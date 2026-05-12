@@ -32,7 +32,7 @@ export default function Draft() {
       <div className="min-h-screen bg-bg text-gray-200 flex flex-col">
         <LeagueSwitcher />
         <main className="flex-1 max-w-7xl mx-auto w-full p-6">
-          <PlayerPool />
+          <PlayerPool key={activeLeagueId} />
         </main>
       </div>
     </>

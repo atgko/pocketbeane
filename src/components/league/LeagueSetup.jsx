@@ -1,11 +1,5 @@
 import { CATEGORIES } from '@/constants/categories'
 
-const IL_TYPE_OPTIONS = [
-  { value: 'none',     label: '0',    title: 'No IL spots' },
-  { value: 'standard', label: 'IL',   title: 'Standard IL (injured players only)' },
-  { value: 'il_plus',  label: 'IL+',  title: 'IL+ (GTD, Out, DTD eligible)' },
-]
-
 const DRAFT_TYPE_OPTIONS = [
   { value: 'snake',   label: 'Snake' },
   { value: 'auction', label: 'Auction' },
@@ -91,45 +85,31 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory }) {
         </div>
       </div>
 
+      {/* Roster Slots */}
+      <div>
+        <label className="block text-xs text-gray-400 mb-1.5">Roster Slots</label>
+        <div className="grid grid-cols-2 gap-x-8 gap-y-2">
+          <SlotCountRow label="PG"   value={config.pgSlots}   onChange={v => onUpdate('pgSlots', v)} />
+          <SlotCountRow label="SG"   value={config.sgSlots}   onChange={v => onUpdate('sgSlots', v)} />
+          <SlotCountRow label="G"    value={config.gSlots}    onChange={v => onUpdate('gSlots', v)} />
+          <SlotCountRow label="SF"   value={config.sfSlots}   onChange={v => onUpdate('sfSlots', v)} />
+          <SlotCountRow label="PF"   value={config.pfSlots}   onChange={v => onUpdate('pfSlots', v)} />
+          <SlotCountRow label="F"    value={config.fSlots}    onChange={v => onUpdate('fSlots', v)} />
+          <SlotCountRow label="C"    value={config.cSlots}    onChange={v => onUpdate('cSlots', v)} />
+          <SlotCountRow label="UTIL" value={config.utilSlots} onChange={v => onUpdate('utilSlots', v)} max={4} />
+        </div>
+        <div className="mt-2">
+          <SlotCountRow label="BN"   value={config.bnSlots}   onChange={v => onUpdate('bnSlots', v)} max={6} />
+        </div>
+      </div>
+
       {/* IL Slots */}
       <div>
         <label className="block text-xs text-gray-400 mb-1.5">Injured List</label>
-        <div className="flex gap-2">
-          {IL_TYPE_OPTIONS.map(opt => (
-            <button
-              key={opt.value}
-              type="button"
-              title={opt.title}
-              onClick={() => onUpdate('ilType', opt.value)}
-              className={`px-4 py-1.5 rounded text-xs font-mono transition-colors ${
-                config.ilType === opt.value
-                  ? 'bg-pick text-white'
-                  : 'bg-bg border border-border text-gray-400 hover:border-pick hover:text-gray-200'
-              }`}
-            >
-              {opt.label}
-            </button>
-          ))}
+        <div className="space-y-2">
+          <SlotCountRow label="IL"  value={config.ilSlots ?? 0}     onChange={v => onUpdate('ilSlots', v)} />
+          <SlotCountRow label="IL+" value={config.ilPlusSlots ?? 0} onChange={v => onUpdate('ilPlusSlots', v)} />
         </div>
-        {config.ilType !== 'none' && (
-          <div className="flex items-center gap-2 mt-2">
-            <span className="text-xs text-gray-500">Slots:</span>
-            {[1, 2, 3].map(n => (
-              <button
-                key={n}
-                type="button"
-                onClick={() => onUpdate('ilSlots', n)}
-                className={`w-7 h-7 rounded text-xs font-mono transition-colors ${
-                  config.ilSlots === n
-                    ? 'bg-pick text-white'
-                    : 'bg-bg border border-border text-gray-400 hover:border-pick'
-                }`}
-              >
-                {n}
-              </button>
-            ))}
-          </div>
-        )}
       </div>
 
       {/* Scoring Categories */}
@@ -153,6 +133,28 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory }) {
         </div>
         <p className="text-xs text-gray-600 mt-1.5 font-mono">{config.categories.length} categories selected</p>
       </div>
+    </div>
+  )
+}
+
+function SlotCountRow({ label, value, onChange, max = 3 }) {
+  return (
+    <div className="flex items-center gap-3">
+      <span className="text-xs text-gray-400 font-mono w-8">{label}</span>
+      {Array.from({ length: max + 1 }, (_, n) => (
+        <button
+          key={n}
+          type="button"
+          onClick={() => onChange(n)}
+          className={`w-7 h-7 rounded text-xs font-mono transition-colors ${
+            value === n
+              ? 'bg-pick text-white'
+              : 'bg-bg border border-border text-gray-400 hover:border-pick'
+          }`}
+        >
+          {n}
+        </button>
+      ))}
     </div>
   )
 }

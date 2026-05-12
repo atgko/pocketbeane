@@ -1,26 +1,58 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { DEFAULT_CATEGORIES } from '@/constants/categories'
-import { DEFAULT_ROSTER_SLOTS } from '@/constants/positions'
 
 export const DEFAULT_CONFIG = {
   name: '',
   numTeams: 10,
   draftPosition: 1,
   categories: DEFAULT_CATEGORIES,
+  // roster slot counts
+  pgSlots: 1,
+  sgSlots: 1,
+  gSlots: 1,
+  sfSlots: 1,
+  pfSlots: 1,
+  fSlots: 1,
+  cSlots: 1,
+  utilSlots: 2,
+  bnSlots: 4,
+  // IL slots are post-draft only, not part of the draft roster
   ilSlots: 1,
-  ilType: 'standard',      // 'standard' | 'il_plus'
+  ilPlusSlots: 0,
   draftType: 'snake',      // 'snake' | 'auction' (auction = future)
   scoringFormat: '9cat',   // '9cat' | '8cat' | 'points' (non-9cat = future)
 }
 
-const makeLeague = (config) => ({
-  id: `league-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-  config: { ...DEFAULT_CONFIG, ...config },
-  status: 'drafting',
-  draft: { picks: [] },
-  rosterSlots: { ...DEFAULT_ROSTER_SLOTS },
-})
+// Returns [{ type, playerId: null }, ...] in display order
+function generateRosterSlots(config) {
+  const slots = []
+  const add = (type, count) => {
+    for (let i = 0; i < count; i++) slots.push({ type, playerId: null })
+  }
+  add('PG',   config.pgSlots)
+  add('SG',   config.sgSlots)
+  add('G',    config.gSlots)
+  add('SF',   config.sfSlots)
+  add('PF',   config.pfSlots)
+  add('F',    config.fSlots)
+  add('C',    config.cSlots)
+  add('UTIL', config.utilSlots)
+  add('BN',   config.bnSlots)
+  return slots
+}
+
+const makeLeague = (config) => {
+  const merged = { ...DEFAULT_CONFIG, ...config }
+  return {
+    id: `league-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+    config: merged,
+    status: 'drafting',
+    // Pick shape: { playerId, pickNumber, draftedBy: 'user' | 'opponent' }
+    draft: { picks: [] },
+    rosterSlots: generateRosterSlots(merged),
+  }
+}
 
 const useLeagueStore = create(
   persist(
@@ -79,7 +111,7 @@ const useLeagueStore = create(
           leagues: state.leagues.map((l) =>
             l.id !== id
               ? l
-              : { ...l, draft: { picks: [] }, rosterSlots: { ...DEFAULT_ROSTER_SLOTS } }
+              : { ...l, draft: { picks: [] }, rosterSlots: generateRosterSlots(l.config) }
           ),
         })),
 
