@@ -14,9 +14,6 @@ out/
 .env.test.local
 .env.production.local
 
-# generated data — rebuilt from script before draft
-src/data/players.json
-
 # script review artifact
 scripts/review.json
 

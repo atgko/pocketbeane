@@ -1,27 +1,160 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import useLeagueStore from '@/store/leagueStore'
+
+const STATUS_LABEL = { drafting: 'In Draft', complete: 'Complete' }
+const STATUS_COLOR = { drafting: 'text-pick', complete: 'text-gray-500' }
 
 export default function Home() {
+  const router = useRouter()
+  const { leagues, setActiveLeague, deleteLeague } = useLeagueStore()
+  const [mounted, setMounted] = useState(false)
+  const [confirmDelete, setConfirmDelete] = useState(null)
+
+  useEffect(() => { setMounted(true) }, [])
+
+  if (!mounted) return null
+
+  const handleEnterDraft = (id) => {
+    setActiveLeague(id)
+    router.push('/draft')
+  }
+
+  const handleDelete = (id) => {
+    if (confirmDelete === id) {
+      deleteLeague(id)
+      setConfirmDelete(null)
+    } else {
+      setConfirmDelete(id)
+    }
+  }
+
   return (
     <>
       <Head>
         <title>PocketBeane</title>
-        <meta name="description" content="AI-powered fantasy basketball GM" />
+        <meta name="description" content="AI-powered Assistant GM for fantasy basketball" />
       </Head>
-      <main className="min-h-screen bg-bg flex flex-col items-center justify-center p-8">
-        <h1 className="text-4xl font-bold text-white mb-2 tracking-tight">
-          PocketBeane
-        </h1>
-        <p className="text-gray-400 mb-10 text-lg">
-          Your AI-powered fantasy basketball GM
-        </p>
-        <Link
-          href="/draft"
-          className="px-6 py-3 bg-pick text-white rounded-lg font-semibold hover:bg-green-500 transition-colors"
-        >
-          Go to Draft Board →
-        </Link>
+      <main className="min-h-screen bg-bg text-gray-200">
+        <div className="max-w-3xl mx-auto px-8 py-12">
+
+          {/* Header */}
+          <div className="flex items-baseline justify-between mb-10">
+            <div>
+              <h1 className="text-3xl font-bold text-white tracking-tight">PocketBeane</h1>
+              <p className="text-gray-500 mt-1 text-sm">AI-powered Assistant GM</p>
+            </div>
+            {leagues.length > 0 && (
+              <Link
+                href="/setup"
+                className="px-4 py-2 bg-pick text-white rounded-lg text-sm font-semibold hover:bg-green-500 transition-colors"
+              >
+                + New League
+              </Link>
+            )}
+          </div>
+
+          {/* League list */}
+          {leagues.length === 0 ? (
+            <EmptyState />
+          ) : (
+            <div className="space-y-3">
+              {leagues.map((league) => (
+                <LeagueCard
+                  key={league.id}
+                  league={league}
+                  confirmingDelete={confirmDelete === league.id}
+                  onEnterDraft={() => handleEnterDraft(league.id)}
+                  onEdit={() => router.push(`/setup?id=${league.id}`)}
+                  onDelete={() => handleDelete(league.id)}
+                  onCancelDelete={() => setConfirmDelete(null)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </main>
     </>
+  )
+}
+
+function LeagueCard({ league, confirmingDelete, onEnterDraft, onEdit, onDelete, onCancelDelete }) {
+  const { config, status, draft } = league
+  const pickCount = draft.picks.length
+  const round = pickCount > 0 ? Math.ceil(pickCount / config.numTeams) : 0
+
+  return (
+    <div className="bg-surface border border-border rounded-lg px-5 py-4 flex items-center gap-5">
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-3">
+          <span className="font-semibold text-white truncate">{config.name || 'Unnamed League'}</span>
+          <span className={`text-xs font-mono ${STATUS_COLOR[status] ?? 'text-gray-500'}`}>
+            {STATUS_LABEL[status] ?? status}
+          </span>
+        </div>
+        <div className="text-xs text-gray-500 mt-0.5 font-mono">
+          {config.numTeams} teams · Pick {config.draftPosition} · {config.scoringFormat?.toUpperCase() ?? '9CAT'}
+          {pickCount > 0 && ` · R${round} P${pickCount + 1}`}
+        </div>
+      </div>
+
+      <div className="flex items-center gap-2 shrink-0">
+        <button
+          onClick={onEnterDraft}
+          className="px-4 py-1.5 bg-pick text-white rounded text-xs font-semibold hover:bg-green-500 transition-colors"
+        >
+          Draft Board
+        </button>
+        <button
+          onClick={onEdit}
+          className="px-3 py-1.5 border border-border text-gray-400 rounded text-xs hover:text-gray-200 hover:border-gray-400 transition-colors"
+        >
+          Edit
+        </button>
+        {confirmingDelete ? (
+          <>
+            <button
+              onClick={onDelete}
+              className="px-3 py-1.5 bg-injury text-white rounded text-xs font-semibold hover:bg-red-700 transition-colors"
+            >
+              Confirm
+            </button>
+            <button
+              onClick={onCancelDelete}
+              className="px-3 py-1.5 border border-border text-gray-400 rounded text-xs hover:text-gray-200 transition-colors"
+            >
+              Cancel
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={onDelete}
+            className="px-3 py-1.5 border border-border text-gray-600 rounded text-xs hover:text-injury hover:border-injury transition-colors"
+          >
+            Delete
+          </button>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function EmptyState() {
+  return (
+    <div className="border border-dashed border-border rounded-lg px-8 py-14 text-center">
+      <p className="text-gray-400 mb-1">No leagues set up yet.</p>
+      <p className="text-gray-600 text-sm mb-6">
+        Add one for each draft you're running — Yahoo, ESPN, mock drafts, whatever platform you're on.
+        PocketBeane runs alongside your live draft and tells you who to pick.
+      </p>
+      <Link
+        href="/setup"
+        className="px-5 py-2.5 bg-pick text-white rounded-lg text-sm font-semibold hover:bg-green-500 transition-colors"
+      >
+        Set Up a League
+      </Link>
+    </div>
   )
 }
