@@ -1,8 +1,12 @@
 import { FILTER_POSITIONS } from '@/constants/positions'
 
-export default function FilterBar({ search, onSearch, posFilter, onPosFilter, searchRef }) {
+export default function FilterBar({
+  search, onSearch, searchRef,
+  posFilter, onPosFilter,
+  showAvailableOnly, onToggleAvailable,
+}) {
   return (
-    <div className="flex items-center gap-3 mb-4">
+    <div className="flex items-center gap-3 mb-4 flex-wrap">
       <div className="relative">
         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs font-mono select-none">/</span>
         <input
@@ -26,6 +30,12 @@ export default function FilterBar({ search, onSearch, posFilter, onPosFilter, se
             {pos}
           </FilterButton>
         ))}
+      </div>
+
+      <div className="ml-auto">
+        <FilterButton active={showAvailableOnly} onClick={onToggleAvailable}>
+          Available
+        </FilterButton>
       </div>
     </div>
   )

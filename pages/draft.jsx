@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import useLeagueStore from '@/store/leagueStore'
 import LeagueSwitcher from '@/components/league/LeagueSwitcher'
 import PlayerPool from '@/components/draft/PlayerPool'
+import RosterView from '@/components/draft/RosterView'
 
 export default function Draft() {
   const router = useRouter()
@@ -32,7 +33,10 @@ export default function Draft() {
       <div className="min-h-screen bg-bg text-gray-200 flex flex-col">
         <LeagueSwitcher />
         <main className="flex-1 max-w-7xl mx-auto w-full p-6">
-          <PlayerPool key={activeLeagueId} />
+          <div className="grid grid-cols-[1fr_288px] gap-6 items-start">
+            <PlayerPool key={activeLeagueId} />
+            {activeLeague && <RosterView league={activeLeague} />}
+          </div>
         </main>
       </div>
     </>
