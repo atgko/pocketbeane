@@ -1,9 +1,8 @@
-import { FILTER_POSITIONS } from '@/constants/positions'
-
 export default function FilterBar({
   search, onSearch, searchRef,
   posFilter, onPosFilter,
   showAvailableOnly, onToggleAvailable,
+  filterPositions,
 }) {
   return (
     <div className="flex items-center gap-3 mb-4 flex-wrap">
@@ -21,7 +20,7 @@ export default function FilterBar({
 
       <div className="flex gap-1.5">
         <FilterButton active={posFilter === null} onClick={() => onPosFilter(null)}>ALL</FilterButton>
-        {FILTER_POSITIONS.map(pos => (
+        {filterPositions.map(pos => (
           <FilterButton
             key={pos}
             active={posFilter === pos}

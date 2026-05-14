@@ -1,13 +1,14 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { DEFAULT_CATEGORIES } from '@/constants/categories'
+import { getSportConfig } from '@/config/sports'
 
 export const DEFAULT_CONFIG = {
   name: '',
+  sport: 'nba',
   numTeams: 10,
   draftPosition: 1,
-  categories: DEFAULT_CATEGORIES,
-  // roster slot counts
+  categories: getSportConfig('nba').categories.map(c => c.id),
+  // roster slot counts — key names are sport-specific (see SPORT_CONFIGS[sport].slotOrder)
   pgSlots: 1,
   sgSlots: 1,
   gSlots: 1,
@@ -26,19 +27,12 @@ export const DEFAULT_CONFIG = {
 
 // Returns [{ type, playerId: null }, ...] in display order
 function generateRosterSlots(config) {
+  const sportConfig = getSportConfig(config.sport)
   const slots = []
-  const add = (type, count) => {
-    for (let i = 0; i < count; i++) slots.push({ type, playerId: null })
+  for (const slot of sportConfig.slotOrder) {
+    const count = config[slot.configKey] ?? slot.default
+    for (let i = 0; i < count; i++) slots.push({ type: slot.type, playerId: null })
   }
-  add('PG',   config.pgSlots)
-  add('SG',   config.sgSlots)
-  add('G',    config.gSlots)
-  add('SF',   config.sfSlots)
-  add('PF',   config.pfSlots)
-  add('F',    config.fSlots)
-  add('C',    config.cSlots)
-  add('UTIL', config.utilSlots)
-  add('BN',   config.bnSlots)
   return slots
 }
 

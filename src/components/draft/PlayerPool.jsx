@@ -2,11 +2,13 @@ import { useState, useMemo, useRef, useEffect } from 'react'
 import players from '@/data/players.json'
 import FilterBar from './FilterBar'
 import useLeagueStore from '@/store/leagueStore'
+import { getSportConfig } from '@/config/sports'
 
 export default function PlayerPool() {
   const { activeLeagueId, addPick, undoPick, getActiveLeague } = useLeagueStore()
   const activeLeague = getActiveLeague()
   const picks = activeLeague?.draft?.picks ?? []
+  const sportConfig = getSportConfig(activeLeague?.config?.sport)
 
   const [search, setSearch] = useState('')
   const [posFilter, setPosFilter] = useState(null)
@@ -36,17 +38,16 @@ export default function PlayerPool() {
     }
 
     if (posFilter) {
-      if (posFilter === 'G') {
-        result = result.filter(p => p.yahoo_positions.some(pos => ['PG', 'SG'].includes(pos)))
-      } else if (posFilter === 'F') {
-        result = result.filter(p => p.yahoo_positions.some(pos => ['SF', 'PF'].includes(pos)))
+      const eligiblePositions = sportConfig.slotEligibility[posFilter]
+      if (eligiblePositions) {
+        result = result.filter(p => p.yahoo_positions.some(pos => eligiblePositions.includes(pos)))
       } else {
         result = result.filter(p => p.yahoo_positions.includes(posFilter))
       }
     }
 
     return result
-  }, [search, posFilter, showAvailableOnly, draftStatus])
+  }, [search, posFilter, showAvailableOnly, draftStatus, activeLeague?.config?.sport])
 
   // Clamp selection when filtered list shrinks
   useEffect(() => {
@@ -164,6 +165,7 @@ export default function PlayerPool() {
         onPosFilter={setPosFilter}
         showAvailableOnly={showAvailableOnly}
         onToggleAvailable={() => setShowAvailableOnly(v => !v)}
+        filterPositions={sportConfig.filterPositions}
       />
 
       {pendingPick && (

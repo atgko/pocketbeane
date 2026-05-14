@@ -1,83 +1,62 @@
-import { CATEGORIES } from '@/constants/categories'
+// roster.js is sport-agnostic — callers inject sport config from SPORT_CONFIGS.
 
-const GUARD_POSITIONS = new Set(['PG', 'SG'])
-const FORWARD_POSITIONS = new Set(['SF', 'PF'])
-
-function buildSlots(config) {
+function buildSlots(config, sportConfig) {
   const slots = []
-  const add = (type, count) => {
-    for (let i = 0; i < (count ?? 0); i++) slots.push({ type, playerId: null })
+  for (const slot of sportConfig.slotOrder) {
+    const count = config[slot.configKey] ?? slot.default
+    for (let i = 0; i < count; i++) slots.push({ type: slot.type, playerId: null })
   }
-  add('PG',   config.pgSlots   ?? 1)
-  add('SG',   config.sgSlots   ?? 1)
-  add('G',    config.gSlots    ?? 1)
-  add('SF',   config.sfSlots   ?? 1)
-  add('PF',   config.pfSlots   ?? 1)
-  add('F',    config.fSlots    ?? 1)
-  add('C',    config.cSlots    ?? 1)
-  add('UTIL', config.utilSlots ?? 2)
-  add('BN',   config.bnSlots   ?? 4)
   return slots
 }
 
-function findBestSlot(slots, player) {
-  const positions = player.yahoo_positions
+function findBestSlot(slots, player, slotEligibility) {
+  const positions = new Set(player.yahoo_positions)
 
   // Exact position match first
-  for (const pos of positions) {
+  for (const pos of player.yahoo_positions) {
     const idx = slots.findIndex(s => s.type === pos && s.playerId === null)
     if (idx !== -1) return idx
   }
 
-  // Flexible guard slot
-  if (positions.some(p => GUARD_POSITIONS.has(p))) {
-    const idx = slots.findIndex(s => s.type === 'G' && s.playerId === null)
-    if (idx !== -1) return idx
+  // Flexible slots in priority order (G before F before UTIL, per slotEligibility key order)
+  for (const [flexSlot, eligiblePositions] of Object.entries(slotEligibility)) {
+    if (eligiblePositions.some(p => positions.has(p))) {
+      const idx = slots.findIndex(s => s.type === flexSlot && s.playerId === null)
+      if (idx !== -1) return idx
+    }
   }
-
-  // Flexible forward slot
-  if (positions.some(p => FORWARD_POSITIONS.has(p))) {
-    const idx = slots.findIndex(s => s.type === 'F' && s.playerId === null)
-    if (idx !== -1) return idx
-  }
-
-  // UTIL
-  const utilIdx = slots.findIndex(s => s.type === 'UTIL' && s.playerId === null)
-  if (utilIdx !== -1) return utilIdx
 
   // Bench
   return slots.findIndex(s => s.type === 'BN' && s.playerId === null)
 }
 
 // Returns slots array [{ type, playerId }] with user picks auto-assigned
-export function computeRosterAssignment(config, userPicks, playerMap) {
-  const slots = buildSlots(config)
+export function computeRosterAssignment(config, userPicks, playerMap, sportConfig) {
+  const slots = buildSlots(config, sportConfig)
   for (const pick of userPicks) {
     const player = playerMap[pick.playerId]
     if (!player) continue
-    const idx = findBestSlot(slots, player)
+    const idx = findBestSlot(slots, player, sportConfig.slotEligibility)
     if (idx !== -1) slots[idx] = { ...slots[idx], playerId: pick.playerId }
   }
   return slots
 }
 
-// Returns per-game totals across user's drafted players
-// Counting stats: sum; percentage stats: average
-export function computeCategoryTotals(userPicks, playerMap) {
+// Returns per-game totals across user's drafted players.
+// Counting stats: sum; percentage stats (listed in percentageCategories): average.
+export function computeCategoryTotals(userPicks, playerMap, categories, percentageCategories) {
   if (userPicks.length === 0) return null
   const players = userPicks.map(p => playerMap[p.playerId]).filter(Boolean)
   if (players.length === 0) return null
 
+  const pctSet = new Set(percentageCategories)
   const result = {}
-  for (const cat of CATEGORIES) {
+  for (const cat of categories) {
     const vals = players.map(p => p.prior_season?.[cat.id]).filter(v => v != null)
     if (vals.length === 0) { result[cat.id] = null; continue }
-
-    if (cat.id === 'fg_pct' || cat.id === 'ft_pct') {
-      result[cat.id] = vals.reduce((a, b) => a + b, 0) / vals.length
-    } else {
-      result[cat.id] = vals.reduce((a, b) => a + b, 0)
-    }
+    result[cat.id] = pctSet.has(cat.id)
+      ? vals.reduce((a, b) => a + b, 0) / vals.length
+      : vals.reduce((a, b) => a + b, 0)
   }
   return result
 }
@@ -86,9 +65,9 @@ export function buildPlayerMap(players) {
   return Object.fromEntries(players.map(p => [p.id, p]))
 }
 
-export function formatStat(catId, value) {
+export function formatStat(catId, value, percentageCategories) {
   if (value == null) return '—'
-  if (catId === 'fg_pct' || catId === 'ft_pct') {
+  if (percentageCategories.includes(catId)) {
     return value.toFixed(3).replace(/^0/, '')
   }
   return value.toFixed(1)

@@ -1,4 +1,4 @@
-import { CATEGORIES } from '@/constants/categories'
+import { getSportConfig } from '@/config/sports'
 
 const DRAFT_TYPE_OPTIONS = [
   { value: 'snake',   label: 'Snake' },
@@ -12,6 +12,10 @@ const SCORING_OPTIONS = [
 ]
 
 export default function LeagueSetup({ config, onUpdate, onToggleCategory }) {
+  const sportConfig = getSportConfig(config.sport)
+  const rosterSlots = sportConfig.slotOrder.filter(s => s.type !== 'BN')
+  const bnSlot = sportConfig.slotOrder.find(s => s.type === 'BN')
+
   return (
     <div className="bg-surface rounded-lg border border-border p-6 space-y-6">
 
@@ -85,22 +89,30 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory }) {
         </div>
       </div>
 
-      {/* Roster Slots */}
+      {/* Roster Slots — driven by sportConfig.slotOrder */}
       <div>
         <label className="block text-xs text-gray-400 mb-1.5">Roster Slots</label>
         <div className="grid grid-cols-2 gap-x-8 gap-y-2">
-          <SlotCountRow label="PG"   value={config.pgSlots}   onChange={v => onUpdate('pgSlots', v)} />
-          <SlotCountRow label="SG"   value={config.sgSlots}   onChange={v => onUpdate('sgSlots', v)} />
-          <SlotCountRow label="G"    value={config.gSlots}    onChange={v => onUpdate('gSlots', v)} />
-          <SlotCountRow label="SF"   value={config.sfSlots}   onChange={v => onUpdate('sfSlots', v)} />
-          <SlotCountRow label="PF"   value={config.pfSlots}   onChange={v => onUpdate('pfSlots', v)} />
-          <SlotCountRow label="F"    value={config.fSlots}    onChange={v => onUpdate('fSlots', v)} />
-          <SlotCountRow label="C"    value={config.cSlots}    onChange={v => onUpdate('cSlots', v)} />
-          <SlotCountRow label="UTIL" value={config.utilSlots} onChange={v => onUpdate('utilSlots', v)} max={4} />
+          {rosterSlots.map(slot => (
+            <SlotCountRow
+              key={slot.type}
+              label={slot.type}
+              value={config[slot.configKey]}
+              onChange={v => onUpdate(slot.configKey, v)}
+              max={slot.max ?? 3}
+            />
+          ))}
         </div>
-        <div className="mt-2">
-          <SlotCountRow label="BN"   value={config.bnSlots}   onChange={v => onUpdate('bnSlots', v)} max={6} />
-        </div>
+        {bnSlot && (
+          <div className="mt-2">
+            <SlotCountRow
+              label="BN"
+              value={config[bnSlot.configKey]}
+              onChange={v => onUpdate(bnSlot.configKey, v)}
+              max={bnSlot.max ?? 6}
+            />
+          </div>
+        )}
       </div>
 
       {/* IL Slots */}
@@ -112,11 +124,11 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory }) {
         </div>
       </div>
 
-      {/* Scoring Categories */}
+      {/* Scoring Categories — driven by sportConfig.categories */}
       <div>
         <label className="block text-xs text-gray-400 mb-1.5">Scoring Categories</label>
         <div className="flex flex-wrap gap-2">
-          {CATEGORIES.map(cat => (
+          {sportConfig.categories.map(cat => (
             <button
               key={cat.id}
               type="button"

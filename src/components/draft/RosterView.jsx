@@ -1,5 +1,5 @@
 import players from '@/data/players.json'
-import { CATEGORIES } from '@/constants/categories'
+import { getSportConfig } from '@/config/sports'
 import {
   buildPlayerMap,
   computeRosterAssignment,
@@ -12,10 +12,11 @@ const playerMap = buildPlayerMap(players)
 export default function RosterView({ league }) {
   const { config, draft } = league
   const picks = draft.picks
+  const sportConfig = getSportConfig(config.sport)
 
   const userPicks = picks.filter(p => p.draftedBy === 'user')
-  const slots = computeRosterAssignment(config, userPicks, playerMap)
-  const totals = computeCategoryTotals(userPicks, playerMap)
+  const slots = computeRosterAssignment(config, userPicks, playerMap, sportConfig)
+  const totals = computeCategoryTotals(userPicks, playerMap, sportConfig.categories, sportConfig.percentageCategories)
 
   const starterSlots = slots.filter(s => s.type !== 'BN')
   const benchSlots   = slots.filter(s => s.type === 'BN')
@@ -55,11 +56,11 @@ export default function RosterView({ league }) {
 
         {totals ? (
           <div className="grid grid-cols-3 gap-x-4 gap-y-3">
-            {CATEGORIES.map(cat => (
+            {sportConfig.categories.map(cat => (
               <div key={cat.id}>
                 <div className="text-xs text-gray-500 font-mono">{cat.label}</div>
                 <div className="text-sm text-white font-mono tabular-nums">
-                  {formatStat(cat.id, totals[cat.id])}
+                  {formatStat(cat.id, totals[cat.id], sportConfig.percentageCategories)}
                 </div>
               </div>
             ))}
