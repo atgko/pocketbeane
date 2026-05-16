@@ -1,6 +1,6 @@
 import players from '@/data/players.json'
 
-export default function UndoModal({ pick, onReturnToBoard, onReassign, onCancel }) {
+export default function UndoModal({ pick, onReturnToBoard, onReassign, onCancel, reassignError }) {
   const player = players.find(p => p.id === pick.playerId)
   const isUserPick = pick.draftedBy === 'user'
 
@@ -32,6 +32,9 @@ export default function UndoModal({ pick, onReturnToBoard, onReassign, onCancel 
           >
             {isUserPick ? 'Reassign as opponent pick' : 'Reassign as my pick'}
           </button>
+          {reassignError && (
+            <p className="text-xs text-red-400 font-mono px-1">{reassignError}</p>
+          )}
           <button
             onClick={onCancel}
             className="w-full px-4 py-2.5 rounded-lg text-gray-500 text-sm font-mono hover:text-gray-300 transition-colors text-left"

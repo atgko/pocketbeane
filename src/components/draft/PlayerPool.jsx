@@ -20,6 +20,7 @@ export default function PlayerPool() {
   const [pendingPick, setPendingPick] = useState(null)
   const [undoTarget, setUndoTarget] = useState(null)
   const [blockMessage, setBlockMessage] = useState(null)
+  const [reassignError, setReassignError] = useState(null)
 
   const searchRef = useRef(null)
   const rowRefs = useRef({})
@@ -83,14 +84,16 @@ export default function PlayerPool() {
     }
   }, [selectedIndex])
 
-  const filteredRef  = useRef(filtered)
-  const selectedRef  = useRef(selectedIndex)
-  const pendingRef   = useRef(pendingPick)
-  const picksRef     = useRef(picks)
-  useEffect(() => { filteredRef.current  = filtered },      [filtered])
-  useEffect(() => { selectedRef.current  = selectedIndex }, [selectedIndex])
-  useEffect(() => { pendingRef.current   = pendingPick },   [pendingPick])
-  useEffect(() => { picksRef.current     = picks },         [picks])
+  const filteredRef     = useRef(filtered)
+  const selectedRef     = useRef(selectedIndex)
+  const pendingRef      = useRef(pendingPick)
+  const picksRef        = useRef(picks)
+  const undoTargetRef   = useRef(undoTarget)
+  useEffect(() => { filteredRef.current   = filtered },      [filtered])
+  useEffect(() => { selectedRef.current   = selectedIndex }, [selectedIndex])
+  useEffect(() => { pendingRef.current    = pendingPick },   [pendingPick])
+  useEffect(() => { picksRef.current      = picks },         [picks])
+  useEffect(() => { undoTargetRef.current = undoTarget },    [undoTarget])
 
   const showBlock = useCallback((msg) => {
     if (blockTimerRef.current) clearTimeout(blockTimerRef.current)
@@ -100,6 +103,16 @@ export default function PlayerPool() {
 
   useEffect(() => {
     const onKeyDown = (e) => {
+      // When the edit modal is open, only allow Escape to close it
+      if (undoTargetRef.current) {
+        if (e.key === 'Escape') {
+          setPendingPick(null)
+          setUndoTarget(null)
+          setReassignError(null)
+        }
+        return
+      }
+
       const searching = document.activeElement === searchRef.current
 
       if (e.key === '/' && !searching) {
@@ -215,10 +228,26 @@ export default function PlayerPool() {
     removePick(activeLeagueId, undoTarget.playerId)
     setPendingPick(null)
     setUndoTarget(null)
+    setReassignError(null)
   }
 
   function handleReassign(newDraftedBy) {
+    if (newDraftedBy === 'user' && draftType === 'snake') {
+      const simulated = picks.map(p =>
+        p.playerId === undoTarget.playerId ? { ...p, draftedBy: 'user' } : p
+      )
+      let run = 0
+      for (const p of simulated) {
+        if (p.draftedBy === 'user') { run++; if (run >= 3) break }
+        else run = 0
+      }
+      if (run >= 3) {
+        setReassignError("Can't reassign — that would create 3 picks in a row, which breaks the snake draft rule.")
+        return
+      }
+    }
     reassignPick(activeLeagueId, undoTarget.playerId, newDraftedBy)
+    setReassignError(null)
     setUndoTarget(null)
   }
 
@@ -296,7 +325,8 @@ export default function PlayerPool() {
           pick={undoTarget}
           onReturnToBoard={handleReturnToBoard}
           onReassign={handleReassign}
-          onCancel={() => setUndoTarget(null)}
+          onCancel={() => { setUndoTarget(null); setReassignError(null) }}
+          reassignError={reassignError}
         />
       )}
     </div>
@@ -410,19 +440,72 @@ function PlayerRow({
 }
 
 function KeyboardLegend() {
-  return (
-    <div className="fixed bottom-4 right-4 bg-surface border border-border rounded-lg p-3 z-40 shadow-lg">
-      <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-2">Shortcuts</p>
+  const [open, setOpen] = useState(false)
+  const [pos, setPos] = useState(null)
+  const containerRef = useRef(null)
+  const dragging = useRef(false)
+  const dragOffset = useRef({ x: 0, y: 0 })
+  const didDrag = useRef(false)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const { width, height } = el.getBoundingClientRect()
+    setPos({
+      x: window.innerWidth - width - 16,
+      y: window.innerHeight - height - 16,
+    })
+  }, [])
+
+  function handleMouseDown(e) {
+    e.preventDefault()
+    didDrag.current = false
+    const rect = containerRef.current.getBoundingClientRect()
+    dragOffset.current = { x: e.clientX - rect.left, y: e.clientY - rect.top }
+    dragging.current = true
+
+    function onMouseMove(e) {
+      if (!dragging.current) return
+      didDrag.current = true
+      const el = containerRef.current
+      const x = Math.max(0, Math.min(e.clientX - dragOffset.current.x, window.innerWidth - el.offsetWidth))
+      const y = Math.max(0, Math.min(e.clientY - dragOffset.current.y, window.innerHeight - el.offsetHeight))
+      setPos({ x, y })
+    }
+
+    function onMouseUp() {
+      dragging.current = false
+      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('mouseup', onMouseUp)
+    }
+
+    window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('mouseup', onMouseUp)
+  }
+
+  function handleClick() {
+    if (didDrag.current) return
+    setOpen(v => !v)
+  }
+
+  const posStyle = pos ? { left: pos.x, top: pos.y } : { bottom: 16, right: 16 }
+  // Open upward when widget is in the lower half of the screen
+  const opensUpward = pos === null || pos.y > window.innerHeight / 2
+
+  const shortcuts = [
+    ['↑ ↓', 'navigate'],
+    ['U', 'draft → me'],
+    ['O', 'draft → opp'],
+    ['Enter', 'confirm'],
+    ['/', 'search'],
+    ['Esc', 'cancel'],
+    ['Z', 'undo last'],
+  ]
+
+  const panel = open && (
+    <div className={`${opensUpward ? 'mb-2' : 'mt-2'} bg-surface border border-border rounded-lg p-3 shadow-lg`}>
       <div className="space-y-1">
-        {[
-          ['↑ ↓', 'navigate'],
-          ['U', 'draft → me'],
-          ['O', 'draft → opp'],
-          ['Enter', 'confirm'],
-          ['/', 'search'],
-          ['Esc', 'cancel'],
-          ['Z', 'undo last'],
-        ].map(([key, label]) => (
+        {shortcuts.map(([key, label]) => (
           <div key={key} className="flex items-center gap-3">
             <kbd className="text-xs font-mono text-gray-300 bg-white/10 px-1.5 py-0.5 rounded min-w-[2.5rem] text-center">
               {key}
@@ -431,6 +514,20 @@ function KeyboardLegend() {
           </div>
         ))}
       </div>
+    </div>
+  )
+
+  return (
+    <div ref={containerRef} className="fixed z-40 w-44" style={posStyle}>
+      {opensUpward && panel}
+      <button
+        onMouseDown={handleMouseDown}
+        onClick={handleClick}
+        className="w-full text-center text-xs font-mono text-gray-500 uppercase tracking-wider bg-surface border border-border rounded-lg px-3 py-1.5 shadow-lg hover:text-gray-300 hover:border-gray-500 transition-colors cursor-grab active:cursor-grabbing"
+      >
+        Shortcuts {open ? '▴' : '▾'}
+      </button>
+      {!opensUpward && panel}
     </div>
   )
 }

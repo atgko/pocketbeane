@@ -33,7 +33,7 @@ export default function FilterBar({
 
       <div className="ml-auto">
         <FilterButton active={showAvailableOnly} onClick={onToggleAvailable}>
-          {showAvailableOnly ? 'Available' : 'All Players'}
+          {showAvailableOnly ? 'All Players' : 'Available'}
         </FilterButton>
       </div>
     </div>

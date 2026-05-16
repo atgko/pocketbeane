@@ -17,6 +17,7 @@ export default function RosterView({ league }) {
   const sportConfig = getSportConfig(config.sport)
 
   const [undoTarget, setUndoTarget] = useState(null)
+  const [reassignError, setReassignError] = useState(null)
 
   const userPicks = picks.filter(p => p.draftedBy === 'user')
   const slots = computeRosterAssignment(config, userPicks, playerMap, sportConfig)
@@ -31,10 +32,26 @@ export default function RosterView({ league }) {
   function handleReturnToBoard() {
     removePick(league.id, undoTarget.playerId)
     setUndoTarget(null)
+    setReassignError(null)
   }
 
   function handleReassign(newDraftedBy) {
+    if (newDraftedBy === 'user' && config.draftType === 'snake') {
+      const simulated = picks.map(p =>
+        p.playerId === undoTarget.playerId ? { ...p, draftedBy: 'user' } : p
+      )
+      let run = 0
+      for (const p of simulated) {
+        if (p.draftedBy === 'user') { run++; if (run >= 3) break }
+        else run = 0
+      }
+      if (run >= 3) {
+        setReassignError("Can't reassign — that would create 3 picks in a row, which breaks the snake draft rule.")
+        return
+      }
+    }
     reassignPick(league.id, undoTarget.playerId, newDraftedBy)
+    setReassignError(null)
     setUndoTarget(null)
   }
 
@@ -91,7 +108,8 @@ export default function RosterView({ league }) {
           pick={undoTarget}
           onReturnToBoard={handleReturnToBoard}
           onReassign={handleReassign}
-          onCancel={() => setUndoTarget(null)}
+          onCancel={() => { setUndoTarget(null); setReassignError(null) }}
+          reassignError={reassignError}
         />
       )}
     </div>
