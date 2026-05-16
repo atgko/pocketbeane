@@ -56,7 +56,7 @@ export default function RosterView({ league }) {
   }
 
   return (
-    <div className="space-y-3 sticky top-6">
+    <div className="space-y-3">
 
       {/* Roster slots */}
       <div className="bg-surface rounded-lg border border-border p-4">

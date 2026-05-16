@@ -4,6 +4,7 @@ import FilterBar from './FilterBar'
 import UndoModal from './UndoModal'
 import useLeagueStore from '@/store/leagueStore'
 import { getSportConfig } from '@/config/sports'
+import { isUserTurn } from '@/utils/snake'
 
 export default function PlayerPool() {
   const { activeLeagueId, addPick, undoPick, removePick, reassignPick, getActiveLeague } = useLeagueStore()
@@ -12,6 +13,8 @@ export default function PlayerPool() {
   const sportConfig = getSportConfig(activeLeague?.config?.sport)
   const draftType = activeLeague?.config?.draftType ?? 'snake'
   const totalSlots = activeLeague?.rosterSlots?.length ?? Infinity
+  const numTeams = activeLeague?.config?.numTeams ?? 10
+  const draftPosition = activeLeague?.config?.draftPosition ?? 1
 
   const [search, setSearch] = useState('')
   const [posFilter, setPosFilter] = useState(null)
@@ -29,16 +32,11 @@ export default function PlayerPool() {
   const userPicks = useMemo(() => picks.filter(p => p.draftedBy === 'user'), [picks])
   const isRosterFull = userPicks.length >= totalSlots
 
-  const consecutiveUserPicks = useMemo(() => {
-    let count = 0
-    for (let i = picks.length - 1; i >= 0; i--) {
-      if (picks[i].draftedBy === 'user') count++
-      else break
-    }
-    return count
-  }, [picks])
-
-  const isSnakeLimitHit = draftType === 'snake' && consecutiveUserPicks >= 2
+  const currentPickNum = picks.length + 1
+  // Turn enforcement only applies to snake drafts with a known draft position
+  const isMyTurn = draftType === 'snake' && !isRosterFull
+    ? isUserTurn(currentPickNum, draftPosition, numTeams)
+    : true
 
   const pickMap = useMemo(() => {
     const map = {}
@@ -84,16 +82,20 @@ export default function PlayerPool() {
     }
   }, [selectedIndex])
 
-  const filteredRef     = useRef(filtered)
-  const selectedRef     = useRef(selectedIndex)
-  const pendingRef      = useRef(pendingPick)
-  const picksRef        = useRef(picks)
-  const undoTargetRef   = useRef(undoTarget)
-  useEffect(() => { filteredRef.current   = filtered },      [filtered])
-  useEffect(() => { selectedRef.current   = selectedIndex }, [selectedIndex])
-  useEffect(() => { pendingRef.current    = pendingPick },   [pendingPick])
-  useEffect(() => { picksRef.current      = picks },         [picks])
-  useEffect(() => { undoTargetRef.current = undoTarget },    [undoTarget])
+  const filteredRef    = useRef(filtered)
+  const selectedRef    = useRef(selectedIndex)
+  const pendingRef     = useRef(pendingPick)
+  const picksRef       = useRef(picks)
+  const undoTargetRef  = useRef(undoTarget)
+  const isMyTurnRef    = useRef(isMyTurn)
+  const isRosterFullRef = useRef(isRosterFull)
+  useEffect(() => { filteredRef.current     = filtered },      [filtered])
+  useEffect(() => { selectedRef.current     = selectedIndex }, [selectedIndex])
+  useEffect(() => { pendingRef.current      = pendingPick },   [pendingPick])
+  useEffect(() => { picksRef.current        = picks },         [picks])
+  useEffect(() => { undoTargetRef.current   = undoTarget },    [undoTarget])
+  useEffect(() => { isMyTurnRef.current     = isMyTurn },      [isMyTurn])
+  useEffect(() => { isRosterFullRef.current = isRosterFull },  [isRosterFull])
 
   const showBlock = useCallback((msg) => {
     if (blockTimerRef.current) clearTimeout(blockTimerRef.current)
@@ -103,7 +105,6 @@ export default function PlayerPool() {
 
   useEffect(() => {
     const onKeyDown = (e) => {
-      // When the edit modal is open, only allow Escape to close it
       if (undoTargetRef.current) {
         if (e.key === 'Escape') {
           setPendingPick(null)
@@ -151,12 +152,12 @@ export default function PlayerPool() {
 
       if (e.key.toLowerCase() === 'u' && selectedRef.current !== null) {
         e.preventDefault()
-        if (isRosterFull) {
+        if (isRosterFullRef.current) {
           showBlock('Your roster is full. Undo a pick if you made a mistake.')
           return
         }
-        if (isSnakeLimitHit) {
-          showBlock("You've already picked twice in a row — impossible in a snake draft. Undo or add an opponent pick first.")
+        if (!isMyTurnRef.current) {
+          showBlock("It's not your pick — log an opponent pick first (O).")
           return
         }
         const player = filteredRef.current[selectedRef.current]
@@ -166,6 +167,10 @@ export default function PlayerPool() {
 
       if (e.key.toLowerCase() === 'o' && selectedRef.current !== null) {
         e.preventDefault()
+        if (isMyTurnRef.current && !isRosterFullRef.current) {
+          showBlock("It's your pick! Use U to draft a player for your team.")
+          return
+        }
         const player = filteredRef.current[selectedRef.current]
         if (player) setPendingPick({ playerId: player.id, draftedBy: 'opponent' })
         return
@@ -174,18 +179,22 @@ export default function PlayerPool() {
       if (e.key === 'Enter' && pendingRef.current) {
         e.preventDefault()
         const pick = pendingRef.current
-        // Re-check limits at confirm time
         if (pick.draftedBy === 'user') {
-          if (isRosterFull) {
-            showBlock('Your roster is full. Undo a pick if you made a mistake.')
+          if (isRosterFullRef.current) {
+            showBlock('Your roster is full.')
             setPendingPick(null)
             return
           }
-          if (isSnakeLimitHit) {
-            showBlock("You've already picked twice in a row — impossible in a snake draft.")
+          if (!isMyTurnRef.current) {
+            showBlock("It's not your pick.")
             setPendingPick(null)
             return
           }
+        }
+        if (pick.draftedBy === 'opponent' && isMyTurnRef.current && !isRosterFullRef.current) {
+          showBlock("It's your pick — use U to draft for your team.")
+          setPendingPick(null)
+          return
         }
         const pickNumber = picksRef.current.length + 1
         addPick(activeLeagueId, { ...pick, pickNumber })
@@ -203,7 +212,7 @@ export default function PlayerPool() {
 
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [activeLeagueId, addPick, undoPick, isRosterFull, isSnakeLimitHit, showBlock])
+  }, [activeLeagueId, addPick, undoPick, showBlock])
 
   function handleDraftAs(player, draftedBy) {
     if (draftedBy === 'user') {
@@ -211,10 +220,14 @@ export default function PlayerPool() {
         showBlock('Your roster is full. Undo a pick if you made a mistake.')
         return
       }
-      if (isSnakeLimitHit) {
-        showBlock("You've already picked twice in a row — impossible in a snake draft.")
+      if (!isMyTurn) {
+        showBlock("It's not your pick — log an opponent pick first (O).")
         return
       }
+    }
+    if (draftedBy === 'opponent' && isMyTurn && !isRosterFull) {
+      showBlock("It's your pick! Use U or click Me to draft a player.")
+      return
     }
     const pickNumber = picks.length + 1
     addPick(activeLeagueId, { playerId: player.id, draftedBy, pickNumber })
@@ -232,27 +245,25 @@ export default function PlayerPool() {
   }
 
   function handleReassign(newDraftedBy) {
-    if (newDraftedBy === 'user' && draftType === 'snake') {
-      const simulated = picks.map(p =>
-        p.playerId === undoTarget.playerId ? { ...p, draftedBy: 'user' } : p
-      )
-      let run = 0
-      for (const p of simulated) {
-        if (p.draftedBy === 'user') { run++; if (run >= 3) break }
-        else run = 0
-      }
-      if (run >= 3) {
-        setReassignError("Can't reassign — that would create 3 picks in a row, which breaks the snake draft rule.")
-        return
-      }
-    }
     reassignPick(activeLeagueId, undoTarget.playerId, newDraftedBy)
     setReassignError(null)
     setUndoTarget(null)
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-3">
+      {/* Turn indicator */}
+      {!isRosterFull && (
+        <div className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-mono ${
+          isMyTurn
+            ? 'bg-pick/15 text-pick border border-pick/30'
+            : 'bg-white/5 text-gray-500 border border-border'
+        }`}>
+          <span className={`w-1.5 h-1.5 rounded-full ${isMyTurn ? 'bg-pick animate-pulse' : 'bg-gray-600'}`} />
+          {isMyTurn ? `Your pick — Round ${Math.ceil(currentPickNum / numTeams)}, Pick #${currentPickNum}` : `Opponents picking — Round ${Math.ceil(currentPickNum / numTeams)}, Pick #${currentPickNum}`}
+        </div>
+      )}
+
       <FilterBar
         search={search}
         onSearch={setSearch}
@@ -269,7 +280,7 @@ export default function PlayerPool() {
       )}
 
       {blockMessage && (
-        <div className="flex items-center justify-between mb-3 px-4 py-2 rounded-lg text-xs font-mono border bg-red-500/10 border-red-500/30 text-red-400">
+        <div className="flex items-center justify-between px-4 py-2 rounded-lg text-xs font-mono border bg-red-500/10 border-red-500/30 text-red-400">
           <span>{blockMessage}</span>
           <button onClick={() => setBlockMessage(null)} className="hover:text-white transition-colors ml-4">✕</button>
         </div>
@@ -297,6 +308,7 @@ export default function PlayerPool() {
                 isSelected={i === selectedIndex}
                 isPending={pendingPick?.playerId === player.id}
                 pendingDraftedBy={pendingPick?.playerId === player.id ? pendingPick.draftedBy : null}
+                isMyTurn={isMyTurn}
                 onClick={() => setSelectedIndex(i)}
                 onDraftAsUser={() => handleDraftAs(player, 'user')}
                 onDraftAsOpponent={() => handleDraftAs(player, 'opponent')}
@@ -314,7 +326,7 @@ export default function PlayerPool() {
         )}
       </div>
 
-      <p className="text-xs text-gray-600 mt-2 font-mono px-1">
+      <p className="text-xs text-gray-600 font-mono px-1">
         {filtered.length} of {players.length} players
       </p>
 
@@ -337,7 +349,7 @@ function PendingBanner({ pendingPick, players, onCancel }) {
   const player = players.find(p => p.id === pendingPick.playerId)
   const isUser = pendingPick.draftedBy === 'user'
   return (
-    <div className={`flex items-center justify-between mb-3 px-4 py-2 rounded-lg text-xs font-mono border ${
+    <div className={`flex items-center justify-between px-4 py-2 rounded-lg text-xs font-mono border ${
       isUser
         ? 'bg-pick/10 border-pick/40 text-pick'
         : 'bg-gray-500/10 border-gray-500/40 text-gray-400'
@@ -353,7 +365,7 @@ function PendingBanner({ pendingPick, players, onCancel }) {
 }
 
 function PlayerRow({
-  player, rank, pick, isSelected, isPending, pendingDraftedBy,
+  player, rank, pick, isSelected, isPending, pendingDraftedBy, isMyTurn,
   onClick, onDraftAsUser, onDraftAsOpponent, onEdit, rowRef,
 }) {
   const isDrafted = !!pick
@@ -362,9 +374,7 @@ function PlayerRow({
   let rowClass = 'border-b border-border last:border-0 cursor-pointer transition-colors'
 
   if (isPending) {
-    rowClass += pendingDraftedBy === 'user'
-      ? ' bg-pick/20'
-      : ' bg-gray-500/15'
+    rowClass += pendingDraftedBy === 'user' ? ' bg-pick/20' : ' bg-gray-500/15'
   } else if (isSelected) {
     rowClass += ' bg-white/10'
   } else if (isDrafted) {
@@ -406,9 +416,7 @@ function PlayerRow({
           <button
             onClick={e => { e.stopPropagation(); onEdit() }}
             className={`text-xs font-mono px-1.5 py-0.5 rounded transition-colors ${
-              isSelected
-                ? 'bg-white/10 text-gray-300 hover:text-white'
-                : 'text-gray-600 hover:text-gray-400'
+              isSelected ? 'bg-white/10 text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-400'
             }`}
             title="Edit this pick"
           >
@@ -418,13 +426,23 @@ function PlayerRow({
           <div className="flex items-center gap-1 justify-center">
             <button
               onClick={e => { e.stopPropagation(); onDraftAsUser() }}
-              className="text-xs px-1.5 py-0.5 rounded bg-pick/20 text-pick hover:bg-pick/40 font-mono transition-colors"
+              className={`text-xs px-1.5 py-0.5 rounded font-mono transition-colors ${
+                isMyTurn
+                  ? 'bg-pick/20 text-pick hover:bg-pick/40'
+                  : 'bg-gray-700/40 text-gray-600 cursor-not-allowed'
+              }`}
+              title={isMyTurn ? 'Draft for my team' : "Not your turn"}
             >
               Me
             </button>
             <button
               onClick={e => { e.stopPropagation(); onDraftAsOpponent() }}
-              className="text-xs px-1.5 py-0.5 rounded bg-gray-500/20 text-gray-400 hover:bg-gray-500/40 font-mono transition-colors"
+              className={`text-xs px-1.5 py-0.5 rounded font-mono transition-colors ${
+                !isMyTurn
+                  ? 'bg-gray-500/20 text-gray-400 hover:bg-gray-500/40'
+                  : 'bg-gray-700/40 text-gray-600 cursor-not-allowed'
+              }`}
+              title={!isMyTurn ? 'Log as opponent pick' : "It's your turn"}
             >
               Opp
             </button>
@@ -489,13 +507,12 @@ function KeyboardLegend() {
   }
 
   const posStyle = pos ? { left: pos.x, top: pos.y } : { bottom: 16, right: 16 }
-  // Open upward when widget is in the lower half of the screen
   const opensUpward = pos === null || pos.y > window.innerHeight / 2
 
   const shortcuts = [
     ['↑ ↓', 'navigate'],
-    ['U', 'draft → me'],
-    ['O', 'draft → opp'],
+    ['U', 'draft → me (your turn)'],
+    ['O', 'draft → opp (their turn)'],
     ['Enter', 'confirm'],
     ['/', 'search'],
     ['Esc', 'cancel'],
@@ -518,7 +535,7 @@ function KeyboardLegend() {
   )
 
   return (
-    <div ref={containerRef} className="fixed z-40 w-44" style={posStyle}>
+    <div ref={containerRef} className="fixed z-40 w-48" style={posStyle}>
       {opensUpward && panel}
       <button
         onMouseDown={handleMouseDown}
