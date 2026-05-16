@@ -1,27 +1,47 @@
-import { useState, useMemo, useRef, useEffect } from 'react'
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
 import players from '@/data/players.json'
 import FilterBar from './FilterBar'
+import UndoModal from './UndoModal'
 import useLeagueStore from '@/store/leagueStore'
 import { getSportConfig } from '@/config/sports'
 
 export default function PlayerPool() {
-  const { activeLeagueId, addPick, undoPick, getActiveLeague } = useLeagueStore()
+  const { activeLeagueId, addPick, undoPick, removePick, reassignPick, getActiveLeague } = useLeagueStore()
   const activeLeague = getActiveLeague()
   const picks = activeLeague?.draft?.picks ?? []
   const sportConfig = getSportConfig(activeLeague?.config?.sport)
+  const draftType = activeLeague?.config?.draftType ?? 'snake'
+  const totalSlots = activeLeague?.rosterSlots?.length ?? Infinity
 
   const [search, setSearch] = useState('')
   const [posFilter, setPosFilter] = useState(null)
   const [showAvailableOnly, setShowAvailableOnly] = useState(true)
   const [selectedIndex, setSelectedIndex] = useState(null)
-  const [pendingPick, setPendingPick] = useState(null) // { playerId, draftedBy }
+  const [pendingPick, setPendingPick] = useState(null)
+  const [undoTarget, setUndoTarget] = useState(null)
+  const [blockMessage, setBlockMessage] = useState(null)
 
   const searchRef = useRef(null)
   const rowRefs = useRef({})
+  const blockTimerRef = useRef(null)
 
-  const draftStatus = useMemo(() => {
+  const userPicks = useMemo(() => picks.filter(p => p.draftedBy === 'user'), [picks])
+  const isRosterFull = userPicks.length >= totalSlots
+
+  const consecutiveUserPicks = useMemo(() => {
+    let count = 0
+    for (let i = picks.length - 1; i >= 0; i--) {
+      if (picks[i].draftedBy === 'user') count++
+      else break
+    }
+    return count
+  }, [picks])
+
+  const isSnakeLimitHit = draftType === 'snake' && consecutiveUserPicks >= 2
+
+  const pickMap = useMemo(() => {
     const map = {}
-    for (const pick of picks) map[pick.playerId] = pick.draftedBy
+    for (const pick of picks) map[pick.playerId] = pick
     return map
   }, [picks])
 
@@ -29,7 +49,7 @@ export default function PlayerPool() {
     let result = players
 
     if (showAvailableOnly) {
-      result = result.filter(p => !draftStatus[p.id])
+      result = result.filter(p => !pickMap[p.id])
     }
 
     if (search.trim()) {
@@ -47,9 +67,8 @@ export default function PlayerPool() {
     }
 
     return result
-  }, [search, posFilter, showAvailableOnly, draftStatus, activeLeague?.config?.sport])
+  }, [search, posFilter, showAvailableOnly, pickMap, activeLeague?.config?.sport])
 
-  // Clamp selection when filtered list shrinks
   useEffect(() => {
     setSelectedIndex(prev => {
       if (prev === null) return null
@@ -58,21 +77,12 @@ export default function PlayerPool() {
     })
   }, [filtered.length])
 
-  // Clear pending pick if the staged player was already drafted (e.g., after undo mismatch)
-  useEffect(() => {
-    if (pendingPick && !draftStatus[pendingPick.playerId] === false) {
-      setPendingPick(null)
-    }
-  }, [draftStatus])
-
-  // Scroll selected row into view
   useEffect(() => {
     if (selectedIndex !== null) {
       rowRefs.current[selectedIndex]?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
     }
   }, [selectedIndex])
 
-  // Mirror mutable refs for use in stable keyboard handler
   const filteredRef  = useRef(filtered)
   const selectedRef  = useRef(selectedIndex)
   const pendingRef   = useRef(pendingPick)
@@ -81,6 +91,12 @@ export default function PlayerPool() {
   useEffect(() => { selectedRef.current  = selectedIndex }, [selectedIndex])
   useEffect(() => { pendingRef.current   = pendingPick },   [pendingPick])
   useEffect(() => { picksRef.current     = picks },         [picks])
+
+  const showBlock = useCallback((msg) => {
+    if (blockTimerRef.current) clearTimeout(blockTimerRef.current)
+    setBlockMessage(msg)
+    blockTimerRef.current = setTimeout(() => setBlockMessage(null), 3500)
+  }, [])
 
   useEffect(() => {
     const onKeyDown = (e) => {
@@ -98,11 +114,11 @@ export default function PlayerPool() {
           setSearch('')
         } else {
           setPendingPick(null)
+          setUndoTarget(null)
         }
         return
       }
 
-      // Pick shortcuts are blocked while typing in search
       if (searching) return
 
       if (e.key === 'ArrowUp') {
@@ -122,6 +138,14 @@ export default function PlayerPool() {
 
       if (e.key.toLowerCase() === 'u' && selectedRef.current !== null) {
         e.preventDefault()
+        if (isRosterFull) {
+          showBlock('Your roster is full. Undo a pick if you made a mistake.')
+          return
+        }
+        if (isSnakeLimitHit) {
+          showBlock("You've already picked twice in a row — impossible in a snake draft. Undo or add an opponent pick first.")
+          return
+        }
         const player = filteredRef.current[selectedRef.current]
         if (player) setPendingPick({ playerId: player.id, draftedBy: 'user' })
         return
@@ -137,6 +161,19 @@ export default function PlayerPool() {
       if (e.key === 'Enter' && pendingRef.current) {
         e.preventDefault()
         const pick = pendingRef.current
+        // Re-check limits at confirm time
+        if (pick.draftedBy === 'user') {
+          if (isRosterFull) {
+            showBlock('Your roster is full. Undo a pick if you made a mistake.')
+            setPendingPick(null)
+            return
+          }
+          if (isSnakeLimitHit) {
+            showBlock("You've already picked twice in a row — impossible in a snake draft.")
+            setPendingPick(null)
+            return
+          }
+        }
         const pickNumber = picksRef.current.length + 1
         addPick(activeLeagueId, { ...pick, pickNumber })
         setPendingPick(null)
@@ -153,7 +190,37 @@ export default function PlayerPool() {
 
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [activeLeagueId, addPick, undoPick])
+  }, [activeLeagueId, addPick, undoPick, isRosterFull, isSnakeLimitHit, showBlock])
+
+  function handleDraftAs(player, draftedBy) {
+    if (draftedBy === 'user') {
+      if (isRosterFull) {
+        showBlock('Your roster is full. Undo a pick if you made a mistake.')
+        return
+      }
+      if (isSnakeLimitHit) {
+        showBlock("You've already picked twice in a row — impossible in a snake draft.")
+        return
+      }
+    }
+    const pickNumber = picks.length + 1
+    addPick(activeLeagueId, { playerId: player.id, draftedBy, pickNumber })
+  }
+
+  function handleEditPick(pick) {
+    setUndoTarget(pick)
+  }
+
+  function handleReturnToBoard() {
+    removePick(activeLeagueId, undoTarget.playerId)
+    setPendingPick(null)
+    setUndoTarget(null)
+  }
+
+  function handleReassign(newDraftedBy) {
+    reassignPick(activeLeagueId, undoTarget.playerId, newDraftedBy)
+    setUndoTarget(null)
+  }
 
   return (
     <div>
@@ -172,6 +239,13 @@ export default function PlayerPool() {
         <PendingBanner pendingPick={pendingPick} players={players} onCancel={() => setPendingPick(null)} />
       )}
 
+      {blockMessage && (
+        <div className="flex items-center justify-between mb-3 px-4 py-2 rounded-lg text-xs font-mono border bg-red-500/10 border-red-500/30 text-red-400">
+          <span>{blockMessage}</span>
+          <button onClick={() => setBlockMessage(null)} className="hover:text-white transition-colors ml-4">✕</button>
+        </div>
+      )}
+
       <div className="bg-surface rounded-lg border border-border overflow-hidden">
         <table className="w-full text-sm">
           <thead>
@@ -181,7 +255,7 @@ export default function PlayerPool() {
               <th className="text-left px-4 py-3 w-28">Pos</th>
               <th className="text-left px-4 py-3 w-16">Team</th>
               <th className="text-right px-4 py-3 w-16">ADP</th>
-              <th className="w-8 px-2" />
+              <th className="w-28 px-2" />
             </tr>
           </thead>
           <tbody>
@@ -190,11 +264,14 @@ export default function PlayerPool() {
                 key={player.id}
                 player={player}
                 rank={i + 1}
-                draftedBy={draftStatus[player.id]}
+                pick={pickMap[player.id] ?? null}
                 isSelected={i === selectedIndex}
                 isPending={pendingPick?.playerId === player.id}
                 pendingDraftedBy={pendingPick?.playerId === player.id ? pendingPick.draftedBy : null}
                 onClick={() => setSelectedIndex(i)}
+                onDraftAsUser={() => handleDraftAs(player, 'user')}
+                onDraftAsOpponent={() => handleDraftAs(player, 'opponent')}
+                onEdit={() => handleEditPick(pickMap[player.id])}
                 rowRef={el => { rowRefs.current[i] = el }}
               />
             ))}
@@ -210,10 +287,18 @@ export default function PlayerPool() {
 
       <p className="text-xs text-gray-600 mt-2 font-mono px-1">
         {filtered.length} of {players.length} players
-        {selectedIndex !== null && (
-          <span className="ml-3 text-gray-700">↑↓ navigate · U user · O opponent · Enter confirm · Z undo</span>
-        )}
       </p>
+
+      <KeyboardLegend />
+
+      {undoTarget && (
+        <UndoModal
+          pick={undoTarget}
+          onReturnToBoard={handleReturnToBoard}
+          onReassign={handleReassign}
+          onCancel={() => setUndoTarget(null)}
+        />
+      )}
     </div>
   )
 }
@@ -237,8 +322,12 @@ function PendingBanner({ pendingPick, players, onCancel }) {
   )
 }
 
-function PlayerRow({ player, rank, draftedBy, isSelected, isPending, pendingDraftedBy, onClick, rowRef }) {
-  const isDrafted = !!draftedBy
+function PlayerRow({
+  player, rank, pick, isSelected, isPending, pendingDraftedBy,
+  onClick, onDraftAsUser, onDraftAsOpponent, onEdit, rowRef,
+}) {
+  const isDrafted = !!pick
+  const draftedBy = pick?.draftedBy ?? null
 
   let rowClass = 'border-b border-border last:border-0 cursor-pointer transition-colors'
 
@@ -272,7 +361,7 @@ function PlayerRow({ player, rank, draftedBy, isSelected, isPending, pendingDraf
           </span>
         )}
         {player.contract_year && (
-          <span className="ml-2 text-xs text-value font-mono" title="Contract year">CY</span>
+          <span className="ml-2 text-xs text-value font-mono" title="Contract year — final season of deal">CY</span>
         )}
       </td>
       <td className="px-4 py-2.5 font-mono text-xs text-gray-300">
@@ -282,16 +371,66 @@ function PlayerRow({ player, rank, draftedBy, isSelected, isPending, pendingDraf
       <td className="text-right px-4 py-2.5 font-mono text-xs text-gray-400">
         {player.adp.toFixed(1)}
       </td>
-      <td className="px-2 py-2.5 text-center">
-        {draftedBy === 'user' && (
-          <span className="text-pick text-xs">✓</span>
-        )}
-        {isPending && (
+      <td className="px-2 py-2.5 text-center" onClick={e => isDrafted && e.stopPropagation()}>
+        {isDrafted ? (
+          <button
+            onClick={e => { e.stopPropagation(); onEdit() }}
+            className={`text-xs font-mono px-1.5 py-0.5 rounded transition-colors ${
+              isSelected
+                ? 'bg-white/10 text-gray-300 hover:text-white'
+                : 'text-gray-600 hover:text-gray-400'
+            }`}
+            title="Edit this pick"
+          >
+            ↩
+          </button>
+        ) : isSelected ? (
+          <div className="flex items-center gap-1 justify-center">
+            <button
+              onClick={e => { e.stopPropagation(); onDraftAsUser() }}
+              className="text-xs px-1.5 py-0.5 rounded bg-pick/20 text-pick hover:bg-pick/40 font-mono transition-colors"
+            >
+              Me
+            </button>
+            <button
+              onClick={e => { e.stopPropagation(); onDraftAsOpponent() }}
+              className="text-xs px-1.5 py-0.5 rounded bg-gray-500/20 text-gray-400 hover:bg-gray-500/40 font-mono transition-colors"
+            >
+              Opp
+            </button>
+          </div>
+        ) : isPending ? (
           <span className={`text-xs font-mono ${pendingDraftedBy === 'user' ? 'text-pick' : 'text-gray-400'}`}>
             {pendingDraftedBy === 'user' ? 'U' : 'O'}
           </span>
-        )}
+        ) : null}
       </td>
     </tr>
+  )
+}
+
+function KeyboardLegend() {
+  return (
+    <div className="fixed bottom-4 right-4 bg-surface border border-border rounded-lg p-3 z-40 shadow-lg">
+      <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-2">Shortcuts</p>
+      <div className="space-y-1">
+        {[
+          ['↑ ↓', 'navigate'],
+          ['U', 'draft → me'],
+          ['O', 'draft → opp'],
+          ['Enter', 'confirm'],
+          ['/', 'search'],
+          ['Esc', 'cancel'],
+          ['Z', 'undo last'],
+        ].map(([key, label]) => (
+          <div key={key} className="flex items-center gap-3">
+            <kbd className="text-xs font-mono text-gray-300 bg-white/10 px-1.5 py-0.5 rounded min-w-[2.5rem] text-center">
+              {key}
+            </kbd>
+            <span className="text-xs font-mono text-gray-500">{label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }

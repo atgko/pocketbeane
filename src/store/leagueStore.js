@@ -100,6 +100,31 @@ const useLeagueStore = create(
           ),
         })),
 
+      removePick: (id, playerId) =>
+        set((state) => ({
+          leagues: state.leagues.map((l) =>
+            l.id !== id
+              ? l
+              : { ...l, draft: { picks: l.draft.picks.filter((p) => p.playerId !== playerId) } }
+          ),
+        })),
+
+      reassignPick: (id, playerId, newDraftedBy) =>
+        set((state) => ({
+          leagues: state.leagues.map((l) =>
+            l.id !== id
+              ? l
+              : {
+                  ...l,
+                  draft: {
+                    picks: l.draft.picks.map((p) =>
+                      p.playerId === playerId ? { ...p, draftedBy: newDraftedBy } : p
+                    ),
+                  },
+                }
+          ),
+        })),
+
       resetDraft: (id) =>
         set((state) => ({
           leagues: state.leagues.map((l) =>
