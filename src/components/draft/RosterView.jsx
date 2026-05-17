@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import players from '@/data/players.json'
 import { getSportConfig } from '@/config/sports'
 import {
@@ -18,6 +18,18 @@ export default function RosterView({ league }) {
 
   const [undoTarget, setUndoTarget] = useState(null)
   const [reassignError, setReassignError] = useState(null)
+  const [showHistory, setShowHistory] = useState(false)
+  const [flipping, setFlipping] = useState(false)
+  const flipTimer = useRef(null)
+
+  function handleFlip() {
+    if (flipping) return
+    setFlipping(true)
+    flipTimer.current = setTimeout(() => {
+      setShowHistory(v => !v)
+      setFlipping(false)
+    }, 180)
+  }
 
   const userPicks = picks.filter(p => p.draftedBy === 'user')
   const slots = computeRosterAssignment(config, userPicks, playerMap, sportConfig)
@@ -57,50 +69,65 @@ export default function RosterView({ league }) {
 
   return (
     <div className="space-y-3">
-
-      {/* Roster slots */}
       <div className="bg-surface rounded-lg border border-border p-4">
-        <h3 className="text-xs text-gray-500 uppercase tracking-wider font-mono mb-3">Your Roster</h3>
+        {/* Header */}
+        <h3 className="text-xs text-gray-500 uppercase tracking-wider font-mono mb-3">
+          {showHistory ? 'Pick History' : 'Your Roster'}
+        </h3>
 
-        <div className="space-y-0.5">
-          {starterSlots.map((slot, i) => (
-            <SlotRow
-              key={i}
-              slot={slot}
-              player={playerMap[slot.playerId]}
-              pick={slot.playerId ? pickByPlayerId[slot.playerId] : null}
-              onEdit={pick => setUndoTarget(pick)}
-            />
-          ))}
+        {/* Animated content area */}
+        <div
+          className="transition-all duration-[180ms]"
+          style={{ opacity: flipping ? 0 : 1, transform: flipping ? 'translateY(4px)' : 'translateY(0)' }}
+        >
+          {showHistory ? (
+            <PickHistory picks={picks} playerMap={playerMap} onEdit={pick => setUndoTarget(pick)} rowCount={slots.length} />
+          ) : (
+            <>
+              <div className="space-y-0.5">
+                {starterSlots.map((slot, i) => (
+                  <SlotRow
+                    key={i}
+                    slot={slot}
+                    player={playerMap[slot.playerId]}
+                    pick={slot.playerId ? pickByPlayerId[slot.playerId] : null}
+                    onEdit={pick => setUndoTarget(pick)}
+                  />
+                ))}
+              </div>
+
+              {benchSlots.length > 0 && (
+                <>
+                  <div className="border-t border-border my-2" />
+                  <div className="space-y-0.5">
+                    {benchSlots.map((slot, i) => (
+                      <SlotRow
+                        key={i}
+                        slot={slot}
+                        player={playerMap[slot.playerId]}
+                        pick={slot.playerId ? pickByPlayerId[slot.playerId] : null}
+                        onEdit={pick => setUndoTarget(pick)}
+                        isBench
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+
+              <p className={`text-xs font-mono mt-3 ${isFull ? 'text-pick font-semibold' : 'text-gray-700'}`}>
+                {userPicks.length} / {slots.length} filled{isFull ? ' — roster full' : ''}
+              </p>
+            </>
+          )}
         </div>
 
-        {benchSlots.length > 0 && (
-          <>
-            <div className="border-t border-border my-2" />
-            <div className="space-y-0.5">
-              {benchSlots.map((slot, i) => (
-                <SlotRow
-                  key={i}
-                  slot={slot}
-                  player={playerMap[slot.playerId]}
-                  pick={slot.playerId ? pickByPlayerId[slot.playerId] : null}
-                  onEdit={pick => setUndoTarget(pick)}
-                  isBench
-                />
-              ))}
-            </div>
-          </>
-        )}
-
-        <p className={`text-xs font-mono mt-3 ${isFull ? 'text-pick font-semibold' : 'text-gray-700'}`}>
-          {userPicks.length} / {slots.length} filled{isFull ? ' — roster full' : ''}
-        </p>
-      </div>
-
-      {/* Pick history */}
-      <div className="bg-surface rounded-lg border border-border p-4">
-        <h3 className="text-xs text-gray-500 uppercase tracking-wider font-mono mb-3">Pick History</h3>
-        <PickHistory picks={picks} playerMap={playerMap} onEdit={pick => setUndoTarget(pick)} />
+        {/* Flip toggle */}
+        <button
+          onClick={handleFlip}
+          className="mt-3 w-full pt-3 border-t border-border text-xs font-mono text-gray-600 hover:text-gray-300 transition-colors text-center"
+        >
+          {showHistory ? '← Your Roster' : 'Pick History →'}
+        </button>
       </div>
 
       {undoTarget && (
@@ -140,16 +167,22 @@ function SlotRow({ slot, player, pick, isBench, onEdit }) {
   )
 }
 
-function PickHistory({ picks, playerMap, onEdit }) {
-  if (picks.length === 0) {
-    return <p className="text-xs text-gray-700 font-mono">No picks yet.</p>
-  }
-
-  const recent = [...picks].reverse().slice(0, 12)
+function PickHistory({ picks, playerMap, onEdit, rowCount }) {
+  const recent = [...picks].reverse().slice(0, rowCount)
+  const rows = [...recent, ...Array(Math.max(0, rowCount - recent.length)).fill(null)]
 
   return (
     <div className="space-y-0.5">
-      {recent.map((pick) => {
+      {rows.map((pick, i) => {
+        if (!pick) {
+          return (
+            <div key={`empty-${i}`} className="flex items-center gap-2 py-0.5">
+              <span className="text-xs font-mono text-gray-800 w-6 shrink-0" />
+              <span className="text-xs font-mono text-gray-800 w-7 shrink-0" />
+              <span className="text-xs text-gray-800 flex-1">—</span>
+            </div>
+          )
+        }
         const player = playerMap[pick.playerId]
         const isUser = pick.draftedBy === 'user'
         return (

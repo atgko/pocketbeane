@@ -18,6 +18,10 @@ export default function FilterBar({
         />
       </div>
 
+      <FilterButton active={showAvailableOnly} onClick={onToggleAvailable}>
+        {showAvailableOnly ? 'All Players' : 'Available'}
+      </FilterButton>
+
       <div className="flex gap-1.5">
         <FilterButton active={posFilter === null} onClick={() => onPosFilter(null)}>ALL</FilterButton>
         {filterPositions.map(pos => (
@@ -29,12 +33,6 @@ export default function FilterBar({
             {pos}
           </FilterButton>
         ))}
-      </div>
-
-      <div className="ml-auto">
-        <FilterButton active={showAvailableOnly} onClick={onToggleAvailable}>
-          {showAvailableOnly ? 'All Players' : 'Available'}
-        </FilterButton>
       </div>
     </div>
   )

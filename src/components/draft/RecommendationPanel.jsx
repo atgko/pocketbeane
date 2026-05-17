@@ -5,7 +5,7 @@ import { buildPlayerMap } from '@/utils/roster'
 import { isUserTurn } from '@/utils/snake'
 import { computeBoardState } from '@/ai/boardState'
 import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
-import { computeScarcity, getScarcityAlerts } from '@/ai/scarcity'
+import { computeScarcity, getSmartScarcityAlerts } from '@/ai/scarcity'
 import { rankByFit } from '@/ai/valueCalculator'
 
 const playerMap = buildPlayerMap(players)
@@ -36,7 +36,7 @@ export default function RecommendationPanel({ league }) {
     const bs = computeBoardState(league, players)
     const gaps = analyzeCategoryGaps(bs.userPicks, playerMap, sportConfig, bs.totalRosterSlots)
     const scarcity = computeScarcity(players, bs.draftedIds, sportConfig)
-    const alerts = getScarcityAlerts(scarcity)
+    const alerts = getSmartScarcityAlerts(scarcity, bs.userPicks, playerMap)
     const ranked = rankByFit(bs.available, gaps, sportConfig, bs.currentPick)
     return { boardState: bs, categoryGaps: gaps, scarcityAlerts: alerts, topCandidates: ranked }
   }, [picks, league.rosterSlots])
@@ -102,7 +102,7 @@ export default function RecommendationPanel({ league }) {
       {/* Header */}
       <div className="bg-surface rounded-lg border border-border px-4 pt-4 pb-3">
         <div className="flex items-center justify-between mb-1">
-          <h2 className="text-sm font-semibold text-white tracking-tight">Beane's Take</h2>
+          <h2 className="text-sm font-semibold text-white tracking-tight">Beane's Corner</h2>
           {loading && <span className="text-xs font-mono text-gray-500 animate-pulse">thinking…</span>}
         </div>
         <p className="text-xs font-mono text-gray-600">
@@ -126,7 +126,7 @@ export default function RecommendationPanel({ league }) {
                 : 'bg-white/3 text-gray-600 cursor-not-allowed border border-transparent'
             }`}
           >
-            {loading ? 'Thinking…' : canGetAdvice ? "Get Beane's read" : `Used this round — available Round ${currentRound + 1}`}
+            {loading ? 'Thinking…' : canGetAdvice ? "Get Beane's Insights" : `Used this round — available Round ${currentRound + 1}`}
           </button>
         </div>
       )}
@@ -140,7 +140,7 @@ export default function RecommendationPanel({ league }) {
 
       {result?.mode === 'advice' && result.briefing && (
         <div className="bg-surface rounded-lg border border-border p-4">
-          <p className="text-xs font-mono text-gray-600 uppercase tracking-wider mb-2">Beane says</p>
+          <p className="text-xs font-mono text-gray-600 uppercase tracking-wider mb-2">Beane's Corner</p>
           <p className="text-sm text-gray-200 leading-relaxed italic">"{result.briefing}"</p>
         </div>
       )}
@@ -202,19 +202,8 @@ export default function RecommendationPanel({ league }) {
             <CategoryBar key={gap.id} gap={gap} />
           ))}
         </div>
-      </div>
 
-      {/* Computed scarcity alerts (no API needed) */}
-      {scarcityAlerts.length > 0 && (
-        <div className="bg-surface rounded-lg border border-yellow-500/20 p-4">
-          <p className="text-xs font-mono text-yellow-500/70 uppercase tracking-wider mb-2">Scarcity</p>
-          <ul className="space-y-1">
-            {scarcityAlerts.map((alert, i) => (
-              <li key={i} className="text-xs font-mono text-yellow-400/80 leading-relaxed">{alert}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+      </div>
     </div>
   )
 }

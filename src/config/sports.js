@@ -6,7 +6,7 @@ export const SPORT_CONFIGS = {
     label: 'NBA',
 
     // Position buttons shown in the draft board filter bar
-    filterPositions: ['PG', 'SG', 'SF', 'PF', 'C', 'G', 'F'],
+    filterPositions: ['PG', 'SG', 'G', 'SF', 'PF', 'F', 'C'],
 
     // Roster slot definitions in display order.
     // configKey is the key name in league.config for this slot's count.

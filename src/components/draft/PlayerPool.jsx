@@ -465,13 +465,15 @@ function KeyboardLegend() {
   const dragOffset = useRef({ x: 0, y: 0 })
   const didDrag = useRef(false)
 
+  const PANEL_HEIGHT_ESTIMATE = 192 // approximate expanded panel height
+
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
     const { width, height } = el.getBoundingClientRect()
     setPos({
       x: window.innerWidth - width - 16,
-      y: window.innerHeight - height - 16,
+      y: window.innerHeight - height - PANEL_HEIGHT_ESTIMATE - 16,
     })
   }, [])
 
@@ -503,11 +505,19 @@ function KeyboardLegend() {
 
   function handleClick() {
     if (didDrag.current) return
-    setOpen(v => !v)
+    const nextOpen = !open
+    if (nextOpen && pos) {
+      // Ensure there's room below the button for the panel before expanding
+      const buttonH = containerRef.current?.offsetHeight ?? 36
+      const maxY = window.innerHeight - buttonH - PANEL_HEIGHT_ESTIMATE - 8
+      if (pos.y > maxY) {
+        setPos(p => ({ ...p, y: Math.max(8, maxY) }))
+      }
+    }
+    setOpen(nextOpen)
   }
 
   const posStyle = pos ? { left: pos.x, top: pos.y } : { bottom: 16, right: 16 }
-  const opensUpward = pos === null || pos.y > window.innerHeight / 2
 
   const shortcuts = [
     ['↑ ↓', 'navigate'],
@@ -519,24 +529,8 @@ function KeyboardLegend() {
     ['Z', 'undo last'],
   ]
 
-  const panel = open && (
-    <div className={`${opensUpward ? 'mb-2' : 'mt-2'} bg-surface border border-border rounded-lg p-3 shadow-lg`}>
-      <div className="space-y-1">
-        {shortcuts.map(([key, label]) => (
-          <div key={key} className="flex items-center gap-3">
-            <kbd className="text-xs font-mono text-gray-300 bg-white/10 px-1.5 py-0.5 rounded min-w-[2.5rem] text-center">
-              {key}
-            </kbd>
-            <span className="text-xs font-mono text-gray-500">{label}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-
   return (
     <div ref={containerRef} className="fixed z-40 w-48" style={posStyle}>
-      {opensUpward && panel}
       <button
         onMouseDown={handleMouseDown}
         onClick={handleClick}
@@ -544,7 +538,20 @@ function KeyboardLegend() {
       >
         Shortcuts {open ? '▴' : '▾'}
       </button>
-      {!opensUpward && panel}
+      {open && (
+        <div className="mt-2 bg-surface border border-border rounded-lg p-3 shadow-lg">
+          <div className="space-y-1">
+            {shortcuts.map(([key, label]) => (
+              <div key={key} className="flex items-center gap-3">
+                <kbd className="text-xs font-mono text-gray-300 bg-white/10 px-1.5 py-0.5 rounded min-w-[2.5rem] text-center">
+                  {key}
+                </kbd>
+                <span className="text-xs font-mono text-gray-500">{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
