@@ -98,9 +98,10 @@ export default function RecommendationPanel({ league }) {
   }
 
   return (
-    <div className="flex flex-col gap-3">
-      {/* Header */}
-      <div className="bg-surface rounded-lg border border-border px-4 pt-4 pb-3">
+    <div className="h-full flex flex-col gap-3">
+
+      {/* Zone 1 — header, always visible, pinned to top */}
+      <div className="shrink-0 bg-surface rounded-lg border border-border px-4 pt-4 pb-3">
         <div className="flex items-center justify-between mb-1">
           <h2 className="text-sm font-semibold text-white tracking-tight">Beane's Corner</h2>
           {loading && <span className="text-xs font-mono text-gray-500 animate-pulse">thinking…</span>}
@@ -127,79 +128,81 @@ export default function RecommendationPanel({ league }) {
         )}
       </div>
 
-      {/* AI result */}
-      {error && (
-        <div className="bg-surface rounded-lg border border-red-500/20 p-4">
-          <p className="text-xs text-red-400 font-mono">{error}</p>
-        </div>
-      )}
+      {/* Zone 2 — AI result, scrollable if content overflows */}
+      <div className="flex-1 min-h-0 overflow-y-auto flex flex-col gap-3">
+        {error && (
+          <div className="bg-surface rounded-lg border border-red-500/20 p-4">
+            <p className="text-xs text-red-400 font-mono">{error}</p>
+          </div>
+        )}
 
-      {result?.mode === 'advice' && result.briefing && (
-        <div className="bg-surface rounded-lg border border-border p-4">
-          <p className="text-xs font-mono text-gray-600 uppercase tracking-wider mb-2">Beane's Corner</p>
-          <p className="text-sm text-gray-200 leading-relaxed italic">"{result.briefing}"</p>
-        </div>
-      )}
+        {result?.mode === 'advice' && result.briefing && (
+          <div className="bg-surface rounded-lg border border-border p-4">
+            <p className="text-xs font-mono text-gray-600 uppercase tracking-wider mb-2">Beane's Corner</p>
+            <p className="text-sm text-gray-200 leading-relaxed italic">"{result.briefing}"</p>
+          </div>
+        )}
 
-      {result?.mode === 'auto' && (
-        <>
-          {result.picks?.length > 0 && (
-            <div className="bg-surface rounded-lg border border-border p-4">
-              <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">My board</p>
-              <div className="space-y-3">
-                {result.picks.map((pick, i) => {
-                  const player = playerMap[pick.id]
-                  return (
-                    <div key={pick.id} className="flex gap-3">
-                      <span className="text-xs font-mono text-pick mt-0.5 w-3 shrink-0 font-bold">{i + 1}</span>
-                      <div className="min-w-0">
-                        <div className="flex items-baseline gap-1.5 flex-wrap">
-                          <span className="text-xs font-semibold text-white">{pick.name}</span>
-                          {player && (
-                            <span className="text-xs font-mono text-gray-600">
-                              {player.yahoo_positions.join('/')} · {player.adp.toFixed(1)}
-                            </span>
-                          )}
+        {result?.mode === 'auto' && (
+          <>
+            {result.picks?.length > 0 && (
+              <div className="bg-surface rounded-lg border border-border p-4">
+                <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">My board</p>
+                <div className="space-y-3">
+                  {result.picks.map((pick, i) => {
+                    const player = playerMap[pick.id]
+                    return (
+                      <div key={pick.id} className="flex gap-3">
+                        <span className="text-xs font-mono text-pick mt-0.5 w-3 shrink-0 font-bold">{i + 1}</span>
+                        <div className="min-w-0">
+                          <div className="flex items-baseline gap-1.5 flex-wrap">
+                            <span className="text-xs font-semibold text-white">{pick.name}</span>
+                            {player && (
+                              <span className="text-xs font-mono text-gray-600">
+                                {player.yahoo_positions.join('/')} · {player.adp.toFixed(1)}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">{pick.reason}</p>
                         </div>
-                        <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">{pick.reason}</p>
                       </div>
-                    </div>
-                  )
-                })}
+                    )
+                  })}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {result.summary && (
-            <div className="bg-surface rounded-lg border border-border p-4">
-              <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-2">The read</p>
-              <p className="text-xs text-gray-300 leading-relaxed">{result.summary}</p>
-            </div>
-          )}
+            {result.summary && (
+              <div className="bg-surface rounded-lg border border-border p-4">
+                <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-2">The read</p>
+                <p className="text-xs text-gray-300 leading-relaxed">{result.summary}</p>
+              </div>
+            )}
 
-          {result.scarcityAlerts?.length > 0 && (
-            <div className="bg-surface rounded-lg border border-yellow-500/20 p-4">
-              <p className="text-xs font-mono text-yellow-500/70 uppercase tracking-wider mb-2">Urgency</p>
-              <ul className="space-y-1">
-                {result.scarcityAlerts.map((a, i) => (
-                  <li key={i} className="text-xs font-mono text-yellow-400/80 leading-relaxed">{a}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </>
-      )}
+            {result.scarcityAlerts?.length > 0 && (
+              <div className="bg-surface rounded-lg border border-yellow-500/20 p-4">
+                <p className="text-xs font-mono text-yellow-500/70 uppercase tracking-wider mb-2">Urgency</p>
+                <ul className="space-y-1">
+                  {result.scarcityAlerts.map((a, i) => (
+                    <li key={i} className="text-xs font-mono text-yellow-400/80 leading-relaxed">{a}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </>
+        )}
+      </div>
 
-      {/* Category bars — always visible, update live */}
-      <div className="bg-surface rounded-lg border border-border p-4">
+      {/* Zone 3 — categories, always visible, pinned to bottom */}
+      <div className="shrink-0 bg-surface rounded-lg border border-border p-4">
         <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">Categories</p>
         <div className="space-y-1.5">
           {categoryGaps.map(gap => (
             <CategoryBar key={gap.id} gap={gap} />
           ))}
         </div>
-
       </div>
+
     </div>
   )
 }

@@ -49,7 +49,7 @@ export default function Draft() {
           /* Live draft: 3-column, each column independently scrollable */
           <main className="flex-1 min-h-0 p-5">
             <div className="grid grid-cols-[288px_1fr_264px] gap-5 h-full">
-              <div className="overflow-y-auto pb-20">
+              <div className="h-full min-h-0">
                 <RecommendationPanel key={activeLeagueId} league={activeLeague} />
               </div>
               <div className="overflow-y-auto pb-20">
