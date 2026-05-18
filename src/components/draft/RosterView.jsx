@@ -97,26 +97,19 @@ export default function RosterView({ league }) {
               </div>
 
               {benchSlots.length > 0 && (
-                <>
-                  <div className="border-t border-border my-2" />
-                  <div className="space-y-0.5">
-                    {benchSlots.map((slot, i) => (
-                      <SlotRow
-                        key={i}
-                        slot={slot}
-                        player={playerMap[slot.playerId]}
-                        pick={slot.playerId ? pickByPlayerId[slot.playerId] : null}
-                        onEdit={pick => setUndoTarget(pick)}
-                        isBench
-                      />
-                    ))}
-                  </div>
-                </>
+                <div className="space-y-0.5">
+                  {benchSlots.map((slot, i) => (
+                    <SlotRow
+                      key={i}
+                      slot={slot}
+                      player={playerMap[slot.playerId]}
+                      pick={slot.playerId ? pickByPlayerId[slot.playerId] : null}
+                      onEdit={pick => setUndoTarget(pick)}
+                      isBench
+                    />
+                  ))}
+                </div>
               )}
-
-              <p className={`text-xs font-mono mt-3 ${isFull ? 'text-pick font-semibold' : 'text-gray-700'}`}>
-                {userPicks.length} / {slots.length} filled{isFull ? ' — roster full' : ''}
-              </p>
             </>
           )}
         </div>

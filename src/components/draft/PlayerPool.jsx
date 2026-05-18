@@ -465,17 +465,7 @@ function KeyboardLegend() {
   const dragOffset = useRef({ x: 0, y: 0 })
   const didDrag = useRef(false)
 
-  const PANEL_HEIGHT_ESTIMATE = 192 // approximate expanded panel height
-
-  useEffect(() => {
-    const el = containerRef.current
-    if (!el) return
-    const { width, height } = el.getBoundingClientRect()
-    setPos({
-      x: window.innerWidth - width - 16,
-      y: window.innerHeight - height - PANEL_HEIGHT_ESTIMATE - 16,
-    })
-  }, [])
+  const PANEL_HEIGHT_ESTIMATE = 192
 
   function handleMouseDown(e) {
     e.preventDefault()
@@ -506,12 +496,17 @@ function KeyboardLegend() {
   function handleClick() {
     if (didDrag.current) return
     const nextOpen = !open
-    if (nextOpen && pos) {
-      // Ensure there's room below the button for the panel before expanding
-      const buttonH = containerRef.current?.offsetHeight ?? 36
-      const maxY = window.innerHeight - buttonH - PANEL_HEIGHT_ESTIMATE - 8
-      if (pos.y > maxY) {
-        setPos(p => ({ ...p, y: Math.max(8, maxY) }))
+    if (nextOpen) {
+      const el = containerRef.current
+      if (el) {
+        const rect = el.getBoundingClientRect()
+        const buttonH = rect.height
+        const maxY = window.innerHeight - buttonH - PANEL_HEIGHT_ESTIMATE - 8
+        // Commit to top/left coords (from current CSS or dragged pos) and clamp
+        setPos({
+          x: pos?.x ?? rect.left,
+          y: Math.max(8, Math.min(pos?.y ?? rect.top, maxY)),
+        })
       }
     }
     setOpen(nextOpen)

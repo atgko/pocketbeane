@@ -112,15 +112,11 @@ export default function RecommendationPanel({ league }) {
             ? 'Auto-analyzing your pick…'
             : `Opponents picking — Round ${currentRound}`}
         </p>
-      </div>
-
-      {/* Opponent's turn: advice button (rate-limited 1/round) */}
-      {!isMyTurn && !isRosterFull && (
-        <div className="bg-surface rounded-lg border border-border p-4">
+        {!isMyTurn && !isRosterFull && (
           <button
             onClick={handleAdviceClick}
             disabled={!canGetAdvice || loading}
-            className={`w-full py-2 px-3 rounded text-xs font-mono font-semibold transition-colors ${
+            className={`mt-3 w-full py-1.5 px-3 rounded text-xs font-mono font-semibold transition-colors ${
               canGetAdvice && !loading
                 ? 'bg-white/5 text-gray-300 hover:bg-white/10 border border-border'
                 : 'bg-white/3 text-gray-600 cursor-not-allowed border border-transparent'
@@ -128,8 +124,8 @@ export default function RecommendationPanel({ league }) {
           >
             {loading ? 'Thinking…' : canGetAdvice ? "Get Beane's Insights" : `Used this round — available Round ${currentRound + 1}`}
           </button>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* AI result */}
       {error && (
@@ -224,11 +220,6 @@ function CategoryBar({ gap }) {
     gap.grade === 'weak'   ? 'text-red-400/80' :
     'text-gray-600'
 
-  const isPct = gap.id === 'fg_pct' || gap.id === 'ft_pct'
-  const displayVal = isMissing ? '—'
-    : isPct ? gap.current?.toFixed(3)
-    : gap.current?.toFixed(1)
-
   return (
     <div className="flex items-center gap-2">
       <span className={`text-xs font-mono w-7 shrink-0 ${labelColor}`}>{gap.label}</span>
@@ -238,7 +229,6 @@ function CategoryBar({ gap }) {
           style={{ width: `${barPct}%` }}
         />
       </div>
-      <span className="text-xs font-mono text-gray-600 w-10 text-right tabular-nums">{displayVal}</span>
     </div>
   )
 }
