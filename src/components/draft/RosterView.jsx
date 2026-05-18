@@ -68,16 +68,16 @@ export default function RosterView({ league }) {
   }
 
   return (
-    <div className="space-y-3">
-      <div className="bg-surface rounded-lg border border-border p-4">
+    <div className="h-full flex flex-col">
+      <div className="flex-1 min-h-0 bg-surface rounded-lg border border-border p-4 flex flex-col">
         {/* Header */}
-        <h3 className="text-xs text-gray-500 uppercase tracking-wider font-mono mb-3">
+        <h3 className="text-xs text-gray-500 uppercase tracking-wider font-mono mb-3 shrink-0">
           {showHistory ? 'Pick History' : 'Your Roster'}
         </h3>
 
-        {/* Animated content area */}
+        {/* Animated content area — fills all space between header and flip button */}
         <div
-          className="transition-all duration-[180ms]"
+          className="flex-1 min-h-0 transition-all duration-[180ms]"
           style={{ opacity: flipping ? 0 : 1, transform: flipping ? 'translateY(4px)' : 'translateY(0)' }}
         >
           {showHistory ? (
@@ -114,10 +114,10 @@ export default function RosterView({ league }) {
           )}
         </div>
 
-        {/* Flip toggle */}
+        {/* Flip toggle — pinned to bottom of card */}
         <button
           onClick={handleFlip}
-          className="mt-3 w-full pt-3 border-t border-border text-xs font-mono text-gray-600 hover:text-gray-300 transition-colors text-center"
+          className="mt-3 shrink-0 w-full pt-3 border-t border-border text-xs font-mono text-gray-600 hover:text-gray-300 transition-colors text-center"
         >
           {showHistory ? '← Your Roster' : 'Pick History →'}
         </button>

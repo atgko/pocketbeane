@@ -55,7 +55,7 @@ export default function Draft() {
               <div className="overflow-y-auto pb-20">
                 <PlayerPool key={activeLeagueId} />
               </div>
-              <div className="overflow-y-auto pb-20">
+              <div className="h-full min-h-0">
                 <RosterView league={activeLeague} />
               </div>
             </div>
