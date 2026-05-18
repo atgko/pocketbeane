@@ -130,6 +130,12 @@ export default function RecommendationPanel({ league }) {
 
       {/* Zone 2 — AI result, scrollable if content overflows */}
       <div className="flex-1 min-h-0 overflow-y-auto flex flex-col gap-3">
+        {!error && !result && !loading && (
+          <div className="flex-1 flex items-center justify-center">
+            <p className="text-xs font-mono text-gray-800">Analysis appears on your pick</p>
+          </div>
+        )}
+
         {error && (
           <div className="bg-surface rounded-lg border border-red-500/20 p-4">
             <p className="text-xs text-red-400 font-mono">{error}</p>
@@ -138,7 +144,6 @@ export default function RecommendationPanel({ league }) {
 
         {result?.mode === 'advice' && result.briefing && (
           <div className="bg-surface rounded-lg border border-border p-4">
-            <p className="text-xs font-mono text-gray-600 uppercase tracking-wider mb-2">Beane's Corner</p>
             <p className="text-sm text-gray-200 leading-relaxed italic">"{result.briefing}"</p>
           </div>
         )}

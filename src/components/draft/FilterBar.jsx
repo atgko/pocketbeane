@@ -3,6 +3,7 @@ export default function FilterBar({
   posFilter, onPosFilter,
   showAvailableOnly, onToggleAvailable,
   filterPositions,
+  turnLabel, isMyTurn,
 }) {
   return (
     <div className="flex items-center gap-3 mb-4 flex-wrap">
@@ -34,6 +35,17 @@ export default function FilterBar({
           </FilterButton>
         ))}
       </div>
+
+      {turnLabel && (
+        <div className={`ml-auto flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono ${
+          isMyTurn
+            ? 'bg-pick/15 text-pick border border-pick/30'
+            : 'bg-white/5 text-gray-500 border border-border'
+        }`}>
+          <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isMyTurn ? 'bg-pick animate-pulse' : 'bg-gray-600'}`} />
+          {turnLabel}
+        </div>
+      )}
     </div>
   )
 }

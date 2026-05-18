@@ -161,7 +161,7 @@ export default function DraftComplete({ league }) {
             <p className="text-xs text-red-400 font-mono">{error}</p>
             <button
               onClick={generateOutlook}
-              className="text-xs font-mono text-gray-400 hover:text-white underline"
+              className="text-xs font-mono px-3 py-1.5 rounded bg-white/5 border border-border text-gray-400 hover:text-white hover:border-pick transition-colors"
             >
               Try again
             </button>

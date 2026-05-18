@@ -250,20 +250,15 @@ export default function PlayerPool() {
     setUndoTarget(null)
   }
 
+  const currentRound = Math.ceil(currentPickNum / numTeams)
+  const turnLabel = isRosterFull
+    ? null
+    : isMyTurn
+      ? `Your pick — R${currentRound} · #${currentPickNum}`
+      : `Opponents — R${currentRound} · #${currentPickNum}`
+
   return (
     <div className="flex flex-col gap-3">
-      {/* Turn indicator */}
-      {!isRosterFull && (
-        <div className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-mono ${
-          isMyTurn
-            ? 'bg-pick/15 text-pick border border-pick/30'
-            : 'bg-white/5 text-gray-500 border border-border'
-        }`}>
-          <span className={`w-1.5 h-1.5 rounded-full ${isMyTurn ? 'bg-pick animate-pulse' : 'bg-gray-600'}`} />
-          {isMyTurn ? `Your pick — Round ${Math.ceil(currentPickNum / numTeams)}, Pick #${currentPickNum}` : `Opponents picking — Round ${Math.ceil(currentPickNum / numTeams)}, Pick #${currentPickNum}`}
-        </div>
-      )}
-
       <FilterBar
         search={search}
         onSearch={setSearch}
@@ -273,6 +268,8 @@ export default function PlayerPool() {
         showAvailableOnly={showAvailableOnly}
         onToggleAvailable={() => setShowAvailableOnly(v => !v)}
         filterPositions={sportConfig.filterPositions}
+        turnLabel={turnLabel}
+        isMyTurn={isMyTurn}
       />
 
       {pendingPick && (
