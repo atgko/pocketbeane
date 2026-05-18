@@ -504,7 +504,7 @@ function KeyboardLegend() {
         const maxY = window.innerHeight - buttonH - PANEL_HEIGHT_ESTIMATE - 8
         // Commit to top/left coords (from current CSS or dragged pos) and clamp
         setPos({
-          x: pos?.x ?? rect.left,
+          x: pos?.x ?? rect.left,  // left-side default: rect.left ≈ 16
           y: Math.max(8, Math.min(pos?.y ?? rect.top, maxY)),
         })
       }
@@ -512,7 +512,7 @@ function KeyboardLegend() {
     setOpen(nextOpen)
   }
 
-  const posStyle = pos ? { left: pos.x, top: pos.y } : { bottom: 16, right: 16 }
+  const posStyle = pos ? { left: pos.x, top: pos.y } : { bottom: 16, left: 16 }
 
   const shortcuts = [
     ['↑ ↓', 'navigate'],

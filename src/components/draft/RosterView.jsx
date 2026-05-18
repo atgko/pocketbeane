@@ -81,36 +81,29 @@ export default function RosterView({ league }) {
           style={{ opacity: flipping ? 0 : 1, transform: flipping ? 'translateY(4px)' : 'translateY(0)' }}
         >
           {showHistory ? (
-            <PickHistory picks={picks} playerMap={playerMap} onEdit={pick => setUndoTarget(pick)} rowCount={slots.length} />
+            <PickHistory picks={picks} playerMap={playerMap} onEdit={pick => setUndoTarget(pick)} />
           ) : (
-            <>
-              <div className="space-y-0.5">
-                {starterSlots.map((slot, i) => (
-                  <SlotRow
-                    key={i}
-                    slot={slot}
-                    player={playerMap[slot.playerId]}
-                    pick={slot.playerId ? pickByPlayerId[slot.playerId] : null}
-                    onEdit={pick => setUndoTarget(pick)}
-                  />
-                ))}
-              </div>
-
-              {benchSlots.length > 0 && (
-                <div className="space-y-0.5">
-                  {benchSlots.map((slot, i) => (
-                    <SlotRow
-                      key={i}
-                      slot={slot}
-                      player={playerMap[slot.playerId]}
-                      pick={slot.playerId ? pickByPlayerId[slot.playerId] : null}
-                      onEdit={pick => setUndoTarget(pick)}
-                      isBench
-                    />
-                  ))}
-                </div>
-              )}
-            </>
+            <div className="h-full flex flex-col">
+              {starterSlots.map((slot, i) => (
+                <SlotRow
+                  key={i}
+                  slot={slot}
+                  player={playerMap[slot.playerId]}
+                  pick={slot.playerId ? pickByPlayerId[slot.playerId] : null}
+                  onEdit={pick => setUndoTarget(pick)}
+                />
+              ))}
+              {benchSlots.map((slot, i) => (
+                <SlotRow
+                  key={`bn-${i}`}
+                  slot={slot}
+                  player={playerMap[slot.playerId]}
+                  pick={slot.playerId ? pickByPlayerId[slot.playerId] : null}
+                  onEdit={pick => setUndoTarget(pick)}
+                  isBench
+                />
+              ))}
+            </div>
           )}
         </div>
 
@@ -138,7 +131,7 @@ export default function RosterView({ league }) {
 
 function SlotRow({ slot, player, pick, isBench, onEdit }) {
   return (
-    <div className="flex items-center gap-2 py-0.5 group">
+    <div className="flex-1 flex items-center gap-2 min-h-0 group">
       <span className={`text-xs font-mono w-8 shrink-0 ${isBench ? 'text-gray-600' : 'text-gray-500'}`}>
         {slot.type}
       </span>
@@ -160,26 +153,24 @@ function SlotRow({ slot, player, pick, isBench, onEdit }) {
   )
 }
 
-function PickHistory({ picks, playerMap, onEdit, rowCount }) {
-  const recent = [...picks].reverse().slice(0, rowCount)
-  const rows = [...recent, ...Array(Math.max(0, rowCount - recent.length)).fill(null)]
+function PickHistory({ picks, playerMap, onEdit }) {
+  if (picks.length === 0) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <p className="text-xs text-gray-700 font-mono">No picks yet.</p>
+      </div>
+    )
+  }
+
+  const rows = [...picks].reverse()
 
   return (
-    <div className="space-y-0.5">
-      {rows.map((pick, i) => {
-        if (!pick) {
-          return (
-            <div key={`empty-${i}`} className="flex items-center gap-2 py-0.5">
-              <span className="text-xs font-mono text-gray-800 w-6 shrink-0" />
-              <span className="text-xs font-mono text-gray-800 w-7 shrink-0" />
-              <span className="text-xs text-gray-800 flex-1">—</span>
-            </div>
-          )
-        }
+    <div className="h-full flex flex-col">
+      {rows.map((pick) => {
         const player = playerMap[pick.playerId]
         const isUser = pick.draftedBy === 'user'
         return (
-          <div key={pick.pickNumber} className="flex items-center gap-2 py-0.5 group">
+          <div key={pick.pickNumber} className="flex-1 flex items-center gap-2 min-h-0 group">
             <span className="text-xs font-mono text-gray-600 w-6 shrink-0 text-right">
               {pick.pickNumber}
             </span>
