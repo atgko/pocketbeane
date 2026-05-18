@@ -162,7 +162,7 @@ function PickHistory({ picks, playerMap, onEdit }) {
     )
   }
 
-  const rows = [...picks].reverse()
+  const rows = [...picks].reverse().slice(0, 15)
 
   return (
     <div className="h-full flex flex-col">

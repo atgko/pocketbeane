@@ -330,8 +330,6 @@ export default function PlayerPool() {
         {filtered.length} of {players.length} players
       </p>
 
-      <KeyboardLegend />
-
       {undoTarget && (
         <UndoModal
           pick={undoTarget}
@@ -454,99 +452,5 @@ function PlayerRow({
         ) : null}
       </td>
     </tr>
-  )
-}
-
-function KeyboardLegend() {
-  const [open, setOpen] = useState(false)
-  const [pos, setPos] = useState(null)
-  const containerRef = useRef(null)
-  const dragging = useRef(false)
-  const dragOffset = useRef({ x: 0, y: 0 })
-  const didDrag = useRef(false)
-
-  const PANEL_HEIGHT_ESTIMATE = 192
-
-  function handleMouseDown(e) {
-    e.preventDefault()
-    didDrag.current = false
-    const rect = containerRef.current.getBoundingClientRect()
-    dragOffset.current = { x: e.clientX - rect.left, y: e.clientY - rect.top }
-    dragging.current = true
-
-    function onMouseMove(e) {
-      if (!dragging.current) return
-      didDrag.current = true
-      const el = containerRef.current
-      const x = Math.max(0, Math.min(e.clientX - dragOffset.current.x, window.innerWidth - el.offsetWidth))
-      const y = Math.max(0, Math.min(e.clientY - dragOffset.current.y, window.innerHeight - el.offsetHeight))
-      setPos({ x, y })
-    }
-
-    function onMouseUp() {
-      dragging.current = false
-      window.removeEventListener('mousemove', onMouseMove)
-      window.removeEventListener('mouseup', onMouseUp)
-    }
-
-    window.addEventListener('mousemove', onMouseMove)
-    window.addEventListener('mouseup', onMouseUp)
-  }
-
-  function handleClick() {
-    if (didDrag.current) return
-    const nextOpen = !open
-    if (nextOpen) {
-      const el = containerRef.current
-      if (el) {
-        const rect = el.getBoundingClientRect()
-        const buttonH = rect.height
-        const maxY = window.innerHeight - buttonH - PANEL_HEIGHT_ESTIMATE - 8
-        // Commit to top/left coords (from current CSS or dragged pos) and clamp
-        setPos({
-          x: pos?.x ?? rect.left,  // left-side default: rect.left ≈ 16
-          y: Math.max(8, Math.min(pos?.y ?? rect.top, maxY)),
-        })
-      }
-    }
-    setOpen(nextOpen)
-  }
-
-  const posStyle = pos ? { left: pos.x, top: pos.y } : { bottom: 16, left: 16 }
-
-  const shortcuts = [
-    ['↑ ↓', 'navigate'],
-    ['U', 'draft → me (your turn)'],
-    ['O', 'draft → opp (their turn)'],
-    ['Enter', 'confirm'],
-    ['/', 'search'],
-    ['Esc', 'cancel'],
-    ['Z', 'undo last'],
-  ]
-
-  return (
-    <div ref={containerRef} className="fixed z-40 w-48" style={posStyle}>
-      <button
-        onMouseDown={handleMouseDown}
-        onClick={handleClick}
-        className="w-full text-center text-xs font-mono text-gray-500 uppercase tracking-wider bg-surface border border-border rounded-lg px-3 py-1.5 shadow-lg hover:text-gray-300 hover:border-gray-500 transition-colors cursor-grab active:cursor-grabbing"
-      >
-        Shortcuts {open ? '▴' : '▾'}
-      </button>
-      {open && (
-        <div className="mt-2 bg-surface border border-border rounded-lg p-3 shadow-lg">
-          <div className="space-y-1">
-            {shortcuts.map(([key, label]) => (
-              <div key={key} className="flex items-center gap-3">
-                <kbd className="text-xs font-mono text-gray-300 bg-white/10 px-1.5 py-0.5 rounded min-w-[2.5rem] text-center">
-                  {key}
-                </kbd>
-                <span className="text-xs font-mono text-gray-500">{label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
   )
 }
