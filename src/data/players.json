@@ -1,552 +1,6601 @@
 [
   {
-    "id": "shai-gilgeous-alexander",
-    "name": "Shai Gilgeous-Alexander",
-    "team": "OKC",
-    "positions": ["PG"],
-    "yahoo_positions": ["PG"],
-    "adp": 1.2,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 30.1, "reb": 5.3, "ast": 6.2, "stl": 2.1, "blk": 0.9, "to": 2.5, "fg_pct": 0.480, "ft_pct": 0.868, "three_pm": 1.7, "gp": 75 },
-    "age": 26, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
     "id": "nikola-jokic",
     "name": "Nikola Jokic",
     "team": "DEN",
-    "positions": ["C"],
-    "yahoo_positions": ["C"],
-    "adp": 2.1,
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 1.3,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 26.4, "reb": 12.4, "ast": 9.0, "stl": 1.4, "blk": 0.9, "to": 3.5, "fg_pct": 0.583, "ft_pct": 0.814, "three_pm": 0.9, "gp": 79 },
-    "age": 30, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "luka-doncic",
-    "name": "Luka Doncic",
-    "team": "LAL",
-    "positions": ["PG", "SF"],
-    "yahoo_positions": ["PG", "SF"],
-    "adp": 3.4,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 28.1, "reb": 8.7, "ast": 7.9, "stl": 1.3, "blk": 0.5, "to": 3.7, "fg_pct": 0.479, "ft_pct": 0.782, "three_pm": 3.1, "gp": 66 },
-    "age": 26, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "giannis-antetokounmpo",
-    "name": "Giannis Antetokounmpo",
-    "team": "MIL",
-    "positions": ["PF"],
-    "yahoo_positions": ["PF", "C"],
-    "adp": 4.8,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 30.4, "reb": 11.9, "ast": 6.5, "stl": 1.2, "blk": 1.1, "to": 3.2, "fg_pct": 0.612, "ft_pct": 0.657, "three_pm": 0.5, "gp": 73 },
-    "age": 30, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "anthony-davis",
-    "name": "Anthony Davis",
-    "team": "LAL",
-    "positions": ["PF", "C"],
-    "yahoo_positions": ["PF", "C"],
-    "adp": 5.9,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 26.2, "reb": 12.6, "ast": 3.6, "stl": 1.0, "blk": 2.6, "to": 2.0, "fg_pct": 0.566, "ft_pct": 0.806, "three_pm": 0.2, "gp": 72 },
-    "age": 31, "injury_risk": true, "injury_notes": "Recurring foot and knee issues; missed 10+ games multiple seasons", "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "jayson-tatum",
-    "name": "Jayson Tatum",
-    "team": "BOS",
-    "positions": ["SF", "PF"],
-    "yahoo_positions": ["SF", "PF"],
-    "adp": 7.1,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 26.9, "reb": 8.3, "ast": 4.9, "stl": 0.9, "blk": 0.6, "to": 2.9, "fg_pct": 0.450, "ft_pct": 0.836, "three_pm": 3.0, "gp": 74 },
-    "age": 26, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 27.7,
+      "reb": 12.9,
+      "ast": 10.7,
+      "stl": 1.4,
+      "blk": 0.8,
+      "to": 3.7,
+      "fg_pct": 0.569,
+      "ft_pct": 0.831,
+      "three_pm": 1.7,
+      "gp": 65
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
   },
   {
     "id": "victor-wembanyama",
     "name": "Victor Wembanyama",
     "team": "SAS",
-    "positions": ["C", "PF"],
-    "yahoo_positions": ["PF", "C"],
-    "adp": 8.0,
+    "positions": [
+      "C",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF"
+    ],
+    "adp": 2.1,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 24.3, "reb": 10.6, "ast": 3.9, "stl": 1.2, "blk": 3.6, "to": 3.3, "fg_pct": 0.462, "ft_pct": 0.793, "three_pm": 2.2, "gp": 71 },
-    "age": 21, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 25,
+      "reb": 11.5,
+      "ast": 3.1,
+      "stl": 1,
+      "blk": 3.1,
+      "to": 2.4,
+      "fg_pct": 0.512,
+      "ft_pct": 0.827,
+      "three_pm": 1.9,
+      "gp": 64
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
   },
   {
-    "id": "karl-anthony-towns",
-    "name": "Karl-Anthony Towns",
-    "team": "NYK",
-    "positions": ["PF", "C"],
-    "yahoo_positions": ["PF", "C"],
-    "adp": 10.0,
+    "id": "shai-gilgeous-alexander",
+    "name": "Shai Gilgeous-Alexander",
+    "team": "OKC",
+    "positions": [
+      "PG"
+    ],
+    "yahoo_positions": [
+      "PG"
+    ],
+    "adp": 3.2,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 21.5, "reb": 8.4, "ast": 3.0, "stl": 0.6, "blk": 0.8, "to": 2.9, "fg_pct": 0.501, "ft_pct": 0.871, "three_pm": 2.8, "gp": 74 },
-    "age": 29, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 31.1,
+      "reb": 4.3,
+      "ast": 6.6,
+      "stl": 1.4,
+      "blk": 0.8,
+      "to": 2.2,
+      "fg_pct": 0.553,
+      "ft_pct": 0.879,
+      "three_pm": 1.7,
+      "gp": 68
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
   },
   {
-    "id": "tyrese-haliburton",
-    "name": "Tyrese Haliburton",
-    "team": "IND",
-    "positions": ["PG"],
-    "yahoo_positions": ["PG"],
-    "adp": 11.5,
+    "id": "luka-doncic",
+    "name": "Luka Doncic",
+    "team": "LAL",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 4.3,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 22.0, "reb": 3.5, "ast": 10.9, "stl": 1.2, "blk": 0.5, "to": 3.2, "fg_pct": 0.450, "ft_pct": 0.846, "three_pm": 2.5, "gp": 60 },
-    "age": 25, "injury_risk": true, "injury_notes": "Hamstring injury limited him to 60 games in 2024-25", "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 33.5,
+      "reb": 7.7,
+      "ast": 8.3,
+      "stl": 1.6,
+      "blk": 0.5,
+      "to": 4,
+      "fg_pct": 0.476,
+      "ft_pct": 0.78,
+      "three_pm": 4,
+      "gp": 64
+    },
+    "age": 26,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
   },
   {
-    "id": "jalen-brunson",
-    "name": "Jalen Brunson",
-    "team": "NYK",
-    "positions": ["PG"],
-    "yahoo_positions": ["PG"],
-    "adp": 12.8,
+    "id": "giannis-antetokounmpo",
+    "name": "Giannis Antetokounmpo",
+    "team": "MIL",
+    "positions": [
+      "PF",
+      "C"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "C"
+    ],
+    "adp": 5.8,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 28.7, "reb": 3.6, "ast": 7.3, "stl": 0.9, "blk": 0.2, "to": 2.5, "fg_pct": 0.473, "ft_pct": 0.850, "three_pm": 2.8, "gp": 77 },
-    "age": 28, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 27.6,
+      "reb": 9.8,
+      "ast": 5.4,
+      "stl": 0.9,
+      "blk": 0.7,
+      "to": 3.2,
+      "fg_pct": 0.624,
+      "ft_pct": 0.65,
+      "three_pm": 0.4,
+      "gp": 36
+    },
+    "age": 31,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
   },
   {
-    "id": "tyrese-maxey",
-    "name": "Tyrese Maxey",
-    "team": "PHI",
-    "positions": ["PG", "SG"],
-    "yahoo_positions": ["PG", "SG"],
-    "adp": 14.0,
+    "id": "anthony-edwards",
+    "name": "Anthony Edwards",
+    "team": "MIN",
+    "positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "adp": 7,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 26.1, "reb": 3.7, "ast": 6.9, "stl": 1.1, "blk": 0.4, "to": 2.2, "fg_pct": 0.476, "ft_pct": 0.875, "three_pm": 2.9, "gp": 79 },
-    "age": 24, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "donovan-mitchell",
-    "name": "Donovan Mitchell",
-    "team": "CLE",
-    "positions": ["SG"],
-    "yahoo_positions": ["PG", "SG"],
-    "adp": 15.5,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 26.6, "reb": 5.0, "ast": 6.1, "stl": 1.6, "blk": 0.4, "to": 3.0, "fg_pct": 0.467, "ft_pct": 0.831, "three_pm": 2.8, "gp": 68 },
-    "age": 28, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "de-aaron-fox",
-    "name": "De'Aaron Fox",
-    "team": "SAS",
-    "positions": ["PG"],
-    "yahoo_positions": ["PG"],
-    "adp": 17.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 25.4, "reb": 4.2, "ast": 5.8, "stl": 1.6, "blk": 0.3, "to": 3.2, "fg_pct": 0.491, "ft_pct": 0.772, "three_pm": 1.0, "gp": 70 },
-    "age": 27, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "jaylen-brown",
-    "name": "Jaylen Brown",
-    "team": "BOS",
-    "positions": ["SG", "SF"],
-    "yahoo_positions": ["SG", "SF"],
-    "adp": 18.5,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 23.0, "reb": 5.4, "ast": 3.6, "stl": 1.0, "blk": 0.5, "to": 2.4, "fg_pct": 0.469, "ft_pct": 0.700, "three_pm": 2.1, "gp": 70 },
-    "age": 28, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "kevin-durant",
-    "name": "Kevin Durant",
-    "team": "PHX",
-    "positions": ["SF", "PF"],
-    "yahoo_positions": ["SF", "PF"],
-    "adp": 19.8,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 26.6, "reb": 6.8, "ast": 4.4, "stl": 0.9, "blk": 1.1, "to": 3.0, "fg_pct": 0.520, "ft_pct": 0.855, "three_pm": 1.6, "gp": 76 },
-    "age": 36, "injury_risk": true, "injury_notes": "Achilles history; age-related risk", "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "stephen-curry",
-    "name": "Stephen Curry",
-    "team": "GSW",
-    "positions": ["PG"],
-    "yahoo_positions": ["PG", "SG"],
-    "adp": 21.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 22.5, "reb": 4.0, "ast": 6.2, "stl": 1.3, "blk": 0.3, "to": 2.8, "fg_pct": 0.453, "ft_pct": 0.923, "three_pm": 4.8, "gp": 74 },
-    "age": 37, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "devin-booker",
-    "name": "Devin Booker",
-    "team": "PHX",
-    "positions": ["SG"],
-    "yahoo_positions": ["SG", "SF"],
-    "adp": 22.5,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 25.3, "reb": 4.5, "ast": 6.9, "stl": 0.8, "blk": 0.5, "to": 3.2, "fg_pct": 0.479, "ft_pct": 0.875, "three_pm": 2.9, "gp": 68 },
-    "age": 28, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "joel-embiid",
-    "name": "Joel Embiid",
-    "team": "PHI",
-    "positions": ["C"],
-    "yahoo_positions": ["C"],
-    "adp": 24.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 32.7, "reb": 12.3, "ast": 5.7, "stl": 1.1, "blk": 1.7, "to": 3.6, "fg_pct": 0.537, "ft_pct": 0.866, "three_pm": 1.3, "gp": 33 },
-    "age": 31, "injury_risk": true, "injury_notes": "Recurring knee issues; played only 33 games in 2024-25", "injury_status": "day-to-day", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 28.8,
+      "reb": 5,
+      "ast": 3.7,
+      "stl": 1.4,
+      "blk": 0.8,
+      "to": 2.9,
+      "fg_pct": 0.489,
+      "ft_pct": 0.796,
+      "three_pm": 3.4,
+      "gp": 61
+    },
+    "age": 24,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
   },
   {
     "id": "cade-cunningham",
     "name": "Cade Cunningham",
     "team": "DET",
-    "positions": ["PG"],
-    "yahoo_positions": ["PG", "SG"],
-    "adp": 25.5,
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 8.3,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 23.0, "reb": 4.6, "ast": 9.2, "stl": 1.0, "blk": 0.5, "to": 4.2, "fg_pct": 0.434, "ft_pct": 0.761, "three_pm": 2.5, "gp": 62 },
-    "age": 23, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 23.9,
+      "reb": 5.5,
+      "ast": 9.9,
+      "stl": 1.4,
+      "blk": 0.8,
+      "to": 3.7,
+      "fg_pct": 0.461,
+      "ft_pct": 0.812,
+      "three_pm": 2,
+      "gp": 64
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
   },
   {
-    "id": "bam-adebayo",
-    "name": "Bam Adebayo",
-    "team": "MIA",
-    "positions": ["PF", "C"],
-    "yahoo_positions": ["PF", "C"],
-    "adp": 27.0,
+    "id": "anthony-davis",
+    "name": "Anthony Davis",
+    "team": "WAS",
+    "positions": [
+      "PF",
+      "C"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "C"
+    ],
+    "adp": 8.4,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 21.0, "reb": 10.4, "ast": 3.9, "stl": 1.1, "blk": 0.8, "to": 2.8, "fg_pct": 0.541, "ft_pct": 0.726, "three_pm": 0.1, "gp": 74 },
-    "age": 27, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 20.4,
+      "reb": 11.1,
+      "ast": 2.8,
+      "stl": 1.1,
+      "blk": 1.7,
+      "to": 2.1,
+      "fg_pct": 0.506,
+      "ft_pct": 0.728,
+      "three_pm": 0.5,
+      "gp": 20
+    },
+    "age": 32,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
   },
   {
-    "id": "damian-lillard",
-    "name": "Damian Lillard",
-    "team": "MIL",
-    "positions": ["PG"],
-    "yahoo_positions": ["PG"],
-    "adp": 28.5,
+    "id": "trae-young",
+    "name": "Trae Young",
+    "team": "WAS",
+    "positions": [
+      "PG"
+    ],
+    "yahoo_positions": [
+      "PG"
+    ],
+    "adp": 10.5,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 24.3, "reb": 4.5, "ast": 7.0, "stl": 0.8, "blk": 0.3, "to": 3.4, "fg_pct": 0.430, "ft_pct": 0.913, "three_pm": 3.9, "gp": 73 },
-    "age": 35, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 17.9,
+      "reb": 2,
+      "ast": 8,
+      "stl": 0.9,
+      "blk": 0.1,
+      "to": 2.6,
+      "fg_pct": 0.458,
+      "ft_pct": 0.825,
+      "three_pm": 1.8,
+      "gp": 15
+    },
+    "age": 27,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "devin-booker",
+    "name": "Devin Booker",
+    "team": "PHO",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 10.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 26.1,
+      "reb": 3.9,
+      "ast": 6,
+      "stl": 0.8,
+      "blk": 0.3,
+      "to": 3.1,
+      "fg_pct": 0.456,
+      "ft_pct": 0.873,
+      "three_pm": 1.9,
+      "gp": 64
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "james-harden",
+    "name": "James Harden",
+    "team": "CLE",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 11.5,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 23.6,
+      "reb": 4.8,
+      "ast": 8,
+      "stl": 1.1,
+      "blk": 0.4,
+      "to": 3.5,
+      "fg_pct": 0.434,
+      "ft_pct": 0.884,
+      "three_pm": 3.1,
+      "gp": 70
+    },
+    "age": 36,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tyrese-maxey",
+    "name": "Tyrese Maxey",
+    "team": "PHI",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 14.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 28.3,
+      "reb": 4.1,
+      "ast": 6.6,
+      "stl": 1.9,
+      "blk": 0.8,
+      "to": 2.4,
+      "fg_pct": 0.462,
+      "ft_pct": 0.892,
+      "three_pm": 3.1,
+      "gp": 70
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "donovan-mitchell",
+    "name": "Donovan Mitchell",
+    "team": "CLE",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 16.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 27.9,
+      "reb": 4.5,
+      "ast": 5.7,
+      "stl": 1.5,
+      "blk": 0.3,
+      "to": 2.8,
+      "fg_pct": 0.483,
+      "ft_pct": 0.865,
+      "three_pm": 3.2,
+      "gp": 70
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
   },
   {
     "id": "domantas-sabonis",
     "name": "Domantas Sabonis",
     "team": "SAC",
-    "positions": ["PF", "C"],
-    "yahoo_positions": ["PF", "C"],
-    "adp": 30.0,
+    "positions": [
+      "C",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF"
+    ],
+    "adp": 16.5,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 20.5, "reb": 13.9, "ast": 8.3, "stl": 1.0, "blk": 0.4, "to": 2.9, "fg_pct": 0.577, "ft_pct": 0.658, "three_pm": 0.1, "gp": 82 },
-    "age": 28, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 15.8,
+      "reb": 11.4,
+      "ast": 4.1,
+      "stl": 0.9,
+      "blk": 0.2,
+      "to": 2.7,
+      "fg_pct": 0.543,
+      "ft_pct": 0.727,
+      "three_pm": 0.3,
+      "gp": 19
+    },
+    "age": 29,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
   },
   {
-    "id": "scottie-barnes",
-    "name": "Scottie Barnes",
-    "team": "TOR",
-    "positions": ["PF", "SF"],
-    "yahoo_positions": ["PF", "SF"],
-    "adp": 31.5,
+    "id": "stephen-curry",
+    "name": "Stephen Curry",
+    "team": "GSW",
+    "positions": [
+      "PG"
+    ],
+    "yahoo_positions": [
+      "PG"
+    ],
+    "adp": 16.5,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 19.9, "reb": 8.2, "ast": 6.1, "stl": 1.3, "blk": 0.8, "to": 2.8, "fg_pct": 0.490, "ft_pct": 0.738, "three_pm": 1.2, "gp": 75 },
-    "age": 24, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 26.6,
+      "reb": 3.6,
+      "ast": 4.7,
+      "stl": 1.1,
+      "blk": 0.4,
+      "to": 2.8,
+      "fg_pct": 0.468,
+      "ft_pct": 0.923,
+      "three_pm": 4.4,
+      "gp": 43
+    },
+    "age": 37,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
   },
   {
-    "id": "pascal-siakam",
-    "name": "Pascal Siakam",
-    "team": "IND",
-    "positions": ["PF", "SF"],
-    "yahoo_positions": ["PF", "SF"],
-    "adp": 33.0,
+    "id": "kevin-durant",
+    "name": "Kevin Durant",
+    "team": "HOU",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 17.3,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 21.3, "reb": 7.8, "ast": 3.7, "stl": 0.9, "blk": 0.7, "to": 2.2, "fg_pct": 0.521, "ft_pct": 0.726, "three_pm": 1.6, "gp": 72 },
-    "age": 31, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 26,
+      "reb": 5.5,
+      "ast": 4.8,
+      "stl": 0.8,
+      "blk": 0.9,
+      "to": 3.2,
+      "fg_pct": 0.52,
+      "ft_pct": 0.874,
+      "three_pm": 2.4,
+      "gp": 78
+    },
+    "age": 37,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
   },
   {
-    "id": "brandon-ingram",
-    "name": "Brandon Ingram",
-    "team": "TOR",
-    "positions": ["SF"],
-    "yahoo_positions": ["SF", "PF"],
-    "adp": 35.0,
+    "id": "karl-anthony-towns",
+    "name": "Karl-Anthony Towns",
+    "team": "NYK",
+    "positions": [
+      "PF",
+      "C"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "C"
+    ],
+    "adp": 18.3,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 24.3, "reb": 5.3, "ast": 5.9, "stl": 0.7, "blk": 0.5, "to": 2.0, "fg_pct": 0.461, "ft_pct": 0.826, "three_pm": 1.5, "gp": 72 },
-    "age": 27, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 20.1,
+      "reb": 11.9,
+      "ast": 3,
+      "stl": 0.9,
+      "blk": 0.5,
+      "to": 2.5,
+      "fg_pct": 0.501,
+      "ft_pct": 0.858,
+      "three_pm": 1.5,
+      "gp": 75
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
   },
   {
-    "id": "jaren-jackson-jr",
-    "name": "Jaren Jackson Jr.",
-    "team": "MEM",
-    "positions": ["PF", "C"],
-    "yahoo_positions": ["PF", "C"],
-    "adp": 37.0,
+    "id": "jalen-brunson",
+    "name": "Jalen Brunson",
+    "team": "NYK",
+    "positions": [
+      "PG"
+    ],
+    "yahoo_positions": [
+      "PG"
+    ],
+    "adp": 19.9,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 23.8, "reb": 6.9, "ast": 1.9, "stl": 0.9, "blk": 3.3, "to": 2.7, "fg_pct": 0.468, "ft_pct": 0.836, "three_pm": 2.1, "gp": 50 },
-    "age": 25, "injury_risk": true, "injury_notes": "Stress fracture history; missed 32 games in 2024-25", "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 26,
+      "reb": 3.3,
+      "ast": 6.8,
+      "stl": 0.8,
+      "blk": 0.1,
+      "to": 2.4,
+      "fg_pct": 0.467,
+      "ft_pct": 0.841,
+      "three_pm": 2.6,
+      "gp": 74
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
   },
   {
     "id": "evan-mobley",
     "name": "Evan Mobley",
     "team": "CLE",
-    "positions": ["PF", "C"],
-    "yahoo_positions": ["PF", "C"],
-    "adp": 38.5,
+    "positions": [
+      "PF",
+      "C"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "C"
+    ],
+    "adp": 21.8,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 18.3, "reb": 9.4, "ast": 3.0, "stl": 1.0, "blk": 2.1, "to": 2.0, "fg_pct": 0.558, "ft_pct": 0.731, "three_pm": 0.2, "gp": 80 },
-    "age": 23, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 18.2,
+      "reb": 9,
+      "ast": 3.6,
+      "stl": 0.7,
+      "blk": 1.7,
+      "to": 1.9,
+      "fg_pct": 0.546,
+      "ft_pct": 0.606,
+      "three_pm": 1,
+      "gp": 65
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
   },
   {
-    "id": "kyrie-irving",
-    "name": "Kyrie Irving",
-    "team": "DAL",
-    "positions": ["PG", "SG"],
-    "yahoo_positions": ["PG", "SG"],
-    "adp": 40.0,
+    "id": "scottie-barnes",
+    "name": "Scottie Barnes",
+    "team": "TOR",
+    "positions": [
+      "C",
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 21.9,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 24.6, "reb": 5.1, "ast": 5.2, "stl": 1.2, "blk": 0.5, "to": 2.0, "fg_pct": 0.494, "ft_pct": 0.894, "three_pm": 2.1, "gp": 60 },
-    "age": 33, "injury_risk": true, "injury_notes": "History of voluntary absence; availability concerns", "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "lauri-markkanen",
-    "name": "Lauri Markkanen",
-    "team": "UTA",
-    "positions": ["PF", "SF"],
-    "yahoo_positions": ["PF", "SF"],
-    "adp": 41.5,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 24.6, "reb": 8.4, "ast": 2.3, "stl": 1.0, "blk": 0.4, "to": 1.4, "fg_pct": 0.480, "ft_pct": 0.853, "three_pm": 3.4, "gp": 66 },
-    "age": 28, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "alperen-sengun",
-    "name": "Alperen Sengun",
-    "team": "HOU",
-    "positions": ["PF", "C"],
-    "yahoo_positions": ["PF", "C"],
-    "adp": 43.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 21.1, "reb": 9.4, "ast": 5.6, "stl": 1.0, "blk": 1.3, "to": 3.4, "fg_pct": 0.537, "ft_pct": 0.792, "three_pm": 0.4, "gp": 69 },
-    "age": 22, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "og-anunoby",
-    "name": "OG Anunoby",
-    "team": "NYK",
-    "positions": ["SF"],
-    "yahoo_positions": ["SF", "PF"],
-    "adp": 45.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 14.7, "reb": 4.3, "ast": 1.8, "stl": 1.7, "blk": 0.6, "to": 1.3, "fg_pct": 0.490, "ft_pct": 0.770, "three_pm": 2.1, "gp": 60 },
-    "age": 27, "injury_risk": true, "injury_notes": "Hamstring and elbow injuries recurring; availability concern", "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "trae-young",
-    "name": "Trae Young",
-    "team": "ATL",
-    "positions": ["PG"],
-    "yahoo_positions": ["PG"],
-    "adp": 46.5,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 25.7, "reb": 3.0, "ast": 10.8, "stl": 1.1, "blk": 0.2, "to": 4.3, "fg_pct": 0.431, "ft_pct": 0.856, "three_pm": 2.6, "gp": 74 },
-    "age": 27, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "zion-williamson",
-    "name": "Zion Williamson",
-    "team": "NOP",
-    "positions": ["PF"],
-    "yahoo_positions": ["PF"],
-    "adp": 48.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 22.9, "reb": 5.8, "ast": 5.0, "stl": 1.1, "blk": 0.8, "to": 3.2, "fg_pct": 0.580, "ft_pct": 0.703, "three_pm": 0.3, "gp": 45 },
-    "age": 25, "injury_risk": true, "injury_notes": "Repeated lower body injuries; has never played a full season", "injury_status": "out", "contract_year": false, "notes": null
-  },
-  {
-    "id": "demar-derozan",
-    "name": "DeMar DeRozan",
-    "team": "SAC",
-    "positions": ["SG", "SF"],
-    "yahoo_positions": ["SG", "SF"],
-    "adp": 52.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 24.0, "reb": 4.1, "ast": 5.5, "stl": 0.9, "blk": 0.3, "to": 2.2, "fg_pct": 0.498, "ft_pct": 0.848, "three_pm": 1.2, "gp": 71 },
-    "age": 36, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "ja-morant",
-    "name": "Ja Morant",
-    "team": "MEM",
-    "positions": ["PG"],
-    "yahoo_positions": ["PG"],
-    "adp": 55.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 21.7, "reb": 5.4, "ast": 8.9, "stl": 1.1, "blk": 0.5, "to": 3.3, "fg_pct": 0.473, "ft_pct": 0.782, "three_pm": 0.5, "gp": 58 },
-    "age": 25, "injury_risk": true, "injury_notes": "Hand injury + suspension history; significant availability risk", "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "kristaps-porzingis",
-    "name": "Kristaps Porzingis",
-    "team": "BOS",
-    "positions": ["PF", "C"],
-    "yahoo_positions": ["PF", "C"],
-    "adp": 58.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 20.1, "reb": 7.0, "ast": 2.0, "stl": 0.7, "blk": 1.6, "to": 1.9, "fg_pct": 0.508, "ft_pct": 0.854, "three_pm": 2.2, "gp": 57 },
-    "age": 30, "injury_risk": true, "injury_notes": "Achilles and stress fracture history; rarely plays full seasons", "injury_status": "day-to-day", "contract_year": false, "notes": null
-  },
-  {
-    "id": "julius-randle",
-    "name": "Julius Randle",
-    "team": "MIN",
-    "positions": ["PF"],
-    "yahoo_positions": ["PF"],
-    "adp": 61.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 24.1, "reb": 9.2, "ast": 5.2, "stl": 1.0, "blk": 0.4, "to": 3.1, "fg_pct": 0.466, "ft_pct": 0.790, "three_pm": 1.8, "gp": 76 },
-    "age": 30, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": true, "notes": null
-  },
-  {
-    "id": "mikal-bridges",
-    "name": "Mikal Bridges",
-    "team": "NYK",
-    "positions": ["SG", "SF"],
-    "yahoo_positions": ["SG", "SF"],
-    "adp": 64.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 19.6, "reb": 4.5, "ast": 3.7, "stl": 1.2, "blk": 0.5, "to": 1.9, "fg_pct": 0.450, "ft_pct": 0.820, "three_pm": 2.1, "gp": 82 },
-    "age": 28, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "paul-george",
-    "name": "Paul George",
-    "team": "PHI",
-    "positions": ["SF", "PF"],
-    "yahoo_positions": ["SF", "PF"],
-    "adp": 67.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 22.2, "reb": 6.0, "ast": 3.8, "stl": 1.5, "blk": 0.4, "to": 2.3, "fg_pct": 0.456, "ft_pct": 0.881, "three_pm": 2.7, "gp": 59 },
-    "age": 35, "injury_risk": true, "injury_notes": "Knee and finger injuries; availability concerns at this age", "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "desmond-bane",
-    "name": "Desmond Bane",
-    "team": "MEM",
-    "positions": ["SG"],
-    "yahoo_positions": ["SG", "SF"],
-    "adp": 70.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 21.4, "reb": 4.0, "ast": 4.7, "stl": 1.1, "blk": 0.2, "to": 1.5, "fg_pct": 0.443, "ft_pct": 0.889, "three_pm": 3.2, "gp": 73 },
-    "age": 26, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "kawhi-leonard",
-    "name": "Kawhi Leonard",
-    "team": "LAC",
-    "positions": ["SF", "PF"],
-    "yahoo_positions": ["SF", "PF"],
-    "adp": 75.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 23.7, "reb": 5.8, "ast": 3.7, "stl": 1.9, "blk": 0.7, "to": 2.3, "fg_pct": 0.530, "ft_pct": 0.880, "three_pm": 2.1, "gp": 22 },
-    "age": 34, "injury_risk": true, "injury_notes": "Torn ACL; played only 22 games in 2024-25", "injury_status": "out", "contract_year": false, "notes": null
-  },
-  {
-    "id": "rudy-gobert",
-    "name": "Rudy Gobert",
-    "team": "MIN",
-    "positions": ["C"],
-    "yahoo_positions": ["C"],
-    "adp": 79.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 14.5, "reb": 13.5, "ast": 2.1, "stl": 0.7, "blk": 2.2, "to": 2.1, "fg_pct": 0.607, "ft_pct": 0.620, "three_pm": 0.0, "gp": 76 },
-    "age": 32, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
-  },
-  {
-    "id": "andrew-wiggins",
-    "name": "Andrew Wiggins",
-    "team": "GSW",
-    "positions": ["SF", "SG"],
-    "yahoo_positions": ["SG", "SF"],
-    "adp": 83.0,
-    "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 17.1, "reb": 4.4, "ast": 2.3, "stl": 1.0, "blk": 0.5, "to": 1.5, "fg_pct": 0.477, "ft_pct": 0.689, "three_pm": 2.5, "gp": 75 },
-    "age": 30, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 18.1,
+      "reb": 7.5,
+      "ast": 5.9,
+      "stl": 1.4,
+      "blk": 1.5,
+      "to": 2.6,
+      "fg_pct": 0.507,
+      "ft_pct": 0.815,
+      "three_pm": 0.9,
+      "gp": 80
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
   },
   {
     "id": "lebron-james",
     "name": "LeBron James",
     "team": "LAL",
-    "positions": ["SF", "PF"],
-    "yahoo_positions": ["SF", "PF"],
-    "adp": 86.0,
+    "positions": [
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "PF"
+    ],
+    "adp": 23.8,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 24.1, "reb": 7.3, "ast": 8.3, "stl": 1.0, "blk": 0.5, "to": 3.5, "fg_pct": 0.510, "ft_pct": 0.740, "three_pm": 1.8, "gp": 71 },
-    "age": 41, "injury_risk": true, "injury_notes": "Age-related risk; groin and foot injuries in recent years", "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 20.9,
+      "reb": 6.1,
+      "ast": 7.2,
+      "stl": 1.2,
+      "blk": 0.6,
+      "to": 3,
+      "fg_pct": 0.515,
+      "ft_pct": 0.737,
+      "three_pm": 1.3,
+      "gp": 60
+    },
+    "age": 41,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
   },
   {
-    "id": "jabari-smith-jr",
-    "name": "Jabari Smith Jr.",
+    "id": "jalen-williams",
+    "name": "Jalen Williams",
+    "team": "OKC",
+    "positions": [
+      "C",
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 24.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 17.1,
+      "reb": 4.6,
+      "ast": 5.5,
+      "stl": 1.2,
+      "blk": 0.3,
+      "to": 1.9,
+      "fg_pct": 0.484,
+      "ft_pct": 0.837,
+      "three_pm": 0.7,
+      "gp": 33
+    },
+    "age": 24,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "chet-holmgren",
+    "name": "Chet Holmgren",
+    "team": "OKC",
+    "positions": [
+      "PF",
+      "C"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "C"
+    ],
+    "adp": 24.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 17.1,
+      "reb": 8.9,
+      "ast": 1.7,
+      "stl": 0.6,
+      "blk": 1.9,
+      "to": 1.6,
+      "fg_pct": 0.557,
+      "ft_pct": 0.792,
+      "three_pm": 1.3,
+      "gp": 69
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "lamelo-ball",
+    "name": "LaMelo Ball",
+    "team": "CHA",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 26.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 20.1,
+      "reb": 4.8,
+      "ast": 7.1,
+      "stl": 1.2,
+      "blk": 0.2,
+      "to": 2.8,
+      "fg_pct": 0.407,
+      "ft_pct": 0.899,
+      "three_pm": 3.8,
+      "gp": 72
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jaylen-brown",
+    "name": "Jaylen Brown",
+    "team": "BOS",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 27.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 28.7,
+      "reb": 6.9,
+      "ast": 5.1,
+      "stl": 1,
+      "blk": 0.4,
+      "to": 3.6,
+      "fg_pct": 0.477,
+      "ft_pct": 0.795,
+      "three_pm": 2,
+      "gp": 71
+    },
+    "age": 29,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "alperen-sengun",
+    "name": "Alperen Sengun",
     "team": "HOU",
-    "positions": ["PF"],
-    "yahoo_positions": ["PF", "SF"],
-    "adp": 90.0,
+    "positions": [
+      "C",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF"
+    ],
+    "adp": 27.9,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 16.4, "reb": 7.1, "ast": 2.0, "stl": 0.9, "blk": 1.1, "to": 1.8, "fg_pct": 0.440, "ft_pct": 0.731, "three_pm": 2.2, "gp": 75 },
-    "age": 22, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 20.4,
+      "reb": 8.9,
+      "ast": 6.2,
+      "stl": 1.2,
+      "blk": 1.1,
+      "to": 3.2,
+      "fg_pct": 0.519,
+      "ft_pct": 0.691,
+      "three_pm": 0.6,
+      "gp": 72
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
   },
   {
-    "id": "rj-barrett",
-    "name": "RJ Barrett",
-    "team": "TOR",
-    "positions": ["SG", "SF"],
-    "yahoo_positions": ["SG", "SF"],
-    "adp": 94.0,
+    "id": "paolo-banchero",
+    "name": "Paolo Banchero",
+    "team": "ORL",
+    "positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "adp": 28.6,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 21.8, "reb": 6.0, "ast": 3.0, "stl": 0.9, "blk": 0.4, "to": 2.0, "fg_pct": 0.453, "ft_pct": 0.764, "three_pm": 1.8, "gp": 71 },
-    "age": 24, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 22.2,
+      "reb": 8.4,
+      "ast": 5.2,
+      "stl": 0.7,
+      "blk": 0.6,
+      "to": 3.1,
+      "fg_pct": 0.459,
+      "ft_pct": 0.775,
+      "three_pm": 1.2,
+      "gp": 72
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
   },
   {
-    "id": "klay-thompson",
-    "name": "Klay Thompson",
-    "team": "DAL",
-    "positions": ["SG"],
-    "yahoo_positions": ["SG"],
-    "adp": 98.0,
+    "id": "jalen-johnson",
+    "name": "Jalen Johnson",
+    "team": "ATL",
+    "positions": [
+      "PF",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF"
+    ],
+    "adp": 29.8,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 17.4, "reb": 3.5, "ast": 2.5, "stl": 0.8, "blk": 0.5, "to": 1.5, "fg_pct": 0.436, "ft_pct": 0.896, "three_pm": 4.1, "gp": 70 },
-    "age": 35, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 22.5,
+      "reb": 10.3,
+      "ast": 7.9,
+      "stl": 1.2,
+      "blk": 0.4,
+      "to": 3.4,
+      "fg_pct": 0.489,
+      "ft_pct": 0.788,
+      "three_pm": 1.7,
+      "gp": 72
+    },
+    "age": 24,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
   },
   {
-    "id": "james-harden",
-    "name": "James Harden",
+    "id": "derrick-white",
+    "name": "Derrick White",
+    "team": "BOS",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 29.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 16.5,
+      "reb": 4.4,
+      "ast": 5.4,
+      "stl": 1.1,
+      "blk": 1.3,
+      "to": 1.7,
+      "fg_pct": 0.394,
+      "ft_pct": 0.902,
+      "three_pm": 2.7,
+      "gp": 77
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "de-aaron-fox",
+    "name": "De'Aaron Fox",
+    "team": "SAS",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 31.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 18.6,
+      "reb": 3.8,
+      "ast": 6.2,
+      "stl": 1.2,
+      "blk": 0.3,
+      "to": 2.3,
+      "fg_pct": 0.486,
+      "ft_pct": 0.76,
+      "three_pm": 1.8,
+      "gp": 72
+    },
+    "age": 28,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jaren-jackson",
+    "name": "Jaren Jackson Jr.",
+    "team": "UTH",
+    "positions": [
+      "PF",
+      "C"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "C"
+    ],
+    "adp": 32.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 19.4,
+      "reb": 5.7,
+      "ast": 2,
+      "stl": 1.1,
+      "blk": 1.4,
+      "to": 2.2,
+      "fg_pct": 0.476,
+      "ft_pct": 0.803,
+      "three_pm": 1.8,
+      "gp": 48
+    },
+    "age": 26,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "pascal-siakam",
+    "name": "Pascal Siakam",
+    "team": "IND",
+    "positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "adp": 32.5,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 24,
+      "reb": 6.6,
+      "ast": 3.8,
+      "stl": 1.1,
+      "blk": 0.4,
+      "to": 2.2,
+      "fg_pct": 0.484,
+      "ft_pct": 0.693,
+      "three_pm": 1.7,
+      "gp": 62
+    },
+    "age": 31,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "josh-giddey",
+    "name": "Josh Giddey",
+    "team": "CHI",
+    "positions": [
+      "PG",
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG",
+      "SF"
+    ],
+    "adp": 32.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 17,
+      "reb": 8.3,
+      "ast": 9.1,
+      "stl": 1,
+      "blk": 0.5,
+      "to": 3.6,
+      "fg_pct": 0.448,
+      "ft_pct": 0.763,
+      "three_pm": 1.9,
+      "gp": 54
+    },
+    "age": 23,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bam-adebayo",
+    "name": "Bam Adebayo",
+    "team": "MIA",
+    "positions": [
+      "C",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF"
+    ],
+    "adp": 32.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 20.1,
+      "reb": 10,
+      "ast": 3.2,
+      "stl": 1.2,
+      "blk": 0.7,
+      "to": 1.6,
+      "fg_pct": 0.442,
+      "ft_pct": 0.778,
+      "three_pm": 1.7,
+      "gp": 73
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "franz-wagner",
+    "name": "Franz Wagner",
+    "team": "ORL",
+    "positions": [
+      "PF",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF"
+    ],
+    "adp": 34.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 20.6,
+      "reb": 5.2,
+      "ast": 3.3,
+      "stl": 0.9,
+      "blk": 0.3,
+      "to": 1.7,
+      "fg_pct": 0.481,
+      "ft_pct": 0.823,
+      "three_pm": 1.4,
+      "gp": 34
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "amen-thompson",
+    "name": "Amen Thompson",
+    "team": "HOU",
+    "positions": [
+      "PF",
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "adp": 35,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 18.3,
+      "reb": 7.8,
+      "ast": 5.3,
+      "stl": 1.5,
+      "blk": 0.6,
+      "to": 2.4,
+      "fg_pct": 0.534,
+      "ft_pct": 0.779,
+      "three_pm": 0.3,
+      "gp": 79
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jamal-murray",
+    "name": "Jamal Murray",
+    "team": "DEN",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 38.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 25.4,
+      "reb": 4.4,
+      "ast": 7.1,
+      "stl": 0.9,
+      "blk": 0.4,
+      "to": 2.3,
+      "fg_pct": 0.483,
+      "ft_pct": 0.887,
+      "three_pm": 3.3,
+      "gp": 75
+    },
+    "age": 28,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ja-morant",
+    "name": "Ja Morant",
+    "team": "MEM",
+    "positions": [
+      "PG"
+    ],
+    "yahoo_positions": [
+      "PG"
+    ],
+    "adp": 38.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 19.5,
+      "reb": 3.3,
+      "ast": 8.1,
+      "stl": 1,
+      "blk": 0.3,
+      "to": 3.6,
+      "fg_pct": 0.41,
+      "ft_pct": 0.897,
+      "three_pm": 1,
+      "gp": 20
+    },
+    "age": 26,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "zion-williamson",
+    "name": "Zion Williamson",
+    "team": "NOR",
+    "positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "adp": 39.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 21,
+      "reb": 5.7,
+      "ast": 3.2,
+      "stl": 1,
+      "blk": 0.5,
+      "to": 2,
+      "fg_pct": 0.6,
+      "ft_pct": 0.716,
+      "three_pm": 0,
+      "gp": 62
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kawhi-leonard",
+    "name": "Kawhi Leonard",
     "team": "LAC",
-    "positions": ["PG", "SG"],
-    "yahoo_positions": ["PG", "SG"],
-    "adp": 102.0,
+    "positions": [
+      "PF",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF"
+    ],
+    "adp": 39.8,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 20.9, "reb": 4.7, "ast": 8.6, "stl": 1.2, "blk": 0.8, "to": 3.2, "fg_pct": 0.440, "ft_pct": 0.850, "three_pm": 2.6, "gp": 78 },
-    "age": 36, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 27.9,
+      "reb": 6.4,
+      "ast": 3.6,
+      "stl": 1.9,
+      "blk": 0.4,
+      "to": 2,
+      "fg_pct": 0.505,
+      "ft_pct": 0.892,
+      "three_pm": 2.6,
+      "gp": 65
+    },
+    "age": 34,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "desmond-bane",
+    "name": "Desmond Bane",
+    "team": "ORL",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 41.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 20.1,
+      "reb": 4.1,
+      "ast": 4.1,
+      "stl": 1,
+      "blk": 0.5,
+      "to": 2,
+      "fg_pct": 0.484,
+      "ft_pct": 0.908,
+      "three_pm": 2,
+      "gp": 82
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "austin-reaves",
+    "name": "Austin Reaves",
+    "team": "LAL",
+    "positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "adp": 45.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 23.3,
+      "reb": 4.7,
+      "ast": 5.5,
+      "stl": 1.1,
+      "blk": 0.4,
+      "to": 3,
+      "fg_pct": 0.49,
+      "ft_pct": 0.871,
+      "three_pm": 2.3,
+      "gp": 51
+    },
+    "age": 27,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "myles-turner",
+    "name": "Myles Turner",
+    "team": "MIL",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 45.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 11.9,
+      "reb": 5.3,
+      "ast": 1.5,
+      "stl": 0.7,
+      "blk": 1.6,
+      "to": 1.2,
+      "fg_pct": 0.44,
+      "ft_pct": 0.74,
+      "three_pm": 2.1,
+      "gp": 71
+    },
+    "age": 29,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jimmy-butler",
+    "name": "Jimmy Butler III",
+    "team": "GSW",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 47.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 20,
+      "reb": 5.6,
+      "ast": 4.9,
+      "stl": 1.4,
+      "blk": 0.2,
+      "to": 1.6,
+      "fg_pct": 0.519,
+      "ft_pct": 0.864,
+      "three_pm": 0.8,
+      "gp": 38
+    },
+    "age": 36,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "darius-garland",
+    "name": "Darius Garland",
+    "team": "LAC",
+    "positions": [
+      "PG"
+    ],
+    "yahoo_positions": [
+      "PG"
+    ],
+    "adp": 50.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 18.8,
+      "reb": 2.4,
+      "ast": 6.7,
+      "stl": 1,
+      "blk": 0.2,
+      "to": 2.9,
+      "fg_pct": 0.46,
+      "ft_pct": 0.861,
+      "three_pm": 2.7,
+      "gp": 45
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "miles-bridges",
+    "name": "Miles Bridges",
+    "team": "CHA",
+    "positions": [
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "PF"
+    ],
+    "adp": 51.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 17.1,
+      "reb": 5.8,
+      "ast": 3.2,
+      "stl": 0.6,
+      "blk": 0.4,
+      "to": 1.4,
+      "fg_pct": 0.46,
+      "ft_pct": 0.822,
+      "three_pm": 1.9,
+      "gp": 77
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "joel-embiid",
+    "name": "Joel Embiid",
+    "team": "PHI",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 53.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 26.9,
+      "reb": 7.7,
+      "ast": 3.9,
+      "stl": 0.6,
+      "blk": 1.2,
+      "to": 2.9,
+      "fg_pct": 0.489,
+      "ft_pct": 0.854,
+      "three_pm": 1.4,
+      "gp": 38
+    },
+    "age": 31,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tyler-herro",
+    "name": "Tyler Herro",
+    "team": "MIA",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 53.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 20.5,
+      "reb": 4.8,
+      "ast": 4.1,
+      "stl": 0.7,
+      "blk": 0.4,
+      "to": 1.9,
+      "fg_pct": 0.48,
+      "ft_pct": 0.917,
+      "three_pm": 2.5,
+      "gp": 33
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "demar-derozan",
+    "name": "DeMar DeRozan",
+    "team": "SAC",
+    "positions": [
+      "PF",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF"
+    ],
+    "adp": 54.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 18.4,
+      "reb": 2.9,
+      "ast": 4.1,
+      "stl": 1,
+      "blk": 0.3,
+      "to": 1.2,
+      "fg_pct": 0.497,
+      "ft_pct": 0.868,
+      "three_pm": 0.6,
+      "gp": 77
+    },
+    "age": 36,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "zach-lavine",
+    "name": "Zach LaVine",
+    "team": "SAC",
+    "positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "adp": 56.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 19.2,
+      "reb": 2.8,
+      "ast": 2.3,
+      "stl": 0.7,
+      "blk": 0.3,
+      "to": 1.9,
+      "fg_pct": 0.479,
+      "ft_pct": 0.88,
+      "three_pm": 2.5,
+      "gp": 39
+    },
+    "age": 30,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dyson-daniels",
+    "name": "Dyson Daniels",
+    "team": "ATL",
+    "positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "adp": 56.5,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 11.9,
+      "reb": 6.8,
+      "ast": 5.9,
+      "stl": 2,
+      "blk": 0.4,
+      "to": 1.8,
+      "fg_pct": 0.517,
+      "ft_pct": 0.615,
+      "three_pm": 0.3,
+      "gp": 76
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "coby-white",
+    "name": "Coby White",
+    "team": "CHA",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 56.5,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 17.4,
+      "reb": 3.4,
+      "ast": 4,
+      "stl": 0.5,
+      "blk": 0.1,
+      "to": 2.6,
+      "fg_pct": 0.446,
+      "ft_pct": 0.817,
+      "three_pm": 2.3,
+      "gp": 50
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "nikola-vucevic",
+    "name": "Nikola Vucevic",
+    "team": "BOS",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 56.5,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 15.1,
+      "reb": 8.4,
+      "ast": 3.3,
+      "stl": 0.6,
+      "blk": 0.6,
+      "to": 1.3,
+      "fg_pct": 0.493,
+      "ft_pct": 0.828,
+      "three_pm": 1.6,
+      "gp": 64
+    },
+    "age": 35,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "trey-murphy",
+    "name": "Trey Murphy III",
+    "team": "NOR",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 56.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 21.5,
+      "reb": 5.7,
+      "ast": 3.8,
+      "stl": 1.5,
+      "blk": 0.4,
+      "to": 1.8,
+      "fg_pct": 0.47,
+      "ft_pct": 0.886,
+      "three_pm": 3.2,
+      "gp": 66
+    },
+    "age": 25,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ivica-zubac",
+    "name": "Ivica Zubac",
+    "team": "IND",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 58.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 14.1,
+      "reb": 10.6,
+      "ast": 2.2,
+      "stl": 0.4,
+      "blk": 0.8,
+      "to": 1.8,
+      "fg_pct": 0.598,
+      "ft_pct": 0.711,
+      "three_pm": 0,
+      "gp": 48
+    },
+    "age": 28,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cooper-flagg",
+    "name": "Cooper Flagg",
+    "team": "DAL",
+    "positions": [
+      "PF",
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "adp": 59.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 21,
+      "reb": 6.7,
+      "ast": 4.5,
+      "stl": 1.2,
+      "blk": 0.9,
+      "to": 2.3,
+      "fg_pct": 0.468,
+      "ft_pct": 0.827,
+      "three_pm": 1,
+      "gp": 70
+    },
+    "age": 19,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brandon-miller",
+    "name": "Brandon Miller",
+    "team": "CHA",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 62.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 20.2,
+      "reb": 4.9,
+      "ast": 3.3,
+      "stl": 1,
+      "blk": 0.7,
+      "to": 2.5,
+      "fg_pct": 0.435,
+      "ft_pct": 0.892,
+      "three_pm": 3.1,
+      "gp": 65
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "julius-randle",
+    "name": "Julius Randle",
+    "team": "MIN",
+    "positions": [
+      "C",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF"
+    ],
+    "adp": 62.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 21.1,
+      "reb": 6.7,
+      "ast": 5,
+      "stl": 1.1,
+      "blk": 0.2,
+      "to": 2.7,
+      "fg_pct": 0.481,
+      "ft_pct": 0.802,
+      "three_pm": 1.4,
+      "gp": 79
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jordan-poole",
+    "name": "Jordan Poole",
+    "team": "NOR",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 62.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.4,
+      "reb": 2,
+      "ast": 3.1,
+      "stl": 0.6,
+      "blk": 0.4,
+      "to": 1.8,
+      "fg_pct": 0.372,
+      "ft_pct": 0.86,
+      "three_pm": 2.5,
+      "gp": 39
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "lauri-markkanen",
+    "name": "Lauri Markkanen",
+    "team": "UTH",
+    "positions": [
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "PF"
+    ],
+    "adp": 65,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 26.7,
+      "reb": 6.9,
+      "ast": 2.1,
+      "stl": 1,
+      "blk": 0.5,
+      "to": 1.5,
+      "fg_pct": 0.477,
+      "ft_pct": 0.896,
+      "three_pm": 2.7,
+      "gp": 42
+    },
+    "age": 28,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
   },
   {
     "id": "immanuel-quickley",
     "name": "Immanuel Quickley",
     "team": "TOR",
-    "positions": ["PG"],
-    "yahoo_positions": ["PG", "SG"],
-    "adp": 107.0,
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 65.8,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 18.6, "reb": 4.5, "ast": 6.8, "stl": 1.0, "blk": 0.2, "to": 2.0, "fg_pct": 0.430, "ft_pct": 0.830, "three_pm": 2.1, "gp": 79 },
-    "age": 26, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 16.4,
+      "reb": 4,
+      "ast": 5.9,
+      "stl": 1.3,
+      "blk": 0.1,
+      "to": 1.5,
+      "fg_pct": 0.443,
+      "ft_pct": 0.821,
+      "three_pm": 2.5,
+      "gp": 70
+    },
+    "age": 26,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "og-anunoby",
+    "name": "OG Anunoby",
+    "team": "NYK",
+    "positions": [
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "PF"
+    ],
+    "adp": 65.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 16.7,
+      "reb": 5.2,
+      "ast": 2.2,
+      "stl": 1.6,
+      "blk": 0.7,
+      "to": 1.8,
+      "fg_pct": 0.484,
+      "ft_pct": 0.828,
+      "three_pm": 2.3,
+      "gp": 67
+    },
+    "age": 28,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cam-thomas",
+    "name": "Cam Thomas",
+    "team": "FA",
+    "positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "adp": 66.5,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.5,
+      "reb": 1.7,
+      "ast": 2.6,
+      "stl": 0.2,
+      "blk": 0.1,
+      "to": 1.8,
+      "fg_pct": 0.41,
+      "ft_pct": 0.811,
+      "three_pm": 1.2,
+      "gp": 42
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "deni-avdija",
+    "name": "Deni Avdija",
+    "team": "POR",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 66.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 24.2,
+      "reb": 6.9,
+      "ast": 6.7,
+      "stl": 0.8,
+      "blk": 0.6,
+      "to": 3.8,
+      "fg_pct": 0.462,
+      "ft_pct": 0.802,
+      "three_pm": 1.9,
+      "gp": 66
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jalen-duren",
+    "name": "Jalen Duren",
+    "team": "DET",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 67.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 19.5,
+      "reb": 10.5,
+      "ast": 2,
+      "stl": 0.8,
+      "blk": 0.8,
+      "to": 1.9,
+      "fg_pct": 0.65,
+      "ft_pct": 0.747,
+      "three_pm": 0,
+      "gp": 70
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kristaps-porzingis",
+    "name": "Kristaps Porzingis",
+    "team": "GSW",
+    "positions": [
+      "PF",
+      "C"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "C"
+    ],
+    "adp": 67.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 16.7,
+      "reb": 5.2,
+      "ast": 2.5,
+      "stl": 0.6,
+      "blk": 1.2,
+      "to": 1.3,
+      "fg_pct": 0.446,
+      "ft_pct": 0.842,
+      "three_pm": 1.7,
+      "gp": 32
+    },
+    "age": 30,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "mikal-bridges",
+    "name": "Mikal Bridges",
+    "team": "NYK",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 67.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 14.4,
+      "reb": 3.8,
+      "ast": 3.7,
+      "stl": 1.3,
+      "blk": 0.8,
+      "to": 1,
+      "fg_pct": 0.49,
+      "ft_pct": 0.827,
+      "three_pm": 1.9,
+      "gp": 82
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jalen-green",
+    "name": "Jalen Green",
+    "team": "PHO",
+    "positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "adp": 69.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 17.8,
+      "reb": 3.6,
+      "ast": 2.8,
+      "stl": 1.1,
+      "blk": 0.3,
+      "to": 2.3,
+      "fg_pct": 0.422,
+      "ft_pct": 0.747,
+      "three_pm": 2.2,
+      "gp": 32
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "michael-porter",
+    "name": "Michael Porter Jr.",
+    "team": "BKN",
+    "positions": [
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "PF"
+    ],
+    "adp": 71.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 24.2,
+      "reb": 7.1,
+      "ast": 3,
+      "stl": 1.1,
+      "blk": 0.3,
+      "to": 2.3,
+      "fg_pct": 0.463,
+      "ft_pct": 0.859,
+      "three_pm": 3.4,
+      "gp": 52
+    },
+    "age": 27,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jarrett-allen",
+    "name": "Jarrett Allen",
+    "team": "CLE",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 73.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 15.4,
+      "reb": 8.5,
+      "ast": 1.8,
+      "stl": 1,
+      "blk": 0.8,
+      "to": 1.3,
+      "fg_pct": 0.638,
+      "ft_pct": 0.709,
+      "three_pm": 0,
+      "gp": 56
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "walker-kessler",
+    "name": "Walker Kessler",
+    "team": "UTH",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 73.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 14.4,
+      "reb": 10.8,
+      "ast": 3,
+      "stl": 1.4,
+      "blk": 1.8,
+      "to": 3.2,
+      "fg_pct": 0.703,
+      "ft_pct": 0.7,
+      "three_pm": 1.2,
+      "gp": 5
+    },
+    "age": 24,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brandon-ingram",
+    "name": "Brandon Ingram",
+    "team": "TOR",
+    "positions": [
+      "SG",
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF",
+      "PF"
+    ],
+    "adp": 75,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 21.5,
+      "reb": 5.6,
+      "ast": 3.7,
+      "stl": 0.8,
+      "blk": 0.7,
+      "to": 2.4,
+      "fg_pct": 0.477,
+      "ft_pct": 0.82,
+      "three_pm": 1.8,
+      "gp": 77
+    },
+    "age": 28,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "rudy-gobert",
+    "name": "Rudy Gobert",
+    "team": "MIN",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 75.1,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 10.9,
+      "reb": 11.5,
+      "ast": 1.7,
+      "stl": 0.8,
+      "blk": 1.6,
+      "to": 1.4,
+      "fg_pct": 0.682,
+      "ft_pct": 0.526,
+      "three_pm": 0,
+      "gp": 76
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "josh-hart",
+    "name": "Josh Hart",
+    "team": "NYK",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 76.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 12,
+      "reb": 7.4,
+      "ast": 4.8,
+      "stl": 1.1,
+      "blk": 0.3,
+      "to": 1.9,
+      "fg_pct": 0.508,
+      "ft_pct": 0.72,
+      "three_pm": 1.5,
+      "gp": 66
+    },
+    "age": 30,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "paul-george",
+    "name": "Paul George",
+    "team": "PHI",
+    "positions": [
+      "SG",
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF",
+      "PF"
+    ],
+    "adp": 79.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 17.3,
+      "reb": 5.3,
+      "ast": 3.6,
+      "stl": 1.7,
+      "blk": 0.4,
+      "to": 1.7,
+      "fg_pct": 0.439,
+      "ft_pct": 0.82,
+      "three_pm": 2.7,
+      "gp": 37
+    },
+    "age": 35,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "isaiah-hartenstein",
+    "name": "Isaiah Hartenstein",
+    "team": "OKC",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 81.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 9.2,
+      "reb": 9.4,
+      "ast": 3.5,
+      "stl": 1,
+      "blk": 0.8,
+      "to": 1.7,
+      "fg_pct": 0.622,
+      "ft_pct": 0.61,
+      "three_pm": 0,
+      "gp": 47
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "devin-vassell",
+    "name": "Devin Vassell",
+    "team": "SAS",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 82.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.9,
+      "reb": 4,
+      "ast": 2.5,
+      "stl": 0.9,
+      "blk": 0.4,
+      "to": 0.9,
+      "fg_pct": 0.437,
+      "ft_pct": 0.815,
+      "three_pm": 2.5,
+      "gp": 67
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "anfernee-simons",
+    "name": "Anfernee Simons",
+    "team": "CHI",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 83.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 14.3,
+      "reb": 2.5,
+      "ast": 2.4,
+      "stl": 0.5,
+      "blk": 0.1,
+      "to": 1.2,
+      "fg_pct": 0.44,
+      "ft_pct": 0.896,
+      "three_pm": 2.7,
+      "gp": 55
+    },
+    "age": 26,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "payton-pritchard",
+    "name": "Payton Pritchard",
+    "team": "BOS",
+    "positions": [
+      "PG"
+    ],
+    "yahoo_positions": [
+      "PG"
+    ],
+    "adp": 84.1,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 17,
+      "reb": 3.9,
+      "ast": 5.2,
+      "stl": 0.7,
+      "blk": 0.1,
+      "to": 1.4,
+      "fg_pct": 0.464,
+      "ft_pct": 0.89,
+      "three_pm": 2.7,
+      "gp": 79
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "deandre-ayton",
+    "name": "Deandre Ayton",
+    "team": "LAL",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 84.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 12.5,
+      "reb": 8,
+      "ast": 0.8,
+      "stl": 0.6,
+      "blk": 1,
+      "to": 1.2,
+      "fg_pct": 0.671,
+      "ft_pct": 0.645,
+      "three_pm": 0,
+      "gp": 72
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jalen-suggs",
+    "name": "Jalen Suggs",
+    "team": "ORL",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 84.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.8,
+      "reb": 3.9,
+      "ast": 5.5,
+      "stl": 1.8,
+      "blk": 0.7,
+      "to": 2.7,
+      "fg_pct": 0.435,
+      "ft_pct": 0.855,
+      "three_pm": 2.1,
+      "gp": 57
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cj-mccollum",
+    "name": "CJ McCollum",
+    "team": "ATL",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 85.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 18.7,
+      "reb": 3.3,
+      "ast": 3.9,
+      "stl": 0.8,
+      "blk": 0.5,
+      "to": 1.8,
+      "fg_pct": 0.455,
+      "ft_pct": 0.772,
+      "three_pm": 2.5,
+      "gp": 76
+    },
+    "age": 34,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jakob-poeltl",
+    "name": "Jakob Poeltl",
+    "team": "TOR",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 88.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 10.7,
+      "reb": 7,
+      "ast": 2,
+      "stl": 0.9,
+      "blk": 0.7,
+      "to": 1.2,
+      "fg_pct": 0.7,
+      "ft_pct": 0.602,
+      "three_pm": 0,
+      "gp": 46
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "alex-sarr",
+    "name": "Alex Sarr",
+    "team": "WAS",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 88.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 16.3,
+      "reb": 7.4,
+      "ast": 2.7,
+      "stl": 0.8,
+      "blk": 2,
+      "to": 1.7,
+      "fg_pct": 0.482,
+      "ft_pct": 0.692,
+      "three_pm": 1,
+      "gp": 48
+    },
+    "age": 20,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "andrew-nembhard",
+    "name": "Andrew Nembhard",
+    "team": "IND",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 89.5,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 16.9,
+      "reb": 2.8,
+      "ast": 7.7,
+      "stl": 0.9,
+      "blk": 0.1,
+      "to": 2.4,
+      "fg_pct": 0.442,
+      "ft_pct": 0.825,
+      "three_pm": 1.9,
+      "gp": 57
+    },
+    "age": 26,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ausar-thompson",
+    "name": "Ausar Thompson",
+    "team": "DET",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 90.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 9.9,
+      "reb": 5.7,
+      "ast": 3.1,
+      "stl": 2,
+      "blk": 0.9,
+      "to": 1.5,
+      "fg_pct": 0.525,
+      "ft_pct": 0.571,
+      "three_pm": 0.1,
+      "gp": 73
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "nic-claxton",
+    "name": "Nic Claxton",
+    "team": "BKN",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 90.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 11.7,
+      "reb": 6.9,
+      "ast": 3.7,
+      "stl": 0.7,
+      "blk": 1.1,
+      "to": 1.4,
+      "fg_pct": 0.571,
+      "ft_pct": 0.616,
+      "three_pm": 0,
+      "gp": 69
+    },
+    "age": 26,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "mark-williams",
+    "name": "Mark Williams",
+    "team": "PHO",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 91.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 11.7,
+      "reb": 8,
+      "ast": 1,
+      "stl": 0.9,
+      "blk": 0.9,
+      "to": 1.1,
+      "fg_pct": 0.644,
+      "ft_pct": 0.771,
+      "three_pm": 0,
+      "gp": 60
+    },
+    "age": 24,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bradley-beal",
+    "name": "Bradley Beal",
+    "team": "LAC",
+    "positions": [
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "SG"
+    ],
+    "adp": 91.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 8.2,
+      "reb": 0.8,
+      "ast": 1.7,
+      "stl": 0.5,
+      "blk": 0,
+      "to": 1.5,
+      "fg_pct": 0.375,
+      "ft_pct": 0.75,
+      "three_pm": 1.2,
+      "gp": 6
+    },
+    "age": 32,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "shaedon-sharpe",
+    "name": "Shaedon Sharpe",
+    "team": "POR",
+    "positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "adp": 92.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 20.8,
+      "reb": 4.3,
+      "ast": 2.6,
+      "stl": 1.4,
+      "blk": 0.1,
+      "to": 2.9,
+      "fg_pct": 0.452,
+      "ft_pct": 0.787,
+      "three_pm": 2.1,
+      "gp": 50
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "draymond-green",
+    "name": "Draymond Green",
+    "team": "GSW",
+    "positions": [
+      "PF",
+      "C"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "C"
+    ],
+    "adp": 94.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 8.4,
+      "reb": 5.5,
+      "ast": 5.5,
+      "stl": 0.9,
+      "blk": 0.6,
+      "to": 2.7,
+      "fg_pct": 0.418,
+      "ft_pct": 0.702,
+      "three_pm": 1.5,
+      "gp": 68
+    },
+    "age": 35,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "onyeka-okongwu",
+    "name": "Onyeka Okongwu",
+    "team": "ATL",
+    "positions": [
+      "C",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF"
+    ],
+    "adp": 95.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 15.2,
+      "reb": 7.6,
+      "ast": 3.1,
+      "stl": 1.1,
+      "blk": 1.1,
+      "to": 1.7,
+      "fg_pct": 0.48,
+      "ft_pct": 0.757,
+      "three_pm": 1.9,
+      "gp": 74
+    },
+    "age": 25,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "keegan-murray",
+    "name": "Keegan Murray",
+    "team": "SAC",
+    "positions": [
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "PF"
+    ],
+    "adp": 95.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 14,
+      "reb": 5.7,
+      "ast": 1.7,
+      "stl": 1,
+      "blk": 1.6,
+      "to": 1.2,
+      "fg_pct": 0.42,
+      "ft_pct": 0.776,
+      "three_pm": 1.3,
+      "gp": 23
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "d-angelo-russell",
+    "name": "D'Angelo Russell",
+    "team": "WAS",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 96.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 10.2,
+      "reb": 2.3,
+      "ast": 4,
+      "stl": 0.5,
+      "blk": 0.1,
+      "to": 1.9,
+      "fg_pct": 0.405,
+      "ft_pct": 0.717,
+      "three_pm": 1.3,
+      "gp": 26
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tobias-harris",
+    "name": "Tobias Harris",
+    "team": "DET",
+    "positions": [
+      "PF",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF"
+    ],
+    "adp": 98.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.3,
+      "reb": 5.1,
+      "ast": 2.5,
+      "stl": 0.9,
+      "blk": 0.4,
+      "to": 1,
+      "fg_pct": 0.469,
+      "ft_pct": 0.866,
+      "three_pm": 1.3,
+      "gp": 63
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cameron-johnson",
+    "name": "Cameron Johnson",
+    "team": "DEN",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 99.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 12.2,
+      "reb": 3.8,
+      "ast": 2.4,
+      "stl": 0.7,
+      "blk": 0.4,
+      "to": 0.9,
+      "fg_pct": 0.48,
+      "ft_pct": 0.839,
+      "three_pm": 2,
+      "gp": 54
+    },
+    "age": 29,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "naz-reid",
+    "name": "Naz Reid",
+    "team": "MIN",
+    "positions": [
+      "PF",
+      "C"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "C"
+    ],
+    "adp": 100.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.6,
+      "reb": 6.2,
+      "ast": 2.2,
+      "stl": 1,
+      "blk": 1,
+      "to": 1.6,
+      "fg_pct": 0.456,
+      "ft_pct": 0.732,
+      "three_pm": 2.1,
+      "gp": 77
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "malik-monk",
+    "name": "Malik Monk",
+    "team": "SAC",
+    "positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "adp": 103.5,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 12.5,
+      "reb": 1.9,
+      "ast": 3,
+      "stl": 0.6,
+      "blk": 0.4,
+      "to": 1.5,
+      "fg_pct": 0.438,
+      "ft_pct": 0.879,
+      "three_pm": 2,
+      "gp": 62
+    },
+    "age": 27,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jrue-holiday",
+    "name": "Jrue Holiday",
+    "team": "POR",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 103.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 16.3,
+      "reb": 4.6,
+      "ast": 6.1,
+      "stl": 1,
+      "blk": 0.1,
+      "to": 2.8,
+      "fg_pct": 0.451,
+      "ft_pct": 0.838,
+      "three_pm": 2.6,
+      "gp": 53
+    },
+    "age": 35,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dereck-lively",
+    "name": "Dereck Lively II",
+    "team": "DAL",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 105.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 4.3,
+      "reb": 5.3,
+      "ast": 1.9,
+      "stl": 0.6,
+      "blk": 1.6,
+      "to": 1.4,
+      "fg_pct": 0.611,
+      "ft_pct": 0.8,
+      "three_pm": 0,
+      "gp": 7
+    },
+    "age": 21,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "donovan-clingan",
+    "name": "Donovan Clingan",
+    "team": "POR",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 105.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 12.1,
+      "reb": 11.6,
+      "ast": 2.1,
+      "stl": 0.6,
+      "blk": 1.7,
+      "to": 1.2,
+      "fg_pct": 0.52,
+      "ft_pct": 0.68,
+      "three_pm": 1.1,
+      "gp": 77
+    },
+    "age": 21,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "rj-barrett",
+    "name": "RJ Barrett",
+    "team": "TOR",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 106.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 19.3,
+      "reb": 5.3,
+      "ast": 3.3,
+      "stl": 0.7,
+      "blk": 0.3,
+      "to": 1.7,
+      "fg_pct": 0.491,
+      "ft_pct": 0.717,
+      "three_pm": 1.7,
+      "gp": 57
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "john-collins",
+    "name": "John Collins",
+    "team": "LAC",
+    "positions": [
+      "PF",
+      "C"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "C"
+    ],
+    "adp": 107.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.6,
+      "reb": 5.3,
+      "ast": 1,
+      "stl": 0.9,
+      "blk": 0.7,
+      "to": 1.4,
+      "fg_pct": 0.552,
+      "ft_pct": 0.766,
+      "three_pm": 1.3,
+      "gp": 69
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brandin-podziemski",
+    "name": "Brandin Podziemski",
+    "team": "GSW",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 107.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.8,
+      "reb": 5.1,
+      "ast": 3.7,
+      "stl": 1.1,
+      "blk": 0.2,
+      "to": 1.6,
+      "fg_pct": 0.455,
+      "ft_pct": 0.797,
+      "three_pm": 1.9,
+      "gp": 82
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "andrew-wiggins",
+    "name": "Andrew Wiggins",
+    "team": "MIA",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 107.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 15.4,
+      "reb": 4.8,
+      "ast": 2.7,
+      "stl": 1.1,
+      "blk": 1,
+      "to": 1.5,
+      "fg_pct": 0.475,
+      "ft_pct": 0.784,
+      "three_pm": 2,
+      "gp": 68
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jaden-ivey",
+    "name": "Jaden Ivey",
+    "team": "FA",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 108.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 8.5,
+      "reb": 2.5,
+      "ast": 1.8,
+      "stl": 0.6,
+      "blk": 0.4,
+      "to": 1.1,
+      "fg_pct": 0.445,
+      "ft_pct": 0.809,
+      "three_pm": 1.4,
+      "gp": 37
+    },
+    "age": 23,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "zach-edey",
+    "name": "Zach Edey",
+    "team": "MEM",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 110.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.6,
+      "reb": 11.1,
+      "ast": 1.1,
+      "stl": 0.6,
+      "blk": 1.9,
+      "to": 2.4,
+      "fg_pct": 0.633,
+      "ft_pct": 0.781,
+      "three_pm": 0.1,
+      "gp": 11
+    },
+    "age": 23,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tari-eason",
+    "name": "Tari Eason",
+    "team": "HOU",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 111.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 10.5,
+      "reb": 6.3,
+      "ast": 1.5,
+      "stl": 1.2,
+      "blk": 0.5,
+      "to": 1.4,
+      "fg_pct": 0.416,
+      "ft_pct": 0.776,
+      "three_pm": 1.6,
+      "gp": 60
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "keyonte-george",
+    "name": "Keyonte George",
+    "team": "UTH",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 111.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 23.6,
+      "reb": 3.7,
+      "ast": 6.1,
+      "stl": 1.1,
+      "blk": 0.3,
+      "to": 3.1,
+      "fg_pct": 0.456,
+      "ft_pct": 0.892,
+      "three_pm": 2.5,
+      "gp": 54
+    },
+    "age": 22,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "norman-powell",
+    "name": "Norman Powell",
+    "team": "MIA",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 113.1,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 21.7,
+      "reb": 3.5,
+      "ast": 2.5,
+      "stl": 1.1,
+      "blk": 0.2,
+      "to": 1.9,
+      "fg_pct": 0.47,
+      "ft_pct": 0.827,
+      "three_pm": 2.7,
+      "gp": 58
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kevin-porter",
+    "name": "Kevin Porter Jr.",
+    "team": "MIL",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 114.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 17.4,
+      "reb": 5.2,
+      "ast": 7.4,
+      "stl": 2.2,
+      "blk": 0.5,
+      "to": 2.9,
+      "fg_pct": 0.465,
+      "ft_pct": 0.878,
+      "three_pm": 1.2,
+      "gp": 38
+    },
+    "age": 25,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "herbert-jones",
+    "name": "Herbert Jones",
+    "team": "NOR",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 115.5,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 8.9,
+      "reb": 3.4,
+      "ast": 2.8,
+      "stl": 1.6,
+      "blk": 0.5,
+      "to": 1.3,
+      "fg_pct": 0.383,
+      "ft_pct": 0.806,
+      "three_pm": 1.4,
+      "gp": 56
+    },
+    "age": 27,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "christian-braun",
+    "name": "Christian Braun",
+    "team": "DEN",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 116.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 12,
+      "reb": 4.8,
+      "ast": 2.7,
+      "stl": 0.7,
+      "blk": 0.3,
+      "to": 1,
+      "fg_pct": 0.519,
+      "ft_pct": 0.782,
+      "three_pm": 1,
+      "gp": 44
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bennedict-mathurin",
+    "name": "Bennedict Mathurin",
+    "team": "LAC",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 116.5,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 17.6,
+      "reb": 5.4,
+      "ast": 2.4,
+      "stl": 0.8,
+      "blk": 0.2,
+      "to": 2.2,
+      "fg_pct": 0.43,
+      "ft_pct": 0.869,
+      "three_pm": 1.4,
+      "gp": 54
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "matas-buzelis",
+    "name": "Matas Buzelis",
+    "team": "CHI",
+    "positions": [
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "PF"
+    ],
+    "adp": 117.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 16.3,
+      "reb": 5.8,
+      "ast": 2.1,
+      "stl": 0.7,
+      "blk": 1.5,
+      "to": 2.1,
+      "fg_pct": 0.463,
+      "ft_pct": 0.786,
+      "three_pm": 2.2,
+      "gp": 77
+    },
+    "age": 21,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "aaron-gordon",
+    "name": "Aaron Gordon",
+    "team": "DEN",
+    "positions": [
+      "PF",
+      "C"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "C"
+    ],
+    "adp": 120.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 16.2,
+      "reb": 5.8,
+      "ast": 2.7,
+      "stl": 0.6,
+      "blk": 0.3,
+      "to": 1.1,
+      "fg_pct": 0.497,
+      "ft_pct": 0.767,
+      "three_pm": 1.7,
+      "gp": 36
+    },
+    "age": 30,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jaden-mcdaniels",
+    "name": "Jaden McDaniels",
+    "team": "MIN",
+    "positions": [
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "PF"
+    ],
+    "adp": 121,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 14.8,
+      "reb": 4.2,
+      "ast": 2.7,
+      "stl": 1.1,
+      "blk": 1,
+      "to": 1.8,
+      "fg_pct": 0.515,
+      "ft_pct": 0.835,
+      "three_pm": 1.4,
+      "gp": 73
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "donte-divincenzo",
+    "name": "Donte DiVincenzo",
+    "team": "MIN",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 121.1,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 12.2,
+      "reb": 4.1,
+      "ast": 3.8,
+      "stl": 1.3,
+      "blk": 0.4,
+      "to": 1.4,
+      "fg_pct": 0.406,
+      "ft_pct": 0.743,
+      "three_pm": 3,
+      "gp": 82
+    },
+    "age": 29,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "scoot-henderson",
+    "name": "Scoot Henderson",
+    "team": "POR",
+    "positions": [
+      "PG"
+    ],
+    "yahoo_positions": [
+      "PG"
+    ],
+    "adp": 121.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 14.2,
+      "reb": 2.7,
+      "ast": 3.7,
+      "stl": 0.9,
+      "blk": 0.3,
+      "to": 2.4,
+      "fg_pct": 0.418,
+      "ft_pct": 0.84,
+      "three_pm": 1.9,
+      "gp": 30
+    },
+    "age": 21,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tj-mcconnell",
+    "name": "T.J. McConnell",
+    "team": "IND",
+    "positions": [
+      "PG"
+    ],
+    "yahoo_positions": [
+      "PG"
+    ],
+    "adp": 122.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 9.4,
+      "reb": 2.2,
+      "ast": 5.1,
+      "stl": 1,
+      "blk": 0.2,
+      "to": 1.1,
+      "fg_pct": 0.538,
+      "ft_pct": 0.862,
+      "three_pm": 0.3,
+      "gp": 56
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kel-el-ware",
+    "name": "Kel'el Ware",
+    "team": "MIA",
+    "positions": [
+      "C",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF"
+    ],
+    "adp": 123.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 11.1,
+      "reb": 9,
+      "ast": 0.7,
+      "stl": 0.8,
+      "blk": 1.1,
+      "to": 0.8,
+      "fg_pct": 0.53,
+      "ft_pct": 0.74,
+      "three_pm": 1.2,
+      "gp": 77
+    },
+    "age": 21,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bobby-portis",
+    "name": "Bobby Portis Jr.",
+    "team": "MIL",
+    "positions": [
+      "PF",
+      "C"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "C"
+    ],
+    "adp": 124.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.7,
+      "reb": 6.4,
+      "ast": 1.6,
+      "stl": 0.6,
+      "blk": 0.2,
+      "to": 1,
+      "fg_pct": 0.488,
+      "ft_pct": 0.706,
+      "three_pm": 2,
+      "gp": 67
+    },
+    "age": 30,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jabari-smith",
+    "name": "Jabari Smith Jr.",
+    "team": "HOU",
+    "positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "adp": 125.1,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 15.8,
+      "reb": 6.9,
+      "ast": 1.9,
+      "stl": 0.7,
+      "blk": 0.9,
+      "to": 1.4,
+      "fg_pct": 0.45,
+      "ft_pct": 0.775,
+      "three_pm": 2.3,
+      "gp": 77
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "santi-aldama",
+    "name": "Santi Aldama",
+    "team": "MEM",
+    "positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "adp": 125.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 14,
+      "reb": 6.7,
+      "ast": 2.9,
+      "stl": 0.9,
+      "blk": 0.7,
+      "to": 1.3,
+      "fg_pct": 0.479,
+      "ft_pct": 0.667,
+      "three_pm": 1.6,
+      "gp": 43
+    },
+    "age": 25,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "daniel-gafford",
+    "name": "Daniel Gafford",
+    "team": "DAL",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 126.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 9.5,
+      "reb": 6.9,
+      "ast": 1.1,
+      "stl": 0.8,
+      "blk": 1.3,
+      "to": 1.1,
+      "fg_pct": 0.655,
+      "ft_pct": 0.683,
+      "three_pm": 0,
+      "gp": 55
+    },
+    "age": 27,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kyle-kuzma",
+    "name": "Kyle Kuzma",
+    "team": "MIL",
+    "positions": [
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "PF"
+    ],
+    "adp": 126.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13,
+      "reb": 4.5,
+      "ast": 2.7,
+      "stl": 0.7,
+      "blk": 0.4,
+      "to": 1.7,
+      "fg_pct": 0.492,
+      "ft_pct": 0.726,
+      "three_pm": 1.2,
+      "gp": 69
+    },
+    "age": 30,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "collin-sexton",
+    "name": "Collin Sexton",
+    "team": "CHI",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 127.1,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 15.4,
+      "reb": 2.3,
+      "ast": 3.3,
+      "stl": 1.1,
+      "blk": 0.1,
+      "to": 2.1,
+      "fg_pct": 0.485,
+      "ft_pct": 0.855,
+      "three_pm": 1.6,
+      "gp": 68
+    },
+    "age": 27,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "chris-paul",
+    "name": "Chris Paul",
+    "team": "FA",
+    "positions": [
+      "PG"
+    ],
+    "yahoo_positions": [
+      "PG"
+    ],
+    "adp": 130.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 2.9,
+      "reb": 1.8,
+      "ast": 3.3,
+      "stl": 0.7,
+      "blk": 0,
+      "to": 1,
+      "fg_pct": 0.321,
+      "ft_pct": 0.5,
+      "three_pm": 0.6,
+      "gp": 16
+    },
+    "age": 40,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
   },
   {
     "id": "pj-washington",
-    "name": "P.J. Washington",
+    "name": "P.J. Washington Jr.",
     "team": "DAL",
-    "positions": ["PF", "SF"],
-    "yahoo_positions": ["PF", "SF"],
-    "adp": 115.0,
+    "positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "adp": 131.9,
     "adp_source": "FantasyPros Yahoo 10-team 2026",
-    "prior_season": { "pts": 13.5, "reb": 5.5, "ast": 2.0, "stl": 1.1, "blk": 0.9, "to": 1.3, "fg_pct": 0.480, "ft_pct": 0.743, "three_pm": 2.4, "gp": 76 },
-    "age": 27, "injury_risk": false, "injury_notes": null, "injury_status": "healthy", "contract_year": false, "notes": null
+    "prior_season": {
+      "pts": 14.2,
+      "reb": 7,
+      "ast": 1.8,
+      "stl": 1,
+      "blk": 1.1,
+      "to": 1.7,
+      "fg_pct": 0.45,
+      "ft_pct": 0.687,
+      "three_pm": 1.4,
+      "gp": 56
+    },
+    "age": 27,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "aaron-nesmith",
+    "name": "Aaron Nesmith",
+    "team": "IND",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 134.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.8,
+      "reb": 4.2,
+      "ast": 1.9,
+      "stl": 0.6,
+      "blk": 0.5,
+      "to": 1.4,
+      "fg_pct": 0.414,
+      "ft_pct": 0.829,
+      "three_pm": 2.3,
+      "gp": 45
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "klay-thompson",
+    "name": "Klay Thompson",
+    "team": "DAL",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 134.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 11.7,
+      "reb": 2.1,
+      "ast": 1.4,
+      "stl": 0.5,
+      "blk": 0.3,
+      "to": 0.9,
+      "fg_pct": 0.393,
+      "ft_pct": 0.766,
+      "three_pm": 2.9,
+      "gp": 69
+    },
+    "age": 35,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jonathan-kuminga",
+    "name": "Jonathan Kuminga",
+    "team": "ATL",
+    "positions": [
+      "PF",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF"
+    ],
+    "adp": 136,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 12.2,
+      "reb": 5.6,
+      "ast": 2.3,
+      "stl": 0.6,
+      "blk": 0.3,
+      "to": 1.9,
+      "fg_pct": 0.463,
+      "ft_pct": 0.724,
+      "three_pm": 1,
+      "gp": 36
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "toumani-camara",
+    "name": "Toumani Camara",
+    "team": "POR",
+    "positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "adp": 136.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.4,
+      "reb": 5.1,
+      "ast": 2.5,
+      "stl": 1.1,
+      "blk": 0.4,
+      "to": 1.8,
+      "fg_pct": 0.44,
+      "ft_pct": 0.708,
+      "three_pm": 2.7,
+      "gp": 82
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "stephon-castle",
+    "name": "Stephon Castle",
+    "team": "SAS",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 137.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 16.7,
+      "reb": 5.3,
+      "ast": 7.4,
+      "stl": 1.1,
+      "blk": 0.3,
+      "to": 3.2,
+      "fg_pct": 0.471,
+      "ft_pct": 0.734,
+      "three_pm": 1.2,
+      "gp": 68
+    },
+    "age": 21,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "alex-caruso",
+    "name": "Alex Caruso",
+    "team": "OKC",
+    "positions": [
+      "PG",
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG",
+      "SF"
+    ],
+    "adp": 137.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 6.2,
+      "reb": 2.8,
+      "ast": 2,
+      "stl": 1.3,
+      "blk": 0.3,
+      "to": 0.9,
+      "fg_pct": 0.423,
+      "ft_pct": 0.804,
+      "three_pm": 0.9,
+      "gp": 56
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dennis-schroder",
+    "name": "Dennis Schroder",
+    "team": "CLE",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 138.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 10.8,
+      "reb": 2.7,
+      "ast": 4.9,
+      "stl": 0.8,
+      "blk": 0.2,
+      "to": 1.8,
+      "fg_pct": 0.405,
+      "ft_pct": 0.834,
+      "three_pm": 1.1,
+      "gp": 70
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bilal-coulibaly",
+    "name": "Bilal Coulibaly",
+    "team": "WAS",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 141.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 11.7,
+      "reb": 4.3,
+      "ast": 2.6,
+      "stl": 1.3,
+      "blk": 1,
+      "to": 1.4,
+      "fg_pct": 0.425,
+      "ft_pct": 0.746,
+      "three_pm": 1.2,
+      "gp": 56
+    },
+    "age": 21,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cason-wallace",
+    "name": "Cason Wallace",
+    "team": "OKC",
+    "positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "adp": 142.1,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 8.6,
+      "reb": 3.1,
+      "ast": 2.6,
+      "stl": 1.9,
+      "blk": 0.4,
+      "to": 0.9,
+      "fg_pct": 0.432,
+      "ft_pct": 0.809,
+      "three_pm": 1.3,
+      "gp": 77
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brook-lopez",
+    "name": "Brook Lopez",
+    "team": "LAC",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 146.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 8.5,
+      "reb": 3.6,
+      "ast": 1.3,
+      "stl": 0.6,
+      "blk": 1.2,
+      "to": 0.8,
+      "fg_pct": 0.428,
+      "ft_pct": 0.757,
+      "three_pm": 1.5,
+      "gp": 75
+    },
+    "age": 37,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "scotty-pippen",
+    "name": "Scotty Pippen Jr.",
+    "team": "MEM",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 147.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 11.4,
+      "reb": 2.2,
+      "ast": 4.7,
+      "stl": 1.9,
+      "blk": 0.4,
+      "to": 2.7,
+      "fg_pct": 0.448,
+      "ft_pct": 0.783,
+      "three_pm": 1,
+      "gp": 10
+    },
+    "age": 25,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "zaccharie-risacher",
+    "name": "Zaccharie Risacher",
+    "team": "ATL",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 149.1,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 9.6,
+      "reb": 3.8,
+      "ast": 1.1,
+      "stl": 0.9,
+      "blk": 0.5,
+      "to": 0.9,
+      "fg_pct": 0.455,
+      "ft_pct": 0.644,
+      "three_pm": 1.4,
+      "gp": 67
+    },
+    "age": 20,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ayo-dosunmu",
+    "name": "Ayo Dosunmu",
+    "team": "MIN",
+    "positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "adp": 149.1,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 14.8,
+      "reb": 3.4,
+      "ast": 3.6,
+      "stl": 0.8,
+      "blk": 0.3,
+      "to": 1.4,
+      "fg_pct": 0.517,
+      "ft_pct": 0.876,
+      "three_pm": 1.8,
+      "gp": 69
+    },
+    "age": 26,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "keon-ellis",
+    "name": "Keon Ellis",
+    "team": "CLE",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 149.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 6.7,
+      "reb": 1.9,
+      "ast": 1,
+      "stl": 1.2,
+      "blk": 0.6,
+      "to": 0.6,
+      "fg_pct": 0.44,
+      "ft_pct": 0.729,
+      "three_pm": 1.3,
+      "gp": 72
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "marjon-beauchamp",
+    "name": "MarJon Beauchamp",
+    "team": "PHI",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 150,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 6.8,
+      "reb": 2.3,
+      "ast": 1.1,
+      "stl": 0.6,
+      "blk": 0.3,
+      "to": 0.9,
+      "fg_pct": 0.434,
+      "ft_pct": 0.684,
+      "three_pm": 1.1,
+      "gp": 14
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "reed-sheppard",
+    "name": "Reed Sheppard",
+    "team": "HOU",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 151.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.5,
+      "reb": 2.9,
+      "ast": 3.4,
+      "stl": 1.5,
+      "blk": 0.7,
+      "to": 1.5,
+      "fg_pct": 0.43,
+      "ft_pct": 0.802,
+      "three_pm": 2.8,
+      "gp": 82
+    },
+    "age": 21,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jerami-grant",
+    "name": "Jerami Grant",
+    "team": "POR",
+    "positions": [
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "PF"
+    ],
+    "adp": 153,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 18.6,
+      "reb": 3.5,
+      "ast": 2.1,
+      "stl": 0.7,
+      "blk": 0.6,
+      "to": 2.1,
+      "fg_pct": 0.453,
+      "ft_pct": 0.814,
+      "three_pm": 2.4,
+      "gp": 57
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kelly-oubre",
+    "name": "Kelly Oubre Jr.",
+    "team": "PHI",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 153.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 14.1,
+      "reb": 5,
+      "ast": 1.6,
+      "stl": 1.4,
+      "blk": 0.5,
+      "to": 1.4,
+      "fg_pct": 0.467,
+      "ft_pct": 0.766,
+      "three_pm": 1.7,
+      "gp": 50
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jeremy-sochan",
+    "name": "Jeremy Sochan",
+    "team": "NYK",
+    "positions": [
+      "C",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF"
+    ],
+    "adp": 154,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 3.6,
+      "reb": 2.4,
+      "ast": 0.9,
+      "stl": 0.4,
+      "blk": 0.2,
+      "to": 0.5,
+      "fg_pct": 0.496,
+      "ft_pct": 0.731,
+      "three_pm": 0.3,
+      "gp": 44
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tyus-jones",
+    "name": "Tyus Jones",
+    "team": "DEN",
+    "positions": [
+      "PG"
+    ],
+    "yahoo_positions": [
+      "PG"
+    ],
+    "adp": 154.1,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 3,
+      "reb": 1.1,
+      "ast": 2.4,
+      "stl": 0.6,
+      "blk": 0,
+      "to": 0.4,
+      "fg_pct": 0.349,
+      "ft_pct": 0.778,
+      "three_pm": 0.6,
+      "gp": 67
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "caris-levert",
+    "name": "Caris LeVert",
+    "team": "DET",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 154.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 7.4,
+      "reb": 2,
+      "ast": 2.7,
+      "stl": 0.9,
+      "blk": 0.7,
+      "to": 1.4,
+      "fg_pct": 0.417,
+      "ft_pct": 0.679,
+      "three_pm": 1,
+      "gp": 60
+    },
+    "age": 31,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "de-andre-hunter",
+    "name": "De'Andre Hunter",
+    "team": "SAC",
+    "positions": [
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "PF"
+    ],
+    "adp": 156.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.7,
+      "reb": 4.1,
+      "ast": 2,
+      "stl": 0.7,
+      "blk": 0.1,
+      "to": 1.7,
+      "fg_pct": 0.415,
+      "ft_pct": 0.867,
+      "three_pm": 1.7,
+      "gp": 45
+    },
+    "age": 28,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kyshawn-george",
+    "name": "Kyshawn George",
+    "team": "WAS",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 157.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 14.8,
+      "reb": 5.1,
+      "ast": 4.5,
+      "stl": 1,
+      "blk": 0.9,
+      "to": 2.6,
+      "fg_pct": 0.438,
+      "ft_pct": 0.802,
+      "three_pm": 2.1,
+      "gp": 48
+    },
+    "age": 22,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ty-jerome",
+    "name": "Ty Jerome",
+    "team": "MEM",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 157.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 19.7,
+      "reb": 2.8,
+      "ast": 5.7,
+      "stl": 1.1,
+      "blk": 0.3,
+      "to": 1.8,
+      "fg_pct": 0.474,
+      "ft_pct": 0.875,
+      "three_pm": 2.8,
+      "gp": 15
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bub-carrington",
+    "name": "Bub Carrington",
+    "team": "WAS",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 158.5,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 10.7,
+      "reb": 3.4,
+      "ast": 4.6,
+      "stl": 0.6,
+      "blk": 0.2,
+      "to": 2.3,
+      "fg_pct": 0.424,
+      "ft_pct": 0.73,
+      "three_pm": 2.1,
+      "gp": 82
+    },
+    "age": 20,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "khris-middleton",
+    "name": "Khris Middleton",
+    "team": "DAL",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 159.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 10.2,
+      "reb": 3.7,
+      "ast": 2.8,
+      "stl": 0.7,
+      "blk": 0.1,
+      "to": 1.7,
+      "fg_pct": 0.42,
+      "ft_pct": 0.875,
+      "three_pm": 1.1,
+      "gp": 63
+    },
+    "age": 34,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "wendell-carter",
+    "name": "Wendell Carter Jr.",
+    "team": "ORL",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 159.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 11.8,
+      "reb": 7.4,
+      "ast": 2,
+      "stl": 0.8,
+      "blk": 0.6,
+      "to": 1.3,
+      "fg_pct": 0.512,
+      "ft_pct": 0.792,
+      "three_pm": 0.9,
+      "gp": 78
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "quentin-grimes",
+    "name": "Quentin Grimes",
+    "team": "PHI",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 159.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.4,
+      "reb": 3.6,
+      "ast": 3.3,
+      "stl": 0.9,
+      "blk": 0.4,
+      "to": 1.8,
+      "fg_pct": 0.45,
+      "ft_pct": 0.84,
+      "three_pm": 1.7,
+      "gp": 75
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "yves-missi",
+    "name": "Yves Missi",
+    "team": "NOR",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 160.1,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 5.7,
+      "reb": 5.8,
+      "ast": 1.3,
+      "stl": 0.3,
+      "blk": 1.5,
+      "to": 0.8,
+      "fg_pct": 0.544,
+      "ft_pct": 0.559,
+      "three_pm": 0,
+      "gp": 66
+    },
+    "age": 21,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "isaiah-collier",
+    "name": "Isaiah Collier",
+    "team": "UTH",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 161.1,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 11.7,
+      "reb": 2.5,
+      "ast": 7.2,
+      "stl": 1.1,
+      "blk": 0.3,
+      "to": 2.5,
+      "fg_pct": 0.495,
+      "ft_pct": 0.722,
+      "three_pm": 0.5,
+      "gp": 59
+    },
+    "age": 21,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jared-mccain",
+    "name": "Jared McCain",
+    "team": "OKC",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 162.1,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 8.3,
+      "reb": 2,
+      "ast": 1.3,
+      "stl": 0.5,
+      "blk": 0.1,
+      "to": 0.8,
+      "fg_pct": 0.425,
+      "ft_pct": 0.864,
+      "three_pm": 1.5,
+      "gp": 67
+    },
+    "age": 21,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "nikola-jovic",
+    "name": "Nikola Jovic",
+    "team": "MIA",
+    "positions": [
+      "C",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF"
+    ],
+    "adp": 162.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 7.3,
+      "reb": 3.3,
+      "ast": 2.2,
+      "stl": 0.6,
+      "blk": 0.4,
+      "to": 1.4,
+      "fg_pct": 0.366,
+      "ft_pct": 0.683,
+      "three_pm": 1,
+      "gp": 47
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "davion-mitchell",
+    "name": "Davion Mitchell",
+    "team": "MIA",
+    "positions": [
+      "PG"
+    ],
+    "yahoo_positions": [
+      "PG"
+    ],
+    "adp": 162.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 9.3,
+      "reb": 2.7,
+      "ast": 6.5,
+      "stl": 1,
+      "blk": 0.2,
+      "to": 1.5,
+      "fg_pct": 0.49,
+      "ft_pct": 0.646,
+      "three_pm": 1.3,
+      "gp": 70
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "gary-trent",
+    "name": "Gary Trent Jr.",
+    "team": "MIL",
+    "positions": [
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "SG"
+    ],
+    "adp": 164.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 8.1,
+      "reb": 1,
+      "ast": 1.2,
+      "stl": 0.5,
+      "blk": 0,
+      "to": 0.6,
+      "fg_pct": 0.387,
+      "ft_pct": 0.769,
+      "three_pm": 1.9,
+      "gp": 65
+    },
+    "age": 27,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dylan-harper",
+    "name": "Dylan Harper",
+    "team": "SAS",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 164.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 11.8,
+      "reb": 3.4,
+      "ast": 3.9,
+      "stl": 0.8,
+      "blk": 0.3,
+      "to": 1.4,
+      "fg_pct": 0.505,
+      "ft_pct": 0.756,
+      "three_pm": 0.9,
+      "gp": 69
+    },
+    "age": 19,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "russell-westbrook",
+    "name": "Russell Westbrook III",
+    "team": "SAC",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 165.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 15.2,
+      "reb": 5.4,
+      "ast": 6.7,
+      "stl": 1.3,
+      "blk": 0.2,
+      "to": 3.3,
+      "fg_pct": 0.427,
+      "ft_pct": 0.694,
+      "three_pm": 2,
+      "gp": 64
+    },
+    "age": 37,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "nickeil-alexander-walker",
+    "name": "Nickeil Alexander-Walker",
+    "team": "ATL",
+    "positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "adp": 166.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 20.8,
+      "reb": 3.4,
+      "ast": 3.7,
+      "stl": 1.3,
+      "blk": 0.5,
+      "to": 2.1,
+      "fg_pct": 0.459,
+      "ft_pct": 0.902,
+      "three_pm": 3.2,
+      "gp": 78
+    },
+    "age": 27,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "buddy-hield",
+    "name": "Buddy Hield",
+    "team": "ATL",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 168.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 7.6,
+      "reb": 2.3,
+      "ast": 1.4,
+      "stl": 0.8,
+      "blk": 0.2,
+      "to": 0.9,
+      "fg_pct": 0.437,
+      "ft_pct": 0.811,
+      "three_pm": 1.5,
+      "gp": 51
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "obi-toppin",
+    "name": "Obi Toppin",
+    "team": "IND",
+    "positions": [
+      "PF"
+    ],
+    "yahoo_positions": [
+      "PF"
+    ],
+    "adp": 169.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 11.6,
+      "reb": 4.4,
+      "ast": 2.3,
+      "stl": 0.5,
+      "blk": 0,
+      "to": 1.2,
+      "fg_pct": 0.503,
+      "ft_pct": 0.913,
+      "three_pm": 1.5,
+      "gp": 24
+    },
+    "age": 27,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kyle-filipowski",
+    "name": "Kyle Filipowski",
+    "team": "UTH",
+    "positions": [
+      "C",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF"
+    ],
+    "adp": 169.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 11.4,
+      "reb": 7.2,
+      "ast": 2.6,
+      "stl": 0.9,
+      "blk": 0.5,
+      "to": 1.6,
+      "fg_pct": 0.492,
+      "ft_pct": 0.75,
+      "three_pm": 1,
+      "gp": 77
+    },
+    "age": 22,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "lonzo-ball",
+    "name": "Lonzo Ball",
+    "team": "FA",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 169.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 4.6,
+      "reb": 4,
+      "ast": 3.9,
+      "stl": 1.3,
+      "blk": 0.3,
+      "to": 1.5,
+      "fg_pct": 0.301,
+      "ft_pct": 0.667,
+      "three_pm": 1.1,
+      "gp": 35
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "al-horford",
+    "name": "Al Horford",
+    "team": "GSW",
+    "positions": [
+      "PF",
+      "C"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "C"
+    ],
+    "adp": 171.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 8.3,
+      "reb": 4.9,
+      "ast": 2.6,
+      "stl": 0.7,
+      "blk": 1.1,
+      "to": 0.9,
+      "fg_pct": 0.426,
+      "ft_pct": 0.846,
+      "three_pm": 1.6,
+      "gp": 45
+    },
+    "age": 39,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "egor-demin",
+    "name": "Egor Demin",
+    "team": "BKN",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 171.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 10.3,
+      "reb": 3.2,
+      "ast": 3.3,
+      "stl": 0.8,
+      "blk": 0.3,
+      "to": 1.7,
+      "fg_pct": 0.399,
+      "ft_pct": 0.831,
+      "three_pm": 2.4,
+      "gp": 52
+    },
+    "age": 19,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "taylor-hendricks",
+    "name": "Taylor Hendricks",
+    "team": "MEM",
+    "positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF",
+      "SF"
+    ],
+    "adp": 172,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 7.4,
+      "reb": 3.7,
+      "ast": 0.9,
+      "stl": 0.8,
+      "blk": 0.5,
+      "to": 0.8,
+      "fg_pct": 0.459,
+      "ft_pct": 0.681,
+      "three_pm": 1.1,
+      "gp": 59
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ace-bailey",
+    "name": "Ace Bailey",
+    "team": "UTH",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 172.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.8,
+      "reb": 4.2,
+      "ast": 1.8,
+      "stl": 0.8,
+      "blk": 0.7,
+      "to": 1.5,
+      "fg_pct": 0.443,
+      "ft_pct": 0.75,
+      "three_pm": 1.9,
+      "gp": 72
+    },
+    "age": 19,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "isaiah-jackson",
+    "name": "Isaiah Jackson",
+    "team": "LAC",
+    "positions": [
+      "PF",
+      "C"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "C"
+    ],
+    "adp": 172.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 6.7,
+      "reb": 5.3,
+      "ast": 0.9,
+      "stl": 0.7,
+      "blk": 0.9,
+      "to": 1.1,
+      "fg_pct": 0.637,
+      "ft_pct": 0.648,
+      "three_pm": 0,
+      "gp": 55
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jay-huff",
+    "name": "Jay Huff",
+    "team": "IND",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 172.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 9.5,
+      "reb": 4,
+      "ast": 1.5,
+      "stl": 0.5,
+      "blk": 1.9,
+      "to": 0.9,
+      "fg_pct": 0.476,
+      "ft_pct": 0.828,
+      "three_pm": 1.5,
+      "gp": 82
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "mike-conley",
+    "name": "Mike Conley",
+    "team": "MIN",
+    "positions": [
+      "PG"
+    ],
+    "yahoo_positions": [
+      "PG"
+    ],
+    "adp": 175.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 4.5,
+      "reb": 1.7,
+      "ast": 2.9,
+      "stl": 0.6,
+      "blk": 0.3,
+      "to": 0.6,
+      "fg_pct": 0.335,
+      "ft_pct": 0.9,
+      "three_pm": 1,
+      "gp": 54
+    },
+    "age": 38,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "rui-hachimura",
+    "name": "Rui Hachimura",
+    "team": "LAL",
+    "positions": [
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "PF"
+    ],
+    "adp": 175.7,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 11.5,
+      "reb": 3.3,
+      "ast": 0.8,
+      "stl": 0.6,
+      "blk": 0.3,
+      "to": 0.6,
+      "fg_pct": 0.514,
+      "ft_pct": 0.694,
+      "three_pm": 1.7,
+      "gp": 68
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kentavious-caldwell-pope",
+    "name": "Kentavious Caldwell-Pope",
+    "team": "MEM",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 176,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 8.4,
+      "reb": 2.5,
+      "ast": 2.7,
+      "stl": 0.8,
+      "blk": 0.2,
+      "to": 1.2,
+      "fg_pct": 0.41,
+      "ft_pct": 0.913,
+      "three_pm": 1.1,
+      "gp": 51
+    },
+    "age": 32,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dillon-brooks",
+    "name": "Dillon Brooks",
+    "team": "PHO",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 176.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 20.2,
+      "reb": 3.6,
+      "ast": 1.8,
+      "stl": 1,
+      "blk": 0.2,
+      "to": 1.8,
+      "fg_pct": 0.435,
+      "ft_pct": 0.842,
+      "three_pm": 2.3,
+      "gp": 56
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "royce-o-neale",
+    "name": "Royce O'Neale",
+    "team": "PHO",
+    "positions": [
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "PF"
+    ],
+    "adp": 176.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 9.8,
+      "reb": 4.8,
+      "ast": 2.7,
+      "stl": 1.1,
+      "blk": 0.4,
+      "to": 1.3,
+      "fg_pct": 0.421,
+      "ft_pct": 0.711,
+      "three_pm": 2.7,
+      "gp": 78
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "luguentz-dort",
+    "name": "Luguentz Dort",
+    "team": "OKC",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 177.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 8.3,
+      "reb": 3.6,
+      "ast": 1.2,
+      "stl": 0.9,
+      "blk": 0.4,
+      "to": 0.8,
+      "fg_pct": 0.385,
+      "ft_pct": 0.759,
+      "three_pm": 1.9,
+      "gp": 69
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "sam-hauser",
+    "name": "Sam Hauser",
+    "team": "BOS",
+    "positions": [
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "PF"
+    ],
+    "adp": 178.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 9.2,
+      "reb": 3.8,
+      "ast": 1.5,
+      "stl": 0.5,
+      "blk": 0.3,
+      "to": 0.4,
+      "fg_pct": 0.419,
+      "ft_pct": 0.85,
+      "three_pm": 2.5,
+      "gp": 78
+    },
+    "age": 28,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jordan-clarkson",
+    "name": "Jordan Clarkson",
+    "team": "NYK",
+    "positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SF",
+      "SG"
+    ],
+    "adp": 178.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 8.6,
+      "reb": 1.8,
+      "ast": 1.3,
+      "stl": 0.4,
+      "blk": 0.1,
+      "to": 0.9,
+      "fg_pct": 0.451,
+      "ft_pct": 0.83,
+      "three_pm": 1,
+      "gp": 72
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "anthony-black",
+    "name": "Anthony Black",
+    "team": "ORL",
+    "positions": [
+      "PG",
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG",
+      "SF"
+    ],
+    "adp": 179,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 15,
+      "reb": 3.8,
+      "ast": 3.7,
+      "stl": 1.4,
+      "blk": 0.7,
+      "to": 2.1,
+      "fg_pct": 0.447,
+      "ft_pct": 0.732,
+      "three_pm": 1.6,
+      "gp": 64
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jaime-jaquez",
+    "name": "Jaime Jaquez Jr.",
+    "team": "MIA",
+    "positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF",
+      "SG"
+    ],
+    "adp": 179.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 15.4,
+      "reb": 5,
+      "ast": 4.7,
+      "stl": 0.7,
+      "blk": 0.3,
+      "to": 2,
+      "fg_pct": 0.507,
+      "ft_pct": 0.769,
+      "three_pm": 0.8,
+      "gp": 75
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "marcus-smart",
+    "name": "Marcus Smart",
+    "team": "LAL",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 181.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 9.3,
+      "reb": 2.8,
+      "ast": 3,
+      "stl": 1.4,
+      "blk": 0.4,
+      "to": 1.5,
+      "fg_pct": 0.395,
+      "ft_pct": 0.822,
+      "three_pm": 1.6,
+      "gp": 62
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jaylen-wells",
+    "name": "Jaylen Wells",
+    "team": "MEM",
+    "positions": [
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "SG"
+    ],
+    "adp": 181.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 12.5,
+      "reb": 3.2,
+      "ast": 1.6,
+      "stl": 0.9,
+      "blk": 0.1,
+      "to": 1.1,
+      "fg_pct": 0.431,
+      "ft_pct": 0.784,
+      "three_pm": 1.9,
+      "gp": 69
+    },
+    "age": 22,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "vj-edgecombe",
+    "name": "VJ Edgecombe",
+    "team": "PHI",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 181.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 16,
+      "reb": 5.6,
+      "ast": 4.2,
+      "stl": 1.4,
+      "blk": 0.5,
+      "to": 1.8,
+      "fg_pct": 0.438,
+      "ft_pct": 0.818,
+      "three_pm": 2,
+      "gp": 75
+    },
+    "age": 20,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "neemias-queta",
+    "name": "Neemias Queta",
+    "team": "BOS",
+    "positions": [
+      "C",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "C",
+      "PF"
+    ],
+    "adp": 181.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 10.2,
+      "reb": 8.4,
+      "ast": 1.7,
+      "stl": 0.8,
+      "blk": 1.3,
+      "to": 1,
+      "fg_pct": 0.653,
+      "ft_pct": 0.703,
+      "three_pm": 0,
+      "gp": 76
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "gradey-dick",
+    "name": "Gradey Dick",
+    "team": "TOR",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 182.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 6,
+      "reb": 1.9,
+      "ast": 0.7,
+      "stl": 0.6,
+      "blk": 0.1,
+      "to": 0.6,
+      "fg_pct": 0.419,
+      "ft_pct": 0.875,
+      "three_pm": 0.7,
+      "gp": 76
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dejounte-murray",
+    "name": "Dejounte Murray",
+    "team": "NOR",
+    "positions": [
+      "PG",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "PG",
+      "SG"
+    ],
+    "adp": 183.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 16.7,
+      "reb": 5.4,
+      "ast": 6.4,
+      "stl": 1.6,
+      "blk": 0.2,
+      "to": 3.4,
+      "fg_pct": 0.484,
+      "ft_pct": 0.867,
+      "three_pm": 1.4,
+      "gp": 14
+    },
+    "age": 29,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cam-whitmore",
+    "name": "Cam Whitmore",
+    "team": "WAS",
+    "positions": [
+      "SF",
+      "PF"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "PF"
+    ],
+    "adp": 185.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 9.2,
+      "reb": 2.8,
+      "ast": 0.7,
+      "stl": 0.7,
+      "blk": 0.4,
+      "to": 0.9,
+      "fg_pct": 0.456,
+      "ft_pct": 0.742,
+      "three_pm": 0.8,
+      "gp": 21
+    },
+    "age": 21,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "out",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kon-knueppel",
+    "name": "Kon Knueppel",
+    "team": "CHA",
+    "positions": [
+      "SF",
+      "SG"
+    ],
+    "yahoo_positions": [
+      "SF",
+      "SG"
+    ],
+    "adp": 186.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 18.5,
+      "reb": 5.3,
+      "ast": 3.4,
+      "stl": 0.7,
+      "blk": 0.2,
+      "to": 2,
+      "fg_pct": 0.475,
+      "ft_pct": 0.863,
+      "three_pm": 3.4,
+      "gp": 81
+    },
+    "age": 20,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "keldon-johnson",
+    "name": "Keldon Johnson",
+    "team": "SAS",
+    "positions": [
+      "PF",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "PF",
+      "SF"
+    ],
+    "adp": 186.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 13.2,
+      "reb": 5.4,
+      "ast": 1.4,
+      "stl": 0.6,
+      "blk": 0.1,
+      "to": 0.9,
+      "fg_pct": 0.519,
+      "ft_pct": 0.794,
+      "three_pm": 1.2,
+      "gp": 82
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "max-strus",
+    "name": "Max Strus",
+    "team": "CLE",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 188.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 11.2,
+      "reb": 5.4,
+      "ast": 2,
+      "stl": 0.3,
+      "blk": 0,
+      "to": 0.8,
+      "fg_pct": 0.443,
+      "ft_pct": 0.778,
+      "three_pm": 2.8,
+      "gp": 12
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bogdan-bogdanovic",
+    "name": "Bogdan Bogdanovic",
+    "team": "LAC",
+    "positions": [
+      "SG",
+      "SF"
+    ],
+    "yahoo_positions": [
+      "SG",
+      "SF"
+    ],
+    "adp": 189,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 7.4,
+      "reb": 2.6,
+      "ast": 2.2,
+      "stl": 0.4,
+      "blk": 0.1,
+      "to": 1.2,
+      "fg_pct": 0.388,
+      "ft_pct": 0.8,
+      "three_pm": 1.4,
+      "gp": 23
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cole-anthony",
+    "name": "Cole Anthony",
+    "team": "FA",
+    "positions": [
+      "PG"
+    ],
+    "yahoo_positions": [
+      "PG"
+    ],
+    "adp": 189.9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 6.7,
+      "reb": 2.5,
+      "ast": 3.5,
+      "stl": 0.6,
+      "blk": 0.3,
+      "to": 1.9,
+      "fg_pct": 0.424,
+      "ft_pct": 0.615,
+      "three_pm": 0.6,
+      "gp": 35
+    },
+    "age": 25,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "mitchell-robinson",
+    "name": "Mitchell Robinson",
+    "team": "NYK",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "adp": 191.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026",
+    "prior_season": {
+      "pts": 5.7,
+      "reb": 8.8,
+      "ast": 0.9,
+      "stl": 0.9,
+      "blk": 1.2,
+      "to": 0.7,
+      "fg_pct": 0.723,
+      "ft_pct": 0.408,
+      "three_pm": 0,
+      "gp": 60
+    },
+    "age": 27,
+    "injury_risk": true,
+    "injury_notes": null,
+    "injury_status": "day-to-day",
+    "contract_year": false,
+    "notes": null
   }
 ]

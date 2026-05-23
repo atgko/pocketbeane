@@ -27,6 +27,11 @@ module.exports = {
   'Cam Thomas':        'Cam Thomas',
   'Jalen Williams':    'Jalen Williams',
 
-  // Players where BBRef uses different formatting
-  // Add more here as discovered during review.json resolution
+  // Confirmed fuzzy matches — BBRef encodes accented characters as ? in CSV exports
+  'Luka Doncic':          'Luka Don?i?',
+  'Alperen Sengun':       'Alperen ?eng?n',
+  'Nikola Vucevic':       'Nikola Vu?evi?',
+  'Kristaps Porzingis':   'Kristaps Porzi??is',
+  'Dennis Schroder':      'Dennis Schr?der',
+  'Egor Demin':           'Egor D?min',
 }

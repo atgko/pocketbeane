@@ -48,7 +48,7 @@ const OUTPUT_FILE  = flags.output  || path.resolve(__dirname, '..', 'src', 'data
 const REVIEW_FILE  = flags.review  || path.resolve(__dirname, 'review.json')
 const ADP_SOURCE   = flags.source  || 'FantasyPros Yahoo 10-team 2026'
 const TOP_N        = parseInt(flags.top || '200', 10)
-const FUZZY_THRESHOLD = 0.78 // Dice coefficient — below this goes to review.json
+const FUZZY_THRESHOLD = 0.75 // Dice coefficient — below this goes to review.json
 
 if (!ADP_FILE || !STATS_FILE) {
   console.error([
@@ -67,12 +67,13 @@ if (!ADP_FILE || !STATS_FILE) {
 
 function normalizeName(raw) {
   return String(raw)
-    .normalize('NFD')                        // decompose accented chars (é → e + ́)
-    .replace(/[̀-ͯ]/g, '')         // strip accent marks
+    .normalize('NFD')                        // decompose accented chars (é → e + combining mark)
+    .replace(/[̀-ͯ]/g, '')         // strip combining diacritical marks
+    .replace(/\?/g, '')                      // BBRef encoding artifact for accented chars (č → ?)
     .toLowerCase()
-    .replace(/\./g, '')                       // "P.J." → "PJ"
-    .replace(/\b(jr|sr|ii|iii|iv)\b/g, '')   // strip suffixes
-    .replace(/[^a-z\s'-]/g, '')              // keep letters, spaces, hyphens, apostrophes
+    .replace(/\./g, '')                      // "P.J." → "PJ"
+    .replace(/\b(jr|sr|ii|iii|iv)\b/g, '')  // strip suffixes
+    .replace(/[^a-z\s'-]/g, '')             // keep letters, spaces, hyphens, apostrophes
     .replace(/\s+/g, ' ')
     .trim()
 }
@@ -119,12 +120,36 @@ function col(row, ...candidates) {
   return null
 }
 
-// Parse CSV — handles quoted fields, Windows/Unix line endings
+// Parse CSV — handles quoted fields, Windows/Unix line endings.
+// Also handles BBRef's "Share & Export" format where every row is wrapped in outer
+// double-quotes: `"Rk,Player,Age,..."` — detected automatically and unwrapped.
 function parseCSV(filePath) {
-  const raw = fs.readFileSync(filePath, 'utf-8')
-    .replace(/^﻿/, '')          // strip BOM if present
+  let raw = fs.readFileSync(filePath, 'utf-8')
+    .replace(/^﻿/, '')      // strip BOM if present
     .replace(/\r\n/g, '\n')
     .replace(/\r/g, '\n')
+
+  // BBRef "Share & Export" detection: each row is one outer-quoted string whose
+  // inner content uses bare commas (no per-field quoting). A normal CSV that starts
+  // and ends with `"` will have `","` field boundaries inside — BBRef rows won't.
+  const allLines = raw.split('\n')
+  const firstContent = allLines.find(l => l.trim() && !l.includes('---') && !l.includes('SR data'))
+  if (firstContent) {
+    const t = firstContent.trim()
+    const inner = t.slice(1, -1)
+    const isBBRefWrapped = t.startsWith('"') && t.endsWith('"') && inner.includes(',') && !inner.includes('","')
+    if (isBBRefWrapped) {
+      raw = allLines
+        .filter(l => l.trim() && !l.includes('---') && !l.includes('SR data'))
+        .map(l => {
+          const trimmed = l.trim()
+          return (trimmed.startsWith('"') && trimmed.endsWith('"'))
+            ? trimmed.slice(1, -1)
+            : l
+        })
+        .join('\n')
+    }
+  }
 
   const lines = raw.split('\n').filter(l => l.trim())
 
@@ -210,33 +235,67 @@ if (APPLY_FIXES) {
 }
 
 // ─── Parse FantasyPros ADP CSV ────────────────────────────────────────────────
+//
+// FantasyPros draft rankings embed team, positions, and injury status inside the
+// player name field: "Luka Doncic (LAL - PG,SG) DTD". The TEAM column is often
+// blank. This regex extracts all three pieces from the name field.
+const FP_NAME_RE = /^(.*?)\s*\(([A-Z]{2,3})\s*-\s*([^)]+)\)\s*(DTD|OUT|QUES|Q)?\s*$/i
+
+function parseFPPlayerField(raw) {
+  const str = String(raw).trim()
+  const m = str.match(FP_NAME_RE)
+  if (m) {
+    const positions = m[3].split(',')
+      .map(p => p.trim().toUpperCase())
+      .filter(p => ['PG', 'SG', 'SF', 'PF', 'C', 'G', 'F'].includes(p))
+    const statusRaw = (m[4] || '').toUpperCase()
+    return {
+      name: m[1].trim(),
+      team: m[2].toUpperCase(),
+      positions,
+      injuryStatus: statusRaw === 'OUT' ? 'out' : statusRaw === 'DTD' ? 'day-to-day' : statusRaw === 'QUES' || statusRaw === 'Q' ? 'questionable' : 'healthy',
+      injuryRisk: statusRaw === 'OUT' || statusRaw === 'DTD',
+    }
+  }
+  // No embedded team/pos — strip any trailing parenthetical and return plain name
+  return {
+    name: str.replace(/\s*\([^)]+\)\s*$/, '').trim(),
+    team: '',
+    positions: [],
+    injuryStatus: 'healthy',
+    injuryRisk: false,
+  }
+}
 
 console.log(`\nReading ADP data from: ${ADP_FILE}`)
 const fpRows = parseCSV(ADP_FILE)
 
 const fpPlayers = []
 for (const row of fpRows) {
-  // FantasyPros exports vary — try multiple column name conventions
-  const name = col(row, 'Player Name', 'PLAYER NAME', 'Player', 'Name', 'PLAYER')
-  const team = col(row, 'Team', 'TEAM', 'Tm', 'Team Abbreviation')
-  const pos  = col(row, 'POS', 'Pos', 'Position', 'POSITION', 'Eligible Positions')
-  const adp  = col(row, 'ADP', 'Avg', 'AVG', 'Average', 'PROJ. ADP')
-  const rank = col(row, 'RK', 'Rank', 'RANK', 'Overall', 'Overall Rank')
+  const nameRaw = col(row, 'Player Name', 'PLAYER NAME', 'Player', 'Name', 'PLAYER')
+  const adp     = col(row, 'ADP', 'Avg', 'AVG', 'Average', 'AVG.', 'PROJ. ADP')
+  const rank    = col(row, 'RK', 'Rank', 'RANK', 'Overall', 'Overall Rank')
 
-  if (!name || !adp) continue
+  if (!nameRaw || !adp) continue
 
   const adpNum = parseNum(adp, 1)
   if (adpNum === null) continue
 
-  // FantasyPros sometimes includes "Player (Team)" in the name — strip it
-  const cleanName = String(name).replace(/\s*\([^)]+\)\s*$/, '').trim()
+  const { name, team, positions, injuryStatus, injuryRisk } = parseFPPlayerField(nameRaw)
+
+  // Fall back to the standalone TEAM/POS columns if the name had no embedded info
+  const teamFallback = col(row, 'Team', 'TEAM', 'Tm', 'Team Abbreviation')
+  const posFallback  = col(row, 'POS', 'Pos', 'Position', 'POSITION', 'Eligible Positions')
 
   fpPlayers.push({
-    fpName: cleanName,
-    team: String(team || '').toUpperCase().trim(),
-    pos: String(pos || '').trim(),
+    fpName: name,
+    team: team || String(teamFallback || '').toUpperCase().trim(),
+    pos: positions.length ? positions.join(',') : String(posFallback || '').trim(),
+    positions,
     adp: adpNum,
     rank: parseNum(rank, 0) ?? fpPlayers.length + 1,
+    injuryStatus,
+    injuryRisk,
   })
 }
 
@@ -327,13 +386,15 @@ for (const fp of topPlayers) {
   }
 
   const { row, confidence, method } = result
-  const positions = parsePositions(fp.pos)
+  // Use positions already parsed from the embedded FP name field; fall back to
+  // the standalone pos column if the name had none.
+  const positions = fp.positions.length ? fp.positions : parsePositions(fp.pos)
 
   const player = {
     id:            slugify(fp.fpName),
     name:          fp.fpName,
     team:          fp.team,
-    positions:     positions,
+    positions,
     yahoo_positions: positions,
     adp:           fp.adp,
     adp_source:    ADP_SOURCE,
@@ -350,9 +411,9 @@ for (const fp of topPlayers) {
       gp:       parseNum(col(row, 'G', 'GP', 'Games', 'games'), 0),
     } : null,
     age:           row ? parseNum(col(row, 'Age', 'AGE', 'age'), 0) : null,
-    injury_risk:   false,
+    injury_risk:   fp.injuryRisk,
     injury_notes:  null,
-    injury_status: 'healthy',
+    injury_status: fp.injuryStatus,
     contract_year: false,
     notes:         null,
   }

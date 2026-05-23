@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build-players": "node scripts/build-players.js",
+    "build-players:apply": "node scripts/build-players.js --apply-fixes"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.95.2",
