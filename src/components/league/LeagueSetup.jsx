@@ -11,6 +11,32 @@ const SCORING_OPTIONS = [
   { value: 'points', label: 'Points' },
 ]
 
+const STRATEGY_OPTIONS = [
+  { value: 'beane',            label: 'Beane Mode' },
+  { value: 'balanced',         label: 'Balanced' },
+  { value: 'stars-and-scrubs', label: 'Stars & Scrubs' },
+  { value: 'punt',             label: 'Punt Strategy' },
+]
+
+const STRATEGY_DESCRIPTIONS = {
+  'beane':            'ADP value-first — exploit market mispricings, fill categories in the middle rounds.',
+  'balanced':         'Even spread across all categories and positions from round one.',
+  'stars-and-scrubs': 'Lock in elite production early, fill remaining spots with high-volume cheap picks.',
+  'punt':             'Concede selected categories and dominate the rest.',
+}
+
+const INJURY_TOLERANCE_OPTIONS = [
+  { value: 'conservative', label: 'Conservative' },
+  { value: 'moderate',     label: 'Moderate' },
+  { value: 'aggressive',   label: 'Aggressive' },
+]
+
+const INJURY_TOLERANCE_DESCRIPTIONS = {
+  'conservative': 'Avoid injury-risk players — dock their ranking significantly.',
+  'moderate':     "Flag risk but don't automatically deprioritize.",
+  'aggressive':   'Injury history = market discount. Exploit it.',
+}
+
 export default function LeagueSetup({ config, onUpdate, onToggleCategory }) {
   const sportConfig = getSportConfig(config.sport)
   const rosterSlots = sportConfig.slotOrder.filter(s => s.type !== 'BN')
@@ -144,6 +170,64 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory }) {
           ))}
         </div>
         <p className="text-xs text-gray-600 mt-1.5 font-mono">{config.categories.length} categories selected</p>
+      </div>
+
+      {/* Draft Strategy */}
+      <div>
+        <label className="block text-xs text-gray-400 mb-1.5">Draft Strategy</label>
+        <ToggleGroup
+          options={STRATEGY_OPTIONS}
+          value={config.philosophy?.strategy ?? 'beane'}
+          onChange={v => onUpdate('philosophy', {
+            ...config.philosophy,
+            strategy: v,
+            puntCategories: v !== 'punt' ? [] : (config.philosophy?.puntCategories ?? []),
+          })}
+        />
+        <p className="text-xs text-gray-600 mt-1.5 font-mono">
+          {STRATEGY_DESCRIPTIONS[config.philosophy?.strategy ?? 'beane']}
+        </p>
+        {config.philosophy?.strategy === 'punt' && (
+          <div className="mt-3">
+            <p className="text-xs text-gray-500 mb-2 font-mono">Categories to punt:</p>
+            <div className="flex flex-wrap gap-2">
+              {sportConfig.categories.map(cat => {
+                const punted = (config.philosophy?.puntCategories ?? []).includes(cat.id)
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => {
+                      const curr = config.philosophy?.puntCategories ?? []
+                      const next = punted ? curr.filter(c => c !== cat.id) : [...curr, cat.id]
+                      onUpdate('philosophy', { ...config.philosophy, puntCategories: next })
+                    }}
+                    className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+                      punted
+                        ? 'bg-red-500/20 text-red-400 border border-red-500/30'
+                        : 'bg-bg border border-border text-gray-400 hover:border-red-500/40 hover:text-red-300'
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Injury Tolerance */}
+      <div>
+        <label className="block text-xs text-gray-400 mb-1.5">Injury Tolerance</label>
+        <ToggleGroup
+          options={INJURY_TOLERANCE_OPTIONS}
+          value={config.philosophy?.injuryTolerance ?? 'moderate'}
+          onChange={v => onUpdate('philosophy', { ...config.philosophy, injuryTolerance: v })}
+        />
+        <p className="text-xs text-gray-600 mt-1.5 font-mono">
+          {INJURY_TOLERANCE_DESCRIPTIONS[config.philosophy?.injuryTolerance ?? 'moderate']}
+        </p>
       </div>
     </div>
   )

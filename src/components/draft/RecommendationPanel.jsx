@@ -6,7 +6,7 @@ import { isUserTurn } from '@/utils/snake'
 import { computeBoardState } from '@/ai/boardState'
 import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
 import { computeScarcity, getSmartScarcityAlerts } from '@/ai/scarcity'
-import { rankByFit } from '@/ai/valueCalculator'
+import { rankByFit, computeSleepers } from '@/ai/valueCalculator'
 
 const playerMap = buildPlayerMap(players)
 
@@ -32,14 +32,17 @@ export default function RecommendationPanel({ league }) {
   const isSnake = draftType === 'snake'
   const isMyTurn = isSnake ? isUserTurn(currentPickNum, draftPosition, numTeams) : true
 
-  const { boardState, categoryGaps, scarcityAlerts, topCandidates } = useMemo(() => {
+  const philosophy = league.config.philosophy ?? {}
+
+  const { boardState, categoryGaps, scarcityAlerts, topCandidates, sleepers } = useMemo(() => {
     const bs = computeBoardState(league, players)
     const gaps = analyzeCategoryGaps(bs.userPicks, playerMap, sportConfig, bs.totalRosterSlots)
     const scarcity = computeScarcity(players, bs.draftedIds, sportConfig)
     const alerts = getSmartScarcityAlerts(scarcity, bs.userPicks, playerMap)
-    const ranked = rankByFit(bs.available, gaps, sportConfig, bs.currentPick)
-    return { boardState: bs, categoryGaps: gaps, scarcityAlerts: alerts, topCandidates: ranked }
-  }, [picks, league.rosterSlots])
+    const ranked = rankByFit(bs.available, gaps, sportConfig, bs.currentPick, philosophy)
+    const sleeperList = computeSleepers(bs.available, bs.currentPick)
+    return { boardState: bs, categoryGaps: gaps, scarcityAlerts: alerts, topCandidates: ranked, sleepers: sleeperList }
+  }, [picks, league.rosterSlots, league.config.philosophy])
 
   const isRosterFull = boardState.userPicksRemaining <= 0
   const canGetAdvice = !isMyTurn && !isRosterFull && currentRound !== lastAdviceRound && !loading
@@ -62,6 +65,7 @@ export default function RecommendationPanel({ league }) {
     categoryGaps,
     scarcityAlerts,
     topCandidates: topCandidates.slice(0, 8),
+    philosophy,
   }
 
   async function runAnalysis(mode) {
@@ -195,6 +199,28 @@ export default function RecommendationPanel({ league }) {
               </div>
             )}
           </>
+        )}
+
+        {/* Sleeper Radar — always visible when there are sleepers and draft is active */}
+        {sleepers.length > 0 && !isRosterFull && (
+          <div className="bg-surface rounded-lg border border-blue-500/15 p-4">
+            <p className="text-xs font-mono text-blue-400/60 uppercase tracking-wider mb-3">Sleeper Radar</p>
+            <div className="space-y-2.5">
+              {sleepers.map(({ player, signals }) => (
+                <div key={player.id} className="flex gap-3 items-start">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-baseline gap-1.5 flex-wrap">
+                      <span className="text-xs font-semibold text-gray-300">{player.name}</span>
+                      <span className="text-xs font-mono text-gray-600">
+                        {player.yahoo_positions.join('/')}
+                      </span>
+                    </div>
+                    <p className="text-xs font-mono text-blue-400/50 mt-0.5">{signals.join(' · ')}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         )}
       </div>
 

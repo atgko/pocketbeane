@@ -2,6 +2,12 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { getSportConfig } from '@/config/sports'
 
+export const DEFAULT_PHILOSOPHY = {
+  strategy: 'beane',           // 'beane' | 'balanced' | 'stars-and-scrubs' | 'punt'
+  puntCategories: [],           // cat IDs to deprioritize (strategy === 'punt' only)
+  injuryTolerance: 'moderate', // 'conservative' | 'moderate' | 'aggressive'
+}
+
 export const DEFAULT_CONFIG = {
   name: '',
   sport: 'nba',
@@ -23,6 +29,7 @@ export const DEFAULT_CONFIG = {
   ilPlusSlots: 0,
   draftType: 'snake',      // 'snake' | 'auction' (auction = future)
   scoringFormat: '9cat',   // '9cat' | '8cat' | 'points' (non-9cat = future)
+  philosophy: { ...DEFAULT_PHILOSOPHY },
 }
 
 // Returns [{ type, playerId: null }, ...] in display order

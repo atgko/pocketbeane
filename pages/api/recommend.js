@@ -5,7 +5,7 @@ const client = new Anthropic()
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
 
-  const { mode = 'auto', leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates } = req.body
+  const { mode = 'auto', leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy = {} } = req.body
 
   if (!leagueConfig || !boardState) {
     return res.status(400).json({ error: 'Missing required fields' })
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
   try {
     const { system, user, maxTokens } = buildMessages(
-      mode, leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates
+      mode, leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy
     )
 
     const message = await client.messages.create({
@@ -52,10 +52,10 @@ function fmt(val, isPct) {
   return isPct ? val.toFixed(3) : val.toFixed(1)
 }
 
-function buildMessages(mode, leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates) {
+function buildMessages(mode, leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy) {
   if (mode === 'advice')   return buildAdviceMessages(leagueConfig, boardState, categoryGaps, topCandidates)
   if (mode === 'complete') return buildCompleteMessages(leagueConfig, boardState, categoryGaps)
-  return buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates)
+  return buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy)
 }
 
 // ─── Auto mode — fires on user's pick turn ───────────────────────────────────
@@ -67,9 +67,17 @@ Categories scored: PTS, REB, AST, STL, BLK, TO (lower is better), FG%, FT%, 3PM.
 Reply ONLY with raw JSON — no markdown, no explanation, no extra text:
 {"picks":[{"id":"player-id","name":"Name","reason":"one confident Beane-voice sentence, specific about which category this fixes or which market mispricing you're exploiting"},{"id":"...","name":"...","reason":"..."},{"id":"...","name":"...","reason":"..."}],"scarcityAlerts":["string if urgency — omit or leave empty array if no urgency"],"summary":"2-3 sentences. GM voice. Specific categories. No filler."}`
 
-function buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates) {
+const STRATEGY_LABELS = {
+  'beane':            'Beane Mode (ADP value-first)',
+  'balanced':         'Balanced (even category spread)',
+  'stars-and-scrubs': 'Stars & Scrubs (elite early, volume late)',
+  'punt':             'Punt Strategy',
+}
+
+function buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy = {}) {
   const { numTeams, draftPosition, scoringFormat } = leagueConfig
   const { userPicksWithData, totalPicks, currentRound, userPicksRemaining } = boardState
+  const { strategy = 'beane', puntCategories = [], injuryTolerance = 'moderate' } = philosophy
 
   const system = [{ type: 'text', text: AUTO_SYSTEM, cache_control: { type: 'ephemeral' } }]
 
@@ -88,16 +96,21 @@ function buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlert
   const candidates = (topCandidates ?? []).slice(0, 8).map(c => {
     const p = c.player
     const s = p.prior_season
-    return `${p.id}|${p.name}(${p.yahoo_positions.join('/')},ADP${p.adp.toFixed(1)}):pts=${fmt(s?.pts,false)} reb=${fmt(s?.reb,false)} ast=${fmt(s?.ast,false)} stl=${fmt(s?.stl,false)} blk=${fmt(s?.blk,false)} 3pm=${fmt(s?.three_pm,false)} fg%=${fmt(s?.fg_pct,true)} ft%=${fmt(s?.ft_pct,true)} to=${fmt(s?.to,false)}`
+    const injuryTag = p.injury_risk ? ` ⚠️injury` : ''
+    return `${p.id}|${p.name}(${p.yahoo_positions.join('/')},ADP${p.adp.toFixed(1)}${injuryTag}):pts=${fmt(s?.pts,false)} reb=${fmt(s?.reb,false)} ast=${fmt(s?.ast,false)} stl=${fmt(s?.stl,false)} blk=${fmt(s?.blk,false)} 3pm=${fmt(s?.three_pm,false)} fg%=${fmt(s?.fg_pct,true)} ft%=${fmt(s?.ft_pct,true)} to=${fmt(s?.to,false)}`
   }).join('\n')
 
   const alertLine = scarcityAlerts?.length > 0 ? `\nSCARCITY: ${scarcityAlerts.join(' ')}` : ''
+
+  const strategyLabel = STRATEGY_LABELS[strategy] ?? strategy
+  const puntLine = puntCategories.length > 0 ? ` Punting: ${puntCategories.join(', ')}.` : ''
+  const strategyLine = `\nStrategy: ${strategyLabel}.${puntLine} Injury tolerance: ${injuryTolerance}.`
 
   const user = `${numTeams} teams, pick position ${draftPosition} (${scoringFormat}).
 Round ${currentRound}, pick #${totalPicks + 1}. ${userPicksRemaining} roster spots left.
 My team: ${roster}
 Category status (current/benchmark[grade]): ${catStatus}
-Weak: ${weakCats || 'none'}. Strong: ${strongCats || 'none'}.${alertLine}
+Weak: ${weakCats || 'none'}. Strong: ${strongCats || 'none'}.${alertLine}${strategyLine}
 
 Top available by fit (use these exact ids in your response):
 ${candidates}`
@@ -139,9 +152,10 @@ My team: ${roster}. Need: ${weakCats || 'balanced'}. Watching: ${watchList}.`
 
 const COMPLETE_SYSTEM = `You are Billy Beane presenting your completed fantasy basketball team to ownership. The draft is done.
 
-Write your GM's season report. 3-4 sentences. What is the team built around? Where is the vulnerability and how will you attack the waiver wire to address it? End with one bold, specific prediction about the season.
+Write your GM's season report. Be specific and direct. No filler.
 
-Reply ONLY with raw JSON — no markdown, no explanation: {"outlook":"your 3-4 sentence GM season report"}`
+Reply ONLY with raw JSON — no markdown, no explanation:
+{"outlook":"3-4 sentence GM narrative — what the team is built around, the key vulnerability, and one bold specific prediction","strengths":["2-3 category labels that are genuinely strong"],"vulnerabilities":["1-3 category labels that are weak or at risk"],"riskNote":"one sentence about injury-risk players on the roster, or null if no injury risks"}`
 
 function buildCompleteMessages(leagueConfig, boardState, categoryGaps) {
   const { name, numTeams } = leagueConfig
@@ -149,7 +163,10 @@ function buildCompleteMessages(leagueConfig, boardState, categoryGaps) {
 
   const system = [{ type: 'text', text: COMPLETE_SYSTEM, cache_control: { type: 'ephemeral' } }]
 
-  const roster  = userPicksWithData.map(p => `${p.name}(${p.yahoo_positions.join('/')})`).join(', ')
+  const roster  = userPicksWithData.map(p => {
+    const injuryTag = p.injury_risk ? ` [INJURY RISK: ${p.injury_notes ?? 'history'}]` : ''
+    return `${p.name}(${p.yahoo_positions.join('/')}${injuryTag})`
+  }).join(', ')
   const grades  = categoryGaps.map(g => `${g.label}[${g.grade}]`).join(' ')
   const strong  = categoryGaps.filter(g => g.grade === 'strong').map(g => g.label).join(', ')
   const weak    = categoryGaps.filter(g => g.grade === 'weak').map(g => g.label).join(', ')

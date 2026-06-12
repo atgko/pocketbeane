@@ -7,7 +7,7 @@ import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
 const playerMap = buildPlayerMap(players)
 
 export default function DraftComplete({ league }) {
-  const [outlook, setOutlook] = useState(null)
+  const [recap, setRecap] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -55,7 +55,7 @@ export default function DraftComplete({ league }) {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'API error')
-      setOutlook(data.outlook)
+      setRecap(data)
     } catch (err) {
       setError(err.message)
     } finally {
@@ -140,7 +140,7 @@ export default function DraftComplete({ league }) {
 
       {/* Beane's Season Outlook */}
       <div className="bg-surface rounded-lg border border-pick/25 p-5">
-        <div className="flex items-center gap-2 mb-3">
+        <div className="flex items-center gap-2 mb-4">
           <div className="w-1.5 h-1.5 rounded-full bg-pick" />
           <h3 className="text-xs font-mono text-pick/80 uppercase tracking-wider">Beane's Season Outlook</h3>
         </div>
@@ -152,8 +152,51 @@ export default function DraftComplete({ league }) {
           </div>
         )}
 
-        {outlook && (
-          <p className="text-sm text-gray-200 leading-relaxed">{outlook}</p>
+        {recap && (
+          <div className="space-y-4">
+            {/* Strengths + Vulnerabilities */}
+            {(recap.strengths?.length > 0 || recap.vulnerabilities?.length > 0) && (
+              <div className="flex gap-4 flex-wrap">
+                {recap.strengths?.length > 0 && (
+                  <div>
+                    <p className="text-xs font-mono text-gray-600 mb-1.5">Strengths</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {recap.strengths.map(cat => (
+                        <span key={cat} className="text-xs font-mono px-2 py-0.5 rounded bg-green-500/15 text-green-400 border border-green-500/20">
+                          {cat}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {recap.vulnerabilities?.length > 0 && (
+                  <div>
+                    <p className="text-xs font-mono text-gray-600 mb-1.5">Vulnerabilities</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {recap.vulnerabilities.map(cat => (
+                        <span key={cat} className="text-xs font-mono px-2 py-0.5 rounded bg-red-500/15 text-red-400 border border-red-500/20">
+                          {cat}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Narrative */}
+            {recap.outlook && (
+              <p className="text-sm text-gray-200 leading-relaxed">{recap.outlook}</p>
+            )}
+
+            {/* Injury risk note */}
+            {recap.riskNote && (
+              <div className="flex items-start gap-2 pt-1">
+                <span className="text-yellow-500/70 text-xs mt-0.5 shrink-0">⚠</span>
+                <p className="text-xs font-mono text-yellow-400/70 leading-relaxed">{recap.riskNote}</p>
+              </div>
+            )}
+          </div>
         )}
 
         {error && (
