@@ -1,69 +1,38 @@
 # PocketBeane — Active Backlog
 
-Last updated: 2026-06-11
+Last updated: 2026-06-15
 
 Items are grouped by dependency tier. Within each tier, order reflects rough priority / logical sequencing.
 
 ---
 
-## Tier 0 — No external dependencies (build anytime)
+## Tier 1 — Yahoo-connected features
 
-### B-01 · Pre-Draft Philosophy Engine
-**Goal:** Let the user define their draft strategy before the draft starts. The AI engine adapts all recommendations to match.
 
-**Settings to expose:**
-- Category strategy: balanced / punt (select categories to deprioritize) / stars-and-scrubs
-- Injury tolerance: conservative / moderate / aggressive (willingness to draft injury-risk players)
-- Position priority: auto (current behavior) / manual rank
 
-**Strategy presets:**
-- "Beane Mode" — ADP value-first, positional scarcity aware, superstar-first early, balanced mid/late (current default, named)
-- Custom — user-defined from the settings above
-
-**Implementation:** Settings screen pre-draft. Store in localStorage per league. Pass philosophy as structured context in Step 5 Claude prompt.
-
----
-
-### B-02 · Sleeper Pick Radar
-**Goal:** Flag 3–5 players per draft who are undervalued relative to their ADP — the "hidden gem" feature.
-
-**Signal inputs (all already in `players.json`):**
-- ADP gap: player available significantly below projected ADP
-- `contract_year: true` — motivation flag (career year incentive)
-- Prior season trends: high per-game upside, small sample or injury-shortened
-
-**Output:** A dedicated panel or badge on the draft board — "Sleepers to Watch" — refreshed each round as players get drafted.
-
-**Implementation:** Extend `valueCalculator.js`. Render as a collapsible section in the recommendation panel or a separate tab.
-
----
-
-### B-03 · Draft Recap
-**Goal:** After the draft ends, deliver a Claude-synthesized summary of the team: strengths, weaknesses, category balance, and season outlook.
-
-**Output format:**
-- Projected category strengths (top 3) and weaknesses (bottom 2–3)
-- Risk flags (injury-risk players on the roster)
-- One-paragraph season outlook + narrative on the team's identity
-
-**Implementation:** Extend the existing `DraftComplete` screen. Add a "Get Recap" button that triggers a Claude call with the full 13-pick roster. Cap at 700 tokens.
-
----
-
-## Tier 1 — Requires Yahoo OAuth (#Y-01)
-
-### Y-01 · Yahoo OAuth 2.0 Integration
-**Goal:** Connect a Yahoo Fantasy account to PocketBeane so the app can read league and draft data.
+### Y-06 · Draft History Recap Page
+**Goal:** Render the full draft board from Yahoo data in a dedicated UI — round-by-round, user's picks highlighted, player names resolved, trade flags for players who moved teams mid-season.
 
 **Scope:**
-- OAuth 2.0 authorization flow (Yahoo as provider)
-- Access token + refresh token storage (server-side, not localStorage)
-- Token refresh logic (Yahoo tokens expire hourly)
-- Disconnect/re-auth option in settings
+- Pull from `/api/yahoo/league-full` (settings + standings + rosters + draft already working)
+- Round-by-round grid layout (12 teams × 13 rounds)
+- Highlight user's team column
+- Flag picks where `player.teamKey ≠ pick.teamKey` (traded players)
+- Unresolved player keys (cuts) shown as "—"
 
-**Implementation:** New Vercel Function `pages/api/auth/yahoo.js` for token exchange and refresh. Pattern mirrors `pages/api/recommend.js`. Store tokens server-side (encrypted cookie or Vercel KV).
+**Prerequisite:** Y-01 ✓
 
-**Risk:** Yahoo OAuth app approval can take a few days — apply early.
+---
+
+### Y-07 · League Context in AI Recommendations
+**Goal:** Wire the real league's stat categories and roster positions into the Claude recommendation prompt so advice is tailored to the actual scoring format rather than generic defaults.
+
+**Scope:**
+- On draft start, fetch league settings from Yahoo and store in league state
+- Inject `statCategories` (e.g. 9-cat H2H: FG%, FT%, 3PTM, PTS, REB, AST, ST, BLK, TO) and `rosterPositions` into the Claude prompt
+- Replace any hardcoded category assumptions in `recommend.js`
+
+**Prerequisite:** Y-01 ✓, Y-02
 
 ---
 
@@ -142,6 +111,11 @@ Items are grouped by dependency tier. Within each tier, order reflects rough pri
 | Beane's Take recommendation panel | Week 4 |
 | Recommendation caching | Week 4 |
 | Turn indicator, shortcuts modal, DraftComplete screen | Polish sprints |
+| B-01 · Pre-Draft Philosophy Engine | Beane Mode preset + custom strategy settings; localStorage per league |
+| B-02 · Sleeper Pick Radar | ADP gap + contract year signals; collapsible panel in recommendation UI |
+| B-03 · Draft Recap | "Get Recap" on DraftComplete screen; Claude call capped at 700 tokens |
+| Y-01 · Yahoo OAuth 2.0 Integration | Done — HTTPS local dev (mkcert + cross-env NODE_OPTIONS), AES-256 encrypted cookie, auto-refresh, Connect/Disconnect UI on home page |
+| Yahoo API data layer | Done — `/api/yahoo/league.js` + `/api/yahoo/league-full.js`; fetches settings, standings, rosters, full 156-pick draft board from TriStar Reboot (466.l.22207) |
 
 ---
 
