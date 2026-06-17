@@ -74,6 +74,17 @@ Items are grouped by dependency tier. Within each tier, order reflects rough pri
 
 ## Tier 2 — Speculative / Needs investigation
 
+### P-01 · Premium Refresh Gate (Monetization)
+**Goal:** Gate "Get Beane's Insights" manual refreshes behind a paid tier once billing infrastructure exists.
+
+**Current state:** Free tier has a 5-refresh-per-draft budget (implemented). Counter is visible in the UI. When exhausted, button is disabled with "No refreshes remaining."
+
+**Premium version:** Replace the disabled state with an upgrade CTA modal. Unlimited manual refreshes as a Pro feature. Budget constant (`REFRESH_BUDGET`) lives in `RecommendationPanel.jsx` — easy to raise or remove per tier.
+
+**Prerequisite:** Billing/subscription layer (Stripe or similar). Do not build until payment infra is in place.
+
+---
+
 ### S-01 · AI Autopick (Premium Feature Candidate)
 **Goal:** When connected to an active Yahoo draft, PocketBeane selects the pick automatically based on the configured strategy.
 

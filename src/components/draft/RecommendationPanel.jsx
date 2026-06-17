@@ -18,6 +18,8 @@ export default function RecommendationPanel({ league }) {
   const [autoAnalyzedForPick, setAutoAnalyzedForPick] = useState(null)
   // Tracks how many user picks we've already fired post-pick analysis for
   const [postPickAnalyzedForCount, setPostPickAnalyzedForCount] = useState(null)
+  // Manual refresh budget — resets each draft session (component mount)
+  const [refreshesUsed, setRefreshesUsed] = useState(0)
 
   const sportConfig = getSportConfig(league.config.sport)
   const numTeams = league.config.numTeams
@@ -49,7 +51,9 @@ export default function RecommendationPanel({ league }) {
 
   const userPickCount = boardState.userPicks.length
   const isRosterFull = boardState.userPicksRemaining <= 0
-  const canRefresh = !isMyTurn && !isRosterFull && !loading
+  const REFRESH_BUDGET = 5
+  const refreshesLeft = REFRESH_BUDGET - refreshesUsed
+  const canRefresh = !isMyTurn && !isRosterFull && !loading && refreshesLeft > 0
 
   // Project who will be drafted before the user's next pick (ADP order = available is pre-sorted).
   // boardState.available preserves players.json ADP order after filtering drafted players.
@@ -124,6 +128,7 @@ export default function RecommendationPanel({ league }) {
   }, [userPickCount, isMyTurn, isRosterFull])
 
   function handleRefreshClick() {
+    setRefreshesUsed(n => n + 1)
     runAnalysis('post-pick')
   }
 
@@ -144,17 +149,22 @@ export default function RecommendationPanel({ league }) {
             : `Opponents picking — Round ${currentRound}`}
         </p>
         {!isMyTurn && !isRosterFull && (
-          <button
-            onClick={handleRefreshClick}
-            disabled={!canRefresh}
-            className={`mt-3 w-full py-1.5 px-3 rounded text-xs font-mono font-semibold transition-colors ${
-              canRefresh
-                ? 'bg-white/5 text-gray-300 hover:bg-white/10 border border-border'
-                : 'bg-white/3 text-gray-600 cursor-not-allowed border border-transparent'
-            }`}
-          >
-            {loading ? 'Thinking…' : "Get Beane's Insights"}
-          </button>
+          <div className="mt-3">
+            <button
+              onClick={handleRefreshClick}
+              disabled={!canRefresh}
+              className={`w-full py-1.5 px-3 rounded text-xs font-mono font-semibold transition-colors ${
+                canRefresh
+                  ? 'bg-white/5 text-gray-300 hover:bg-white/10 border border-border'
+                  : 'bg-white/3 text-gray-600 cursor-not-allowed border border-transparent'
+              }`}
+            >
+              {loading ? 'Thinking…' : refreshesLeft === 0 ? "No refreshes remaining" : "Get Beane's Insights"}
+            </button>
+            <p className="text-xs font-mono text-gray-700 text-center mt-1.5">
+              {refreshesLeft} of {REFRESH_BUDGET} refreshes left this draft
+            </p>
+          </div>
         )}
       </div>
 
