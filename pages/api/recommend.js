@@ -5,7 +5,7 @@ const client = new Anthropic()
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
 
-  const { mode = 'auto', leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy = {} } = req.body
+  const { mode = 'auto', leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy = {}, snakeContext = {} } = req.body
 
   if (!leagueConfig || !boardState) {
     return res.status(400).json({ error: 'Missing required fields' })
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
   try {
     const { system, user, maxTokens } = buildMessages(
-      mode, leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy
+      mode, leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy, snakeContext
     )
 
     const message = await client.messages.create({
@@ -52,18 +52,26 @@ function fmt(val, isPct) {
   return isPct ? val.toFixed(3) : val.toFixed(1)
 }
 
-function buildMessages(mode, leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy) {
+function buildMessages(mode, leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy, snakeContext) {
   if (mode === 'advice')   return buildAdviceMessages(leagueConfig, boardState, categoryGaps, topCandidates)
   if (mode === 'complete') return buildCompleteMessages(leagueConfig, boardState, categoryGaps)
-  return buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy)
+  return buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy, snakeContext)
 }
 
 // ─── Auto mode — fires on user's pick turn ───────────────────────────────────
 
 const AUTO_SYSTEM = `You are Billy Beane — data-obsessed, unsentimental, decisive. You are the GM making a pick RIGHT NOW in a Yahoo fantasy basketball snake draft.
 
+You will receive a positional depth snapshot showing how many quality options survive at each position by your next pick. Use this to assess whether a position the team needs is genuinely drying up — not just losing one player, but losing the entire viable pool.
+
+URGENCY rules (strict):
+- Only prepend exactly 'URGENCY: ' to a reason when: (1) a position the team currently needs shows COLLAPSE or EMPTY at next pick, AND (2) skipping that position this round means the viable pool is effectively gone.
+- Do NOT use URGENCY: when the position is STABLE or THIN — those positions still have options.
+- Do NOT use URGENCY: on a pick just because an individual star will be gone. The question is whether the position's depth collapses.
+- Most picks should have no URGENCY. Reserve it for genuine inflection points.
+
 Reply ONLY with raw JSON — no markdown, no explanation, no extra text:
-{"picks":[{"id":"player-id","name":"Name","reason":"one confident Beane-voice sentence, specific about which category this fixes or which market mispricing you're exploiting"},{"id":"...","name":"...","reason":"..."},{"id":"...","name":"...","reason":"..."}],"scarcityAlerts":["string if urgency — omit or leave empty array if no urgency"],"summary":"2-3 sentences. GM voice. Specific categories. No filler."}`
+{"picks":[{"id":"player-id","name":"Name","reason":"1-2 sentences. Beane voice. Specific categories or market mispricing. Prepend 'URGENCY: ' only per the rules above."},{"id":"...","name":"...","reason":"..."},{"id":"...","name":"...","reason":"..."}],"summary":"2-3 sentences. GM voice. Specific categories. No filler."}`
 
 const STRATEGY_LABELS = {
   'beane':            'Beane Mode (ADP value-first)',
@@ -72,7 +80,7 @@ const STRATEGY_LABELS = {
   'punt':             'Punt Strategy',
 }
 
-function buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy = {}) {
+function buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy = {}, snakeContext = {}) {
   const { numTeams, draftPosition, scoringFormat, statCategories, rosterPositions } = leagueConfig
   const { userPicksWithData, totalPicks, currentRound, userPicksRemaining } = boardState
   const { strategy = 'beane', puntCategories = [], injuryTolerance = 'moderate' } = philosophy
@@ -104,6 +112,18 @@ function buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlert
   const puntLine = puntCategories.length > 0 ? ` Punting: ${puntCategories.join(', ')}.` : ''
   const strategyLine = `\nStrategy: ${strategyLabel}.${puntLine} Injury tolerance: ${injuryTolerance}.`
 
+  const { picksUntilNext, nextPickNum, projectedGone = [], positionalDepth = [] } = snakeContext
+
+  const depthLines = positionalDepth.length > 0
+    ? positionalDepth.map(d => `${d.pos}: ${d.nowCount} now → ${d.laterCount} at next pick [${d.severity}]`).join(', ')
+    : ''
+
+  const snakeLine = picksUntilNext > 0 && nextPickNum
+    ? `\nSnake window: ${picksUntilNext} opponent pick${picksUntilNext === 1 ? '' : 's'} before next turn (#${nextPickNum}).${depthLines ? `\nPositional depth (quality options now → at pick #${nextPickNum}): ${depthLines}.` : ''}`
+    : picksUntilNext === 0 && nextPickNum
+    ? `\nSnake window: consecutive picks — next turn is #${nextPickNum}, board essentially unchanged.`
+    : ''
+
   // Build scoring and roster context lines from Yahoo settings when available,
   // falling back to the standard 9-cat NBA defaults.
   const scoringLine = statCategories?.length
@@ -122,7 +142,7 @@ ${contextLines}
 Round ${currentRound}, pick #${totalPicks + 1}. ${userPicksRemaining} roster spots left.
 My team: ${roster}
 Category status (current/benchmark[grade]): ${catStatus}
-Weak: ${weakCats || 'none'}. Strong: ${strongCats || 'none'}.${alertLine}${strategyLine}
+Weak: ${weakCats || 'none'}. Strong: ${strongCats || 'none'}.${alertLine}${strategyLine}${snakeLine}
 
 Top available by fit (use these exact ids in your response):
 ${candidates}`

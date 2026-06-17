@@ -8,3 +8,12 @@ export function isUserTurn(pickNum, draftPosition, numTeams) {
     : numTeams - pickInRound + 1
   return position === draftPosition
 }
+
+// Returns the pick number of the user's next turn after currentPickNum.
+// Scans at most 2 full rounds forward to handle the snake turn-around.
+export function getNextUserPickNum(currentPickNum, draftPosition, numTeams) {
+  for (let pick = currentPickNum + 1; pick <= currentPickNum + 2 * numTeams; pick++) {
+    if (isUserTurn(pick, draftPosition, numTeams)) return pick
+  }
+  return null
+}

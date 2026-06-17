@@ -2,10 +2,10 @@ import { useState, useMemo, useRef, useEffect } from 'react'
 import players from '@/data/players.json'
 import { getSportConfig } from '@/config/sports'
 import { buildPlayerMap } from '@/utils/roster'
-import { isUserTurn } from '@/utils/snake'
+import { isUserTurn, getNextUserPickNum } from '@/utils/snake'
 import { computeBoardState } from '@/ai/boardState'
 import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
-import { computeScarcity, getSmartScarcityAlerts } from '@/ai/scarcity'
+import { computeScarcity, getSmartScarcityAlerts, computePositionalDepth } from '@/ai/scarcity'
 import { rankByFit, computeSleepers } from '@/ai/valueCalculator'
 
 const playerMap = buildPlayerMap(players)
@@ -32,6 +32,9 @@ export default function RecommendationPanel({ league }) {
   const isSnake = draftType === 'snake'
   const isMyTurn = isSnake ? isUserTurn(currentPickNum, draftPosition, numTeams) : true
 
+  const nextPickNum = isSnake ? getNextUserPickNum(currentPickNum, draftPosition, numTeams) : null
+  const picksUntilNext = nextPickNum != null ? nextPickNum - currentPickNum - 1 : 0
+
   const philosophy = league.config.philosophy ?? {}
 
   const { boardState, categoryGaps, scarcityAlerts, topCandidates, sleepers } = useMemo(() => {
@@ -46,6 +49,18 @@ export default function RecommendationPanel({ league }) {
 
   const isRosterFull = boardState.userPicksRemaining <= 0
   const canGetAdvice = !isMyTurn && !isRosterFull && currentRound !== lastAdviceRound && !loading
+
+  // Project who will be drafted before the user's next pick (ADP order = available is pre-sorted).
+  // boardState.available preserves players.json ADP order after filtering drafted players.
+  const projectedGone = picksUntilNext > 0
+    ? boardState.available.slice(0, picksUntilNext).map(p => `${p.name}(${p.yahoo_positions.join('/')})`)
+    : []
+
+  const positionalDepth = computePositionalDepth(
+    boardState.available, picksUntilNext, numTeams,
+    totalPicks, boardState.totalRosterSlots,
+    league.config, sportConfig
+  )
 
   // Build API payload (stable reference avoids stale closures in useEffect)
   const payloadRef = useRef(null)
@@ -68,6 +83,7 @@ export default function RecommendationPanel({ league }) {
     scarcityAlerts,
     topCandidates: topCandidates.slice(0, 8),
     philosophy,
+    snakeContext: { picksUntilNext, nextPickNum, projectedGone, positionalDepth },
   }
 
   async function runAnalysis(mode) {
@@ -154,53 +170,39 @@ export default function RecommendationPanel({ league }) {
           </div>
         )}
 
-        {result?.mode === 'auto' && (
-          <>
+        {result?.mode === 'auto' && (result.picks?.length > 0 || result.summary) && (
+          <div className="bg-surface rounded-lg border border-border p-4">
+            <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">My board</p>
             {result.picks?.length > 0 && (
-              <div className="bg-surface rounded-lg border border-border p-4">
-                <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">My board</p>
-                <div className="space-y-3">
-                  {result.picks.map((pick, i) => {
-                    const player = playerMap[pick.id]
-                    return (
-                      <div key={pick.id} className="flex gap-3">
-                        <span className="text-xs font-mono text-pick mt-0.5 w-3 shrink-0 font-bold">{i + 1}</span>
-                        <div className="min-w-0">
-                          <div className="flex items-baseline gap-1.5 flex-wrap">
-                            <span className="text-xs font-semibold text-white">{pick.name}</span>
-                            {player && (
-                              <span className="text-xs font-mono text-gray-600">
-                                {player.yahoo_positions.join('/')} · {player.adp.toFixed(1)}
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">{pick.reason}</p>
+              <div className="space-y-3">
+                {result.picks.map((pick, i) => {
+                  const player = playerMap[pick.id]
+                  return (
+                    <div key={pick.id} className="flex gap-3">
+                      <span className="text-xs font-mono text-pick mt-0.5 w-3 shrink-0 font-bold">{i + 1}</span>
+                      <div className="min-w-0">
+                        <div className="flex items-baseline gap-1.5 flex-wrap">
+                          <span className="text-xs font-semibold text-white">{pick.name}</span>
+                          {player && (
+                            <span className="text-xs font-mono text-gray-600">
+                              {player.yahoo_positions.join('/')} · {player.adp.toFixed(1)}
+                            </span>
+                          )}
                         </div>
+                        <PickReason reason={pick.reason} />
                       </div>
-                    )
-                  })}
-                </div>
+                    </div>
+                  )
+                })}
               </div>
             )}
-
             {result.summary && (
-              <div className="bg-surface rounded-lg border border-border p-4">
-                <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-2">The read</p>
-                <p className="text-xs text-gray-300 leading-relaxed">{result.summary}</p>
-              </div>
+              <>
+                <div className="border-t border-border mt-3 pt-3" />
+                <p className="text-xs text-gray-400 leading-relaxed">{result.summary}</p>
+              </>
             )}
-
-            {result.scarcityAlerts?.length > 0 && (
-              <div className="bg-surface rounded-lg border border-yellow-500/20 p-4">
-                <p className="text-xs font-mono text-yellow-500/70 uppercase tracking-wider mb-2">Urgency</p>
-                <ul className="space-y-1">
-                  {result.scarcityAlerts.map((a, i) => (
-                    <li key={i} className="text-xs font-mono text-yellow-400/80 leading-relaxed">{a}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </>
+          </div>
         )}
 
         {/* Sleeper Radar — always visible when there are sleepers and draft is active */}
@@ -238,6 +240,19 @@ export default function RecommendationPanel({ league }) {
 
     </div>
   )
+}
+
+function PickReason({ reason }) {
+  const urgencyPrefix = 'URGENCY: '
+  if (reason?.startsWith(urgencyPrefix)) {
+    return (
+      <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
+        <span className="text-yellow-400 font-semibold font-mono">URGENCY: </span>
+        {reason.slice(urgencyPrefix.length)}
+      </p>
+    )
+  }
+  return <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">{reason}</p>
 }
 
 function CategoryBar({ gap }) {
