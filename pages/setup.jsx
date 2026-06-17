@@ -51,8 +51,10 @@ export default function Setup() {
         ...prev,
         yahooStatCategories: data.statCategories,
         yahooRosterPositions: data.rosterPositions,
-        ...(data.numTeams && { numTeams: data.numTeams }),
+        ...(data.numTeams   && { numTeams: data.numTeams }),
         ...(data.leagueName && !prev.name && { name: data.leagueName }),
+        ...(data.draftType  && { draftType: data.draftType }),
+        ...(data.auctionBudget != null && { auctionBudget: data.auctionBudget }),
       }))
       setSyncState('success')
     } catch (err) {

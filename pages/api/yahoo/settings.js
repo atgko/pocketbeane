@@ -34,6 +34,8 @@ function parseSettings(data) {
     rosterPositions,
     numTeams: meta?.num_teams ? Number(meta.num_teams) : null,
     leagueName: meta?.name ?? null,
+    draftType: meta?.draft_type ?? null,
+    auctionBudget: meta?.draft_type === 'auction' ? Number(meta.faar_budget ?? 200) : null,
   }
 }
 

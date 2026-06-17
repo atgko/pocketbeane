@@ -27,7 +27,8 @@ export const DEFAULT_CONFIG = {
   // IL slots are post-draft only, not part of the draft roster
   ilSlots: 1,
   ilPlusSlots: 0,
-  draftType: 'snake',      // 'snake' | 'auction' (auction = future)
+  draftType: 'snake',      // 'snake' | 'auction'
+  auctionBudget: 200,      // total budget per team (auction only), Yahoo default is $200
   scoringFormat: '9cat',   // '9cat' | '8cat' | 'points' (non-9cat = future)
   philosophy: { ...DEFAULT_PHILOSOPHY },
   // Yahoo-synced league settings — null until synced via setup page
@@ -53,7 +54,7 @@ const makeLeague = (config) => {
     id: `league-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
     config: merged,
     status: 'drafting',
-    // Pick shape: { playerId, pickNumber, draftedBy: 'user' | 'opponent' }
+    // Pick shape: { playerId, pickNumber, draftedBy: 'user' | 'opponent', price: number | null }
     draft: { picks: [] },
     rosterSlots: generateRosterSlots(merged),
   }

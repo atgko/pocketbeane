@@ -185,6 +185,22 @@ function parseCSV(filePath) {
   return rows
 }
 
+// Derives a baseline auction dollar value from ADP using a log-linear model calibrated
+// for a standard 10-team, $200 budget, 13-roster-spot league.
+// Replace with real FantasyPros auction CSV data when available each season.
+//   adp=1   → $70  (top overall pick)
+//   adp=10  → $37
+//   adp=50  → $15
+//   adp=130 → $1   (last rostered player in 10×13 league)
+//   adp>130 → $1   (effectively undrafted)
+const AUCTION_A = 70
+const AUCTION_B = 69 / Math.log(130)  // calibrated so adp=130 → $1
+
+function deriveAuctionValue(adp) {
+  const raw = AUCTION_A - AUCTION_B * Math.log(Math.max(1, adp))
+  return Math.max(1, Math.round(raw))
+}
+
 // Parse numeric — return null for empty/missing, float otherwise
 function parseNum(val, decimals = 1) {
   if (val === null || val === undefined || val === '' || val === 'N/A') return null
@@ -398,6 +414,7 @@ for (const fp of topPlayers) {
     yahoo_positions: positions,
     adp:           fp.adp,
     adp_source:    ADP_SOURCE,
+    auction_value: deriveAuctionValue(fp.adp),
     prior_season: row ? {
       pts:      parseNum(col(row, 'PTS', 'pts', 'PPG'), 1),
       reb:      parseNum(col(row, 'TRB', 'REB', 'reb', 'RPG'), 1),
