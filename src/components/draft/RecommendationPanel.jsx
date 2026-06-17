@@ -55,6 +55,8 @@ export default function RecommendationPanel({ league }) {
       numTeams,
       draftPosition,
       scoringFormat: league.config.scoringFormat,
+      statCategories: league.config.yahooStatCategories ?? null,
+      rosterPositions: league.config.yahooRosterPositions ?? null,
     },
     boardState: {
       userPicksWithData: boardState.userPicks.map(p => playerMap[p.playerId]).filter(Boolean),

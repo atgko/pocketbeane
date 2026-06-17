@@ -60,9 +60,7 @@ function buildMessages(mode, leagueConfig, boardState, categoryGaps, scarcityAle
 
 // ─── Auto mode — fires on user's pick turn ───────────────────────────────────
 
-const AUTO_SYSTEM = `You are Billy Beane — data-obsessed, unsentimental, decisive. You are the GM making a pick RIGHT NOW in a Yahoo 9-category fantasy basketball snake draft.
-
-Categories scored: PTS, REB, AST, STL, BLK, TO (lower is better), FG%, FT%, 3PM.
+const AUTO_SYSTEM = `You are Billy Beane — data-obsessed, unsentimental, decisive. You are the GM making a pick RIGHT NOW in a Yahoo fantasy basketball snake draft.
 
 Reply ONLY with raw JSON — no markdown, no explanation, no extra text:
 {"picks":[{"id":"player-id","name":"Name","reason":"one confident Beane-voice sentence, specific about which category this fixes or which market mispricing you're exploiting"},{"id":"...","name":"...","reason":"..."},{"id":"...","name":"...","reason":"..."}],"scarcityAlerts":["string if urgency — omit or leave empty array if no urgency"],"summary":"2-3 sentences. GM voice. Specific categories. No filler."}`
@@ -75,7 +73,7 @@ const STRATEGY_LABELS = {
 }
 
 function buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy = {}) {
-  const { numTeams, draftPosition, scoringFormat } = leagueConfig
+  const { numTeams, draftPosition, scoringFormat, statCategories, rosterPositions } = leagueConfig
   const { userPicksWithData, totalPicks, currentRound, userPicksRemaining } = boardState
   const { strategy = 'beane', puntCategories = [], injuryTolerance = 'moderate' } = philosophy
 
@@ -106,7 +104,21 @@ function buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlert
   const puntLine = puntCategories.length > 0 ? ` Punting: ${puntCategories.join(', ')}.` : ''
   const strategyLine = `\nStrategy: ${strategyLabel}.${puntLine} Injury tolerance: ${injuryTolerance}.`
 
+  // Build scoring and roster context lines from Yahoo settings when available,
+  // falling back to the standard 9-cat NBA defaults.
+  const scoringLine = statCategories?.length
+    ? `Scoring: ${statCategories.map(c => c.higherIsBetter ? c.name : `${c.name}↓`).join(', ')}`
+    : 'Scoring: PTS, REB, AST, STL, BLK, TO↓, FG%, FT%, 3PM'
+
+  const starterSlots = rosterPositions?.filter(p => p.isStarter)
+  const slotsLine = starterSlots?.length
+    ? `Roster: ${starterSlots.map(p => `${p.position}×${p.count}`).join(' ')}`
+    : null
+
+  const contextLines = [scoringLine, slotsLine].filter(Boolean).join('\n')
+
   const user = `${numTeams} teams, pick position ${draftPosition} (${scoringFormat}).
+${contextLines}
 Round ${currentRound}, pick #${totalPicks + 1}. ${userPicksRemaining} roster spots left.
 My team: ${roster}
 Category status (current/benchmark[grade]): ${catStatus}

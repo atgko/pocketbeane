@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import useLeagueStore, { DEFAULT_CONFIG } from '@/store/leagueStore'
 import LeagueSetup from '@/components/league/LeagueSetup'
+import { useYahooAuth } from '@/hooks/useYahooAuth'
 
 export default function Setup() {
   const router = useRouter()
@@ -10,6 +11,9 @@ export default function Setup() {
   const { createLeague, updateLeagueConfig, getLeague } = useLeagueStore()
   const [mounted, setMounted] = useState(false)
   const [config, setConfig] = useState({ ...DEFAULT_CONFIG, name: '' })
+  const [syncState, setSyncState] = useState(null) // null | 'loading' | 'success' | 'error'
+  const [syncError, setSyncError] = useState(null)
+  const yahoo = useYahooAuth()
 
   useEffect(() => { setMounted(true) }, [])
 
@@ -34,6 +38,28 @@ export default function Setup() {
           : [...cats, catId],
       }
     })
+
+  const handleYahooSync = async () => {
+    if (!config.yahooLeagueKey) return
+    setSyncState('loading')
+    setSyncError(null)
+    try {
+      const res = await fetch(`/api/yahoo/settings?league_key=${encodeURIComponent(config.yahooLeagueKey)}`)
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Sync failed')
+      setConfig((prev) => ({
+        ...prev,
+        yahooStatCategories: data.statCategories,
+        yahooRosterPositions: data.rosterPositions,
+        ...(data.numTeams && { numTeams: data.numTeams }),
+        ...(data.leagueName && !prev.name && { name: data.leagueName }),
+      }))
+      setSyncState('success')
+    } catch (err) {
+      setSyncError(err.message)
+      setSyncState('error')
+    }
+  }
 
   const handleSave = () => {
     if (editId) {
@@ -80,6 +106,48 @@ export default function Setup() {
             onUpdate={updateField}
             onToggleCategory={toggleCategory}
           />
+
+          {yahoo.connected && (
+            <div className="mt-4 bg-surface rounded-lg border border-border p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-semibold text-gray-300">Sync from Yahoo</p>
+                  <p className="text-xs text-gray-600 mt-0.5 font-mono">
+                    Pull real stat categories and roster slots into the AI prompt.
+                  </p>
+                </div>
+                {config.yahooStatCategories && syncState !== 'success' && (
+                  <span className="text-xs font-mono text-green-400/70">
+                    ✓ {config.yahooStatCategories.length} cats synced
+                  </span>
+                )}
+                {syncState === 'success' && (
+                  <span className="text-xs font-mono text-green-400/70">
+                    ✓ Synced — {config.yahooStatCategories?.length} cats · {config.numTeams} teams
+                  </span>
+                )}
+              </div>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={config.yahooLeagueKey ?? ''}
+                  onChange={(e) => updateField('yahooLeagueKey', e.target.value)}
+                  placeholder="Yahoo league key, e.g. 466.l.22207"
+                  className="flex-1 bg-bg border border-border rounded px-3 py-1.5 text-xs text-white font-mono focus:outline-none focus:border-pick placeholder:text-gray-700"
+                />
+                <button
+                  onClick={handleYahooSync}
+                  disabled={!config.yahooLeagueKey || syncState === 'loading'}
+                  className="px-4 py-1.5 bg-white/5 border border-border text-gray-300 rounded text-xs font-mono hover:bg-white/10 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                >
+                  {syncState === 'loading' ? 'Syncing…' : 'Sync'}
+                </button>
+              </div>
+              {syncState === 'error' && (
+                <p className="text-xs text-red-400 font-mono">{syncError}</p>
+              )}
+            </div>
+          )}
 
           <div className="mt-6 flex gap-3">
             <button

@@ -24,17 +24,6 @@ Items are grouped by dependency tier. Within each tier, order reflects rough pri
 
 ---
 
-### Y-07 · League Context in AI Recommendations
-**Goal:** Wire the real league's stat categories and roster positions into the Claude recommendation prompt so advice is tailored to the actual scoring format rather than generic defaults.
-
-**Scope:**
-- On draft start, fetch league settings from Yahoo and store in league state
-- Inject `statCategories` (e.g. 9-cat H2H: FG%, FT%, 3PTM, PTS, REB, AST, ST, BLK, TO) and `rosterPositions` into the Claude prompt
-- Replace any hardcoded category assumptions in `recommend.js`
-
-**Prerequisite:** Y-01 ✓, Y-02
-
----
 
 ### Y-02 · League Selection After Auth
 **Goal:** After connecting Yahoo, let the user select which Yahoo leagues to link to each PocketBeane league slot.
@@ -116,6 +105,7 @@ Items are grouped by dependency tier. Within each tier, order reflects rough pri
 | B-03 · Draft Recap | "Get Recap" on DraftComplete screen; Claude call capped at 700 tokens |
 | Y-01 · Yahoo OAuth 2.0 Integration | Done — HTTPS local dev (mkcert + cross-env NODE_OPTIONS), AES-256 encrypted cookie, auto-refresh, Connect/Disconnect UI on home page |
 | Yahoo API data layer | Done — `/api/yahoo/league.js` + `/api/yahoo/league-full.js`; fetches settings, standings, rosters, full 156-pick draft board from TriStar Reboot (466.l.22207) |
+| Y-07 · League Context in AI Recommendations | Done — `/api/yahoo/settings.js` endpoint; "Sync from Yahoo" in setup page; statCategories + rosterPositions threaded into Claude prompt; hardcoded 9-cat string replaced with dynamic scoring line |
 
 ---
 

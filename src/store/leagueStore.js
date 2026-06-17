@@ -30,6 +30,10 @@ export const DEFAULT_CONFIG = {
   draftType: 'snake',      // 'snake' | 'auction' (auction = future)
   scoringFormat: '9cat',   // '9cat' | '8cat' | 'points' (non-9cat = future)
   philosophy: { ...DEFAULT_PHILOSOPHY },
+  // Yahoo-synced league settings — null until synced via setup page
+  yahooLeagueKey: null,
+  yahooStatCategories: null,   // [{ id, name, higherIsBetter }]
+  yahooRosterPositions: null,  // [{ position, count, isStarter }]
 }
 
 // Returns [{ type, playerId: null }, ...] in display order
