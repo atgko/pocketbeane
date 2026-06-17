@@ -170,7 +170,7 @@ export default function RecommendationPanel({ league }) {
           </div>
         )}
 
-        {result?.mode === 'auto' && (result.picks?.length > 0 || result.summary) && (
+        {result?.mode === 'auto' && result.picks?.length > 0 && (
           <div className="bg-surface rounded-lg border border-border p-4">
             <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">My board</p>
             {result.picks?.length > 0 && (
@@ -195,12 +195,6 @@ export default function RecommendationPanel({ league }) {
                   )
                 })}
               </div>
-            )}
-            {result.summary && (
-              <>
-                <div className="border-t border-border mt-3 pt-3" />
-                <p className="text-xs text-gray-400 leading-relaxed">{result.summary}</p>
-              </>
             )}
           </div>
         )}

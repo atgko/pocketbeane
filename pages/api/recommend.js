@@ -71,7 +71,7 @@ URGENCY rules (strict):
 - Most picks should have no URGENCY. Reserve it for genuine inflection points.
 
 Reply ONLY with raw JSON — no markdown, no explanation, no extra text:
-{"picks":[{"id":"player-id","name":"Name","reason":"1-2 sentences. Beane voice. Specific categories or market mispricing. Prepend 'URGENCY: ' only per the rules above."},{"id":"...","name":"...","reason":"..."},{"id":"...","name":"...","reason":"..."}],"summary":"2-3 sentences. GM voice. Specific categories. No filler."}`
+{"picks":[{"id":"player-id","name":"Name","reason":"Pick 1 gets 3-4 sentences: open with the specific stats and categories this player addresses, then weave in the strategic context — what the snake window and positional depth mean for this decision, and how this pick sets up the team. One cohesive paragraph, Beane voice. Prepend 'URGENCY: ' only per the rules above."},{"id":"...","name":"...","reason":"1-2 sentences. Why this alternative, what it offers differently."},{"id":"...","name":"...","reason":"1-2 sentences. Why this alternative, what it offers differently."}]}`
 
 const STRATEGY_LABELS = {
   'beane':            'Beane Mode (ADP value-first)',
