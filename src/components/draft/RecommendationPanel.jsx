@@ -16,8 +16,8 @@ export default function RecommendationPanel({ league }) {
   const [error, setError] = useState(null)
   // Track which pick number we auto-analyzed for (prevents re-triggering on same turn)
   const [autoAnalyzedForPick, setAutoAnalyzedForPick] = useState(null)
-  // Rate-limit advice requests to 1 per round during opponent turns
-  const [lastAdviceRound, setLastAdviceRound] = useState(null)
+  // Tracks how many user picks we've already fired post-pick analysis for
+  const [postPickAnalyzedForCount, setPostPickAnalyzedForCount] = useState(null)
 
   const sportConfig = getSportConfig(league.config.sport)
   const numTeams = league.config.numTeams
@@ -47,8 +47,9 @@ export default function RecommendationPanel({ league }) {
     return { boardState: bs, categoryGaps: gaps, scarcityAlerts: alerts, topCandidates: ranked, sleepers: sleeperList }
   }, [picks, league.rosterSlots, league.config.philosophy])
 
+  const userPickCount = boardState.userPicks.length
   const isRosterFull = boardState.userPicksRemaining <= 0
-  const canGetAdvice = !isMyTurn && !isRosterFull && currentRound !== lastAdviceRound && !loading
+  const canRefresh = !isMyTurn && !isRosterFull && !loading
 
   // Project who will be drafted before the user's next pick (ADP order = available is pre-sorted).
   // boardState.available preserves players.json ADP order after filtering drafted players.
@@ -114,9 +115,16 @@ export default function RecommendationPanel({ league }) {
     }
   }, [currentPickNum, isMyTurn, isRosterFull])
 
-  function handleAdviceClick() {
-    setLastAdviceRound(currentRound)
-    runAnalysis('advice')
+  // Auto-generate post-pick forward view once after each user pick (during opponent turns)
+  useEffect(() => {
+    if (!isMyTurn && !isRosterFull && userPickCount > 0 && userPickCount !== postPickAnalyzedForCount) {
+      setPostPickAnalyzedForCount(userPickCount)
+      runAnalysis('post-pick')
+    }
+  }, [userPickCount, isMyTurn, isRosterFull])
+
+  function handleRefreshClick() {
+    runAnalysis('post-pick')
   }
 
   return (
@@ -137,15 +145,15 @@ export default function RecommendationPanel({ league }) {
         </p>
         {!isMyTurn && !isRosterFull && (
           <button
-            onClick={handleAdviceClick}
-            disabled={!canGetAdvice || loading}
+            onClick={handleRefreshClick}
+            disabled={!canRefresh}
             className={`mt-3 w-full py-1.5 px-3 rounded text-xs font-mono font-semibold transition-colors ${
-              canGetAdvice && !loading
+              canRefresh
                 ? 'bg-white/5 text-gray-300 hover:bg-white/10 border border-border'
                 : 'bg-white/3 text-gray-600 cursor-not-allowed border border-transparent'
             }`}
           >
-            {loading ? 'Thinking…' : canGetAdvice ? "Get Beane's Insights" : `Used this round — available Round ${currentRound + 1}`}
+            {loading ? 'Thinking…' : "Get Beane's Insights"}
           </button>
         )}
       </div>
@@ -164,38 +172,32 @@ export default function RecommendationPanel({ league }) {
           </div>
         )}
 
-        {result?.mode === 'advice' && result.briefing && (
+        {result?.picks?.length > 0 && (
           <div className="bg-surface rounded-lg border border-border p-4">
-            <p className="text-sm text-gray-200 leading-relaxed italic">"{result.briefing}"</p>
-          </div>
-        )}
-
-        {result?.mode === 'auto' && result.picks?.length > 0 && (
-          <div className="bg-surface rounded-lg border border-border p-4">
-            <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">My board</p>
-            {result.picks?.length > 0 && (
-              <div className="space-y-3">
-                {result.picks.map((pick, i) => {
-                  const player = playerMap[pick.id]
-                  return (
-                    <div key={pick.id} className="flex gap-3">
-                      <span className="text-xs font-mono text-pick mt-0.5 w-3 shrink-0 font-bold">{i + 1}</span>
-                      <div className="min-w-0">
-                        <div className="flex items-baseline gap-1.5 flex-wrap">
-                          <span className="text-xs font-semibold text-white">{pick.name}</span>
-                          {player && (
-                            <span className="text-xs font-mono text-gray-600">
-                              {player.yahoo_positions.join('/')} · {player.adp.toFixed(1)}
-                            </span>
-                          )}
-                        </div>
-                        <PickReason reason={pick.reason} />
+            <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">
+              {result.mode === 'post-pick' ? 'On my radar' : 'My board'}
+            </p>
+            <div className="space-y-3">
+              {result.picks.map((pick, i) => {
+                const player = playerMap[pick.id]
+                return (
+                  <div key={pick.id} className="flex gap-3">
+                    <span className="text-xs font-mono text-pick mt-0.5 w-3 shrink-0 font-bold">{i + 1}</span>
+                    <div className="min-w-0">
+                      <div className="flex items-baseline gap-1.5 flex-wrap">
+                        <span className="text-xs font-semibold text-white">{pick.name}</span>
+                        {player && (
+                          <span className="text-xs font-mono text-gray-600">
+                            {player.yahoo_positions.join('/')} · {player.adp.toFixed(1)}
+                          </span>
+                        )}
                       </div>
+                      <PickReason reason={pick.reason} />
                     </div>
-                  )
-                })}
-              </div>
-            )}
+                  </div>
+                )
+              })}
+            </div>
           </div>
         )}
 

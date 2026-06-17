@@ -53,8 +53,8 @@ function fmt(val, isPct) {
 }
 
 function buildMessages(mode, leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy, snakeContext) {
-  if (mode === 'advice')   return buildAdviceMessages(leagueConfig, boardState, categoryGaps, topCandidates)
-  if (mode === 'complete') return buildCompleteMessages(leagueConfig, boardState, categoryGaps)
+  if (mode === 'post-pick') return buildPostPickMessages(leagueConfig, boardState, categoryGaps, topCandidates, philosophy, snakeContext)
+  if (mode === 'complete')  return buildCompleteMessages(leagueConfig, boardState, categoryGaps)
   return buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy, snakeContext)
 }
 
@@ -148,6 +148,82 @@ Top available by fit (use these exact ids in your response):
 ${candidates}`
 
   return { system, user, maxTokens: 800 }
+}
+
+// ─── Post-pick mode — fires after user picks, sets up next turn ──────────────
+
+const POST_PICK_SYSTEM = `You are Billy Beane. Your GM just locked in their pick. Now brief them on what to target when their next turn comes around in this snake draft.
+
+Give 2-3 targets to watch. Pick 1 gets 3-4 sentences: open by acknowledging what the pick just addressed for the team, then pivot to what the team needs next and why this target fits — specific categories, whether they'll survive to the next pick based on the snake window, and how they complete the roster being built. Picks 2 and 3 are 1-2 sentences each as contingency options. Beane voice throughout.
+
+Reply ONLY with raw JSON — no markdown, no explanation, no extra text:
+{"picks":[{"id":"player-id","name":"Name","reason":"..."},{"id":"...","name":"...","reason":"..."},{"id":"...","name":"...","reason":"..."}]}`
+
+function buildPostPickMessages(leagueConfig, boardState, categoryGaps, topCandidates, philosophy = {}, snakeContext = {}) {
+  const { numTeams, draftPosition, scoringFormat, statCategories, rosterPositions } = leagueConfig
+  const { userPicksWithData, totalPicks, currentRound, userPicksRemaining } = boardState
+  const { strategy = 'beane', puntCategories = [], injuryTolerance = 'moderate' } = philosophy
+
+  const system = [{ type: 'text', text: POST_PICK_SYSTEM, cache_control: { type: 'ephemeral' } }]
+
+  const lastPick = userPicksWithData[userPicksWithData.length - 1]
+  const lastPickLine = lastPick
+    ? `Just drafted: ${lastPick.name}(${lastPick.yahoo_positions.join('/')}).`
+    : ''
+
+  const roster = userPicksWithData.length > 0
+    ? userPicksWithData.map(p => `${p.name}(${p.yahoo_positions.join('/')})`).join(', ')
+    : 'Empty'
+
+  const weakCats  = categoryGaps.filter(g => g.grade === 'weak' || g.grade === 'missing').map(g => g.label).join(', ')
+  const strongCats = categoryGaps.filter(g => g.grade === 'strong').map(g => g.label).join(', ')
+
+  const catStatus = categoryGaps.map(g => {
+    const isPct = g.id.includes('pct')
+    return `${g.label}:${g.current != null ? fmt(g.current, isPct) : '—'}/${fmt(g.benchmark, isPct)}[${g.grade}]`
+  }).join(' ')
+
+  const candidates = (topCandidates ?? []).slice(0, 8).map(c => {
+    const p = c.player
+    const s = p.prior_season
+    const injuryTag = p.injury_risk ? ` ⚠️injury` : ''
+    return `${p.id}|${p.name}(${p.yahoo_positions.join('/')},ADP${p.adp.toFixed(1)}${injuryTag}):pts=${fmt(s?.pts,false)} reb=${fmt(s?.reb,false)} ast=${fmt(s?.ast,false)} stl=${fmt(s?.stl,false)} blk=${fmt(s?.blk,false)} 3pm=${fmt(s?.three_pm,false)} fg%=${fmt(s?.fg_pct,true)} ft%=${fmt(s?.ft_pct,true)} to=${fmt(s?.to,false)}`
+  }).join('\n')
+
+  const strategyLabel = STRATEGY_LABELS[strategy] ?? strategy
+  const puntLine = puntCategories.length > 0 ? ` Punting: ${puntCategories.join(', ')}.` : ''
+  const strategyLine = `\nStrategy: ${strategyLabel}.${puntLine} Injury tolerance: ${injuryTolerance}.`
+
+  const { picksUntilNext, nextPickNum, positionalDepth = [] } = snakeContext
+  const depthLines = positionalDepth.length > 0
+    ? positionalDepth.map(d => `${d.pos}: ${d.nowCount} now → ${d.laterCount} at next pick [${d.severity}]`).join(', ')
+    : ''
+  const snakeLine = picksUntilNext > 0 && nextPickNum
+    ? `\nSnake window: ${picksUntilNext} opponent pick${picksUntilNext === 1 ? '' : 's'} before next turn (#${nextPickNum}).${depthLines ? `\nPositional depth (quality options now → at pick #${nextPickNum}): ${depthLines}.` : ''}`
+    : picksUntilNext === 0 && nextPickNum
+    ? `\nSnake window: consecutive picks — next turn is #${nextPickNum}, board essentially unchanged.`
+    : ''
+
+  const scoringLine = statCategories?.length
+    ? `Scoring: ${statCategories.map(c => c.higherIsBetter ? c.name : `${c.name}↓`).join(', ')}`
+    : 'Scoring: PTS, REB, AST, STL, BLK, TO↓, FG%, FT%, 3PM'
+  const starterSlots = rosterPositions?.filter(p => p.isStarter)
+  const slotsLine = starterSlots?.length
+    ? `Roster: ${starterSlots.map(p => `${p.position}×${p.count}`).join(' ')}`
+    : null
+  const contextLines = [scoringLine, slotsLine].filter(Boolean).join('\n')
+
+  const user = `${numTeams} teams, pick position ${draftPosition} (${scoringFormat}).
+${contextLines}
+${lastPickLine}
+My team now: ${roster}
+Category status: ${catStatus}
+Weak: ${weakCats || 'none'}. Strong: ${strongCats || 'none'}.${strategyLine}${snakeLine}
+
+Watch list — likely still available at next pick (use these exact ids):
+${candidates}`
+
+  return { system, user, maxTokens: 700 }
 }
 
 // ─── Advice mode — fires during opponent turns ────────────────────────────────
