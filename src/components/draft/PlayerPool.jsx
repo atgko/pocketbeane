@@ -24,6 +24,10 @@ export default function PlayerPool() {
   const [undoTarget, setUndoTarget] = useState(null)
   const [blockMessage, setBlockMessage] = useState(null)
   const [reassignError, setReassignError] = useState(null)
+  const [pendingPrice, setPendingPrice] = useState('')
+  const pendingPriceRef = useRef('')
+  const priceInputRef = useRef(null)
+  const draftTypeRef = useRef(draftType)
 
   const searchRef = useRef(null)
   const rowRefs = useRef({})
@@ -96,6 +100,8 @@ export default function PlayerPool() {
   useEffect(() => { undoTargetRef.current   = undoTarget },    [undoTarget])
   useEffect(() => { isMyTurnRef.current     = isMyTurn },      [isMyTurn])
   useEffect(() => { isRosterFullRef.current = isRosterFull },  [isRosterFull])
+  useEffect(() => { pendingPriceRef.current = pendingPrice },  [pendingPrice])
+  useEffect(() => { draftTypeRef.current   = draftType },     [draftType])
 
   const showBlock = useCallback((msg) => {
     if (blockTimerRef.current) clearTimeout(blockTimerRef.current)
@@ -128,6 +134,7 @@ export default function PlayerPool() {
           setSearch('')
         } else {
           setPendingPick(null)
+          setPendingPrice('')
           setUndoTarget(null)
         }
         return
@@ -190,6 +197,10 @@ export default function PlayerPool() {
             setPendingPick(null)
             return
           }
+          if (draftTypeRef.current === 'auction') {
+            priceInputRef.current?.focus()
+            return
+          }
         }
         if (pick.draftedBy === 'opponent' && isMyTurnRef.current && !isRosterFullRef.current) {
           showBlock("It's your pick — use U to draft for your team.")
@@ -230,7 +241,20 @@ export default function PlayerPool() {
       return
     }
     const pickNumber = picks.length + 1
-    addPick(activeLeagueId, { playerId: player.id, draftedBy, pickNumber })
+    if (draftType === 'auction' && draftedBy === 'user') {
+      setPendingPick({ playerId: player.id, draftedBy: 'user' })
+      return
+    }
+    addPick(activeLeagueId, { playerId: player.id, draftedBy, pickNumber, price: null })
+  }
+
+  function onConfirmWithPrice(price) {
+    const pick = pendingPick
+    if (!pick || pick.draftedBy !== 'user') return
+    const pickNumber = picks.length + 1
+    addPick(activeLeagueId, { ...pick, pickNumber, price })
+    setPendingPick(null)
+    setPendingPrice('')
   }
 
   function handleEditPick(pick) {
@@ -273,7 +297,16 @@ export default function PlayerPool() {
       />
 
       {pendingPick && (
-        <PendingBanner pendingPick={pendingPick} players={players} onCancel={() => setPendingPick(null)} />
+        <PendingBanner
+          pendingPick={pendingPick}
+          players={players}
+          onCancel={() => { setPendingPick(null); setPendingPrice('') }}
+          isAuction={draftType === 'auction'}
+          pendingPrice={pendingPrice}
+          onPriceChange={setPendingPrice}
+          onConfirmWithPrice={onConfirmWithPrice}
+          priceInputRef={priceInputRef}
+        />
       )}
 
       {blockMessage && (
@@ -340,19 +373,47 @@ export default function PlayerPool() {
   )
 }
 
-function PendingBanner({ pendingPick, players, onCancel }) {
+function PendingBanner({ pendingPick, players, onCancel, isAuction, pendingPrice, onPriceChange, onConfirmWithPrice, priceInputRef }) {
   const player = players.find(p => p.id === pendingPick.playerId)
   const isUser = pendingPick.draftedBy === 'user'
+  const needsPrice = isAuction && isUser
   return (
     <div className={`flex items-center justify-between px-4 py-2 rounded-lg text-xs font-mono border ${
       isUser
         ? 'bg-pick/10 border-pick/40 text-pick'
         : 'bg-gray-500/10 border-gray-500/40 text-gray-400'
     }`}>
-      <span>
+      <span className="flex items-center gap-1.5 flex-wrap">
         {isUser ? 'Your pick:' : 'Opponent:'}{' '}
         <span className="font-semibold text-white">{player?.name}</span>
-        {' '}— press <kbd className="px-1 py-0.5 rounded bg-white/10">Enter</kbd> to confirm
+        {needsPrice ? (
+          <>
+            <span className="text-gray-400">·</span>
+            <span>$</span>
+            <input
+              ref={priceInputRef}
+              type="number"
+              min={1}
+              max={999}
+              value={pendingPrice}
+              onChange={e => onPriceChange(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  const price = Number(pendingPrice)
+                  if (price >= 1) onConfirmWithPrice(price)
+                }
+                if (e.key === 'Escape') onCancel()
+                e.stopPropagation()
+              }}
+              autoFocus
+              placeholder="0"
+              className="w-12 bg-white/10 border border-pick/30 rounded px-1.5 py-0.5 text-white text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            />
+            <span className="text-gray-400">— Enter to confirm</span>
+          </>
+        ) : (
+          <span>— press <kbd className="px-1 py-0.5 rounded bg-white/10">Enter</kbd> to confirm</span>
+        )}
       </span>
       <button onClick={onCancel} className="hover:text-white transition-colors">✕</button>
     </div>

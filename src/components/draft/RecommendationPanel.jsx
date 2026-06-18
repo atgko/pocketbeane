@@ -32,7 +32,9 @@ export default function RecommendationPanel({ league }) {
   const currentRound = Math.ceil(currentPickNum / numTeams)
 
   const isSnake = draftType === 'snake'
-  const isMyTurn = isSnake ? isUserTurn(currentPickNum, draftPosition, numTeams) : true
+  const isMyTurn = isSnake
+    ? isUserTurn(currentPickNum, draftPosition, numTeams)
+    : ((currentPickNum - 1) % numTeams) + 1 === draftPosition
 
   const nextPickNum = isSnake ? getNextUserPickNum(currentPickNum, draftPosition, numTeams) : null
   const picksUntilNext = nextPickNum != null ? nextPickNum - currentPickNum - 1 : 0
@@ -51,6 +53,16 @@ export default function RecommendationPanel({ league }) {
 
   const userPickCount = boardState.userPicks.length
   const isRosterFull = boardState.userPicksRemaining <= 0
+
+  const auctionBudget = league.config.auctionBudget ?? 200
+  const budgetSpent = !isSnake
+    ? picks.filter(p => p.draftedBy === 'user').reduce((sum, p) => sum + (p.price ?? 0), 0)
+    : 0
+  const budgetRemaining = auctionBudget - budgetSpent
+  const slotsLeft = boardState.userPicksRemaining
+  const spendableBudget = slotsLeft > 1 ? budgetRemaining - (slotsLeft - 1) : budgetRemaining
+  const avgPerSlot = slotsLeft > 0 ? budgetRemaining / slotsLeft : 0
+
   const REFRESH_BUDGET = 5
   const refreshesLeft = REFRESH_BUDGET - refreshesUsed
   const canRefresh = !isMyTurn && !isRosterFull && !loading && refreshesLeft > 0
@@ -89,6 +101,12 @@ export default function RecommendationPanel({ league }) {
     topCandidates: topCandidates.slice(0, 8),
     philosophy,
     snakeContext: { picksUntilNext, nextPickNum, projectedGone, positionalDepth },
+    auctionContext: !isSnake ? {
+      nominationNumber: totalPicks + 1,
+      budgetRemaining,
+      spendableBudget: Math.max(1, spendableBudget),
+      avgCostPerRemainingSpot: Math.round(avgPerSlot * 10) / 10,
+    } : {},
   }
 
   async function runAnalysis(mode) {
@@ -115,7 +133,7 @@ export default function RecommendationPanel({ league }) {
   useEffect(() => {
     if (isMyTurn && !isRosterFull && currentPickNum !== autoAnalyzedForPick) {
       setAutoAnalyzedForPick(currentPickNum)
-      runAnalysis('auto')
+      runAnalysis(isSnake ? 'auto' : 'nomination')
     }
   }, [currentPickNum, isMyTurn, isRosterFull])
 
@@ -123,13 +141,13 @@ export default function RecommendationPanel({ league }) {
   useEffect(() => {
     if (!isMyTurn && !isRosterFull && userPickCount > 0 && userPickCount !== postPickAnalyzedForCount) {
       setPostPickAnalyzedForCount(userPickCount)
-      runAnalysis('post-pick')
+      runAnalysis(isSnake ? 'post-pick' : 'auction-watching')
     }
   }, [userPickCount, isMyTurn, isRosterFull])
 
   function handleRefreshClick() {
     setRefreshesUsed(n => n + 1)
-    runAnalysis('post-pick')
+    runAnalysis(isSnake ? 'post-pick' : 'auction-watching')
   }
 
   return (
@@ -145,9 +163,17 @@ export default function RecommendationPanel({ league }) {
           {isRosterFull
             ? 'Draft complete — see full analysis below'
             : isMyTurn
-            ? 'Auto-analyzing your pick…'
-            : `Opponents picking — Round ${currentRound}`}
+            ? (isSnake ? 'Auto-analyzing your pick…' : 'Your nomination turn')
+            : (isSnake ? `Opponents picking — Round ${currentRound}` : `Watching — Pick #${totalPicks + 1}`)}
         </p>
+        {!isSnake && !isRosterFull && (
+          <div className="mt-2 flex items-baseline justify-between">
+            <span className="text-xs font-mono text-white font-semibold">${budgetRemaining} left</span>
+            <span className="text-xs font-mono text-gray-600">
+              {slotsLeft} spots · ~${Math.round(avgPerSlot)}/slot
+            </span>
+          </div>
+        )}
         {!isMyTurn && !isRosterFull && (
           <div className="mt-3">
             <button
@@ -159,7 +185,7 @@ export default function RecommendationPanel({ league }) {
                   : 'bg-white/3 text-gray-600 cursor-not-allowed border border-transparent'
               }`}
             >
-              {loading ? 'Thinking…' : refreshesLeft === 0 ? "No refreshes remaining" : "Get Beane's Insights"}
+              {loading ? 'Thinking…' : refreshesLeft === 0 ? "No refreshes remaining" : isSnake ? "Get Beane's Insights" : "Get Market Read"}
             </button>
             <p className="text-xs font-mono text-gray-700 text-center mt-1.5">
               {refreshesLeft} of {REFRESH_BUDGET} refreshes left this draft
@@ -185,7 +211,9 @@ export default function RecommendationPanel({ league }) {
         {result?.picks?.length > 0 && (
           <div className="bg-surface rounded-lg border border-border p-4">
             <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">
-              {result.mode === 'post-pick' ? 'On my radar' : 'My board'}
+              {result.mode === 'post-pick' ? 'On my radar'
+                : result.mode === 'nomination' ? 'Nomination targets'
+                : 'My board'}
             </p>
             <div className="space-y-3">
               {result.picks.map((pick, i) => {
@@ -208,6 +236,13 @@ export default function RecommendationPanel({ league }) {
                 )
               })}
             </div>
+          </div>
+        )}
+
+        {result?.briefing && (
+          <div className="bg-surface rounded-lg border border-border p-4">
+            <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">Market read</p>
+            <p className="text-xs text-gray-400 leading-relaxed">{result.briefing}</p>
           </div>
         )}
 
