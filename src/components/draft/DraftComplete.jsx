@@ -73,6 +73,18 @@ export default function DraftComplete({ league }) {
         </div>
         <div className="text-right">
           <p className="text-xs font-mono text-gray-600">{userPicks.length} players · {league.config.scoringFormat}</p>
+          {league.config.draftType === 'auction' && (() => {
+            const budget = league.config.auctionBudget ?? 200
+            const spent = userPicks.reduce((sum, p) => sum + (p.price ?? 0), 0)
+            const remaining = budget - spent
+            return (
+              <p className="text-xs font-mono text-gray-500 mt-0.5">
+                <span className="text-white font-semibold">${spent}</span>
+                <span className="text-gray-600"> / ${budget} spent · </span>
+                <span className={remaining >= 0 ? 'text-green-400' : 'text-red-400'}>${Math.abs(remaining)} {remaining >= 0 ? 'left' : 'over'}</span>
+              </p>
+            )
+          })()}
         </div>
       </div>
 

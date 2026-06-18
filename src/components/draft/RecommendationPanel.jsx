@@ -20,6 +20,11 @@ export default function RecommendationPanel({ league }) {
   const [postPickAnalyzedForCount, setPostPickAnalyzedForCount] = useState(null)
   // Manual refresh budget — resets each draft session (component mount)
   const [refreshesUsed, setRefreshesUsed] = useState(0)
+  // Bid-advice state
+  const [bidSearch, setBidSearch] = useState('')
+  const [bidPlayer, setBidPlayer] = useState(null)
+  const [bidAmount, setBidAmount] = useState('')
+  const bidSearchRef = useRef(null)
 
   const sportConfig = getSportConfig(league.config.sport)
   const numTeams = league.config.numTeams
@@ -109,7 +114,7 @@ export default function RecommendationPanel({ league }) {
     } : {},
   }
 
-  async function runAnalysis(mode) {
+  async function runAnalysis(mode, extra = {}) {
     setLoading(true)
     setError(null)
     setResult(null)
@@ -117,7 +122,7 @@ export default function RecommendationPanel({ league }) {
       const res = await fetch('/api/recommend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mode, ...payloadRef.current }),
+        body: JSON.stringify({ mode, ...payloadRef.current, ...extra }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'API error')
@@ -128,6 +133,16 @@ export default function RecommendationPanel({ league }) {
       setLoading(false)
     }
   }
+
+  function handleBidAdvice() {
+    const amount = Number(bidAmount)
+    if (!bidPlayer || amount < 1) return
+    runAnalysis('bid-advice', { bidTarget: { player: bidPlayer, currentBid: amount } })
+  }
+
+  const bidMatches = bidSearch.trim().length > 1 && !bidPlayer
+    ? players.filter(p => p.name.toLowerCase().includes(bidSearch.trim().toLowerCase())).slice(0, 5)
+    : []
 
   // Auto-generate on user's turn — fires once per turn (tracked by pick number)
   useEffect(() => {
@@ -175,21 +190,77 @@ export default function RecommendationPanel({ league }) {
           </div>
         )}
         {!isMyTurn && !isRosterFull && (
-          <div className="mt-3">
-            <button
-              onClick={handleRefreshClick}
-              disabled={!canRefresh}
-              className={`w-full py-1.5 px-3 rounded text-xs font-mono font-semibold transition-colors ${
-                canRefresh
-                  ? 'bg-white/5 text-gray-300 hover:bg-white/10 border border-border'
-                  : 'bg-white/3 text-gray-600 cursor-not-allowed border border-transparent'
-              }`}
-            >
-              {loading ? 'Thinking…' : refreshesLeft === 0 ? "No refreshes remaining" : isSnake ? "Get Beane's Insights" : "Get Market Read"}
-            </button>
-            <p className="text-xs font-mono text-gray-700 text-center mt-1.5">
-              {refreshesLeft} of {REFRESH_BUDGET} refreshes left this draft
-            </p>
+          <div className="mt-3 space-y-3">
+            <div>
+              <button
+                onClick={handleRefreshClick}
+                disabled={!canRefresh}
+                className={`w-full py-1.5 px-3 rounded text-xs font-mono font-semibold transition-colors ${
+                  canRefresh
+                    ? 'bg-white/5 text-gray-300 hover:bg-white/10 border border-border'
+                    : 'bg-white/3 text-gray-600 cursor-not-allowed border border-transparent'
+                }`}
+              >
+                {loading ? 'Thinking…' : refreshesLeft === 0 ? "No refreshes remaining" : isSnake ? "Get Beane's Insights" : "Get Market Read"}
+              </button>
+              <p className="text-xs font-mono text-gray-700 text-center mt-1.5">
+                {refreshesLeft} of {REFRESH_BUDGET} refreshes left this draft
+              </p>
+            </div>
+
+            {!isSnake && (
+              <div className="pt-3 border-t border-border/50">
+                <p className="text-xs font-mono text-gray-600 mb-1.5">On the block</p>
+                <div className="relative">
+                  <input
+                    ref={bidSearchRef}
+                    type="text"
+                    value={bidPlayer ? bidPlayer.name : bidSearch}
+                    onChange={e => { setBidSearch(e.target.value); setBidPlayer(null) }}
+                    placeholder="Search player…"
+                    className="w-full bg-white/5 border border-border rounded px-2.5 py-1.5 text-xs text-white placeholder-gray-600 font-mono focus:outline-none focus:border-pick/50"
+                  />
+                  {bidMatches.length > 0 && (
+                    <div className="absolute top-full left-0 right-0 z-10 mt-0.5 bg-[#1a1a1a] border border-border rounded overflow-hidden">
+                      {bidMatches.map(p => (
+                        <button
+                          key={p.id}
+                          onClick={() => { setBidPlayer(p); setBidSearch(''); bidSearchRef.current?.blur() }}
+                          className="w-full text-left px-2.5 py-1.5 text-xs font-mono text-gray-300 hover:bg-white/10 transition-colors"
+                        >
+                          {p.name} <span className="text-gray-600">{p.yahoo_positions.join('/')}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                {bidPlayer && (
+                  <div className="flex gap-1.5 mt-1.5">
+                    <span className="text-gray-500 text-xs font-mono self-center">$</span>
+                    <input
+                      type="number"
+                      min={1}
+                      value={bidAmount}
+                      onChange={e => setBidAmount(e.target.value)}
+                      onKeyDown={e => { if (e.key === 'Enter') handleBidAdvice() }}
+                      placeholder="bid"
+                      className="w-14 bg-white/5 border border-border rounded px-2 py-1 text-xs text-white font-mono text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:outline-none focus:border-pick/50"
+                    />
+                    <button
+                      onClick={handleBidAdvice}
+                      disabled={Number(bidAmount) < 1 || loading}
+                      className={`flex-1 py-1 px-2 rounded text-xs font-mono font-semibold transition-colors ${
+                        Number(bidAmount) >= 1 && !loading
+                          ? 'bg-white/5 text-gray-300 hover:bg-white/10 border border-border'
+                          : 'bg-white/3 text-gray-600 cursor-not-allowed border border-transparent'
+                      }`}
+                    >
+                      {loading ? 'Thinking…' : 'Get ceiling'}
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -205,6 +276,23 @@ export default function RecommendationPanel({ league }) {
         {error && (
           <div className="bg-surface rounded-lg border border-red-500/20 p-4">
             <p className="text-xs text-red-400 font-mono">{error}</p>
+          </div>
+        )}
+
+        {result?.verdict && (
+          <div className="bg-surface rounded-lg border border-border p-4">
+            <div className="flex items-baseline justify-between mb-2">
+              <p className="text-xs font-mono text-gray-500 uppercase tracking-wider">Bid ceiling</p>
+              <span className={`text-xs font-mono font-semibold px-1.5 py-0.5 rounded ${
+                result.verdict === 'buy'     ? 'text-green-400 bg-green-500/10' :
+                result.verdict === 'stretch' ? 'text-yellow-400 bg-yellow-500/10' :
+                                               'text-red-400 bg-red-500/10'
+              }`}>
+                {result.verdict === 'buy' ? 'BUY' : result.verdict === 'stretch' ? 'STRETCH' : 'PASS'}
+              </span>
+            </div>
+            <p className="text-2xl font-bold text-white font-mono mb-2">${result.ceiling}</p>
+            <p className="text-xs text-gray-400 leading-relaxed">{result.reason}</p>
           </div>
         )}
 

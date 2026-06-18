@@ -163,7 +163,7 @@ export default function PlayerPool() {
           showBlock('Your roster is full. Undo a pick if you made a mistake.')
           return
         }
-        if (!isMyTurnRef.current) {
+        if (!isMyTurnRef.current && draftTypeRef.current !== 'auction') {
           showBlock("It's not your pick — log an opponent pick first (O).")
           return
         }
@@ -174,7 +174,7 @@ export default function PlayerPool() {
 
       if (e.key.toLowerCase() === 'o' && selectedRef.current !== null) {
         e.preventDefault()
-        if (isMyTurnRef.current && !isRosterFullRef.current) {
+        if (isMyTurnRef.current && !isRosterFullRef.current && draftTypeRef.current !== 'auction') {
           showBlock("It's your pick! Use U to draft a player for your team.")
           return
         }
@@ -192,7 +192,7 @@ export default function PlayerPool() {
             setPendingPick(null)
             return
           }
-          if (!isMyTurnRef.current) {
+          if (!isMyTurnRef.current && draftTypeRef.current !== 'auction') {
             showBlock("It's not your pick.")
             setPendingPick(null)
             return
@@ -202,7 +202,7 @@ export default function PlayerPool() {
             return
           }
         }
-        if (pick.draftedBy === 'opponent' && isMyTurnRef.current && !isRosterFullRef.current) {
+        if (pick.draftedBy === 'opponent' && isMyTurnRef.current && !isRosterFullRef.current && draftTypeRef.current !== 'auction') {
           showBlock("It's your pick — use U to draft for your team.")
           setPendingPick(null)
           return
@@ -231,12 +231,12 @@ export default function PlayerPool() {
         showBlock('Your roster is full. Undo a pick if you made a mistake.')
         return
       }
-      if (!isMyTurn) {
+      if (!isMyTurn && draftType !== 'auction') {
         showBlock("It's not your pick — log an opponent pick first (O).")
         return
       }
     }
-    if (draftedBy === 'opponent' && isMyTurn && !isRosterFull) {
+    if (draftedBy === 'opponent' && isMyTurn && !isRosterFull && draftType !== 'auction') {
       showBlock("It's your pick! Use U or click Me to draft a player.")
       return
     }
@@ -277,9 +277,11 @@ export default function PlayerPool() {
   const currentRound = Math.ceil(currentPickNum / numTeams)
   const turnLabel = isRosterFull
     ? null
-    : isMyTurn
-      ? `Your pick — R${currentRound} · #${currentPickNum}`
-      : `Opponents — R${currentRound} · #${currentPickNum}`
+    : draftType === 'auction'
+      ? (isMyTurn ? `Your nomination — #${currentPickNum}` : `Nomination #${currentPickNum}`)
+      : isMyTurn
+        ? `Your pick — R${currentRound} · #${currentPickNum}`
+        : `Opponents — R${currentRound} · #${currentPickNum}`
 
   return (
     <div className="flex flex-col gap-3">
@@ -344,6 +346,7 @@ export default function PlayerPool() {
                 onDraftAsOpponent={() => handleDraftAs(player, 'opponent')}
                 onEdit={() => handleEditPick(pickMap[player.id])}
                 rowRef={el => { rowRefs.current[i] = el }}
+                isAuction={draftType === 'auction'}
               />
             ))}
           </tbody>
@@ -421,7 +424,7 @@ function PendingBanner({ pendingPick, players, onCancel, isAuction, pendingPrice
 }
 
 function PlayerRow({
-  player, rank, pick, isSelected, isPending, pendingDraftedBy, isMyTurn,
+  player, rank, pick, isSelected, isPending, pendingDraftedBy, isMyTurn, isAuction,
   onClick, onDraftAsUser, onDraftAsOpponent, onEdit, rowRef,
 }) {
   const isDrafted = !!pick
@@ -483,22 +486,22 @@ function PlayerRow({
             <button
               onClick={e => { e.stopPropagation(); onDraftAsUser() }}
               className={`text-xs px-1.5 py-0.5 rounded font-mono transition-colors ${
-                isMyTurn
+                isMyTurn || isAuction
                   ? 'bg-pick/20 text-pick hover:bg-pick/40'
                   : 'bg-gray-700/40 text-gray-600 cursor-not-allowed'
               }`}
-              title={isMyTurn ? 'Draft for my team' : "Not your turn"}
+              title={isMyTurn || isAuction ? 'Draft for my team' : "Not your turn"}
             >
               Me
             </button>
             <button
               onClick={e => { e.stopPropagation(); onDraftAsOpponent() }}
               className={`text-xs px-1.5 py-0.5 rounded font-mono transition-colors ${
-                !isMyTurn
+                !isMyTurn || isAuction
                   ? 'bg-gray-500/20 text-gray-400 hover:bg-gray-500/40'
                   : 'bg-gray-700/40 text-gray-600 cursor-not-allowed'
               }`}
-              title={!isMyTurn ? 'Log as opponent pick' : "It's your turn"}
+              title="Log as opponent pick"
             >
               Opp
             </button>

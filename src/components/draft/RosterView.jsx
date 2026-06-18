@@ -31,6 +31,7 @@ export default function RosterView({ league }) {
     }, 180)
   }
 
+  const isAuction = config.draftType === 'auction'
   const userPicks = picks.filter(p => p.draftedBy === 'user')
   const slots = computeRosterAssignment(config, userPicks, playerMap, sportConfig)
   const isFull = userPicks.length >= slots.length
@@ -81,7 +82,7 @@ export default function RosterView({ league }) {
           style={{ opacity: flipping ? 0 : 1, transform: flipping ? 'translateY(4px)' : 'translateY(0)' }}
         >
           {showHistory ? (
-            <PickHistory picks={picks} playerMap={playerMap} onEdit={pick => setUndoTarget(pick)} />
+            <PickHistory picks={picks} playerMap={playerMap} onEdit={pick => setUndoTarget(pick)} isAuction={isAuction} />
           ) : (
             <div className="h-full flex flex-col">
               {starterSlots.map((slot, i) => (
@@ -91,6 +92,7 @@ export default function RosterView({ league }) {
                   player={playerMap[slot.playerId]}
                   pick={slot.playerId ? pickByPlayerId[slot.playerId] : null}
                   onEdit={pick => setUndoTarget(pick)}
+                  isAuction={isAuction}
                 />
               ))}
               {benchSlots.map((slot, i) => (
@@ -101,6 +103,7 @@ export default function RosterView({ league }) {
                   pick={slot.playerId ? pickByPlayerId[slot.playerId] : null}
                   onEdit={pick => setUndoTarget(pick)}
                   isBench
+                  isAuction={isAuction}
                 />
               ))}
             </div>
@@ -129,7 +132,7 @@ export default function RosterView({ league }) {
   )
 }
 
-function SlotRow({ slot, player, pick, isBench, onEdit }) {
+function SlotRow({ slot, player, pick, isBench, onEdit, isAuction }) {
   return (
     <div className="flex-1 flex items-center gap-2 min-h-0 group">
       <span className={`text-xs font-mono w-8 shrink-0 ${isBench ? 'text-gray-600' : 'text-gray-500'}`}>
@@ -138,6 +141,9 @@ function SlotRow({ slot, player, pick, isBench, onEdit }) {
       {player ? (
         <>
           <span className="text-xs text-white truncate flex-1">{player.name}</span>
+          {isAuction && pick?.price != null && (
+            <span className="text-xs font-mono text-gray-500 shrink-0">${pick.price}</span>
+          )}
           <button
             onClick={() => onEdit(pick)}
             className="text-xs text-gray-700 hover:text-gray-300 opacity-0 group-hover:opacity-100 transition-all shrink-0 ml-auto px-1"
@@ -153,7 +159,7 @@ function SlotRow({ slot, player, pick, isBench, onEdit }) {
   )
 }
 
-function PickHistory({ picks, playerMap, onEdit }) {
+function PickHistory({ picks, playerMap, onEdit, isAuction }) {
   if (picks.length === 0) {
     return (
       <div className="h-full flex items-center justify-center">
@@ -180,6 +186,9 @@ function PickHistory({ picks, playerMap, onEdit }) {
             <span className={`text-xs truncate flex-1 ${isUser ? 'text-white' : 'text-gray-500'}`}>
               {player?.name ?? '—'}
             </span>
+            {isAuction && isUser && pick.price != null && (
+              <span className="text-xs font-mono text-gray-500 shrink-0">${pick.price}</span>
+            )}
             <button
               onClick={() => onEdit(pick)}
               className="text-xs text-gray-700 hover:text-gray-300 opacity-0 group-hover:opacity-100 transition-all shrink-0 ml-auto px-1"

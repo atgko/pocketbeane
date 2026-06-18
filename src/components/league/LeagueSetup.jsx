@@ -18,11 +18,19 @@ const STRATEGY_OPTIONS = [
   { value: 'punt',             label: 'Punt Strategy' },
 ]
 
+const AUCTION_STRATEGY_OPTIONS = [
+  { value: 'beane',            label: 'Value Hunt' },
+  { value: 'balanced',         label: 'Balanced' },
+  { value: 'stars-and-scrubs', label: 'Stars & Scrubs' },
+  { value: 'budget-control',   label: 'Budget Control' },
+]
+
 const STRATEGY_DESCRIPTIONS = {
   'beane':            'ADP value-first — exploit market mispricings, fill categories in the middle rounds.',
   'balanced':         'Even spread across all categories and positions from round one.',
   'stars-and-scrubs': 'Lock in elite production early, fill remaining spots with high-volume cheap picks.',
   'punt':             'Concede selected categories and dominate the rest.',
+  'budget-control':   'Hold reserves, let opponents overspend early, then dominate when the market is broke.',
 }
 
 const INJURY_TOLERANCE_OPTIONS = [
@@ -93,10 +101,29 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory }) {
           <ToggleGroup
             options={DRAFT_TYPE_OPTIONS}
             value={config.draftType}
-            onChange={v => onUpdate('draftType', v)}
+            onChange={v => {
+              onUpdate('draftType', v)
+              const strategy = config.philosophy?.strategy
+              if (v === 'snake' && strategy === 'budget-control') {
+                onUpdate('philosophy', { ...config.philosophy, strategy: 'beane' })
+              } else if (v === 'auction' && strategy === 'punt') {
+                onUpdate('philosophy', { ...config.philosophy, strategy: 'beane' })
+              }
+            }}
           />
           {config.draftType === 'auction' && (
-            <p className="text-xs text-value mt-1.5 font-mono">Auction coming in a future phase — snake only for now.</p>
+            <div className="mt-2 flex items-center gap-2">
+              <span className="text-xs font-mono text-gray-500">$</span>
+              <input
+                type="number"
+                min={1}
+                max={9999}
+                value={config.auctionBudget ?? 200}
+                onChange={e => onUpdate('auctionBudget', Math.max(1, Number(e.target.value)))}
+                className="w-20 bg-bg border border-border rounded px-2 py-1 text-xs text-white font-mono focus:outline-none focus:border-pick [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              />
+              <span className="text-xs font-mono text-gray-600">budget per team</span>
+            </div>
           )}
         </div>
 
@@ -176,7 +203,7 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory }) {
       <div>
         <label className="block text-xs text-gray-400 mb-1.5">Draft Strategy</label>
         <ToggleGroup
-          options={STRATEGY_OPTIONS}
+          options={config.draftType === 'auction' ? AUCTION_STRATEGY_OPTIONS : STRATEGY_OPTIONS}
           value={config.philosophy?.strategy ?? 'beane'}
           onChange={v => onUpdate('philosophy', {
             ...config.philosophy,
