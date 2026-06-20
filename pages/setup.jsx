@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import useLeagueStore, { DEFAULT_CONFIG } from '@/store/leagueStore'
 import LeagueSetup from '@/components/league/LeagueSetup'
 import { useYahooAuth } from '@/hooks/useYahooAuth'
@@ -8,22 +8,35 @@ import { useYahooAuth } from '@/hooks/useYahooAuth'
 export default function Setup() {
   const router = useRouter()
   const { id: editId } = router.query
-  const { createLeague, updateLeagueConfig, getLeague } = useLeagueStore()
+  const { createLeague, updateLeagueConfig, getLeague, importDraft, setActiveLeague } = useLeagueStore()
   const [mounted, setMounted] = useState(false)
   const [config, setConfig] = useState({ ...DEFAULT_CONFIG, name: '' })
   const [syncState, setSyncState] = useState(null) // null | 'loading' | 'success' | 'error'
   const [syncError, setSyncError] = useState(null)
+  const [yahooLeagues, setYahooLeagues] = useState([])
+  const [leaguesLoading, setLeaguesLoading] = useState(false)
   const yahoo = useYahooAuth()
 
   useEffect(() => { setMounted(true) }, [])
 
-  // Seed form when editing an existing league
   useEffect(() => {
     if (mounted && editId) {
       const league = getLeague(editId)
-      if (league) setConfig({ ...DEFAULT_CONFIG, ...league.config })
+      if (league) {
+        setConfig({ ...DEFAULT_CONFIG, ...league.config })
+        if (league.config.yahooStatCategories) setSyncState('success')
+      }
     }
   }, [mounted, editId])
+
+  useEffect(() => {
+    if (!mounted || !yahoo.connected) return
+    setLeaguesLoading(true)
+    fetch('/api/yahoo/my-leagues')
+      .then(r => r.json())
+      .then(d => { setYahooLeagues(d.leagues ?? []); setLeaguesLoading(false) })
+      .catch(() => setLeaguesLoading(false))
+  }, [mounted, yahoo.connected])
 
   const updateField = (field, value) =>
     setConfig((prev) => ({ ...prev, [field]: value }))
@@ -39,41 +52,66 @@ export default function Setup() {
       }
     })
 
-  const handleYahooSync = async () => {
-    if (!config.yahooLeagueKey) return
+  const handleLeagueSelect = useCallback(async (leagueKey, leagueName) => {
+    if (!leagueKey) return
     setSyncState('loading')
     setSyncError(null)
     try {
-      const res = await fetch(`/api/yahoo/settings?league_key=${encodeURIComponent(config.yahooLeagueKey)}`)
+      const res = await fetch(`/api/yahoo/settings?league_key=${encodeURIComponent(leagueKey)}`)
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Sync failed')
-      setConfig((prev) => ({
+      const ilCount = data.rosterPositions?.find(p => p.position === 'IL')?.count ?? null
+      const ilPlusCount = data.rosterPositions?.find(p => p.position === 'IL+')?.count ?? null
+
+      setConfig(prev => ({
         ...prev,
+        yahooLeagueKey: leagueKey,
+        yahooLeagueName: leagueName ?? data.leagueName ?? null,
         yahooStatCategories: data.statCategories,
         yahooRosterPositions: data.rosterPositions,
-        ...(data.numTeams   && { numTeams: data.numTeams }),
+        ...(data.numTeams && { numTeams: data.numTeams }),
         ...(data.leagueName && !prev.name && { name: data.leagueName }),
-        ...(data.draftType  && { draftType: data.draftType }),
+        ...(data.draftType && { draftType: data.draftType }),
         ...(data.auctionBudget != null && { auctionBudget: data.auctionBudget }),
+        ...(ilCount !== null && { ilSlots: ilCount }),
+        ...(ilPlusCount !== null && { ilPlusSlots: ilPlusCount }),
       }))
       setSyncState('success')
     } catch (err) {
       setSyncError(err.message)
       setSyncState('error')
     }
-  }
+  }, [])
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (editId) {
       updateLeagueConfig(editId, config)
       router.push('/')
-    } else {
-      createLeague(config)
-      router.push('/draft')
+      return
     }
+
+    const leagueId = createLeague(config)
+    setActiveLeague(leagueId)
+
+    if (config.yahooLeagueKey) {
+      try {
+        const res = await fetch(`/api/yahoo/sync-draft?leagueKey=${encodeURIComponent(config.yahooLeagueKey)}`)
+        const data = await res.json()
+        if (res.ok && data.total > 0) {
+          importDraft(leagueId, data.picks, data.draftPosition)
+          router.push('/season')
+          return
+        }
+      } catch {
+        // Draft sync failed — fall through to draft board
+      }
+    }
+
+    router.push('/draft')
   }
 
   const isEditing = Boolean(editId)
+  const isYahooSynced = syncState === 'success' || Boolean(config.yahooStatCategories)
 
   if (!mounted) return null
 
@@ -84,7 +122,9 @@ export default function Setup() {
       </Head>
       <main className="min-h-screen bg-bg text-gray-200 p-8">
         <div className="max-w-xl mx-auto">
-          <div className="mb-8 flex items-center gap-4">
+
+          {/* Header */}
+          <div className="mb-6 flex items-center gap-4">
             <button
               onClick={() => router.push('/')}
               className="text-gray-500 hover:text-gray-300 text-sm transition-colors"
@@ -103,53 +143,88 @@ export default function Setup() {
             </div>
           </div>
 
-          <LeagueSetup
-            config={config}
-            onUpdate={updateField}
-            onToggleCategory={toggleCategory}
-          />
+          {/* League Name */}
+          <div className="bg-surface rounded-lg border border-border px-5 py-4 mb-4">
+            <label className="block text-xs text-gray-400 mb-1.5">League Name</label>
+            <input
+              type="text"
+              value={config.name}
+              onChange={e => updateField('name', e.target.value)}
+              className="w-full bg-bg border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-pick"
+              placeholder="e.g. Main League, Mock Draft #1"
+            />
+          </div>
 
+          {/* Yahoo Sync */}
           {yahoo.connected && (
-            <div className="mt-4 bg-surface rounded-lg border border-border p-4 space-y-3">
+            <div className="mb-4 bg-surface rounded-lg border border-border p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs font-semibold text-gray-300">Sync from Yahoo</p>
                   <p className="text-xs text-gray-600 mt-0.5 font-mono">
-                    Pull real stat categories and roster slots into the AI prompt.
+                    Pulls real stat categories, roster slots, and league settings.
                   </p>
                 </div>
-                {config.yahooStatCategories && syncState !== 'success' && (
-                  <span className="text-xs font-mono text-green-400/70">
-                    ✓ {config.yahooStatCategories.length} cats synced
-                  </span>
-                )}
-                {syncState === 'success' && (
-                  <span className="text-xs font-mono text-green-400/70">
-                    ✓ Synced — {config.yahooStatCategories?.length} cats · {config.numTeams} teams
+                {isYahooSynced && (
+                  <span className="text-xs font-mono text-green-400/70 shrink-0 ml-4">
+                    ✓ {config.yahooStatCategories?.length} cats · {config.numTeams} teams
                   </span>
                 )}
               </div>
-              <div className="flex gap-2">
-                <input
-                  type="text"
+
+              {leaguesLoading ? (
+                <p className="text-xs text-gray-500 font-mono">Loading leagues…</p>
+              ) : yahooLeagues.length > 0 ? (
+                <select
                   value={config.yahooLeagueKey ?? ''}
-                  onChange={(e) => updateField('yahooLeagueKey', e.target.value)}
-                  placeholder="Yahoo league key, e.g. 466.l.22207"
-                  className="flex-1 bg-bg border border-border rounded px-3 py-1.5 text-xs text-white font-mono focus:outline-none focus:border-pick placeholder:text-gray-700"
-                />
-                <button
-                  onClick={handleYahooSync}
-                  disabled={!config.yahooLeagueKey || syncState === 'loading'}
-                  className="px-4 py-1.5 bg-white/5 border border-border text-gray-300 rounded text-xs font-mono hover:bg-white/10 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  onChange={e => {
+                    const league = yahooLeagues.find(l => l.leagueKey === e.target.value)
+                    if (league) handleLeagueSelect(league.leagueKey, league.name)
+                  }}
+                  className="w-full bg-bg border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-pick"
                 >
-                  {syncState === 'loading' ? 'Syncing…' : 'Sync'}
-                </button>
-              </div>
+                  <option value="">Select a Yahoo league…</option>
+                  {yahooLeagues.map(l => (
+                    <option key={l.leagueKey} value={l.leagueKey}>
+                      {l.name} ({l.numTeams} teams · {l.season})
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={config.yahooLeagueKey ?? ''}
+                    onChange={e => updateField('yahooLeagueKey', e.target.value)}
+                    placeholder="Yahoo league key, e.g. 466.l.22207"
+                    className="flex-1 bg-bg border border-border rounded px-3 py-1.5 text-xs text-white font-mono focus:outline-none focus:border-pick placeholder:text-gray-700"
+                  />
+                  <button
+                    onClick={() => handleLeagueSelect(config.yahooLeagueKey, null)}
+                    disabled={!config.yahooLeagueKey || syncState === 'loading'}
+                    className="px-4 py-1.5 bg-white/5 border border-border text-gray-300 rounded text-xs font-mono hover:bg-white/10 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {syncState === 'loading' ? 'Syncing…' : 'Sync'}
+                  </button>
+                </div>
+              )}
+
+              {syncState === 'loading' && yahooLeagues.length > 0 && (
+                <p className="text-xs text-gray-500 font-mono">Syncing…</p>
+              )}
               {syncState === 'error' && (
                 <p className="text-xs text-red-400 font-mono">{syncError}</p>
               )}
             </div>
           )}
+
+          {/* Strategy + Composition */}
+          <LeagueSetup
+            config={config}
+            onUpdate={updateField}
+            onToggleCategory={toggleCategory}
+            isYahooSynced={isYahooSynced}
+          />
 
           <div className="mt-6 flex gap-3">
             <button

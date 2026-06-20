@@ -59,7 +59,7 @@ function pickInfo(league) {
 
 export default function LeagueSwitcher() {
   const router = useRouter()
-  const { leagues, activeLeagueId, setActiveLeague } = useLeagueStore()
+  const { leagues, activeLeagueId, setActiveLeague, getActiveLeague } = useLeagueStore()
   const [showShortcuts, setShowShortcuts] = useState(false)
 
   const handleSwitch = (id) => {
@@ -68,6 +68,8 @@ export default function LeagueSwitcher() {
   }
 
   const isDraft = router.pathname === '/draft'
+  const activeLeague = getActiveLeague()
+  const draftComplete = Boolean(activeLeague?.config?.draftSynced) || activeLeague?.status === 'complete'
 
   return (
     <>
@@ -96,7 +98,7 @@ export default function LeagueSwitcher() {
 
         <div className="flex-1" />
 
-        {isDraft && (
+        {isDraft && !draftComplete && (
           <button
             onClick={() => setShowShortcuts(true)}
             className="flex items-center px-4 text-xs text-gray-600 hover:text-gray-300 transition-colors shrink-0"

@@ -15,6 +15,7 @@ export default function PlayerPool() {
   const totalSlots = activeLeague?.rosterSlots?.length ?? Infinity
   const numTeams = activeLeague?.config?.numTeams ?? 10
   const draftPosition = activeLeague?.config?.draftPosition ?? 1
+  const isYahooLinked = Boolean(activeLeague?.config?.yahooLeagueKey)
 
   const [search, setSearch] = useState('')
   const [posFilter, setPosFilter] = useState(null)
@@ -159,6 +160,7 @@ export default function PlayerPool() {
 
       if (e.key.toLowerCase() === 'u' && selectedRef.current !== null) {
         e.preventDefault()
+        if (isYahooLinked) return
         if (isRosterFullRef.current) {
           showBlock('Your roster is full. Undo a pick if you made a mistake.')
           return
@@ -174,6 +176,7 @@ export default function PlayerPool() {
 
       if (e.key.toLowerCase() === 'o' && selectedRef.current !== null) {
         e.preventDefault()
+        if (isYahooLinked) return
         if (isMyTurnRef.current && !isRosterFullRef.current && draftTypeRef.current !== 'auction') {
           showBlock("It's your pick! Use U to draft a player for your team.")
           return
@@ -185,6 +188,7 @@ export default function PlayerPool() {
 
       if (e.key === 'Enter' && pendingRef.current) {
         e.preventDefault()
+        if (isYahooLinked) return
         const pick = pendingRef.current
         if (pick.draftedBy === 'user') {
           if (isRosterFullRef.current) {
@@ -215,6 +219,7 @@ export default function PlayerPool() {
 
       if (e.key.toLowerCase() === 'z' && !e.metaKey && !e.ctrlKey) {
         e.preventDefault()
+        if (isYahooLinked) return
         undoPick(activeLeagueId)
         setPendingPick(null)
         return
@@ -341,6 +346,7 @@ export default function PlayerPool() {
                 isPending={pendingPick?.playerId === player.id}
                 pendingDraftedBy={pendingPick?.playerId === player.id ? pendingPick.draftedBy : null}
                 isMyTurn={isMyTurn}
+                isYahooLinked={isYahooLinked}
                 onClick={() => setSelectedIndex(i)}
                 onDraftAsUser={() => handleDraftAs(player, 'user')}
                 onDraftAsOpponent={() => handleDraftAs(player, 'opponent')}
@@ -424,7 +430,7 @@ function PendingBanner({ pendingPick, players, onCancel, isAuction, pendingPrice
 }
 
 function PlayerRow({
-  player, rank, pick, isSelected, isPending, pendingDraftedBy, isMyTurn, isAuction,
+  player, rank, pick, isSelected, isPending, pendingDraftedBy, isMyTurn, isAuction, isYahooLinked,
   onClick, onDraftAsUser, onDraftAsOpponent, onEdit, rowRef,
 }) {
   const isDrafted = !!pick
@@ -471,7 +477,7 @@ function PlayerRow({
         {player.adp.toFixed(1)}
       </td>
       <td className="px-2 py-2.5 text-center" onClick={e => isDrafted && e.stopPropagation()}>
-        {isDrafted ? (
+        {isYahooLinked ? null : isDrafted ? (
           <button
             onClick={e => { e.stopPropagation(); onEdit() }}
             className={`text-xs font-mono px-1.5 py-0.5 rounded transition-colors ${

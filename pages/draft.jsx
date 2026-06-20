@@ -26,7 +26,7 @@ export default function Draft() {
 
   const userPickCount = activeLeague.draft.picks.filter(p => p.draftedBy === 'user').length
   const totalSlots = activeLeague.rosterSlots.length
-  const isDraftComplete = totalSlots > 0 && userPickCount >= totalSlots
+  const isDraftComplete = activeLeague.config.draftSynced || activeLeague.status === 'complete' || (totalSlots > 0 && userPickCount >= totalSlots)
 
   return (
     <>

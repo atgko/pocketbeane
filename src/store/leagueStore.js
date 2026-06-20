@@ -94,6 +94,16 @@ const useLeagueStore = create(
 
       setActiveLeague: (id) => set({ activeLeagueId: id }),
 
+      setLeagueStatus: (id, status) =>
+        set((state) => ({
+          leagues: state.leagues.map((l) => (l.id === id ? { ...l, status } : l)),
+        })),
+
+      setDraftOutlook: (id, outlook) =>
+        set((state) => ({
+          leagues: state.leagues.map((l) => (l.id === id ? { ...l, draftOutlook: outlook } : l)),
+        })),
+
       addPick: (id, pick) =>
         set((state) => ({
           leagues: state.leagues.map((l) =>
@@ -144,6 +154,27 @@ const useLeagueStore = create(
               ? l
               : { ...l, draft: { picks: [] }, rosterSlots: generateRosterSlots(l.config) }
           ),
+        })),
+
+      importDraft: (id, picks, draftPosition) =>
+        set((state) => ({
+          leagues: state.leagues.map((l) => {
+            if (l.id !== id) return l
+            const validPicks = picks
+              .filter((p) => p.playerId !== null)
+              .map(({ playerId, pickNumber, draftedBy }) => ({
+                playerId,
+                pickNumber,
+                draftedBy,
+                price: null,
+              }))
+            const newConfig = {
+              ...l.config,
+              draftSynced: true,
+              ...(draftPosition ? { draftPosition } : {}),
+            }
+            return { ...l, config: newConfig, draft: { picks: validPicks }, status: 'complete' }
+          }),
         })),
 
       getLeague: (id) => get().leagues.find((l) => l.id === id) ?? null,

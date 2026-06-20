@@ -3,11 +3,13 @@ import players from '@/data/players.json'
 import { getSportConfig } from '@/config/sports'
 import { buildPlayerMap, computeRosterAssignment } from '@/utils/roster'
 import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
+import useLeagueStore from '@/store/leagueStore'
 
 const playerMap = buildPlayerMap(players)
 
 export default function DraftComplete({ league }) {
-  const [recap, setRecap] = useState(null)
+  const { setDraftOutlook } = useLeagueStore()
+  const [recap, setRecap] = useState(league.draftOutlook ?? null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -30,7 +32,9 @@ export default function DraftComplete({ league }) {
   )
 
   useEffect(() => {
-    generateOutlook()
+    // Already cached — skip the API call
+    if (league.draftOutlook) return
+    if (userPicks.length > 0) generateOutlook()
   }, [])
 
   async function generateOutlook() {
@@ -38,6 +42,10 @@ export default function DraftComplete({ league }) {
     setError(null)
     try {
       const userPicksWithData = userPicks.map(p => playerMap[p.playerId]).filter(Boolean)
+      if (userPicksWithData.length === 0) {
+        setError('No player data available for analysis.')
+        return
+      }
       const res = await fetch('/api/recommend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -56,6 +64,7 @@ export default function DraftComplete({ league }) {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'API error')
       setRecap(data)
+      setDraftOutlook(league.id, data)
     } catch (err) {
       setError(err.message)
     } finally {
@@ -88,8 +97,18 @@ export default function DraftComplete({ league }) {
         </div>
       </div>
 
+      {/* Empty state */}
+      {userPicks.length === 0 && (
+        <div className="bg-surface border border-border rounded-lg px-6 py-10 text-center">
+          <p className="text-gray-400 text-sm mb-1">No draft data synced yet.</p>
+          <p className="text-gray-600 text-xs font-mono">
+            Go back to the home page and use <span className="text-gray-400">Import Picks</span> on this league to pull your draft from Yahoo.
+          </p>
+        </div>
+      )}
+
       {/* Main grid: roster + categories */}
-      <div className="grid grid-cols-[1fr_300px] gap-5 items-start">
+      {userPicks.length > 0 && <div className="grid grid-cols-[1fr_300px] gap-5 items-start">
         {/* Roster table */}
         <div className="bg-surface rounded-lg border border-border overflow-hidden">
           <div className="px-4 py-3 border-b border-border">
@@ -148,10 +167,10 @@ export default function DraftComplete({ league }) {
             ))}
           </div>
         </div>
-      </div>
+      </div>}
 
-      {/* Beane's Season Outlook */}
-      <div className="bg-surface rounded-lg border border-pick/25 p-5">
+      {/* Beane's Season Outlook — only when picks are loaded */}
+      {userPicks.length > 0 && <div className="bg-surface rounded-lg border border-pick/25 p-5">
         <div className="flex items-center gap-2 mb-4">
           <div className="w-1.5 h-1.5 rounded-full bg-pick" />
           <h3 className="text-xs font-mono text-pick/80 uppercase tracking-wider">Beane's Season Outlook</h3>
@@ -222,7 +241,7 @@ export default function DraftComplete({ league }) {
             </button>
           </div>
         )}
-      </div>
+      </div>}
     </div>
   )
 }

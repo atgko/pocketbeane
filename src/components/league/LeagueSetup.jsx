@@ -45,222 +45,223 @@ const INJURY_TOLERANCE_DESCRIPTIONS = {
   'aggressive':   'Injury history = market discount. Exploit it.',
 }
 
-export default function LeagueSetup({ config, onUpdate, onToggleCategory }) {
+export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYahooSynced = false }) {
   const sportConfig = getSportConfig(config.sport)
   const rosterSlots = sportConfig.slotOrder.filter(s => s.type !== 'BN')
   const bnSlot = sportConfig.slotOrder.find(s => s.type === 'BN')
+  const lockedClass = 'opacity-40 pointer-events-none select-none'
 
   return (
-    <div className="bg-surface rounded-lg border border-border p-6 space-y-6">
+    <div className="space-y-4">
 
-      {/* League Name */}
-      <div>
-        <label className="block text-xs text-gray-400 mb-1.5">League Name</label>
-        <input
-          type="text"
-          value={config.name}
-          onChange={e => onUpdate('name', e.target.value)}
-          className="w-full bg-bg border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-pick"
-          placeholder="e.g. Main League, Mock Draft #1"
-        />
-      </div>
-
-      {/* Teams + Draft Position */}
-      <div className="grid grid-cols-2 gap-4">
+      {/* Draft Strategy — always editable */}
+      <div className="bg-surface rounded-lg border border-border p-5 space-y-4">
         <div>
-          <label className="block text-xs text-gray-400 mb-1.5">Teams</label>
-          <select
-            value={config.numTeams}
-            onChange={e => onUpdate('numTeams', Number(e.target.value))}
-            className="w-full bg-bg border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-pick"
-          >
-            {[8, 10, 12, 14, 16].map(n => (
-              <option key={n} value={n}>{n} teams</option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-xs text-gray-400 mb-1.5">Draft Position</label>
-          <select
-            value={config.draftPosition}
-            onChange={e => onUpdate('draftPosition', Number(e.target.value))}
-            className="w-full bg-bg border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-pick"
-          >
-            {Array.from({ length: config.numTeams }, (_, i) => i + 1).map(n => (
-              <option key={n} value={n}>Pick {n}</option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {/* Draft Type + Scoring Format */}
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-xs text-gray-400 mb-1.5">Draft Type</label>
+          <label className="block text-xs text-gray-400 mb-1.5">Draft Strategy</label>
           <ToggleGroup
-            options={DRAFT_TYPE_OPTIONS}
-            value={config.draftType}
-            onChange={v => {
-              onUpdate('draftType', v)
-              const strategy = config.philosophy?.strategy
-              if (v === 'snake' && strategy === 'budget-control') {
-                onUpdate('philosophy', { ...config.philosophy, strategy: 'beane' })
-              } else if (v === 'auction' && strategy === 'punt') {
-                onUpdate('philosophy', { ...config.philosophy, strategy: 'beane' })
-              }
-            }}
+            options={config.draftType === 'auction' ? AUCTION_STRATEGY_OPTIONS : STRATEGY_OPTIONS}
+            value={config.philosophy?.strategy ?? 'beane'}
+            onChange={v => onUpdate('philosophy', {
+              ...config.philosophy,
+              strategy: v,
+              puntCategories: v !== 'punt' ? [] : (config.philosophy?.puntCategories ?? []),
+            })}
           />
-          {config.draftType === 'auction' && (
-            <div className="mt-2 flex items-center gap-2">
-              <span className="text-xs font-mono text-gray-500">$</span>
-              <input
-                type="number"
-                min={1}
-                max={9999}
-                value={config.auctionBudget ?? 200}
-                onChange={e => onUpdate('auctionBudget', Math.max(1, Number(e.target.value)))}
-                className="w-20 bg-bg border border-border rounded px-2 py-1 text-xs text-white font-mono focus:outline-none focus:border-pick [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              />
-              <span className="text-xs font-mono text-gray-600">budget per team</span>
+          <p className="text-xs text-gray-600 mt-1.5 font-mono">
+            {STRATEGY_DESCRIPTIONS[config.philosophy?.strategy ?? 'beane']}
+          </p>
+          {config.philosophy?.strategy === 'punt' && (
+            <div className="mt-3">
+              <p className="text-xs text-gray-500 mb-2 font-mono">Categories to punt:</p>
+              <div className="flex flex-wrap gap-2">
+                {sportConfig.categories.map(cat => {
+                  const punted = (config.philosophy?.puntCategories ?? []).includes(cat.id)
+                  return (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => {
+                        const curr = config.philosophy?.puntCategories ?? []
+                        const next = punted ? curr.filter(c => c !== cat.id) : [...curr, cat.id]
+                        onUpdate('philosophy', { ...config.philosophy, puntCategories: next })
+                      }}
+                      className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+                        punted
+                          ? 'bg-red-500/20 text-red-400 border border-red-500/30'
+                          : 'bg-bg border border-border text-gray-400 hover:border-red-500/40 hover:text-red-300'
+                      }`}
+                    >
+                      {cat.label}
+                    </button>
+                  )
+                })}
+              </div>
             </div>
           )}
         </div>
 
         <div>
-          <label className="block text-xs text-gray-400 mb-1.5">Scoring Format</label>
+          <label className="block text-xs text-gray-400 mb-1.5">Injury Tolerance</label>
           <ToggleGroup
-            options={SCORING_OPTIONS}
-            value={config.scoringFormat}
-            onChange={v => onUpdate('scoringFormat', v)}
+            options={INJURY_TOLERANCE_OPTIONS}
+            value={config.philosophy?.injuryTolerance ?? 'moderate'}
+            onChange={v => onUpdate('philosophy', { ...config.philosophy, injuryTolerance: v })}
           />
-          {config.scoringFormat !== '9cat' && (
-            <p className="text-xs text-value mt-1.5 font-mono">
-              {config.scoringFormat === 'points' ? 'Points' : '8-Cat'} coming in a future phase — 9-cat only for now.
-            </p>
-          )}
+          <p className="text-xs text-gray-600 mt-1.5 font-mono">
+            {INJURY_TOLERANCE_DESCRIPTIONS[config.philosophy?.injuryTolerance ?? 'moderate']}
+          </p>
         </div>
       </div>
 
-      {/* Roster Slots — driven by sportConfig.slotOrder */}
-      <div>
-        <label className="block text-xs text-gray-400 mb-1.5">Roster Slots</label>
-        <div className="grid grid-cols-2 gap-x-8 gap-y-2">
-          {rosterSlots.map(slot => (
-            <SlotCountRow
-              key={slot.type}
-              label={slot.type}
-              value={config[slot.configKey]}
-              onChange={v => onUpdate(slot.configKey, v)}
-              max={slot.max ?? 3}
-            />
-          ))}
-        </div>
-        {bnSlot && (
-          <div className="mt-2">
-            <SlotCountRow
-              label="BN"
-              value={config[bnSlot.configKey]}
-              onChange={v => onUpdate(bnSlot.configKey, v)}
-              max={bnSlot.max ?? 6}
-            />
-          </div>
+      {/* League Composition — locked when Yahoo-synced */}
+      <div className="bg-surface rounded-lg border border-border p-5 space-y-5">
+        {isYahooSynced && (
+          <p className="text-xs text-gray-600 font-mono">
+            League structure synced from Yahoo.
+          </p>
         )}
-      </div>
 
-      {/* IL Slots */}
-      <div>
-        <label className="block text-xs text-gray-400 mb-1.5">Injured List</label>
-        <div className="space-y-2">
-          <SlotCountRow label="IL"  value={config.ilSlots ?? 0}     onChange={v => onUpdate('ilSlots', v)} />
-          <SlotCountRow label="IL+" value={config.ilPlusSlots ?? 0} onChange={v => onUpdate('ilPlusSlots', v)} />
-        </div>
-      </div>
-
-      {/* Scoring Categories — driven by sportConfig.categories */}
-      <div>
-        <label className="block text-xs text-gray-400 mb-1.5">Scoring Categories</label>
-        <div className="flex flex-wrap gap-2">
-          {sportConfig.categories.map(cat => (
-            <button
-              key={cat.id}
-              type="button"
-              onClick={() => onToggleCategory(cat.id)}
-              className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
-                config.categories.includes(cat.id)
-                  ? 'bg-pick text-white'
-                  : 'bg-bg border border-border text-gray-400 hover:border-pick hover:text-gray-200'
-              }`}
+        {/* Teams + Draft Position */}
+        <div className={`grid grid-cols-2 gap-4 ${isYahooSynced ? lockedClass : ''}`}>
+          <div>
+            <label className="block text-xs text-gray-400 mb-1.5">Teams</label>
+            <select
+              value={config.numTeams}
+              onChange={e => onUpdate('numTeams', Number(e.target.value))}
+              disabled={isYahooSynced}
+              className="w-full bg-bg border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-pick disabled:cursor-not-allowed"
             >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-        <p className="text-xs text-gray-600 mt-1.5 font-mono">{config.categories.length} categories selected</p>
-      </div>
-
-      {/* Draft Strategy */}
-      <div>
-        <label className="block text-xs text-gray-400 mb-1.5">Draft Strategy</label>
-        <ToggleGroup
-          options={config.draftType === 'auction' ? AUCTION_STRATEGY_OPTIONS : STRATEGY_OPTIONS}
-          value={config.philosophy?.strategy ?? 'beane'}
-          onChange={v => onUpdate('philosophy', {
-            ...config.philosophy,
-            strategy: v,
-            puntCategories: v !== 'punt' ? [] : (config.philosophy?.puntCategories ?? []),
-          })}
-        />
-        <p className="text-xs text-gray-600 mt-1.5 font-mono">
-          {STRATEGY_DESCRIPTIONS[config.philosophy?.strategy ?? 'beane']}
-        </p>
-        {config.philosophy?.strategy === 'punt' && (
-          <div className="mt-3">
-            <p className="text-xs text-gray-500 mb-2 font-mono">Categories to punt:</p>
-            <div className="flex flex-wrap gap-2">
-              {sportConfig.categories.map(cat => {
-                const punted = (config.philosophy?.puntCategories ?? []).includes(cat.id)
-                return (
-                  <button
-                    key={cat.id}
-                    type="button"
-                    onClick={() => {
-                      const curr = config.philosophy?.puntCategories ?? []
-                      const next = punted ? curr.filter(c => c !== cat.id) : [...curr, cat.id]
-                      onUpdate('philosophy', { ...config.philosophy, puntCategories: next })
-                    }}
-                    className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
-                      punted
-                        ? 'bg-red-500/20 text-red-400 border border-red-500/30'
-                        : 'bg-bg border border-border text-gray-400 hover:border-red-500/40 hover:text-red-300'
-                    }`}
-                  >
-                    {cat.label}
-                  </button>
-                )
-              })}
-            </div>
+              {[8, 10, 12, 14, 16].map(n => (
+                <option key={n} value={n}>{n} teams</option>
+              ))}
+            </select>
           </div>
-        )}
+
+          <div>
+            <label className="block text-xs text-gray-400 mb-1.5">Draft Position</label>
+            <select
+              value={config.draftPosition}
+              onChange={e => onUpdate('draftPosition', Number(e.target.value))}
+              disabled={isYahooSynced}
+              className="w-full bg-bg border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-pick disabled:cursor-not-allowed"
+            >
+              {Array.from({ length: config.numTeams }, (_, i) => i + 1).map(n => (
+                <option key={n} value={n}>Pick {n}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Draft Type + Scoring */}
+        <div className={`grid grid-cols-2 gap-4 ${isYahooSynced ? lockedClass : ''}`}>
+          <div>
+            <label className="block text-xs text-gray-400 mb-1.5">Draft Type</label>
+            <ToggleGroup
+              options={DRAFT_TYPE_OPTIONS}
+              value={config.draftType}
+              disabled={isYahooSynced}
+              onChange={v => {
+                onUpdate('draftType', v)
+                const strategy = config.philosophy?.strategy
+                if (v === 'snake' && strategy === 'budget-control') {
+                  onUpdate('philosophy', { ...config.philosophy, strategy: 'beane' })
+                } else if (v === 'auction' && strategy === 'punt') {
+                  onUpdate('philosophy', { ...config.philosophy, strategy: 'beane' })
+                }
+              }}
+            />
+            {config.draftType === 'auction' && (
+              <div className="mt-2 flex items-center gap-2">
+                <span className="text-xs font-mono text-gray-500">$</span>
+                <input
+                  type="number"
+                  min={1}
+                  max={9999}
+                  value={config.auctionBudget ?? 200}
+                  onChange={e => onUpdate('auctionBudget', Math.max(1, Number(e.target.value)))}
+                  className="w-20 bg-bg border border-border rounded px-2 py-1 text-xs text-white font-mono focus:outline-none focus:border-pick [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                />
+                <span className="text-xs font-mono text-gray-600">budget per team</span>
+              </div>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-xs text-gray-400 mb-1.5">Scoring Format</label>
+            <ToggleGroup
+              options={SCORING_OPTIONS}
+              value={config.scoringFormat}
+              disabled={isYahooSynced}
+              onChange={v => onUpdate('scoringFormat', v)}
+            />
+            {config.scoringFormat !== '9cat' && (
+              <p className="text-xs text-value mt-1.5 font-mono">
+                {config.scoringFormat === 'points' ? 'Points' : '8-Cat'} coming in a future phase — 9-cat only for now.
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Roster Slots */}
+        <div className={isYahooSynced ? lockedClass : ''}>
+          <label className="block text-xs text-gray-400 mb-1.5">Roster Slots</label>
+          <div className="grid grid-cols-2 gap-x-8 gap-y-2">
+            {rosterSlots.map(slot => (
+              <SlotCountRow
+                key={slot.type}
+                label={slot.type}
+                value={config[slot.configKey]}
+                onChange={v => onUpdate(slot.configKey, v)}
+                max={slot.max ?? 3}
+                disabled={isYahooSynced}
+              />
+            ))}
+          </div>
+          <div className="mt-2 space-y-2">
+            {bnSlot && (
+              <SlotCountRow
+                label="BN"
+                value={config[bnSlot.configKey]}
+                onChange={v => onUpdate(bnSlot.configKey, v)}
+                max={bnSlot.max ?? 6}
+                disabled={isYahooSynced}
+              />
+            )}
+            <SlotCountRow label="IL"  value={config.ilSlots ?? 0}     onChange={v => onUpdate('ilSlots', v)}     disabled={isYahooSynced} />
+            <SlotCountRow label="IL+" value={config.ilPlusSlots ?? 0} onChange={v => onUpdate('ilPlusSlots', v)} disabled={isYahooSynced} />
+          </div>
+        </div>
+
+        {/* Scoring Categories */}
+        <div className={isYahooSynced ? lockedClass : ''}>
+          <label className="block text-xs text-gray-400 mb-1.5">Scoring Categories</label>
+          <div className="flex flex-wrap gap-2">
+            {sportConfig.categories.map(cat => (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => !isYahooSynced && onToggleCategory(cat.id)}
+                disabled={isYahooSynced}
+                className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+                  config.categories.includes(cat.id)
+                    ? 'bg-pick text-white'
+                    : 'bg-bg border border-border text-gray-400 hover:border-pick hover:text-gray-200'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+          <p className="text-xs text-gray-600 mt-1.5 font-mono">{config.categories.length} categories selected</p>
+        </div>
       </div>
 
-      {/* Injury Tolerance */}
-      <div>
-        <label className="block text-xs text-gray-400 mb-1.5">Injury Tolerance</label>
-        <ToggleGroup
-          options={INJURY_TOLERANCE_OPTIONS}
-          value={config.philosophy?.injuryTolerance ?? 'moderate'}
-          onChange={v => onUpdate('philosophy', { ...config.philosophy, injuryTolerance: v })}
-        />
-        <p className="text-xs text-gray-600 mt-1.5 font-mono">
-          {INJURY_TOLERANCE_DESCRIPTIONS[config.philosophy?.injuryTolerance ?? 'moderate']}
-        </p>
-      </div>
+
     </div>
   )
 }
 
-function SlotCountRow({ label, value, onChange, max = 3 }) {
+function SlotCountRow({ label, value, onChange, max = 3, disabled = false }) {
   return (
     <div className="flex items-center gap-3">
       <span className="text-xs text-gray-400 font-mono w-8">{label}</span>
@@ -268,7 +269,8 @@ function SlotCountRow({ label, value, onChange, max = 3 }) {
         <button
           key={n}
           type="button"
-          onClick={() => onChange(n)}
+          onClick={() => !disabled && onChange(n)}
+          disabled={disabled}
           className={`w-7 h-7 rounded text-xs font-mono transition-colors ${
             value === n
               ? 'bg-pick text-white'
@@ -282,14 +284,15 @@ function SlotCountRow({ label, value, onChange, max = 3 }) {
   )
 }
 
-function ToggleGroup({ options, value, onChange }) {
+function ToggleGroup({ options, value, onChange, disabled = false }) {
   return (
     <div className="flex gap-1.5">
       {options.map(opt => (
         <button
           key={opt.value}
           type="button"
-          onClick={() => onChange(opt.value)}
+          onClick={() => !disabled && onChange(opt.value)}
+          disabled={disabled}
           className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
             value === opt.value
               ? 'bg-pick text-white'
