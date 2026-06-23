@@ -1,5 +1,5 @@
 # PocketBeane — Product Requirements Document
-# Version 1.0 | May 2026 | Owner: Allan Ko
+# Version 1.0 | May 2026 | Owner: Athavan Elangko
 
 ---
 
