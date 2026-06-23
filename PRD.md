@@ -5,7 +5,7 @@
 
 ## 1. Product Summary
 
-PocketBeane is a personal AI-powered fantasy basketball assistant and draft-day co-pilot for two Yahoo Fantasy Basketball leagues. It helps Allan Ko make smarter, faster decisions during live snake drafts, then continues as a season-long advisor for waiver wire moves, trade analysis, and weekly performance review.
+PocketBeane is a personal AI-powered fantasy basketball assistant and draft-day co-pilot for two Yahoo Fantasy Basketball leagues. It helps Athavan Elangko make smarter, faster decisions during live snake drafts, then continues as a season-long advisor for waiver wire moves, trade analysis, and weekly performance review.
 
 The tool has personality — a confident GM sidekick, not a generic dashboard. It speaks with authority, flags risk without hiding it, and gives one recommendation at a time rather than a list of options.
 
@@ -48,7 +48,7 @@ Post-draft, the same problem recurs weekly: waiver wire and trade decisions requ
 
 ## 4. User
 
-**Primary user:** Allan Ko — experienced fantasy basketball player, two Yahoo leagues, snake draft format. Drafting strategy is ADP-value-first, positional scarcity aware, superstar-first in early rounds, category balance in middle/late rounds. Accepts injury risk for elite upside but wants it flagged explicitly.
+**Primary user:** Athavan Elangko — experienced fantasy basketball player, two Yahoo leagues, snake draft format. Drafting strategy is ADP-value-first, positional scarcity aware, superstar-first in early rounds, category balance in middle/late rounds. Accepts injury risk for elite upside but wants it flagged explicitly.
 
 ---
 
