@@ -1,15 +1,17 @@
 # PocketBeane — Product Requirements Document
-# Version 1.0 | May 2026 | Owner: Athavan Elangko
+# Version 2.0 | June 2026 | Owner: Athavan Elangko
+
+> **Changelog from v1.0:** Yahoo OAuth shipped; architecture migrated to Next.js; in-season management suite added as Phase 2; multi-sport expansion (NHL, NFL, MLB) added as Phase 3; monetization layer added as Phase 4.
 
 ---
 
 ## 1. Product Summary
 
-PocketBeane is a personal AI-powered fantasy basketball assistant and draft-day co-pilot for two Yahoo Fantasy Basketball leagues. It helps Athavan Elangko make smarter, faster decisions during live snake drafts, then continues as a season-long advisor for waiver wire moves, trade analysis, and weekly performance review.
+PocketBeane is an AI-powered fantasy sports assistant and draft-day co-pilot. It started as a tool for two Yahoo Fantasy Basketball leagues, and has evolved into a platform for serious fantasy players who want an opinionated GM sidekick — one that synthesizes ADP value, positional scarcity, category balance, and injury risk into a single, direct recommendation, then stays relevant throughout the season with waiver wire advice, trade analysis, and weekly lineup optimization.
 
-The tool has personality — a confident GM sidekick, not a generic dashboard. It speaks with authority, flags risk without hiding it, and gives one recommendation at a time rather than a list of options.
+The tool has personality: a confident GM sidekick, not a generic dashboard. It speaks with authority, flags risk without hiding it, and gives one recommendation at a time rather than a list of options.
 
-**Working name:** PocketBeane (final name TBD in a separate session)
+**Current name:** PocketBeane
 
 ---
 
@@ -19,30 +21,50 @@ Live fantasy drafts move fast. Tracking 200 players across ADP value, positional
 
 Post-draft, the same problem recurs weekly: waiver wire and trade decisions require multi-variable analysis that most players do intuitively and inconsistently.
 
+The problem is not basketball-specific. The same pattern applies to any category-based head-to-head fantasy league. PocketBeane's architecture is sport-agnostic by design.
+
 ---
 
 ## 3. Goals
 
-### MVP (Phase 1 — ready before September 2026 draft)
-- Provide a real-time draft co-pilot that synthesizes ADP value, positional scarcity, and category gap analysis into one recommendation per pick
-- Track two leagues simultaneously with independent rosters, draft boards, and AI recommendations
-- Mark picks (user / opponent) in seconds during a live draft — speed is a hard requirement
-- Surface injury flags without hiding them
+### Shipped — Phase 1 (May–June 2026)
+- [x] Real-time draft co-pilot: ADP value, positional scarcity, category gap → one recommendation per pick
+- [x] Two Yahoo Basketball leagues, independent rosters and draft boards
+- [x] Fast pick marking during live draft (keyboard shortcuts U, O, ↑↓, /, Enter, Z)
+- [x] Injury flag surface in recommendation
+- [x] Claude API proxied server-side (API key never exposed to browser)
+- [x] Yahoo OAuth 2.0 integration (AES-256 encrypted session cookie, auto-refresh)
+- [x] Yahoo data sync: league settings, stat categories, roster positions, standings, full draft board
+- [x] Dynamic scoring categories (AI prompt uses live Yahoo league config, not hardcoded 9-cat)
+- [x] Pre-Draft Philosophy Engine (Beane Mode preset + custom strategy per league)
+- [x] Sleeper Pick Radar (ADP gap + contract year signal)
+- [x] Draft Recap (post-draft Claude analysis, 700 tokens)
 
-### Phase 2 (October 2026 onwards)
-- Waiver wire advisor
-- Trade analyzer
-- Weekly performance summary and start/sit advisor
-- Optional Yahoo Fantasy API integration
+### Active — Phase 2 (June–September 2026)
+- [ ] Y-02: League selection UI after Yahoo auth (map Yahoo leagues to PocketBeane slots)
+- [ ] Y-03: Live draft sync via polling (auto-detect opponent picks every 8–10s, no manual input)
+- [ ] Y-04: Post-draft roster sync (all 10 team rosters for full league visibility)
+- [ ] Y-05: Season management suite (matchup advisor, waiver wire, trade analyzer, start/sit, league pulse)
+- [ ] Y-06: Draft history recap page (round-by-round board, user picks highlighted, trade flags)
+- [ ] Week 5 QA: full 13-round mock draft session, edge cases, p95 latency benchmark
+- [ ] August 2026: refresh `players.json` with real FantasyPros 2026 ADP export
 
-### Non-goals (explicitly excluded from MVP)
-- Yahoo OAuth / live API integration
-- Auction draft mode
+### Planned — Phase 3 (October 2026+)
+- [ ] NHL expansion (positions, categories, and roster slots already stubbed in `sports.js`)
+- [ ] NFL expansion (stubbed)
+- [ ] MLB expansion (stubbed)
+- [ ] Auction draft mode (originally a non-goal — re-evaluate post-September draft)
+
+### Planned — Phase 4 (2027, needs payment infra first)
+- [ ] Premium tier: unlimited recommendation refreshes (currently capped at 5 per draft)
+- [ ] S-01: AI Autopick during live Yahoo draft (blocked — verify Yahoo write API first)
+
+### Non-goals (still excluded from current scope)
 - Mobile layout
-- Multi-sport support
 - Automatic injury news scraping
 - Public sharing or multi-user access
 - Historical tracking beyond the current season
+- Multi-user / team collaboration
 
 ---
 
@@ -50,11 +72,13 @@ Post-draft, the same problem recurs weekly: waiver wire and trade decisions requ
 
 **Primary user:** Athavan Elangko — experienced fantasy basketball player, two Yahoo leagues, snake draft format. Drafting strategy is ADP-value-first, positional scarcity aware, superstar-first in early rounds, category balance in middle/late rounds. Accepts injury risk for elite upside but wants it flagged explicitly.
 
+**Future user (Phase 3+):** Other serious multi-sport fantasy players who want the same opinionated GM sidekick for NHL, NFL, or MLB leagues.
+
 ---
 
 ## 5. League Configuration
 
-Both leagues share these defaults, configurable per-league at setup:
+### Basketball defaults (configurable per league)
 
 | Setting | Default |
 |---|---|
@@ -63,46 +87,51 @@ Both leagues share these defaults, configurable per-league at setup:
 | Draft style | Snake |
 | Format | Head-to-head weekly |
 | Scoring | 9-cat: PTS, REB, AST, STL, BLK, TO, FG%, FT%, 3PM |
-| Roster size | 13 players |
-| IL slots | 1 (minimum) |
-| Positions | PG, SG, SF, PF, C, G, F, UTIL, BN |
+| Roster | PG, SG, G, SF, PF, F, C, UTIL×2, BN×4, IL×1 |
 
-Each league stores its own: draft position (1–10), drafted player history, current roster, and category totals.
+Stat categories and roster positions are pulled dynamically from Yahoo via `/api/yahoo/settings.js` and override any defaults.
+
+Each league stores: draft position (1–10), drafted player history, current roster, category totals, philosophy preset, and Yahoo league key.
 
 ---
 
-## 6. Open Questions — Resolved
+## 6. Decisions — Resolved
 
-### 6.1 Best free ADP data source
+### 6.1 ADP data source
 **Decision: FantasyPros + HashtagBasketball, manually exported CSV before draft.**
+FantasyPros free CSV for Yahoo 10-team leagues; HashtagBasketball as cross-reference. No live scraping for MVP.
 
-FantasyPros offers a free exportable CSV for Yahoo 10-team leagues (consensus ADP from multiple experts). HashtagBasketball provides position-specific rankings as a cross-reference. Both are available in August before the September draft. ESPN and Yahoo's own rankings serve as tertiary validation. No live scraping for MVP.
+### 6.2 Draft board view
+**Decision: Single scrollable ADP-sorted list, with optional round-view toggle.**
+ADP list is the default; round-view is a secondary tab for post-round review.
 
-### 6.2 Draft board view: scrollable list vs. round-by-round
-**Decision: Single scrollable ADP-sorted list, with an optional round-view toggle.**
+### 6.3 Positional flexibility
+**Decision: Store all Yahoo-eligible positions per player. Track roster slots separately. Allow manual slot assignment.**
+Multi-position eligibility factors into scarcity scoring.
 
-During a live draft, the user needs to find and mark players quickly. A round-by-round view is post-draft analysis, not draft-day UX. Default to the ADP list; add a round-view mode as a secondary tab for post-round review.
-
-### 6.3 Positional flexibility (multi-position eligibility)
-**Decision: Store all Yahoo-eligible positions per player. Track roster slots separately. Allow user to assign a player to any eligible slot manually.**
-
-Multi-position eligibility (e.g., Luka at PG/SF, Bam at PF/C) is a strategic asset. The AI recommendation engine factors in all eligible positions when assessing positional scarcity. The roster UI shows which slot a pick fills and flags if the user has flexibility to move players to unlock a slot.
-
-### 6.4 Keyboard shortcut UX for marking picks
-**Decision:** 
+### 6.4 Keyboard shortcuts
 - `U` — mark selected player as user pick
 - `O` — mark selected player as opponent pick
 - `↑ / ↓` — move selection up/down the player list
 - `/` — jump to search
-- `Enter` — confirm pick (after U or O)
+- `Enter` — confirm pick
 - `Z` — undo last pick
 
-Selection state is visually clear (highlighted row). These shortcuts work without a mouse during a live draft.
+### 6.5 League switcher
+**Decision: Tab switcher with persistent status bar.**
+A persistent bar shows both leagues' current pick number and round at a glance.
 
-### 6.5 Both leagues visible simultaneously or tab-switched
-**Decision: Tab switcher with a persistent status bar.**
+### 6.6 API key security
+**Decision: Claude calls always proxied through `/api/recommend.js` on the server.** The Anthropic API key is never in the browser bundle. This was identified as Risk 1 in v1.0 and resolved in the Phase 1 build.
 
-A split-screen layout is too cluttered during a live draft where focus is critical. A tab switcher (League 1 / League 2) keeps each league's full interface. A persistent status bar at the top shows both leagues' current pick number and round at a glance so the user never loses track of where each draft stands.
+### 6.7 State management
+**Decision: Zustand for client state.** localStorage used for persistence of league config and draft history. `players.json` is never duplicated in storage — only pick history and slot assignments are persisted.
+
+### 6.8 Yahoo integration
+**Decision: Full OAuth 2.0 with server-side token storage.** Tokens are AES-256 encrypted and stored in a server-side cookie. Auto-refresh handles token expiry transparently. Local dev requires HTTPS (mkcert + `cross-env NODE_OPTIONS=--use-system-ca`).
+
+### 6.9 Multi-sport architecture
+**Decision: Sport config registry as the single source of truth.** All sport-specific logic (positions, categories, roster slots, benchmarks) lives in `src/config/sports.js`. Adding a new sport requires one config entry and a data file — no other code changes.
 
 ---
 
@@ -114,22 +143,24 @@ A split-screen layout is too cluttered during a live draft where focus is critic
 
 **Inputs:**
 - League name (free text)
+- Sport (NBA initially; NHL / NFL / MLB when Phase 3 ships)
 - Number of teams (default: 10)
 - User's draft position (1–10)
-- Scoring category overrides (checkboxes, pre-filled with 9-cat defaults)
-- IL slot count (default: 1)
+- Scoring category overrides (checkboxes, pre-filled from Yahoo sync or sport defaults)
+- Roster slot counts (driven by sport config)
+- IL slot count
 
-**Output:** League config stored to localStorage, draft board initialized with full player pool.
+**Yahoo sync:** "Sync from Yahoo" in the setup page pulls live stat categories and roster positions from `/api/yahoo/settings.js` and overwrites the form defaults.
 
-**Behavior:** Two leagues configured independently. Both accessible via tab switcher. League state persists across sessions.
+**Output:** League config stored to Zustand + localStorage.
 
 ---
 
 ### 7.2 Player Pool
 
-**Source:** `players.json` — top 200 players by projected ADP, manually curated from FantasyPros + HashtagBasketball before the September draft.
+**Source:** `src/data/players.json` — top 199 players by projected ADP, manually curated from FantasyPros + HashtagBasketball. Refreshed each August before the September draft.
 
-**Per-player record (refined schema):**
+**Per-player record:**
 
 ```json
 {
@@ -141,16 +172,9 @@ A split-screen layout is too cluttered during a live draft where focus is critic
   "adp": 1.2,
   "adp_source": "FantasyPros Yahoo 10-team 2026",
   "prior_season": {
-    "pts": 26.4,
-    "reb": 12.4,
-    "ast": 9.0,
-    "stl": 1.4,
-    "blk": 0.9,
-    "to": 3.5,
-    "fg_pct": 0.583,
-    "ft_pct": 0.814,
-    "three_pm": 0.9,
-    "gp": 79
+    "pts": 26.4, "reb": 12.4, "ast": 9.0,
+    "stl": 1.4, "blk": 0.9, "to": 3.5,
+    "fg_pct": 0.583, "ft_pct": 0.814, "three_pm": 0.9, "gp": 79
   },
   "age": 30,
   "injury_risk": false,
@@ -161,20 +185,11 @@ A split-screen layout is too cluttered during a live draft where focus is critic
 }
 ```
 
-**Fields explained:**
-- `positions` — actual NBA positions
-- `yahoo_positions` — all Yahoo Fantasy eligibility slots (may differ, e.g., a PF/C on Yahoo)
-- `adp` — consensus pre-draft ADP for Yahoo 10-team 2026 season
-- `injury_risk` — chronic/recurring injury history flag (true = flag this player)
-- `injury_notes` — brief note, e.g., "recurring knee issues, missed 20+ games in 2024-25"
-- `injury_status` — current status at draft time: `healthy | day-to-day | out | IL`
-- `contract_year` — true if the player is in the final year of their contract
+A `scripts/build-players.js` utility exists for building and validating the player file.
 
 ---
 
 ### 7.3 Draft Day Interface
-
-**Layout:**
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -193,12 +208,13 @@ A split-screen layout is too cluttered during a live draft where focus is critic
 │                          │  BLK  TO   FG%  FT% 3PM  │
 │                          │  0.9  3.5  .583 .814 0.9 │
 ├──────────────────────────┴──────────────────────────┤
-│  AI RECOMMENDATION PANEL                             │
+│  BEANE'S TAKE                              [Refresh] │
 │  "Take Luka Doncic (PG/SF). He's the best available │
 │   value at pick 14 — ADP 3.0, flagging an elite PG  │
 │   before the position runs dry. Weak in assists;     │
 │   Luka fixes that. Alt: Bam Adebayo if you want C   │
 │   locked early — only 3 elite centers remain."       │
+│                          [Sleeper Radar ▾]           │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -208,129 +224,118 @@ A split-screen layout is too cluttered during a live draft where focus is critic
 - Drafted by opponent — dimmed/grey, strikethrough
 
 **Pick flow:**
-1. User selects a player row (keyboard or click)
+1. Select a player row (keyboard or click)
 2. Press `U` (user pick) or `O` (opponent pick)
 3. Press `Enter` to confirm
-4. Player status updates immediately, AI panel refreshes for next pick
+4. Status updates immediately; AI panel refreshes for next pick
 
-**Filters available:**
-- Position (PG / SG / SF / PF / C / G / F / UTIL)
-- Status (available only / all)
-- Injury status (hide day-to-day and out)
-- Round value flag (show only players available 10+ picks below ADP)
+**Filters:** Position, status (available/all), injury status, round-value flag
+
+**Recommendation budget:** 5 manual refreshes per draft session (free tier). Counter visible in UI.
 
 ---
 
-### 7.4 AI Recommendation Engine
+### 7.4 Pre-Draft Philosophy Engine (B-01)
 
-The recommendation engine runs in five sequential steps. Steps 1–4 execute client-side in JavaScript (fast, no API call). Step 5 sends a structured context prompt to Claude and returns the recommendation.
+Configurable per league before the draft starts. Sets the strategic weighting Claude uses throughout the session.
+
+**Beane Mode (preset):** ADP-value-first, positional scarcity aware, superstar-first in early rounds, category balance in middle/late rounds, injury risk flagged but accepted for elite upside.
+
+**Custom strategy settings:** user can override each axis independently (value vs. upside, safe vs. risky, balanced categories vs. punting).
+
+Stored in localStorage per league. Injected into the Claude system prompt at Step 5.
+
+---
+
+### 7.5 AI Recommendation Engine
+
+Five sequential steps. Steps 1–4 run client-side (instant). Step 5 hits Claude through the server-side proxy.
 
 #### Step 1 — Board State Assessment
-```
-Input: full player pool, draft status per player, user roster, pick number
-Output: {
-  availablePlayers: sorted by ADP ascending,
-  userRoster: [player records],
-  currentPick: number,
-  currentRound: number,
-  emptySlots: [position strings],
-  picksUntilNextTurn: number (calculated from snake order)
-}
-```
-
-Snake order math: For a 10-team league, picks go 1–10 in odd rounds, 10–1 in even rounds. `picksUntilNextTurn` = picks between current pick and user's next pick.
+Board state including available players sorted by ADP, user roster, current pick, round, empty slots, picks until next turn.
 
 #### Step 2 — Value Identification
-```
-For each available player:
-  valueGap = player.adp - currentPickNumber
-  if valueGap > 10: flag as VALUE_PICK (available well below expected)
-  if valueGap < -5: flag as REACH (would be drafting early relative to ADP)
-
-Output: topValuePicks = availablePlayers sorted by valueGap descending, top 5
-```
+ADP gap scoring. `valueGap = player.adp - currentPickNumber`. Flags VALUE_PICK (available 10+ below ADP) and REACH (drafting 5+ above ADP).
 
 #### Step 3 — Positional Scarcity Check
-```
-For each position P:
-  eliteAvailable[P] = count of available players at P with ADP <= (currentPick + 30)
-  scarcityScore[P] = eliteAvailable[P] / picksUntilNextTurn
-
-Flag positions where:
-  - user has 0 players at P AND P is a required slot
-  - scarcityScore[P] < 1.5 (running out of quality options before next turn)
-
-Output: urgentPositions = positions flagged, sorted by scarcityScore ascending
-```
+Counts elite players remaining at each position relative to picks until next turn. Flags urgent positions where scarcity is tightening.
 
 #### Step 4 — Category Gap Analysis
-```
-benchmarkPerGame = {
-  pts: 20.0, reb: 7.5, ast: 5.0, stl: 1.2, blk: 0.8,
-  to: 2.8, fg_pct: 0.470, ft_pct: 0.780, three_pm: 1.8
-}
-
-For each category:
-  rosterAvg[cat] = average of user's drafted players at that category
-  gap[cat] = benchmarkPerGame[cat] - rosterAvg[cat]
-
-weakCategories = categories where gap[cat] > threshold (15% below benchmark)
-
-For each available player, calculate categoryContribution:
-  score = sum of (gap[cat] > 0 ? player.prior_season[cat] : 0) for all categories
-
-Output: categoryRecommendations = top 3 players by categoryContribution
-```
+Compares current roster averages against empirical benchmarks derived from the top 130 players in `players.json`. Identifies weak categories and scores available players by their contribution to gaps.
 
 #### Step 5 — Claude Synthesis
 ```
-Prompt structure sent to claude-sonnet-4-20250514:
-
-System: You are PocketBeane, a confident fantasy basketball GM sidekick. 
-        Give one primary recommendation, not a ranked list. Be direct and opinionated.
-        
-User: [structured board state from steps 1–4]
-  - Current pick: {currentPick} (Round {round})
-  - Picks until my next turn: {picksUntilNextTurn}
-  - Top value picks: {topValuePicks[0..4]}
-  - Urgent positions: {urgentPositions}
-  - Weak categories: {weakCategories}
-  - My current roster: {userRoster}
-  - Strategy phase: {round <= 3 ? "superstar-first" : "balance"}
-  
-  Give me: primary pick + rationale (2–3 sentences), injury flag if applicable,
-  one alternative if primary is a risk, and one board watch for the next round.
-
+Model: claude-sonnet-4-6 (server-side, /api/recommend.js)
 max_tokens: 512
-temperature: 0.3 (consistent, not creative)
+temperature: 0.3
+
+System: You are PocketBeane, a confident fantasy basketball GM sidekick.
+        Give one primary recommendation, not a ranked list. Be direct and opinionated.
+        [Philosophy preset injected here]
+
+User: [Structured output from Steps 1–4 + dynamic Yahoo scoring categories]
+      Give: primary pick + rationale (2–3 sentences), injury flag if applicable,
+      one alternative if primary is a risk, one board watch for next round.
 ```
 
-**Performance requirement:** Claude response must return within 4 seconds. Steps 1–4 run instantly client-side. Only Step 5 hits the API.
-
-**Caching:** Cache the last recommendation. If the board state hasn't changed (no new picks since last recommendation), serve the cached result without a new API call.
+**Performance requirement:** Response within 4 seconds. Cache the last recommendation; serve cached result if board state unchanged.
 
 ---
 
-### 7.5 Season-Long Features (Phase 2)
+### 7.6 Sleeper Pick Radar (B-02)
 
-#### Waiver Wire Advisor
-- User manually inputs available free agents (name + recent stats)
-- Tool recommends pickups based on: roster gaps, upcoming schedule density, recent trend, injury news
-- Flags hot-streak targets
+Collapsible panel within the recommendation UI. Surfaces players whose ADP gap and contract-year status suggest outperformance potential. Secondary signal layer on top of Beane's Take.
 
-#### Trade Analyzer
-- User inputs: give [player A], receive [player B]
-- Tool evaluates: net category impact, positional balance impact, buy-low/sell-high signal, injury risk of incoming player
-- Returns: Accept / Decline / Counter with rationale
+---
 
-#### Weekly Performance Summary
-- User logs weekly result: W/L, categories won/lost
-- Tool tracks: season record, category win rates, roster performance vs. projections
-- Flags overperformers (sell-high) and underperformers (buy-low or drop)
+### 7.7 Draft Recap (B-03)
 
-#### Start/Sit Advisor
-- User inputs eligible starters and bench for the week
-- Tool recommends optimal lineup: games played that week, matchup difficulty, recent form, injury status
+Triggered from the DraftComplete screen. Single Claude call (700 tokens) that analyzes the full draft pick history and returns a summary: team strengths, weak categories, standout value picks, and one risk flag.
+
+---
+
+### 7.8 Yahoo Integration
+
+**Auth flow:** Yahoo OAuth 2.0 → server issues AES-256 encrypted cookie → auto-refresh on expiry. Connect/Disconnect UI on the home page. Local dev requires HTTPS (mkcert).
+
+**API endpoints:**
+- `/api/auth/yahoo/login` — initiates OAuth
+- `/api/auth/yahoo/callback` — exchanges code for token
+- `/api/auth/yahoo/me` — returns current auth state
+- `/api/auth/yahoo/disconnect` — clears session
+- `/api/yahoo/league.js` — basic league info
+- `/api/yahoo/league-full.js` — settings + standings + rosters + full draft board
+- `/api/yahoo/settings.js` — stat categories + roster positions for a given league
+- `/api/yahoo/my-leagues.js` — list of user's active Yahoo leagues
+- `/api/yahoo/sync-draft.js` — draft picks sync
+
+---
+
+### 7.9 Season Management Suite (Phase 2 — Y-05)
+
+Full in-season advisor powered by live Yahoo data. Ships incrementally after the September draft.
+
+| Sub-feature | Description |
+|---|---|
+| Head-to-head matchup advisor | Weekly outlook vs. current opponent — category projections and lineup suggestions |
+| Waiver wire advisor | Recommend adds/drops based on roster gaps, schedule density, recent trend |
+| Trade analyzer | Input give/receive — net category impact, positional balance, buy-low/sell-high signal |
+| Trade value index | Running power ranking of roster trade value — who to sell high, buy low, or hold |
+| Start/sit advisor | Optimal weekly lineup given schedule, matchup, recent form, injury status |
+| League pulse | Weekly league-wide summary — who's dominating, who's weak, who might trade |
+
+**Prerequisite:** Y-02 (league selection) + Y-04 (post-draft roster sync).
+
+---
+
+### 7.10 Multi-Sport Expansion (Phase 3)
+
+Sport configs for NHL, NFL, and MLB are already stubbed in `src/config/sports.js` with correct positions, slot eligibility, and category scaffolding. Adding a sport means:
+1. Populate the stub config entry (categories, benchmarks, roster slots)
+2. Create a `players-{sport}.json` data file
+3. Add sport selector to League Setup (already accounts for it in the config model)
+
+No other code changes required by design.
 
 ---
 
@@ -340,62 +345,74 @@ temperature: 0.3 (consistent, not creative)
 
 | Layer | Technology |
 |---|---|
-| Frontend | React (JSX), Tailwind CSS |
-| Language | JavaScript ES6+ (no TypeScript for MVP) |
-| AI Engine | Anthropic Claude API (`claude-sonnet-4-20250514`), max_tokens: 512 |
-| Data | `players.json` — top 200 players, manually curated |
-| Storage | localStorage (two league states stored independently) |
+| Framework | Next.js 16 (Pages Router), React 19 |
+| Language | JavaScript ES6+, JSX (no TypeScript for MVP) |
+| Styling | Tailwind CSS |
+| State | Zustand (client state) + localStorage (persistence) |
+| AI | Anthropic Claude API (`claude-sonnet-4-6`) via server-side proxy |
+| Yahoo | Yahoo Fantasy Sports API v2, OAuth 2.0 |
+| Data | `src/data/players.json` — 199 players, manually curated |
+| Auth | AES-256 encrypted server-side cookie (no third-party auth service) |
 | Hosting | Vercel (free tier) |
-| Environment | `REACT_APP_ANTHROPIC_API_KEY` |
+| Secrets | `ANTHROPIC_API_KEY`, `YAHOO_CLIENT_ID`, `YAHOO_CLIENT_SECRET`, `COOKIE_SECRET` — server-side only |
 
-### File and Folder Structure
+### File Structure
 
 ```
-hoopsgm/
-├── public/
-│   └── index.html
+pocketbeane/
+├── pages/
+│   ├── _app.jsx
+│   ├── index.jsx                       # Home — connect Yahoo, league overview
+│   ├── draft.jsx                       # Draft day interface
+│   ├── setup.jsx                       # League setup form
+│   ├── season.jsx                      # Season management hub
+│   └── api/
+│       ├── recommend.js                # Claude API proxy (server-side only)
+│       ├── auth/yahoo/
+│       │   ├── login.js
+│       │   ├── callback.js
+│       │   ├── me.js
+│       │   └── disconnect.js
+│       └── yahoo/
+│           ├── league.js
+│           ├── league-full.js
+│           ├── settings.js
+│           ├── my-leagues.js
+│           └── sync-draft.js
 ├── src/
-│   ├── components/
-│   │   ├── draft/
-│   │   │   ├── DraftBoard.jsx          # Main draft board, player list
-│   │   │   ├── PlayerRow.jsx           # Single player row with pick controls
-│   │   │   ├── FilterBar.jsx           # Position/status filters
-│   │   │   └── RecommendationPanel.jsx # AI recommendation display
-│   │   ├── roster/
-│   │   │   ├── RosterView.jsx          # User's current roster grid
-│   │   │   ├── CategoryTotals.jsx      # Running 9-cat stat totals
-│   │   │   └── PositionSlot.jsx        # Individual roster slot
-│   │   ├── league/
-│   │   │   ├── LeagueSetup.jsx         # League config form
-│   │   │   └── LeagueSwitcher.jsx      # Tab switcher + status bar
-│   │   └── shared/
-│   │       ├── SearchBar.jsx
-│   │       └── StatusBadge.jsx         # Injury/value/scarcity badges
-│   ├── engine/
+│   ├── ai/
 │   │   ├── boardState.js               # Step 1: board state assessment
 │   │   ├── valueCalculator.js          # Step 2: ADP value gap scoring
 │   │   ├── scarcity.js                 # Step 3: positional scarcity model
-│   │   ├── categoryAnalysis.js         # Step 4: category gap analysis
-│   │   └── promptBuilder.js            # Step 5: build Claude prompt
-│   ├── hooks/
-│   │   ├── useDraftState.js            # Draft board state and pick actions
-│   │   ├── useLeague.js                # League config and switcher
-│   │   └── useRecommendation.js        # Claude API call + caching
-│   ├── services/
-│   │   └── claude.js                   # Anthropic API client wrapper
+│   │   └── categoryAnalysis.js         # Step 4: category gap analysis
+│   ├── components/
+│   │   ├── draft/
+│   │   │   ├── PlayerPool.jsx
+│   │   │   ├── RosterView.jsx
+│   │   │   ├── FilterBar.jsx
+│   │   │   ├── RecommendationPanel.jsx # Beane's Take + Sleeper Radar
+│   │   │   ├── DraftComplete.jsx       # Post-draft recap trigger
+│   │   │   └── UndoModal.jsx
+│   │   └── league/
+│   │       ├── LeagueSetup.jsx
+│   │       └── LeagueSwitcher.jsx
+│   ├── config/
+│   │   └── sports.js                   # Sport config registry (NBA live; NHL/NFL/MLB stubbed)
 │   ├── data/
-│   │   └── players.json                # Top 200 players, pre-curated
-│   ├── constants/
-│   │   ├── categories.js               # 9-cat definitions + benchmarks
-│   │   ├── positions.js                # Yahoo position slots
-│   │   └── snakeDraft.js               # Snake order calculator
-│   ├── utils/
-│   │   └── draft.js                    # Pick helpers, roster validators
-│   ├── App.jsx
-│   └── index.js
-├── .env                                # REACT_APP_ANTHROPIC_API_KEY
-├── .env.example                        # Committed template, no secrets
-├── package.json
+│   │   └── players.json                # 199 players, refreshed each August
+│   ├── hooks/
+│   │   └── useYahooAuth.js
+│   ├── store/
+│   │   └── leagueStore.js              # Zustand store
+│   └── utils/
+│       ├── yahooAuth.js                # Token encryption + refresh
+│       ├── roster.js
+│       └── snake.js                    # Snake draft order calculator
+├── scripts/
+│   └── build-players.js               # Player data builder + validator
+├── .env.local                         # Local secrets (never committed)
+├── .env.example                       # Committed template, no secrets
+├── next.config.js
 ├── tailwind.config.js
 └── vercel.json
 ```
@@ -407,130 +424,123 @@ hoopsgm/
   "hoopsgm_league_1": {
     "config": {
       "name": "Main League",
+      "sport": "nba",
       "numTeams": 10,
       "draftPosition": 3,
+      "yahooLeagueKey": "466.l.22207",
       "categories": ["pts", "reb", "ast", "stl", "blk", "to", "fg_pct", "ft_pct", "three_pm"],
-      "ilSlots": 1
+      "rosterSlots": { "pgSlots": 1, "sgSlots": 1, ... },
+      "ilSlots": 1,
+      "philosophy": "beane-mode"
     },
     "draft": {
       "picks": [
         { "playerId": "nikola-jokic", "pickNumber": 1, "by": "opponent" },
-        { "playerId": "shai-gilgeous-alexander", "pickNumber": 2, "by": "opponent" },
         { "playerId": "luka-doncic", "pickNumber": 3, "by": "user" }
       ]
     },
-    "rosterSlots": {
+    "assignedSlots": {
       "PG": "luka-doncic",
-      "SG": null,
-      "SF": null,
-      "PF": null,
-      "C": null,
-      "G": null,
-      "F": null,
-      "UTIL": null,
-      "BN1": null,
-      "BN2": null,
-      "BN3": null,
-      "BN4": null,
-      "BN5": null
+      "SG": null, "SF": null, "PF": null, "C": null,
+      "G": null, "F": null, "UTIL1": null, "UTIL2": null,
+      "BN1": null, "BN2": null, "BN3": null, "BN4": null
     }
-  },
-  "hoopsgm_league_2": { ... }
+  }
 }
 ```
 
-The full `players.json` is never duplicated in localStorage — only pick history and slot assignments are stored. Player data is always loaded from the bundled file.
-
 ### Design System
 
-- **Theme:** Dark mode, sports-analytics aesthetic — ESPN dark theme meets GM war room
-- **Colors:** Near-black background (`#0f1117`), dark surface (`#1a1f2e`), accent green for user picks, muted grey for opponent picks, amber for value flags, red for injury flags
-- **Typography:** Monospace or tight sans-serif numbers for stats; clear hierarchy between player name, position badge, and ADP
-- **Density:** High — the draft board needs to show 15–20 players without scrolling
+- **Theme:** Dark mode, sports-analytics aesthetic — ESPN dark meets GM war room
+- **Background:** `#0f1117` (near-black), surface `#1a1f2e`
+- **Accents:** Green for user picks, muted grey for opponent picks, amber for value flags, red for injury flags
+- **Typography:** Tight sans-serif with monospace numbers for stats
+- **Density:** High — 15–20 players visible without scrolling on draft board
 
 ---
 
 ## 9. Build Order
 
-### Phase 0 — Pre-build (May–August 2026)
-1. Export top 200 player ADP from FantasyPros (Yahoo 10-team, 2026 projections)
-2. Cross-reference with HashtagBasketball positional rankings
-3. Build `players.json` with full schema — all 200 players, all fields populated
-4. Decide tool name (separate session)
-5. Set up GitHub repo and Vercel project
+### Phase 1 — MVP (Complete)
+- [x] Next.js scaffold + Tailwind + Vercel deployment
+- [x] `players.json` (199 players) integrated and rendering
+- [x] Claude API proxied through `/api/recommend.js`
+- [x] League setup + switcher (two leagues, independent configs)
+- [x] Player pool — ADP-sorted, searchable, position-filterable
+- [x] Draft board with pick states + keyboard shortcuts
+- [x] Roster view + category totals
+- [x] Snake order calculator
+- [x] Client-side AI engine (Steps 1–4)
+- [x] Beane's Take recommendation panel + caching
+- [x] Pre-Draft Philosophy Engine (B-01)
+- [x] Sleeper Pick Radar (B-02)
+- [x] Draft Recap on DraftComplete (B-03)
+- [x] Yahoo OAuth 2.0 (Y-01)
+- [x] Yahoo data layer (settings, standings, rosters, draft board)
+- [x] Dynamic scoring categories in AI prompt (Y-07)
 
-### Phase 1 — MVP (August 2026, ready for September draft)
+### Phase 2 — Yahoo-Connected Season Hub (June–September 2026)
+- [ ] Y-02: League selection UI after auth
+- [ ] Y-03: Live draft sync via polling (8–10s interval)
+- [ ] Y-04: Post-draft full roster sync
+- [ ] Y-05: Season management suite (ships incrementally)
+- [ ] Y-06: Draft history recap page
+- [ ] Week 5 QA: mock draft, edge cases, latency benchmark
+- [ ] August 2026: `players.json` refresh with 2026 ADP
 
-**Week 1: Foundation**
-- [ ] React app scaffold with Tailwind CSS
-- [ ] Vercel deployment configured
-- [ ] `players.json` integrated and rendering
-- [ ] `.env` setup with Claude API key
+### Phase 3 — Multi-Sport (October 2026+)
+- [ ] NHL: populate sport config + `players-nhl.json`
+- [ ] NFL: populate sport config + `players-nfl.json`
+- [ ] MLB: populate sport config + `players-mlb.json`
+- [ ] Sport selector in League Setup
+- [ ] Evaluate auction draft mode (post-September decision)
 
-**Week 2: League Setup + Player Pool**
-- [ ] League setup form — two leagues, independent configs stored to localStorage
-- [ ] League switcher tab component + persistent status bar
-- [ ] Player pool display — ADP-sorted, searchable, position-filterable
-
-**Week 3: Draft Board**
-- [ ] Draft board with pick state (available / user / opponent)
-- [ ] Keyboard shortcut system (U, O, ↑↓, /, Enter, Z)
-- [ ] Roster view with position slots and running category totals
-- [ ] Snake order calculator and pick number tracking
-
-**Week 4: AI Engine**
-- [ ] Client-side engine: boardState, valueCalculator, scarcity, categoryAnalysis
-- [ ] Claude API integration (claude.js + useRecommendation hook)
-- [ ] Prompt builder and recommendation panel
-- [ ] Recommendation caching
-
-**Week 5: Polish + Testing**
-- [ ] Mock draft session — full 13-round draft with a friend or alone
-- [ ] Edge case testing: last pick in round, multi-position players, all positions filled
-- [ ] Performance check: recommendation latency under 4 seconds
-- [ ] Visual polish — badge system, colour coding, injury flags
-
-### Phase 2 — Season-long (October 2026+)
-- Waiver wire advisor
-- Trade analyzer
-- Weekly performance summary + start/sit advisor
-- Yahoo API integration (if manual input proves limiting)
+### Phase 4 — Monetization (2027, needs payment infra)
+- [ ] Stripe (or similar) billing integration
+- [ ] Premium tier: unlimited recommendation refreshes
+- [ ] S-01: AI Autopick (blocked — verify Yahoo write API capability first)
 
 ---
 
 ## 10. Technical Risks
 
-### Risk 1 — API Key Exposure (HIGH)
-**Problem:** `REACT_APP_ANTHROPIC_API_KEY` is a client-side React env variable, visible in the browser bundle. Anyone who inspects the built app can extract the key.
-
-**Mitigation for MVP (personal use):** Acceptable for a personal-use tool with no public access. Document clearly: never deploy publicly without moving the Claude call to a serverless function proxy. Vercel Functions can act as the proxy in Phase 2 with one route.
-
-**Mitigation for Phase 2:** Add `/api/recommend` Vercel Function to proxy the Claude call — API key lives server-side only.
+### Risk 1 — API Key Exposure ~~(HIGH)~~ → RESOLVED
+Claude calls are proxied through `/api/recommend.js`. The Anthropic API key is a server-side environment variable and never touches the browser bundle.
 
 ### Risk 2 — ADP Data Staleness (MEDIUM)
-**Problem:** `players.json` is curated once before the draft. Injuries, trades, or suspensions between curation and draft day will make the data stale.
+`players.json` is curated once before the draft. Injuries, trades, or suspensions between curation and draft day will make it stale.
 
-**Mitigation:** Build an in-app "edit player" function so ADP and injury status can be updated manually on draft day. Document the update checklist: run it 48 hours before draft and morning-of.
+**Mitigation:** In-app player edit function for ADP and injury status. Manual update checklist: run 48 hours before draft and morning-of.
 
 ### Risk 3 — Claude Latency During Live Draft (MEDIUM)
-**Problem:** A live draft may give only 60–90 seconds per pick. Claude synthesis must return in time to be useful.
+A live draft gives 60–90 seconds per pick. Claude must return within 4 seconds.
 
-**Mitigation:** Steps 1–4 are client-side and instant. Only Step 5 hits Claude. Cap tokens at 512. Test and measure p95 latency. If latency is consistently above 3 seconds, pre-trigger the recommendation as soon as the opponent's pick is confirmed (don't wait for the user to ask).
+**Mitigation:** Steps 1–4 are client-side and instant. Step 5 is capped at 512 tokens. Pre-trigger the recommendation as soon as an opponent's pick is confirmed (don't wait for user to ask). Measure p95 latency in Week 5 QA.
 
 ### Risk 4 — Snake Order Edge Cases (LOW)
-**Problem:** Multi-round snake order math must correctly compute the user's pick number in every round, especially if the user is pick 1 or 10 (first/last in each direction).
+Multi-round snake math must handle pick 1 and pick 10 (first/last each direction) correctly.
 
-**Mitigation:** Unit test the snake calculator with all 10 draft positions across 13 rounds before the draft.
+**Mitigation:** Unit test `src/utils/snake.js` across all 10 positions × 13 rounds.
 
 ### Risk 5 — localStorage Size Limits (LOW)
-**Problem:** localStorage has a ~5MB limit per origin. Two leagues with full draft histories could approach this.
+~5MB limit per origin. Two leagues, two sports max at MVP.
 
-**Mitigation:** Already mitigated by design — only pick history (player IDs + pick numbers) is stored in localStorage, not the full player pool. 13 picks × 2 leagues × ~50 bytes per record = well under limits.
+**Mitigation:** Only pick history (player IDs + pick numbers) is stored. Full player data is always loaded from the bundled file. Well within limits.
 
 ### Risk 6 — Category Benchmark Calibration (LOW)
-**Problem:** The category gap analysis benchmarks are static estimates. If they're miscalibrated, the category recommendations will be misleading.
+Static benchmarks could be miscalibrated, skewing category recommendations.
 
-**Mitigation:** Derive benchmarks from actual prior-season data in `players.json` — calculate what the top 130 players average across each category (130 players across 10 teams × 13 roster spots). This makes the benchmark empirically grounded, not guessed.
+**Mitigation:** Benchmarks in `sports.js` are derived from actual prior-season player pool averages, not guessed.
+
+### Risk 7 — Yahoo API Availability During Live Draft (MEDIUM)
+If Yahoo's Fantasy API is slow or down during a live draft, polling sync (Y-03) fails.
+
+**Mitigation:** Manual pick input always works as fallback. Polling failures are surfaced as a banner, not a crash. Retry with exponential backoff.
+
+### Risk 8 — Yahoo Write API for Autopick (HIGH — currently blocked)
+S-01 (AI Autopick) requires programmatic draft picks via Yahoo's API. Yahoo's API is largely read-only; write capability for draft picks is unconfirmed.
+
+**Mitigation:** Do not build toward this until verified. If the API doesn't support it, S-01 is permanently removed from the roadmap.
 
 ---
 
@@ -538,17 +548,20 @@ The full `players.json` is never duplicated in localStorage — only pick histor
 
 ### Draft Day
 - AI recommendation latency: p95 < 4 seconds
-- Recommendation followed vs. overridden: tracked per session (qualitative)
+- Recommendation followed vs. overridden: tracked per session (qualitative review)
 - Category balance at end of draft: competitive in 7 of 9 categories
 
-### Season-long (tracked manually)
+### Season-Long
 - W/L record per league
 - Category win rates by week
-- Waiver wire add success (did the pickup improve standing?)
-- Trade recommendation outcome (accept → improved / declined → stayed same)
+- Waiver wire add success rate (did the pickup improve standing?)
+- Trade recommendation outcome (accept → improved / decline → held or improved)
+
+### Phase 3 Validation
+- At least one non-NBA league active and tracked through a full season
 
 ### Ultimate validation
-- End-of-season league standings. The tool either helped or it didn't.
+End-of-season league standings. The tool either helped or it didn't.
 
 ---
 
@@ -556,18 +569,18 @@ The full `players.json` is never duplicated in localStorage — only pick histor
 
 PocketBeane is a personal side project demonstrating the same AI decision-support pattern as Wayfound, applied to a different domain. The narrative: "I build AI-powered tools for decisions I care about. Wayfound plans adventures. PocketBeane wins fantasy leagues."
 
-Real personal use creates real feedback. League standings are the product metric.
+Real personal use creates real feedback. League standings are the product metric. The multi-sport expansion, if it ships, demonstrates that the architecture generalizes — not a one-sport hack.
 
 ---
 
-## 13. Open Items Before Build Starts
+## 13. Open Items
 
-- [ ] Finalize tool name (separate session — don't block build)
-- [ ] Export 2026 ADP CSV from FantasyPros and build `players.json`
-- [ ] Confirm GitHub repo name and Vercel project name
-- [ ] Confirm Phase 1 target date (first draft date in September 2026)
-- [ ] Decide: proxy Claude calls through Vercel Function from day one, or accept client-side key risk for MVP?
+- [ ] Finalize Phase 3 sport priority order (NHL first? NFL?)
+- [ ] Decide: build season management UI before or after September draft?
+- [ ] Verify Yahoo write API capability (unblocks S-01)
+- [ ] Confirm first 2026 draft date (determines August ADP refresh deadline)
+- [ ] Evaluate monetization timing — Stripe integration isn't worth the overhead until Phase 3 is live
 
 ---
 
-*This document is the source of truth for PocketBeane MVP scope and architecture. Update it as decisions are made.*
+*This document is the source of truth for PocketBeane scope and architecture. Update it as decisions are made.*
