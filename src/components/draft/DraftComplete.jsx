@@ -5,6 +5,7 @@ import { buildPlayerMap, computeRosterAssignment } from '@/utils/roster'
 import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
 import useLeagueStore from '@/store/leagueStore'
 import { getSessionId } from '@/utils/session'
+import { resolveProfile } from '@/utils/gmProfile'
 
 const playerMap = buildPlayerMap(players)
 
@@ -60,6 +61,7 @@ export default function DraftComplete({ league }) {
           },
           boardState: { userPicksWithData },
           categoryGaps,
+          gmProfile: resolveProfile(league.profileOverride),
         }),
       })
       const data = await res.json()

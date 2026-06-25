@@ -67,14 +67,23 @@ export default function Home() {
               <h1 className="text-3xl font-bold text-white tracking-tight">PocketBeane</h1>
               <p className="text-gray-500 mt-1 text-sm">AI-powered Assistant GM</p>
             </div>
-            {leagues.length > 0 && (
+            <div className="flex items-center gap-3">
               <Link
-                href="/setup"
-                className="px-4 py-2 bg-pick text-white rounded-lg text-sm font-semibold hover:bg-green-500 transition-colors"
+                href="/gm-profile"
+                className="text-xs text-gray-500 hover:text-gray-300 transition-colors font-mono"
+                title="GM Profile"
               >
-                + New League
+                GM Profile
               </Link>
-            )}
+              {leagues.length > 0 && (
+                <Link
+                  href="/setup"
+                  className="px-4 py-2 bg-pick text-white rounded-lg text-sm font-semibold hover:bg-green-500 transition-colors"
+                >
+                  + New League
+                </Link>
+              )}
+            </div>
           </div>
 
           {/* Yahoo connection */}

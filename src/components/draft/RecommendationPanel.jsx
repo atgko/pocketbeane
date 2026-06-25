@@ -8,6 +8,7 @@ import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
 import { computeScarcity, getSmartScarcityAlerts, computePositionalDepth } from '@/ai/scarcity'
 import { rankByFit, computeSleepers } from '@/ai/valueCalculator'
 import { getSessionId } from '@/utils/session'
+import { resolveProfile } from '@/utils/gmProfile'
 
 const playerMap = buildPlayerMap(players)
 
@@ -106,6 +107,7 @@ export default function RecommendationPanel({ league }) {
     scarcityAlerts,
     topCandidates: topCandidates.slice(0, 8),
     philosophy,
+    gmProfile: resolveProfile(league.profileOverride),
     snakeContext: { picksUntilNext, nextPickNum, projectedGone, positionalDepth },
     auctionContext: !isSnake ? {
       nominationNumber: totalPicks + 1,

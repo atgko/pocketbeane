@@ -109,6 +109,14 @@ export default function LeagueSwitcher() {
         )}
 
         <Link
+          href="/gm-profile"
+          className="flex items-center px-3 text-xs text-gray-600 hover:text-gray-300 transition-colors shrink-0"
+          title="GM Profile"
+        >
+          ⚙
+        </Link>
+
+        <Link
           href="/"
           className="flex items-center px-4 text-xs text-gray-600 hover:text-gray-300 transition-colors shrink-0"
         >

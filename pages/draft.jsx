@@ -7,17 +7,32 @@ import PlayerPool from '@/components/draft/PlayerPool'
 import RosterView from '@/components/draft/RosterView'
 import RecommendationPanel from '@/components/draft/RecommendationPanel'
 import DraftComplete from '@/components/draft/DraftComplete'
+import PhilosophyQuiz from '@/components/PhilosophyQuiz'
+import ProfileNudge from '@/components/ProfileNudge'
+import { getGMProfile, saveGMProfile } from '@/utils/gmProfile'
 
 export default function Draft() {
   const router = useRouter()
   const { leagues, activeLeagueId, getActiveLeague } = useLeagueStore()
   const [mounted, setMounted] = useState(false)
+  const [quizOpen, setQuizOpen] = useState(false)
+  const [showNudge, setShowNudge] = useState(false)
 
   useEffect(() => { setMounted(true) }, [])
 
   useEffect(() => {
     if (mounted && leagues.length === 0) router.replace('/')
   }, [mounted, leagues.length])
+
+  useEffect(() => {
+    if (!mounted) return
+    const profile = getGMProfile()
+    if (!profile) {
+      setQuizOpen(true)
+    } else if (profile.skippedAt && !profile.completedAt) {
+      setShowNudge(true)
+    }
+  }, [mounted])
 
   if (!mounted || leagues.length === 0) return null
 
@@ -28,25 +43,38 @@ export default function Draft() {
   const totalSlots = activeLeague.rosterSlots.length
   const isDraftComplete = activeLeague.config.draftSynced || activeLeague.status === 'complete' || (totalSlots > 0 && userPickCount >= totalSlots)
 
+  function handleQuizComplete(answers) {
+    saveGMProfile({ ...answers, completedAt: new Date().toISOString(), skippedAt: null })
+    setQuizOpen(false)
+    setShowNudge(false)
+  }
+
+  function handleQuizSkip() {
+    saveGMProfile({ skippedAt: new Date().toISOString() })
+    setQuizOpen(false)
+    setShowNudge(true)
+  }
+
   return (
     <>
       <Head>
         <title>{`${activeLeague.config.name} — PocketBeane`}</title>
       </Head>
 
-      {/* Full-viewport flex column so the content area fills exactly the remaining height */}
       <div className="h-screen bg-bg text-gray-200 flex flex-col overflow-hidden">
         <LeagueSwitcher />
 
+        {showNudge && !quizOpen && (
+          <ProfileNudge onOpen={() => { setShowNudge(false); setQuizOpen(true) }} />
+        )}
+
         {isDraftComplete ? (
-          /* Draft complete: centered scrollable area, no columns */
           <main className="flex-1 overflow-y-auto">
             <div className="max-w-5xl mx-auto px-6 py-6">
               <DraftComplete key={activeLeagueId} league={activeLeague} />
             </div>
           </main>
         ) : (
-          /* Live draft: 3-column, each column independently scrollable */
           <main className="flex-1 min-h-0 p-5">
             <div className="grid grid-cols-[288px_1fr_264px] gap-5 h-full">
               <div className="h-full min-h-0">
@@ -62,6 +90,10 @@ export default function Draft() {
           </main>
         )}
       </div>
+
+      {quizOpen && (
+        <PhilosophyQuiz onComplete={handleQuizComplete} onSkip={handleQuizSkip} />
+      )}
     </>
   )
 }

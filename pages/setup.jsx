@@ -3,18 +3,22 @@ import { useRouter } from 'next/router'
 import { useState, useEffect, useCallback } from 'react'
 import useLeagueStore, { DEFAULT_CONFIG } from '@/store/leagueStore'
 import LeagueSetup from '@/components/league/LeagueSetup'
+import ProfileOverrideScreen from '@/components/ProfileOverrideScreen'
 import { useYahooAuth } from '@/hooks/useYahooAuth'
+import { getGMProfile, INJURY_DISPLAY, CATEGORY_DISPLAY, ROSTER_DISPLAY } from '@/utils/gmProfile'
 
 export default function Setup() {
   const router = useRouter()
   const { id: editId } = router.query
-  const { createLeague, updateLeagueConfig, getLeague, importDraft, setActiveLeague } = useLeagueStore()
+  const { leagues, createLeague, updateLeagueConfig, getLeague, importDraft, setActiveLeague, setProfileOverride } = useLeagueStore()
   const [mounted, setMounted] = useState(false)
   const [config, setConfig] = useState({ ...DEFAULT_CONFIG, name: '' })
   const [syncState, setSyncState] = useState(null) // null | 'loading' | 'success' | 'error'
   const [syncError, setSyncError] = useState(null)
   const [yahooLeagues, setYahooLeagues] = useState([])
   const [leaguesLoading, setLeaguesLoading] = useState(false)
+  const [showOverride, setShowOverride] = useState(false)
+  const [pendingOverride, setPendingOverride] = useState(null)
   const yahoo = useYahooAuth()
 
   useEffect(() => { setMounted(true) }, [])
@@ -91,6 +95,7 @@ export default function Setup() {
     }
 
     const leagueId = createLeague(config)
+    if (pendingOverride?.hasOverride) setProfileOverride(leagueId, pendingOverride)
     setActiveLeague(leagueId)
 
     if (config.yahooLeagueKey) {
@@ -225,6 +230,43 @@ export default function Setup() {
             onToggleCategory={toggleCategory}
             isYahooSynced={isYahooSynced}
           />
+
+          {/* Flow C — profile acknowledgment for second+ league */}
+          {!isEditing && leagues.length > 0 && (() => {
+            const gmProfile = getGMProfile()
+            if (!gmProfile?.completedAt) return null
+            return (
+              <div className="mt-4 bg-surface border border-border rounded-lg px-5 py-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-semibold text-gray-300">GM Profile</p>
+                    <p className="text-xs text-gray-500 mt-0.5 font-mono">
+                      {INJURY_DISPLAY[gmProfile.injuryTolerance]} · {CATEGORY_DISPLAY[gmProfile.categoryStrategy]} · {ROSTER_DISPLAY[gmProfile.rosterPhilosophy]}
+                    </p>
+                    {pendingOverride?.hasOverride && (
+                      <p className="text-xs text-value mt-0.5 font-mono">Customized for this league</p>
+                    )}
+                  </div>
+                  {!showOverride && (
+                    <button
+                      onClick={() => setShowOverride(true)}
+                      className="text-xs text-gray-500 hover:text-gray-300 transition-colors shrink-0 ml-4"
+                    >
+                      Customize for this league →
+                    </button>
+                  )}
+                </div>
+                {showOverride && (
+                  <ProfileOverrideScreen
+                    leagueName={config.name}
+                    currentOverride={pendingOverride}
+                    onSave={override => { setPendingOverride(override); setShowOverride(false) }}
+                    onCancel={() => setShowOverride(false)}
+                  />
+                )}
+              </div>
+            )
+          })()}
 
           <div className="mt-6 flex gap-3">
             <button

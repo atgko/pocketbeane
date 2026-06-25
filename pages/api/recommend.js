@@ -5,6 +5,36 @@ const client = new Anthropic()
 const SESSION_LIMIT = 50
 const sessionCounts = new Map()
 
+const GM_INJURY_LABELS = {
+  play_it_safe:    'Play it safe — avoids injury-prone players regardless of upside',
+  calculated_risk: 'Accepts injury risk for elite upside — surface the flag but do not use it as a reason to pass on the player',
+  round_dependent: 'Safe early, willing to accept injury risk in mid-to-late rounds',
+}
+
+const GM_CATEGORY_LABELS = {
+  compete_all_9:   'Compete in all 9 — wants balanced coverage, no deliberate weaknesses',
+  punt_categories: 'Punts 1-2 categories — prefers dominating 7 over spreading thin. Do NOT flag weakness in punted categories as a problem — treat it as intentional.',
+  read_the_draft:  "Reads the draft — no predetermined category plan, decides based on what's available",
+}
+
+const GM_ROSTER_LABELS = {
+  stars_and_scrubs:   'Stars and scrubs — weight rounds 1-4 toward the best player available regardless of positional balance. Fill depth late.',
+  balanced_depth:     'Balanced depth — values consistent contributors across all 13 roster spots',
+  streaming_friendly: 'Streaming-friendly — values roster flexibility and players with high weekly schedule upside',
+}
+
+function buildProfileBlock(gmProfile) {
+  if (!gmProfile?.injuryTolerance) {
+    return 'GM PHILOSOPHY PROFILE: Not set. Apply balanced default recommendations.'
+  }
+  return `GM PHILOSOPHY PROFILE FOR THIS USER:
+- Injury tolerance: ${GM_INJURY_LABELS[gmProfile.injuryTolerance] ?? gmProfile.injuryTolerance}
+- Category strategy: ${GM_CATEGORY_LABELS[gmProfile.categoryStrategy] ?? gmProfile.categoryStrategy}
+- Roster philosophy: ${GM_ROSTER_LABELS[gmProfile.rosterPhilosophy] ?? gmProfile.rosterPhilosophy}
+
+Weight all recommendations according to this profile.`
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
 
@@ -18,7 +48,7 @@ export default async function handler(req, res) {
     sessionCounts.set(sessionId, count + 1)
   }
 
-  const { mode = 'auto', leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy = {}, snakeContext = {}, auctionContext = {}, bidTarget = null } = req.body
+  const { mode = 'auto', leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy = {}, snakeContext = {}, auctionContext = {}, bidTarget = null, gmProfile = null } = req.body
 
   if (!leagueConfig || !boardState) {
     return res.status(400).json({ error: 'Missing required fields' })
@@ -28,6 +58,8 @@ export default async function handler(req, res) {
     const { system, user, maxTokens } = buildMessages(
       mode, leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy, snakeContext, auctionContext, bidTarget
     )
+
+    system.push({ type: 'text', text: buildProfileBlock(gmProfile) })
 
     const message = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',

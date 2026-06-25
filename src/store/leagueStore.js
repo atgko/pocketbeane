@@ -48,6 +48,13 @@ function generateRosterSlots(config) {
   return slots
 }
 
+const DEFAULT_PROFILE_OVERRIDE = {
+  hasOverride: false,
+  injuryTolerance: null,
+  categoryStrategy: null,
+  rosterPhilosophy: null,
+}
+
 const makeLeague = (config) => {
   const merged = { ...DEFAULT_CONFIG, ...config }
   return {
@@ -57,6 +64,7 @@ const makeLeague = (config) => {
     // Pick shape: { playerId, pickNumber, draftedBy: 'user' | 'opponent', price: number | null }
     draft: { picks: [] },
     rosterSlots: generateRosterSlots(merged),
+    profileOverride: { ...DEFAULT_PROFILE_OVERRIDE },
   }
 }
 
@@ -102,6 +110,13 @@ const useLeagueStore = create(
       setDraftOutlook: (id, outlook) =>
         set((state) => ({
           leagues: state.leagues.map((l) => (l.id === id ? { ...l, draftOutlook: outlook } : l)),
+        })),
+
+      setProfileOverride: (id, override) =>
+        set((state) => ({
+          leagues: state.leagues.map((l) =>
+            l.id === id ? { ...l, profileOverride: { ...DEFAULT_PROFILE_OVERRIDE, ...override } } : l
+          ),
         })),
 
       addPick: (id, pick) =>
