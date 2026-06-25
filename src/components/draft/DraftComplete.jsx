@@ -4,6 +4,7 @@ import { getSportConfig } from '@/config/sports'
 import { buildPlayerMap, computeRosterAssignment } from '@/utils/roster'
 import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
 import useLeagueStore from '@/store/leagueStore'
+import { getSessionId } from '@/utils/session'
 
 const playerMap = buildPlayerMap(players)
 
@@ -48,7 +49,7 @@ export default function DraftComplete({ league }) {
       }
       const res = await fetch('/api/recommend', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-Session-Id': getSessionId() ?? '' },
         body: JSON.stringify({
           mode: 'complete',
           leagueConfig: {

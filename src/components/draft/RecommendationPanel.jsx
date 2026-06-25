@@ -7,6 +7,7 @@ import { computeBoardState } from '@/ai/boardState'
 import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
 import { computeScarcity, getSmartScarcityAlerts, computePositionalDepth } from '@/ai/scarcity'
 import { rankByFit, computeSleepers } from '@/ai/valueCalculator'
+import { getSessionId } from '@/utils/session'
 
 const playerMap = buildPlayerMap(players)
 
@@ -121,7 +122,7 @@ export default function RecommendationPanel({ league }) {
     try {
       const res = await fetch('/api/recommend', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-Session-Id': getSessionId() ?? '' },
         body: JSON.stringify({ mode, ...payloadRef.current, ...extra }),
       })
       const data = await res.json()

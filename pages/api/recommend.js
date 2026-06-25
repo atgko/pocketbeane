@@ -2,8 +2,21 @@ import Anthropic from '@anthropic-ai/sdk'
 
 const client = new Anthropic()
 
+const SESSION_LIMIT = 50
+const sessionCounts = new Map()
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
+
+  const sessionId = req.headers['x-session-id']
+  if (sessionId) {
+    const count = sessionCounts.get(sessionId) ?? 0
+    if (count >= SESSION_LIMIT) {
+      console.warn('[recommend] rate limit hit', sessionId)
+      return res.status(429).json({ error: `Rate limit exceeded. Max ${SESSION_LIMIT} recommendations per session.` })
+    }
+    sessionCounts.set(sessionId, count + 1)
+  }
 
   const { mode = 'auto', leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy = {}, snakeContext = {}, auctionContext = {}, bidTarget = null } = req.body
 

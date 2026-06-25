@@ -160,7 +160,7 @@ Priority: 🔴 CRITICAL (pre-September) · 🟡 HIGH · 🟢 SEASON
 
 ---
 
-### PMF-01 · Rate Limiting on /api/recommend 🔴
+### ~~PMF-01 · Rate Limiting on /api/recommend~~ ✅ DONE
 **PMF source:** C1 (API Key Security — partial gap)
 
 The server-side Claude proxy at `pages/api/recommend.js` has no rate limiting. The PMF ticket requires max 50 API calls per session to prevent cost abuse. The proxy itself is complete; this is the missing enforcement layer.
