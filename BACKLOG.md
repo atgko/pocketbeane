@@ -1,8 +1,30 @@
 # PocketBeane — Active Backlog
 
-Last updated: 2026-06-24
+Last updated: 2026-06-25
 
 Items are grouped by dependency tier. Within each tier, order reflects rough priority / logical sequencing.
+
+---
+
+## DECISION — Side project vs. commercial product (June 2026)
+
+After cross-referencing the PMF backlog against the codebase, we split the PMF
+gap tickets into two buckets:
+
+**Build — makes the product genuinely better:**
+PMF-01 (rate limiting), PMF-02 (philosophy quiz UX), PMF-04 (shareable recap
+card), PMF-08 (data refresh). These improve the actual draft/season experience
+regardless of whether PocketBeane ever has other users.
+
+**Defer — commercial theater for a side project:**
+PMF-03 (freemium tier architecture), PMF-05 (email capture), PMF-07 (analytics),
+PMF-09 ($4.99 trial tier). These only make sense with a real user base and
+billing infrastructure. Building them now adds complexity that makes the tool
+worse to use personally. The PMF simulation + product architecture already tell
+the portfolio story without a fake paywall.
+
+Redirect the saved scope toward Y-02 → Y-03 → Y-04 → Y-05 (Yahoo-connected
+season features), which are both a better personal product and a stronger demo.
 
 ---
 
@@ -129,9 +151,10 @@ Items are grouped by dependency tier. Within each tier, order reflects rough pri
 
 ---
 
-## PMF Gap Tickets
+## PMF Gap Tickets — Active (makes the product better)
 *Added June 2026 — derived from cross-referencing PMF simulation tickets against the shipped codebase.*
 *Source document: POCKETBEANE_PMF_BACKLOG.md*
+*See DECISION note at top of file for why commercial tickets are deferred.*
 
 Priority: 🔴 CRITICAL (pre-September) · 🟡 HIGH · 🟢 SEASON
 
@@ -193,8 +216,17 @@ The setup form is for league configuration. The onboarding quiz is for philosoph
 
 ---
 
-### PMF-03 · Freemium Tier Architecture 🔴
-**PMF source:** C3 (paywall moment redesign — CRITICAL)
+## PMF Gap Tickets — Deferred (commercial product only)
+*These tickets only make sense with a real user base and billing infrastructure.*
+*Do not build until PocketBeane has users beyond the owner. The PMF simulation*
+*and existing architecture already tell the portfolio story without these.*
+*Revisit if the project goes commercial.*
+
+---
+
+### PMF-03 · Freemium Tier Architecture
+**PMF source:** C3 (paywall moment redesign — CRITICAL for commercial launch)
+**Deferred reason:** Fake paywall adds codebase complexity with no personal-use benefit.
 
 No tier system exists. P-01 only gates the 5-refresh budget with a disabled button. The simulation validated a specific paywall architecture: feature-gating at the category gap analysis step, not an arbitrary round cutoff. The tier comparison screen must be shown before the draft starts.
 
@@ -264,8 +296,9 @@ Paywall trigger: when a free user's recommendation would include Steps 3–5, sh
 
 ---
 
-### PMF-05 · Email Capture + Resend Integration 🟡
+### PMF-05 · Email Capture + Resend Integration
 **PMF source:** C5 (missing email capture = no re-engagement channel between drafts)
+**Deferred reason:** No users to email. Revisit if the project goes commercial.
 
 No email infrastructure exists. Free users who draft and close the app cannot be re-engaged. Competitors can poach them in the silence between draft and waiver wire season.
 
@@ -323,8 +356,9 @@ No email infrastructure exists. Free users who draft and close the app cannot be
 
 ---
 
-### PMF-07 · Basic Analytics Foundation 🟡
+### PMF-07 · Basic Analytics Foundation
 **PMF source:** Finding 5 (distribution is the unsolved problem — product works, channel is the ceiling)
+**Deferred reason:** You are the user — you already know how you're using it. Revisit if the project goes commercial.
 
 No analytics exist. Without data on the conversion funnel (visit → draft start → draft complete → season feature viewed → upgrade), it's impossible to measure the impact of any PMF-driven feature change.
 
@@ -381,8 +415,9 @@ No analytics exist. Without data on the conversion funnel (visit → draft start
 
 ---
 
-### PMF-09 · $4.99 Trial Tier Implementation 🟢
+### PMF-09 · $4.99 Trial Tier Implementation
 **PMF source:** Finding 7 ($4.99 trial tier validated — 38% of trial users upgraded to annual)
+**Deferred reason:** Requires PMF-03 + Stripe + real users. Revisit if the project goes commercial.
 
 The pricing model is validated: $4.99 for draft + 2 weeks of season, then "$14 more for the full season" upgrade prompt (net of trial already paid). This is a monetization tier, not a feature — it requires PMF-03 (tier architecture) and Stripe as prerequisites.
 
