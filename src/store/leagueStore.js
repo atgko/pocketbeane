@@ -112,6 +112,11 @@ const useLeagueStore = create(
           leagues: state.leagues.map((l) => (l.id === id ? { ...l, draftOutlook: outlook } : l)),
         })),
 
+      setDraftDNA: (id, dna) =>
+        set((state) => ({
+          leagues: state.leagues.map((l) => (l.id === id ? { ...l, draftDNA: dna } : l)),
+        })),
+
       setProfileOverride: (id, override) =>
         set((state) => ({
           leagues: state.leagues.map((l) =>

@@ -51,6 +51,30 @@ export default async function handler(req, res) {
 
   const { mode = 'auto', leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy = {}, snakeContext = {}, auctionContext = {}, bidTarget = null, gmProfile = null } = req.body
 
+  // Bold prediction — plain text response, bypasses extractJSON
+  if (mode === 'bold_prediction') {
+    const { rosterPlayers = [], archetypeName = '', topCategories = [] } = req.body
+    try {
+      const predictionMsg = await client.messages.create({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 80,
+        system: [{
+          type: 'text',
+          text: 'You are Billy Beane making a bold prediction about a fantasy basketball team. Generate exactly one sentence under 25 words. Be specific, name a player if possible, state it as fact — no hedging, no "might", no "could". Return only the sentence, nothing else.',
+        }],
+        messages: [{
+          role: 'user',
+          content: `Archetype: ${archetypeName}\nTop categories: ${topCategories.join(', ') || 'none'}\nRoster: ${rosterPlayers.slice(0, 8).join(', ') || 'unknown'}\n\nGenerate one bold prediction about how this team performs this season.`,
+        }],
+      })
+      const prediction = predictionMsg.content[0]?.text?.trim() ?? ''
+      return res.json({ boldPrediction: prediction })
+    } catch (err) {
+      console.error('[recommend:bold_prediction]', err)
+      return res.status(500).json({ error: err.message })
+    }
+  }
+
   if (!leagueConfig || !boardState) {
     return res.status(400).json({ error: 'Missing required fields' })
   }

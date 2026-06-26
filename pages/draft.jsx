@@ -6,7 +6,7 @@ import LeagueSwitcher from '@/components/league/LeagueSwitcher'
 import PlayerPool from '@/components/draft/PlayerPool'
 import RosterView from '@/components/draft/RosterView'
 import RecommendationPanel from '@/components/draft/RecommendationPanel'
-import DraftComplete from '@/components/draft/DraftComplete'
+import DraftRecap from '@/components/DraftRecap'
 import PhilosophyQuiz from '@/components/PhilosophyQuiz'
 import ProfileNudge from '@/components/ProfileNudge'
 import { getGMProfile, saveGMProfile } from '@/utils/gmProfile'
@@ -71,7 +71,7 @@ export default function Draft() {
         {isDraftComplete ? (
           <main className="flex-1 overflow-y-auto">
             <div className="max-w-5xl mx-auto px-6 py-6">
-              <DraftComplete key={activeLeagueId} league={activeLeague} />
+              <DraftRecap key={activeLeagueId} league={activeLeague} />
             </div>
           </main>
         ) : (
