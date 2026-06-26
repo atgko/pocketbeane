@@ -7,13 +7,13 @@ import ProfileOverrideScreen from '@/components/ProfileOverrideScreen'
 import {
   getGMProfile, saveGMProfile, clearGMProfile, resolveProfile,
   QUIZ_QUESTIONS,
-  INJURY_DISPLAY, CATEGORY_DISPLAY, ROSTER_DISPLAY,
+  INJURY_DISPLAY, CATEGORY_DISPLAY, STRATEGY_DISPLAY,
 } from '@/utils/gmProfile'
 
 const DISPLAY_MAPS = {
   injuryTolerance: INJURY_DISPLAY,
   categoryStrategy: CATEGORY_DISPLAY,
-  rosterPhilosophy: ROSTER_DISPLAY,
+  draftStrategy: STRATEGY_DISPLAY,
 }
 
 export default function GMProfilePage() {
@@ -48,7 +48,7 @@ export default function GMProfilePage() {
   }
 
   function handleClearOverride(leagueId) {
-    setProfileOverride(leagueId, { hasOverride: false, injuryTolerance: null, categoryStrategy: null, rosterPhilosophy: null })
+    setProfileOverride(leagueId, { hasOverride: false, injuryTolerance: null, categoryStrategy: null, draftStrategy: null })
   }
 
   const hasProfile = Boolean(profile?.completedAt)
@@ -62,11 +62,11 @@ export default function GMProfilePage() {
       <main className="min-h-screen bg-bg text-gray-200 p-8">
         <div className="max-w-xl mx-auto">
 
-          <div className="mb-6 flex items-center gap-4">
+          <div className="mb-6">
             <Link href="/" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
               ← My Leagues
             </Link>
-            <div>
+            <div className="mt-4 text-center">
               <h1 className="text-xl font-bold text-white">GM Profile</h1>
               <p className="text-gray-500 text-sm mt-0.5">
                 Your draft philosophy — applied to all leagues by default.
@@ -141,7 +141,7 @@ export default function GMProfilePage() {
                               <p className="text-sm text-white">{league.config.name || 'Unnamed League'}</p>
                               {override?.hasOverride ? (
                                 <p className="text-xs text-value font-mono mt-0.5">
-                                  Customized · {INJURY_DISPLAY[resolved?.injuryTolerance]} · {CATEGORY_DISPLAY[resolved?.categoryStrategy]} · {ROSTER_DISPLAY[resolved?.rosterPhilosophy]}
+                                  Customized · {INJURY_DISPLAY[resolved?.injuryTolerance]} · {CATEGORY_DISPLAY[resolved?.categoryStrategy]} · {STRATEGY_DISPLAY[resolved?.draftStrategy]}
                                 </p>
                               ) : (
                                 <p className="text-xs text-gray-600 font-mono mt-0.5">Using global profile</p>

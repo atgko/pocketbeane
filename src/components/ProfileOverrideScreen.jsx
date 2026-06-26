@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { QUIZ_QUESTIONS, getGMProfile, INJURY_DISPLAY, CATEGORY_DISPLAY, ROSTER_DISPLAY } from '@/utils/gmProfile'
+import { QUIZ_QUESTIONS, getGMProfile, INJURY_DISPLAY, CATEGORY_DISPLAY, STRATEGY_DISPLAY } from '@/utils/gmProfile'
 
 export default function ProfileOverrideScreen({ leagueName, currentOverride, onSave, onCancel }) {
   const global = getGMProfile()
@@ -7,7 +7,7 @@ export default function ProfileOverrideScreen({ leagueName, currentOverride, onS
   const initial = {
     injuryTolerance: currentOverride?.injuryTolerance ?? global?.injuryTolerance ?? null,
     categoryStrategy: currentOverride?.categoryStrategy ?? global?.categoryStrategy ?? null,
-    rosterPhilosophy: currentOverride?.rosterPhilosophy ?? global?.rosterPhilosophy ?? null,
+    draftStrategy: currentOverride?.draftStrategy ?? global?.draftStrategy ?? null,
   }
 
   const [answers, setAnswers] = useState(initial)
@@ -21,13 +21,13 @@ export default function ProfileOverrideScreen({ leagueName, currentOverride, onS
     const hasAnyOverride =
       answers.injuryTolerance !== global?.injuryTolerance ||
       answers.categoryStrategy !== global?.categoryStrategy ||
-      answers.rosterPhilosophy !== global?.rosterPhilosophy
+      answers.draftStrategy !== global?.draftStrategy
 
     onSave({
       hasOverride: hasAnyOverride,
       injuryTolerance: answers.injuryTolerance !== global?.injuryTolerance ? answers.injuryTolerance : null,
       categoryStrategy: answers.categoryStrategy !== global?.categoryStrategy ? answers.categoryStrategy : null,
-      rosterPhilosophy: answers.rosterPhilosophy !== global?.rosterPhilosophy ? answers.rosterPhilosophy : null,
+      draftStrategy: answers.draftStrategy !== global?.draftStrategy ? answers.draftStrategy : null,
     })
   }
 
@@ -46,7 +46,7 @@ export default function ProfileOverrideScreen({ leagueName, currentOverride, onS
         {QUIZ_QUESTIONS.map(q => {
           const displayMap = q.id === 'injuryTolerance' ? INJURY_DISPLAY
             : q.id === 'categoryStrategy' ? CATEGORY_DISPLAY
-            : ROSTER_DISPLAY
+            : STRATEGY_DISPLAY
           const globalValue = global?.[q.id]
           const currentValue = answers[q.id]
 

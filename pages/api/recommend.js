@@ -6,9 +6,9 @@ const SESSION_LIMIT = 50
 const sessionCounts = new Map()
 
 const GM_INJURY_LABELS = {
-  play_it_safe:    'Play it safe — avoids injury-prone players regardless of upside',
-  calculated_risk: 'Accepts injury risk for elite upside — surface the flag but do not use it as a reason to pass on the player',
-  round_dependent: 'Safe early, willing to accept injury risk in mid-to-late rounds',
+  conservative: 'Conservative — avoids injury-prone players, docks their ranking significantly',
+  moderate:     'Moderate — flags injury risk but weighs it against upside',
+  aggressive:   'Aggressive — treats injury history as a market discount and exploits it',
 }
 
 const GM_CATEGORY_LABELS = {
@@ -17,10 +17,11 @@ const GM_CATEGORY_LABELS = {
   read_the_draft:  "Reads the draft — no predetermined category plan, decides based on what's available",
 }
 
-const GM_ROSTER_LABELS = {
-  stars_and_scrubs:   'Stars and scrubs — weight rounds 1-4 toward the best player available regardless of positional balance. Fill depth late.',
-  balanced_depth:     'Balanced depth — values consistent contributors across all 13 roster spots',
-  streaming_friendly: 'Streaming-friendly — values roster flexibility and players with high weekly schedule upside',
+const GM_STRATEGY_LABELS = {
+  beane:            'Beane Mode — ADP value-first, exploits market mispricings, fills categories in the middle rounds',
+  balanced:         'Balanced — even spread across all categories and positions from round one',
+  'stars-and-scrubs': 'Stars and scrubs — weight rounds 1-4 toward the best player available, fill depth late',
+  punt:             'Punt strategy — deliberately concedes 1-2 categories to dominate the rest',
 }
 
 function buildProfileBlock(gmProfile) {
@@ -30,7 +31,7 @@ function buildProfileBlock(gmProfile) {
   return `GM PHILOSOPHY PROFILE FOR THIS USER:
 - Injury tolerance: ${GM_INJURY_LABELS[gmProfile.injuryTolerance] ?? gmProfile.injuryTolerance}
 - Category strategy: ${GM_CATEGORY_LABELS[gmProfile.categoryStrategy] ?? gmProfile.categoryStrategy}
-- Roster philosophy: ${GM_ROSTER_LABELS[gmProfile.rosterPhilosophy] ?? gmProfile.rosterPhilosophy}
+- Draft strategy: ${GM_STRATEGY_LABELS[gmProfile.draftStrategy] ?? gmProfile.draftStrategy}
 
 Weight all recommendations according to this profile.`
 }

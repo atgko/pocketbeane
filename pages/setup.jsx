@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useState, useEffect, useCallback } from 'react'
-import useLeagueStore, { DEFAULT_CONFIG } from '@/store/leagueStore'
+import useLeagueStore, { DEFAULT_CONFIG, DEFAULT_PHILOSOPHY } from '@/store/leagueStore'
 import LeagueSetup from '@/components/league/LeagueSetup'
 import ProfileOverrideScreen from '@/components/ProfileOverrideScreen'
 import { useYahooAuth } from '@/hooks/useYahooAuth'
-import { getGMProfile, INJURY_DISPLAY, CATEGORY_DISPLAY, ROSTER_DISPLAY } from '@/utils/gmProfile'
+import { getGMProfile, INJURY_DISPLAY, CATEGORY_DISPLAY, STRATEGY_DISPLAY } from '@/utils/gmProfile'
 
 export default function Setup() {
   const router = useRouter()
@@ -24,11 +24,24 @@ export default function Setup() {
   useEffect(() => { setMounted(true) }, [])
 
   useEffect(() => {
-    if (mounted && editId) {
+    if (!mounted) return
+    if (editId) {
       const league = getLeague(editId)
       if (league) {
         setConfig({ ...DEFAULT_CONFIG, ...league.config })
         if (league.config.yahooStatCategories) setSyncState('success')
+      }
+    } else {
+      const profile = getGMProfile()
+      if (profile?.completedAt) {
+        setConfig(prev => ({
+          ...prev,
+          philosophy: {
+            ...DEFAULT_PHILOSOPHY,
+            ...(profile.draftStrategy ? { strategy: profile.draftStrategy } : {}),
+            ...(profile.injuryTolerance ? { injuryTolerance: profile.injuryTolerance } : {}),
+          },
+        }))
       }
     }
   }, [mounted, editId])
@@ -241,7 +254,7 @@ export default function Setup() {
                   <div>
                     <p className="text-xs font-semibold text-gray-300">GM Profile</p>
                     <p className="text-xs text-gray-500 mt-0.5 font-mono">
-                      {INJURY_DISPLAY[gmProfile.injuryTolerance]} · {CATEGORY_DISPLAY[gmProfile.categoryStrategy]} · {ROSTER_DISPLAY[gmProfile.rosterPhilosophy]}
+                      {INJURY_DISPLAY[gmProfile.injuryTolerance]} · {CATEGORY_DISPLAY[gmProfile.categoryStrategy]} · {STRATEGY_DISPLAY[gmProfile.draftStrategy]}
                     </p>
                     {pendingOverride?.hasOverride && (
                       <p className="text-xs text-value mt-0.5 font-mono">Customized for this league</p>
@@ -273,7 +286,7 @@ export default function Setup() {
               onClick={handleSave}
               className="px-6 py-2.5 bg-pick text-white font-semibold rounded-lg hover:bg-green-500 transition-colors text-sm"
             >
-              {isEditing ? 'Save Changes' : 'Create League & Go to Draft →'}
+              {isEditing ? 'Save Changes' : 'Create League'}
             </button>
             <button
               onClick={() => router.push('/')}

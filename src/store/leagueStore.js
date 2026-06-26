@@ -52,7 +52,7 @@ const DEFAULT_PROFILE_OVERRIDE = {
   hasOverride: false,
   injuryTolerance: null,
   categoryStrategy: null,
-  rosterPhilosophy: null,
+  draftStrategy: null,
 }
 
 const makeLeague = (config) => {

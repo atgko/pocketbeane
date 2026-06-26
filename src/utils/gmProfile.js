@@ -5,9 +5,9 @@ export const QUIZ_QUESTIONS = [
     id: 'injuryTolerance',
     question: 'How do you handle injury risk?',
     options: [
-      { value: 'play_it_safe',     label: 'Play it safe',     desc: 'Avoid injury-prone players regardless of upside' },
-      { value: 'calculated_risk',  label: 'Calculated risk',  desc: 'Accept injury risk for elite upside — flag it for me' },
-      { value: 'round_dependent',  label: 'Round dependent',  desc: 'Safe early, riskier in mid-to-late rounds' },
+      { value: 'conservative', label: 'Conservative', desc: 'Avoid injury-prone players — dock their ranking significantly' },
+      { value: 'moderate',     label: 'Moderate',     desc: 'Flag injury risk but weigh it against upside' },
+      { value: 'aggressive',   label: 'Aggressive',   desc: 'Injury history = market discount — exploit it' },
     ],
   },
   {
@@ -20,20 +20,21 @@ export const QUIZ_QUESTIONS = [
     ],
   },
   {
-    id: 'rosterPhilosophy',
-    question: "What's your roster philosophy?",
+    id: 'draftStrategy',
+    question: "What's your draft strategy?",
     options: [
-      { value: 'stars_and_scrubs',     label: 'Stars and scrubs',      desc: 'Elite players first, fill depth late' },
-      { value: 'balanced_depth',       label: 'Balanced depth',        desc: 'Consistent contributors across all roster spots' },
-      { value: 'streaming_friendly',   label: 'Streaming-friendly',    desc: 'Flexible roster I can move around week to week' },
+      { value: 'beane',            label: 'Beane Mode',       desc: 'ADP value-first — exploit market mispricings, fill categories in the middle rounds' },
+      { value: 'balanced',         label: 'Balanced',         desc: 'Even spread across all categories and positions from round one' },
+      { value: 'stars-and-scrubs', label: 'Stars and scrubs', desc: 'Elite players first, fill depth late' },
+      { value: 'punt',             label: 'Punt strategy',    desc: 'Dominate most categories by deliberately conceding 1-2' },
     ],
   },
 ]
 
 export const INJURY_DISPLAY = {
-  play_it_safe:    'Play it safe',
-  calculated_risk: 'Calculated risk',
-  round_dependent: 'Round dependent',
+  conservative: 'Conservative',
+  moderate:     'Moderate',
+  aggressive:   'Aggressive',
 }
 
 export const CATEGORY_DISPLAY = {
@@ -42,10 +43,11 @@ export const CATEGORY_DISPLAY = {
   read_the_draft:  'Read the draft',
 }
 
-export const ROSTER_DISPLAY = {
-  stars_and_scrubs:   'Stars and scrubs',
-  balanced_depth:     'Balanced depth',
-  streaming_friendly: 'Streaming-friendly',
+export const STRATEGY_DISPLAY = {
+  beane:            'Beane Mode',
+  balanced:         'Balanced',
+  'stars-and-scrubs': 'Stars and scrubs',
+  punt:             'Punt strategy',
 }
 
 export function getGMProfile() {
@@ -79,6 +81,6 @@ export function resolveProfile(leagueOverride = null) {
   return {
     injuryTolerance: override?.injuryTolerance ?? global.injuryTolerance,
     categoryStrategy: override?.categoryStrategy ?? global.categoryStrategy,
-    rosterPhilosophy: override?.rosterPhilosophy ?? global.rosterPhilosophy,
+    draftStrategy: override?.draftStrategy ?? global.draftStrategy,
   }
 }
