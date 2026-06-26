@@ -8,7 +8,6 @@ import useLeagueStore from '@/store/leagueStore'
 import { getSessionId } from '@/utils/session'
 import { resolveProfile } from '@/utils/gmProfile'
 import { classifyDraftDNA, getTopCategories, FALLBACK_PREDICTIONS } from '@/utils/draftDNA'
-import CategoryOutlook from '@/components/CategoryOutlook'
 import DraftDNACard from '@/components/DraftDNACard'
 
 const playerMap = buildPlayerMap(players)
@@ -216,14 +215,27 @@ export default function DraftRecap({ league }) {
             </table>
           </div>
 
-          {/* Right column: Category Outlook + DNA button */}
+          {/* Right column: Category bar chart + buttons */}
           <div className="space-y-3">
-            <CategoryOutlook categoryGaps={categoryGaps} />
+            <div className="bg-surface rounded-lg border border-border p-4">
+              <h3 className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-4">Category Report</h3>
+              <div className="space-y-2">
+                {categoryGaps.map(gap => (
+                  <CategoryRow key={gap.id} gap={gap} />
+                ))}
+              </div>
+            </div>
             <button
               onClick={() => setShowDNACard(true)}
               className="w-full px-4 py-2.5 rounded-lg text-xs font-mono border border-white/10 text-gray-400 hover:border-pick/40 hover:text-white transition-colors text-center"
             >
               View your Draft DNA →
+            </button>
+            <button
+              onClick={() => router.push('/season')}
+              className="w-full px-4 py-2.5 rounded-lg text-xs font-mono border border-border text-gray-500 hover:text-gray-300 transition-colors text-center"
+            >
+              Go to Season Hub →
             </button>
           </div>
         </div>
@@ -302,22 +314,6 @@ export default function DraftRecap({ league }) {
         </div>
       )}
 
-      {/* Season Management CTA */}
-      {userPicks.length > 0 && (
-        <div className="bg-surface border border-border rounded-lg p-5 text-center">
-          <p className="text-sm text-white font-semibold">Your season starts now.</p>
-          <p className="text-xs text-gray-500 mt-1 font-mono">
-            Check back once the season starts for waiver wire and matchup recommendations.
-          </p>
-          <button
-            onClick={() => router.push('/')}
-            className="mt-3 px-4 py-2 bg-white/5 border border-border text-gray-300 rounded text-xs font-mono hover:bg-white/10 hover:text-white transition-colors"
-          >
-            Back to My Leagues →
-          </button>
-        </div>
-      )}
-
       {/* Draft DNA card modal */}
       {showDNACard && (
         <DraftDNACard
@@ -328,6 +324,39 @@ export default function DraftRecap({ league }) {
           onClose={() => setShowDNACard(false)}
         />
       )}
+    </div>
+  )
+}
+
+function CategoryRow({ gap }) {
+  const isPct = gap.id === 'fg_pct' || gap.id === 'ft_pct'
+  const isMissing = gap.grade === 'missing'
+  const barPct = isMissing ? 0 : Math.min(gap.progress * 100, 130)
+
+  const gradeColor =
+    gap.grade === 'strong' ? 'text-green-400 bg-green-500/10 border-green-500/20' :
+    gap.grade === 'ok'     ? 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20' :
+    gap.grade === 'weak'   ? 'text-red-400 bg-red-500/10 border-red-500/20' :
+    'text-gray-600 bg-white/5 border-border'
+
+  const barColor =
+    gap.grade === 'strong' ? 'bg-green-500/60' :
+    gap.grade === 'ok'     ? 'bg-yellow-500/50' :
+    gap.grade === 'weak'   ? 'bg-red-500/60' :
+    'bg-gray-700/40'
+
+  return (
+    <div className="flex items-center gap-2">
+      <span className="text-xs font-mono text-gray-500 w-8 shrink-0">{gap.label}</span>
+      <div className="flex-1 bg-white/5 rounded-full h-1.5 overflow-hidden">
+        <div className={`h-full rounded-full ${barColor}`} style={{ width: `${barPct}%` }} />
+      </div>
+      <span className="text-xs font-mono text-gray-500 w-10 text-right tabular-nums">
+        {isMissing ? '—' : isPct ? gap.current?.toFixed(3) : gap.current?.toFixed(1)}
+      </span>
+      <span className={`text-xs font-mono px-1.5 py-0.5 rounded border w-14 text-center shrink-0 ${gradeColor}`}>
+        {gap.grade}
+      </span>
     </div>
   )
 }

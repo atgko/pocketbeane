@@ -1,50 +1,43 @@
-import { useRef } from 'react'
-import { toBlob } from 'html-to-image'
+import { useState } from 'react'
 
 export default function DraftDNACard({ archetype, topCategories = [], boldPrediction, loadingPrediction, onClose }) {
-  const cardRef = useRef(null)
+  const [copied, setCopied] = useState(false)
 
-  async function handleDownload() {
-    if (!cardRef.current) return
-    try {
-      const blob = await toBlob(cardRef.current, { pixelRatio: 2, backgroundColor: '#0d1117' })
-      if (!blob) return
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `draft-dna-${archetype.id}.png`
-      a.click()
-      URL.revokeObjectURL(url)
-    } catch (err) {
-      console.error('[DraftDNACard] download failed', err)
-    }
+  const shareText = `${archetype.name}: "${archetype.tagline}"${boldPrediction ? `\n\n${boldPrediction}` : ''}`
+
+  const canShare = typeof window !== 'undefined' &&
+    typeof navigator.share === 'function' &&
+    (typeof navigator.canShare !== 'function' || navigator.canShare({ title: archetype.name, text: shareText, url: 'https://pocketbeane.com' }))
+
+  function handleShare() {
+    navigator.share({
+      title: archetype.name,
+      text: shareText,
+      url: 'https://pocketbeane.com',
+    }).catch(() => {})
   }
 
   async function handleCopy() {
-    const text = `I'm "${archetype.name}" on PocketBeane — check your Draft DNA at pocketbeane.com`
     try {
-      await navigator.clipboard.writeText(text)
-    } catch {
-      // Clipboard API not available in all contexts
-    }
+      await navigator.clipboard.writeText(`${shareText}\n\nhttps://pocketbeane.com`)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {}
   }
 
   return (
     <div className="fixed inset-0 bg-black/85 z-50 flex items-center justify-center p-4">
       <div className="flex flex-col items-center gap-4">
 
-        {/* Card — captured for PNG export */}
+        {/* Card */}
         <div
-          ref={cardRef}
           className="w-[340px] rounded-2xl p-8 flex flex-col gap-5"
           style={{ background: 'linear-gradient(160deg, #0d1117 0%, #111827 100%)', border: '1px solid rgba(255,255,255,0.08)' }}
         >
-          {/* PocketBeane wordmark */}
           <p className="text-xs font-mono tracking-widest uppercase" style={{ color: 'rgba(255,255,255,0.25)' }}>
             PocketBeane
           </p>
 
-          {/* Archetype hero */}
           <div className="space-y-1.5">
             <p className="text-xs font-mono uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.35)' }}>
               Your Draft DNA
@@ -55,7 +48,6 @@ export default function DraftDNACard({ archetype, topCategories = [], boldPredic
             </p>
           </div>
 
-          {/* Category edges */}
           {topCategories.length > 0 && (
             <div>
               <p className="text-xs font-mono mb-2" style={{ color: 'rgba(255,255,255,0.3)' }}>Category edges</p>
@@ -73,10 +65,8 @@ export default function DraftDNACard({ archetype, topCategories = [], boldPredic
             </div>
           )}
 
-          {/* Divider */}
           <div style={{ height: '1px', background: 'rgba(255,255,255,0.07)' }} />
 
-          {/* Bold prediction */}
           <div className="pl-3" style={{ borderLeft: '2px solid rgba(34,197,94,0.5)' }}>
             {loadingPrediction ? (
               <div className="flex items-center gap-2">
@@ -90,25 +80,26 @@ export default function DraftDNACard({ archetype, topCategories = [], boldPredic
             )}
           </div>
 
-          {/* Bottom branding */}
           <p className="text-xs font-mono" style={{ color: 'rgba(255,255,255,0.2)' }}>
             draft smarter at pocketbeane.com
           </p>
         </div>
 
-        {/* Action buttons — outside captured area */}
+        {/* Action buttons */}
         <div className="flex gap-2">
-          <button
-            onClick={handleDownload}
-            className="px-4 py-2 rounded-lg text-xs font-mono border border-white/10 text-gray-300 hover:border-white/25 hover:text-white transition-colors"
-          >
-            Save as Image
-          </button>
+          {canShare && (
+            <button
+              onClick={handleShare}
+              className="px-4 py-2 rounded-lg text-xs font-mono bg-pick/10 border border-pick/30 text-pick hover:bg-pick/20 transition-colors"
+            >
+              Share your Draft DNA
+            </button>
+          )}
           <button
             onClick={handleCopy}
             className="px-4 py-2 rounded-lg text-xs font-mono border border-white/10 text-gray-300 hover:border-white/25 hover:text-white transition-colors"
           >
-            Copy Link
+            {copied ? 'Copied!' : 'Copy'}
           </button>
           <button
             onClick={onClose}
