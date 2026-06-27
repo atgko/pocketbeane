@@ -1,6 +1,6 @@
 # PocketBeane — Active Backlog
 
-Last updated: 2026-06-27 (Y-04 shipped)
+Last updated: 2026-06-27 (Y-04 shipped; NHL-01, NFL-01, MLB-01, D-01 tickets added)
 
 Items are grouped by dependency tier. Within each tier, order reflects rough priority / logical sequencing.
 
@@ -110,6 +110,129 @@ button for in-season updates.
 **Status: BLOCKED — needs API research.** Yahoo's Fantasy Sports API is largely read-only. The ability to make a programmatic draft pick via the API is unconfirmed. Do not build toward this until API capability is verified.
 
 **If feasible:** This is a premium/opt-in feature. User explicitly enables autopick mode per draft. Strategy is sourced from B-01 philosophy settings.
+
+---
+
+## Multi-Sport Expansion
+
+All sport expansions require a `{sport}_players.json` file with ADP rankings and prior season stats before recommendation logic can be calibrated. The `sports.js` config already has stub entries for NHL, NFL, and MLB — the architecture is sport-config driven and ready. The Yahoo OAuth layer supports all three sports via `game_codes={sport}`.
+
+---
+
+### MLB-01 · MLB League Support 🟡
+**Status: Active league — draft complete, 6 weeks into 2026 season**
+
+**Goal:** Full MLB draft experience (recommendation engine, category grading, Draft DNA) plus Season Hub roster sync against a real active league.
+
+**Complexity note:** MLB is the most structurally complex of the three sports. Pitching and hitting categories are completely separate stat pools, and SP/RP slot distinctions require position-aware slot logic. ERA and WHIP are lower-is-better categories — the grading engine will need a `lowerIsBetter` flag to avoid inverting their grades.
+
+**What's needed:**
+- `mlb_players.json` — ~250 batters + ~150 pitchers, separate ADP curves for each group
+  - Source: FantasyPros MLB ADP (available now for active leagues), Baseball Reference for prior season stats
+- `sports.js` MLB config entry:
+  - `filterPositions: ['C', '1B', '2B', '3B', 'SS', 'OF', 'SP', 'RP', 'UTIL', 'BN']`
+  - Categories: `AVG`, `R`, `HR`, `RBI`, `SB` (hitting) + `W`, `SV`, `K`, `ERA`, `WHIP` (pitching)
+  - `percentageCategories: ['avg']`
+  - `lowerIsBetter: ['era', 'whip']` — new config field needed in grading logic
+- `sync-rosters.js` adjustment: `game_codes=mlb` for user team identity call
+- Claude prompt tuning: MLB-aware language for recommendations and bold prediction
+
+**Season Hub opportunity:** With an active 2026 MLB league, Y-05-style features (waiver advisor, matchup outlook) can be validated against live data. Worth unlocking even before full Season Management Suite is built.
+
+**Acceptance criteria:**
+- Can create an MLB league in setup, complete a mock draft, receive recommendations
+- Category grades correctly flip ERA/WHIP (lower = better = stronger grade)
+- Draft DNA classifies correctly against MLB-specific stat signals
+- `sync-rosters.js` correctly fetches the active MLB league roster
+
+**Prerequisite:** `mlb_players.json` — data available now from FantasyPros and Baseball Reference.
+
+---
+
+### NHL-01 · NHL League Support
+**Status: Blocked on data — nhl_players.json needed (August 2026)**
+
+**Goal:** Full NHL draft experience using the existing sports.js stub as the foundation.
+
+**Complexity note:** Goalies and skaters have completely separate stat profiles. The category grading engine will need to handle `sv_pct` as a percentage category and `gaa` as a lower-is-better category. The `G` position (goalie) has no overlap with skater positions — slot logic must treat them as distinct pools.
+
+**What's needed:**
+- `nhl_players.json` — skaters + goalies, 2026-27 projected ADP + 2025-26 prior season stats
+  - Source: FantasyPros NHL ADP (August), Hockey Reference (per-game stats)
+- `sports.js` NHL config entry (stub already commented in):
+  - `filterPositions: ['C', 'LW', 'RW', 'W', 'D', 'G']`
+  - Skater categories: `G`, `A`, `+/-`, `PIM`, `PPP`, `SHP`, `SOG`
+  - Goalie categories: `W`, `GAA`, `SV%`, `SO`
+  - `percentageCategories: ['sv_pct']`
+  - `lowerIsBetter: ['gaa']`
+- Claude prompt tuning for NHL context (goalie streaming, early-season regression, etc.)
+- `sync-rosters.js` game_codes=nhl variant
+
+**Testing constraint:** No completed NHL league available. End-to-end validation requires a test draft or an active league. October 2026 season start = first real test window.
+
+**Timing:** Data available August 2026. Build alongside PMF-08 data refresh sprint.
+
+---
+
+### NFL-01 · NFL League Support
+**Status: Blocked on data — nfl_players.json needed (August 2026)**
+
+**Goal:** Full NFL draft experience — same structure as NHL, same timeline.
+
+**Complexity note:** NFL has the most position heterogeneity of any sport. QB is a completely separate stat pool (passing yards, TDs, INTs, rushing). K and DST are streaming positions that change weekly. Bye weeks add lineup complexity that doesn't exist in NBA/NHL. Standard scoring vs. PPR vs. half-PPR creates divergent ADP curves — need to decide which format to target first (PPR is the most common).
+
+**What's needed:**
+- `nfl_players.json` — ~200 relevant skill-position players, PPR ADP + 2025 season stats
+  - Source: FantasyPros NFL ADP (August), Pro Football Reference
+- `sports.js` NFL config entry (stub already commented in):
+  - `filterPositions: ['QB', 'RB', 'WR', 'TE', 'K', 'DEF', 'FLEX', 'BN']`
+  - Scoring format: PPR (first pass), with `scoringFormat` config supporting `ppr | half_ppr | standard`
+  - Point categories (NFL is typically points-based, not category): `pts`, `passYds`, `rushYds`, `recYds`, `passTDs`, `rushRecTDs`
+- Claude prompt tuning for NFL draft strategy (Zero RB, Hero RB, Robust RB, TE-premium)
+- `sync-rosters.js` game_codes=nfl variant
+
+**Testing constraint:** No completed NFL league available. September 2026 draft window is the first test opportunity.
+
+**Timing:** Data available August 2026. Build alongside PMF-08 and NHL-01 data sprint.
+
+---
+
+## Platform & Design
+
+---
+
+### D-01 · Full App UI Revamp
+**Status: No external dependency — can start any time; research component required**
+
+**Goal:** Overhaul the visual identity of PocketBeane from the current monochrome Tailwind default into a polished, premium sports analytics product.
+
+**Current state:** Dark background + single green accent (`#22c55e`, Tailwind `green-500`), monospace typography for data labels, no imagery, no logo beyond the wordmark. Functional but not visually distinctive.
+
+**What this covers:**
+
+| Area | Current | Target |
+|---|---|---|
+| Color palette | Single green on dark | Proper design system — primary, accent, muted, destructive tokens |
+| Imagery | None | Player silhouettes, sport-specific backgrounds, hero moments |
+| Typography | System font + mono for data | Sports-appropriate type scale — distinct heading vs. data vs. body |
+| Logo/wordmark | Plain text "PocketBeane" | Refined mark with optional icon |
+| Card system | Uniform surface/border pattern | Differentiated cards for draft board, recommendation panel, DNA card |
+| Mobile | Responsive but unstyled | Intentionally mobile-first layouts for Season Hub and Draft DNA share card |
+
+**Research component (do this first):**
+Before touching code, define the visual direction:
+- Reference apps: The Athletic, ESPN Fantasy, Stathead, Underdog Fantasy, Sleeper
+- Decide: sports-data minimal (high info density, monochrome) vs. brand-forward (team colors, hero imagery) vs. premium analytics (dark glass, gradient accents)
+- Mood board → token decisions → then code
+
+**Acceptance criteria:**
+- New color token system defined and applied globally (Tailwind config updated)
+- At least one imagery element on the home/draft screen
+- Draft DNA card looks polished enough to share publicly
+- Typography hierarchy is clear across all major screens
+- Passes a11y contrast check on all primary text
+
+**Note:** This should happen before any public-facing launch or sharing push. The Draft DNA share card in particular will represent the app to anyone outside who receives it.
 
 ---
 
