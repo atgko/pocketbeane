@@ -161,18 +161,6 @@ export default function Setup() {
             </div>
           </div>
 
-          {/* League Name */}
-          <div className="bg-surface rounded-lg border border-border px-5 py-4 mb-4">
-            <label className="block text-xs text-gray-400 mb-1.5">League Name</label>
-            <input
-              type="text"
-              value={config.name}
-              onChange={e => updateField('name', e.target.value)}
-              className="w-full bg-bg border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-pick"
-              placeholder="e.g. Main League, Mock Draft #1"
-            />
-          </div>
-
           {/* Yahoo Sync */}
           {yahoo.connected && (
             <div className="mb-4 bg-surface rounded-lg border border-border p-4 space-y-3">
@@ -196,17 +184,23 @@ export default function Setup() {
                 <select
                   value={config.yahooLeagueKey ?? ''}
                   onChange={e => {
-                    const league = yahooLeagues.find(l => l.leagueKey === e.target.value)
-                    if (league) handleLeagueSelect(league.leagueKey, league.name)
+                    const l = yahooLeagues.find(l => l.leagueKey === e.target.value)
+                    if (!l) return
+                    const alreadyUsed = !isEditing && leagues.some(existing => existing.config.yahooLeagueKey === l.leagueKey)
+                    if (alreadyUsed) return
+                    handleLeagueSelect(l.leagueKey, l.name)
                   }}
                   className="w-full bg-bg border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-pick"
                 >
                   <option value="">Select a Yahoo league…</option>
-                  {yahooLeagues.map(l => (
-                    <option key={l.leagueKey} value={l.leagueKey}>
-                      {l.name} ({l.numTeams} teams · {l.season})
-                    </option>
-                  ))}
+                  {yahooLeagues.map(l => {
+                    const alreadyUsed = !isEditing && leagues.some(existing => existing.config.yahooLeagueKey === l.leagueKey)
+                    return (
+                      <option key={l.leagueKey} value={l.leagueKey} disabled={alreadyUsed}>
+                        {l.name} ({l.numTeams} teams · {l.season}){alreadyUsed ? ' — already set up' : ''}
+                      </option>
+                    )
+                  })}
                 </select>
               ) : (
                 <div className="flex gap-2">
@@ -235,6 +229,18 @@ export default function Setup() {
               )}
             </div>
           )}
+
+          {/* League Name */}
+          <div className="bg-surface rounded-lg border border-border px-5 py-4 mb-4">
+            <label className="block text-xs text-gray-400 mb-1.5">League Name</label>
+            <input
+              type="text"
+              value={config.name}
+              onChange={e => updateField('name', e.target.value)}
+              className="w-full bg-bg border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-pick"
+              placeholder="e.g. Main League, Mock Draft #1"
+            />
+          </div>
 
           {/* Strategy + Composition */}
           <LeagueSetup

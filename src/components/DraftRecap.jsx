@@ -7,7 +7,7 @@ import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
 import useLeagueStore from '@/store/leagueStore'
 import { getSessionId } from '@/utils/session'
 import { resolveProfile } from '@/utils/gmProfile'
-import { classifyDraftDNA, getTopCategories, FALLBACK_PREDICTIONS } from '@/utils/draftDNA'
+import { classifyDraftDNA, getTopCategories, FALLBACK_PREDICTIONS, trackArchetypeStat } from '@/utils/draftDNA'
 import DraftDNACard from '@/components/DraftDNACard'
 
 const playerMap = buildPlayerMap(players)
@@ -51,6 +51,7 @@ export default function DraftRecap({ league }) {
     if (userPicks.length === 0) return
     if (!league.draftOutlook) generateOutlook()
     if (!league.draftDNA?.generatedAt) {
+      trackArchetypeStat(archetype.id)
       setShowDNACard(true)
       generateBoldPrediction()
     }
