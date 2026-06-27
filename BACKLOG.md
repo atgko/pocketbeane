@@ -1,6 +1,6 @@
 # PocketBeane — Active Backlog
 
-Last updated: 2026-06-27
+Last updated: 2026-06-27 (Y-04 shipped)
 
 Items are grouped by dependency tier. Within each tier, order reflects rough priority / logical sequencing.
 
@@ -23,8 +23,8 @@ billing infrastructure. Building them now adds complexity that makes the tool
 worse to use personally. The PMF simulation + product architecture already tell
 the portfolio story without a fake paywall.
 
-Yahoo roadmap: Y-02 ✅ → **Y-04 (next)** → Y-03 (August build / September validate) → Y-05.
-Note: Y-04 has no live-draft dependency and can be built now. Y-03 requires a live Yahoo draft for end-to-end validation so infrastructure ships in August.
+Yahoo roadmap: Y-02 ✅ → Y-04 ✅ → Y-03 (August build / September validate) → Y-05 (next).
+Note: Y-03 requires a live Yahoo draft for end-to-end validation so infrastructure ships in August. Y-05 is now unblocked — Y-04 provides the full league roster data it depends on.
 
 ---
 
@@ -64,14 +64,12 @@ validate during September draft window.
 
 ---
 
-### Y-04 · Post-Draft Roster Sync
-**Goal:** After the draft, pull all team rosters from Yahoo so PocketBeane has
-full league visibility for season-long features.
-
-**Scope:** Sync all 10 team rosters (not just the user's). Enables opponent
-roster awareness in trade and waiver analysis.
-
-**Prerequisite:** Y-01 ✓, Y-02 ✓
+### ~~Y-04 · Post-Draft Roster Sync~~ ✅ DONE
+`/api/yahoo/sync-rosters` fetches all 10 team rosters + standings in parallel,
+matches players to `players.json` IDs by name normalization, stores result as
+`league.leagueRosters` in Zustand. Season Hub shows standings table with
+expandable team rosters; user's team auto-expands and is highlighted. Refresh
+button for in-season updates.
 
 ---
 
@@ -144,6 +142,7 @@ roster awareness in trade and waiver analysis.
 | PMF-02 · Philosophy First-Visit Onboarding Quiz | Done — PhilosophyQuiz overlay, GM Profile page, per-league overrides, profile injected into all Claude calls. Quiz vocabulary aligned with league setup fields (conservative/moderate/aggressive, beane/balanced/stars-and-scrubs/punt). New league setup seeds philosophy from completed profile. |
 | PMF-04 · Draft DNA System | Done — Spotify Wrapped-style archetype identity system. 9 archetypes (Moneyball GM → Contrarian catch-all) classified from ADP deltas, category grades, and GM profile. DraftDNACard modal auto-shows on first draft completion; re-openable via button below Category Report. Bold prediction via Haiku API, cached in league state. Web Share API primary; clipboard fallback with "Copied!" state. DraftRecap.jsx replaces DraftComplete.jsx. |
 | PMF-04 UAT polish (2026-06-27) | Setup page: Yahoo Sync reordered before League Name; already-synced Yahoo leagues disabled in dropdown. DraftDNACard: share redesigned to Web Share API only (no hardcoded social buttons). Category Report reverted to original bar-chart. Moneyball GM threshold raised 3→4 value picks. classifyDraftDNA emits console.debug for every archetype evaluated. Archetype distribution silently tracked in localStorage key pocketbeane_archetype_stats. |
+| Y-04 · Post-Draft Roster Sync | Done — `/api/yahoo/sync-rosters` fetches all team rosters + standings in parallel, name-matches to players.json IDs, stored as league.leagueRosters. Season Hub rebuilt: standings table with expandable rosters, user's team highlighted and auto-expanded, Refresh button for in-season updates. |
 
 ---
 

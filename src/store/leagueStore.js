@@ -117,6 +117,11 @@ const useLeagueStore = create(
           leagues: state.leagues.map((l) => (l.id === id ? { ...l, draftDNA: dna } : l)),
         })),
 
+      setLeagueRosters: (id, rosters) =>
+        set((state) => ({
+          leagues: state.leagues.map((l) => (l.id === id ? { ...l, leagueRosters: rosters } : l)),
+        })),
+
       setProfileOverride: (id, override) =>
         set((state) => ({
           leagues: state.leagues.map((l) =>
