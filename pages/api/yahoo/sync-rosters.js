@@ -35,11 +35,12 @@ export default async function handler(req, res) {
   const token = await getValidToken(req, res)
   if (!token) return res.status(401).json({ error: 'Not connected to Yahoo' })
 
-  const { leagueKey } = req.query
+  const { leagueKey, sport = 'nba' } = req.query
   if (!leagueKey) return res.status(400).json({ error: 'leagueKey required' })
 
-  // Build name → PocketBeane id map from local player pool
-  const playersPath = path.join(process.cwd(), 'src/data/players.json')
+  // Build name → PocketBeane id map from the right sport's player pool
+  const playerFile = sport === 'mlb' ? 'mlb_players.json' : 'players.json'
+  const playersPath = path.join(process.cwd(), 'src/data', playerFile)
   const players = JSON.parse(fs.readFileSync(playersPath, 'utf8'))
   const nameToId = {}
   for (const p of players) {
@@ -50,7 +51,7 @@ export default async function handler(req, res) {
   const [rostersRaw, standingsRaw, userTeamsRaw] = await Promise.all([
     yahooFetch(token, `/league/${leagueKey}/teams/roster`),
     yahooFetch(token, `/league/${leagueKey}/standings`),
-    yahooFetch(token, '/users;use_login=1/games;game_codes=nba/teams'),
+    yahooFetch(token, `/users;use_login=1/games;game_codes=${sport}/teams`),
   ])
 
   // Identify the user's team within this league
@@ -59,7 +60,7 @@ export default async function handler(req, res) {
   const userGameCount = userGames?.count ?? 0
   outer: for (let i = 0; i < userGameCount; i++) {
     const gameArr = userGames[i]?.game
-    if (!gameArr || gameArr[0]?.code !== 'nba') continue
+    if (!gameArr || gameArr[0]?.code !== sport) continue
     const teamsObj = gameArr[1]?.teams
     const teamCount = teamsObj?.count ?? 0
     for (let j = 0; j < teamCount; j++) {

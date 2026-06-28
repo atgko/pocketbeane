@@ -53,14 +53,15 @@ export default async function handler(req, res) {
 
   // Bold prediction — plain text response, bypasses extractJSON
   if (mode === 'bold_prediction') {
-    const { rosterPlayers = [], archetypeName = '', topCategories = [] } = req.body
+    const { rosterPlayers = [], archetypeName = '', topCategories = [], sport = 'nba' } = req.body
+    const sportLabel = sport === 'mlb' ? 'fantasy baseball' : 'fantasy basketball'
     try {
       const predictionMsg = await client.messages.create({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 80,
         system: [{
           type: 'text',
-          text: 'You are Billy Beane making a bold prediction about a fantasy basketball team. Generate exactly one sentence under 25 words. Be specific, name a player if possible, state it as fact — no hedging, no "might", no "could". Return only the sentence, nothing else.',
+          text: `You are Billy Beane making a bold prediction about a ${sportLabel} team. Generate exactly one sentence under 25 words. Be specific, name a player if possible, state it as fact — no hedging, no "might", no "could". Return only the sentence, nothing else.`,
         }],
         messages: [{
           role: 'user',
@@ -132,9 +133,24 @@ function buildMessages(mode, leagueConfig, boardState, categoryGaps, scarcityAle
   return buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy, snakeContext)
 }
 
+// ─── Candidate stat formatter — sport-aware ──────────────────────────────────
+
+function formatCandidateStats(player, sport) {
+  const s = player.prior_season
+  if (sport === 'mlb') {
+    return `r=${fmt(s?.r,false)} hr=${fmt(s?.hr,false)} rbi=${fmt(s?.rbi,false)} sb=${fmt(s?.sb,false)} avg=${fmt(s?.avg,true)} w=${fmt(s?.w,false)} sv=${fmt(s?.sv,false)} k=${fmt(s?.k,false)} era=${fmt(s?.era,false)} whip=${fmt(s?.whip,false)}`
+  }
+  return `pts=${fmt(s?.pts,false)} reb=${fmt(s?.reb,false)} ast=${fmt(s?.ast,false)} stl=${fmt(s?.stl,false)} blk=${fmt(s?.blk,false)} 3pm=${fmt(s?.three_pm,false)} fg%=${fmt(s?.fg_pct,true)} ft%=${fmt(s?.ft_pct,true)} to=${fmt(s?.to,false)}`
+}
+
+function defaultScoringLine(sport) {
+  if (sport === 'mlb') return 'Scoring: R, HR, RBI, SB, AVG (hitting) + W, SV, K, ERA↓, WHIP↓ (pitching)'
+  return 'Scoring: PTS, REB, AST, STL, BLK, TO↓, FG%, FT%, 3PM'
+}
+
 // ─── Auto mode — fires on user's pick turn ───────────────────────────────────
 
-const AUTO_SYSTEM = `You are Billy Beane — data-obsessed, unsentimental, decisive. You are the GM making a pick RIGHT NOW in a Yahoo fantasy basketball snake draft.
+const AUTO_SYSTEM = `You are Billy Beane — data-obsessed, unsentimental, decisive. You are the GM making a pick RIGHT NOW in a Yahoo fantasy sports snake draft.
 
 You will receive a positional depth snapshot showing how many quality options survive at each position by your next pick. Use this to assess whether a position the team needs is genuinely drying up — not just losing one player, but losing the entire viable pool.
 
@@ -155,7 +171,7 @@ const STRATEGY_LABELS = {
 }
 
 function buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlerts, topCandidates, philosophy = {}, snakeContext = {}) {
-  const { numTeams, draftPosition, scoringFormat, statCategories, rosterPositions } = leagueConfig
+  const { numTeams, draftPosition, scoringFormat, statCategories, rosterPositions, sport = 'nba' } = leagueConfig
   const { userPicksWithData, totalPicks, currentRound, userPicksRemaining } = boardState
   const { strategy = 'beane', puntCategories = [], injuryTolerance = 'moderate' } = philosophy
 
@@ -175,9 +191,8 @@ function buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlert
 
   const candidates = (topCandidates ?? []).slice(0, 8).map(c => {
     const p = c.player
-    const s = p.prior_season
     const injuryTag = p.injury_risk ? ` ⚠️injury` : ''
-    return `${p.id}|${p.name}(${p.yahoo_positions.join('/')},ADP${p.adp.toFixed(1)}${injuryTag}):pts=${fmt(s?.pts,false)} reb=${fmt(s?.reb,false)} ast=${fmt(s?.ast,false)} stl=${fmt(s?.stl,false)} blk=${fmt(s?.blk,false)} 3pm=${fmt(s?.three_pm,false)} fg%=${fmt(s?.fg_pct,true)} ft%=${fmt(s?.ft_pct,true)} to=${fmt(s?.to,false)}`
+    return `${p.id}|${p.name}(${p.yahoo_positions.join('/')},ADP${p.adp.toFixed(1)}${injuryTag}):${formatCandidateStats(p, sport)}`
   }).join('\n')
 
   const alertLine = scarcityAlerts?.length > 0 ? `\nSCARCITY: ${scarcityAlerts.join(' ')}` : ''
@@ -198,11 +213,9 @@ function buildAutoMessages(leagueConfig, boardState, categoryGaps, scarcityAlert
     ? `\nSnake window: consecutive picks — next turn is #${nextPickNum}, board essentially unchanged.`
     : ''
 
-  // Build scoring and roster context lines from Yahoo settings when available,
-  // falling back to the standard 9-cat NBA defaults.
   const scoringLine = statCategories?.length
     ? `Scoring: ${statCategories.map(c => c.higherIsBetter ? c.name : `${c.name}↓`).join(', ')}`
-    : 'Scoring: PTS, REB, AST, STL, BLK, TO↓, FG%, FT%, 3PM'
+    : defaultScoringLine(sport)
 
   const starterSlots = rosterPositions?.filter(p => p.isStarter)
   const slotsLine = starterSlots?.length
@@ -226,7 +239,7 @@ ${candidates}`
 
 // ─── Post-pick mode — fires after user picks, sets up next turn ──────────────
 
-const POST_PICK_SYSTEM = `You are Billy Beane. Your GM just locked in their pick. Now brief them on what to target when their next turn comes around in this snake draft.
+const POST_PICK_SYSTEM = `You are Billy Beane. Your GM just locked in their pick. Now brief them on what to target when their next turn comes around in this fantasy sports snake draft.
 
 Give 2-3 targets to watch. Pick 1 gets 3-4 sentences: open by acknowledging what the pick just addressed for the team, then pivot to what the team needs next and why this target fits — specific categories, whether they'll survive to the next pick based on the snake window, and how they complete the roster being built. Picks 2 and 3 are 1-2 sentences each as contingency options. Beane voice throughout.
 
@@ -234,7 +247,7 @@ Reply ONLY with raw JSON — no markdown, no explanation, no extra text:
 {"picks":[{"id":"player-id","name":"Name","reason":"..."},{"id":"...","name":"...","reason":"..."},{"id":"...","name":"...","reason":"..."}]}`
 
 function buildPostPickMessages(leagueConfig, boardState, categoryGaps, topCandidates, philosophy = {}, snakeContext = {}) {
-  const { numTeams, draftPosition, scoringFormat, statCategories, rosterPositions } = leagueConfig
+  const { numTeams, draftPosition, scoringFormat, statCategories, rosterPositions, sport = 'nba' } = leagueConfig
   const { userPicksWithData, totalPicks, currentRound, userPicksRemaining } = boardState
   const { strategy = 'beane', puntCategories = [], injuryTolerance = 'moderate' } = philosophy
 
@@ -259,9 +272,8 @@ function buildPostPickMessages(leagueConfig, boardState, categoryGaps, topCandid
 
   const candidates = (topCandidates ?? []).slice(0, 8).map(c => {
     const p = c.player
-    const s = p.prior_season
     const injuryTag = p.injury_risk ? ` ⚠️injury` : ''
-    return `${p.id}|${p.name}(${p.yahoo_positions.join('/')},ADP${p.adp.toFixed(1)}${injuryTag}):pts=${fmt(s?.pts,false)} reb=${fmt(s?.reb,false)} ast=${fmt(s?.ast,false)} stl=${fmt(s?.stl,false)} blk=${fmt(s?.blk,false)} 3pm=${fmt(s?.three_pm,false)} fg%=${fmt(s?.fg_pct,true)} ft%=${fmt(s?.ft_pct,true)} to=${fmt(s?.to,false)}`
+    return `${p.id}|${p.name}(${p.yahoo_positions.join('/')},ADP${p.adp.toFixed(1)}${injuryTag}):${formatCandidateStats(p, sport)}`
   }).join('\n')
 
   const strategyLabel = STRATEGY_LABELS[strategy] ?? strategy
@@ -280,7 +292,7 @@ function buildPostPickMessages(leagueConfig, boardState, categoryGaps, topCandid
 
   const scoringLine = statCategories?.length
     ? `Scoring: ${statCategories.map(c => c.higherIsBetter ? c.name : `${c.name}↓`).join(', ')}`
-    : 'Scoring: PTS, REB, AST, STL, BLK, TO↓, FG%, FT%, 3PM'
+    : defaultScoringLine(sport)
   const starterSlots = rosterPositions?.filter(p => p.isStarter)
   const slotsLine = starterSlots?.length
     ? `Roster: ${starterSlots.map(p => `${p.position}×${p.count}`).join(' ')}`
@@ -332,7 +344,7 @@ My team: ${roster}. Need: ${weakCats || 'balanced'}. Watching: ${watchList}.`
 
 // ─── Complete mode — fires after draft finishes ───────────────────────────────
 
-const COMPLETE_SYSTEM = `You are Billy Beane presenting your completed fantasy basketball team to ownership. The draft is done.
+const COMPLETE_SYSTEM = `You are Billy Beane presenting your completed fantasy team to ownership. The draft is done.
 
 Write your GM's season report. Be specific and direct. No filler.
 
@@ -370,7 +382,7 @@ const AUCTION_STRATEGY_LABELS = {
   'budget-control':   'Budget Control (hold reserves, dominate late)',
 }
 
-const NOMINATION_SYSTEM = `You are Billy Beane — data-obsessed, unsentimental, decisive. It's your nomination turn in a Yahoo fantasy basketball auction draft.
+const NOMINATION_SYSTEM = `You are Billy Beane — data-obsessed, unsentimental, decisive. It's your nomination turn in a Yahoo fantasy sports auction draft.
 
 Two levers: nominate a player you want (bid on your own terms) or nominate a player the room covets (drain their budgets before you spend yours). The right call depends on your strategy and budget position.
 
@@ -380,7 +392,7 @@ Reply ONLY with raw JSON — no markdown, no explanation, no extra text:
 {"picks":[{"id":"player-id","name":"Name","reason":"..."},{"id":"...","name":"...","reason":"..."},{"id":"...","name":"...","reason":"..."}]}`
 
 function buildNominationMessages(leagueConfig, boardState, categoryGaps, topCandidates, philosophy = {}, auctionContext = {}) {
-  const { numTeams, scoringFormat, statCategories, rosterPositions } = leagueConfig
+  const { numTeams, scoringFormat, statCategories, rosterPositions, sport = 'nba' } = leagueConfig
   const { userPicksWithData, userPicksRemaining } = boardState
   const { strategy = 'beane', puntCategories = [], injuryTolerance = 'moderate' } = philosophy
   const { nominationNumber, budgetRemaining, spendableBudget, avgCostPerRemainingSpot } = auctionContext
@@ -401,9 +413,8 @@ function buildNominationMessages(leagueConfig, boardState, categoryGaps, topCand
 
   const candidates = (topCandidates ?? []).slice(0, 8).map(c => {
     const p = c.player
-    const s = p.prior_season
     const injuryTag = p.injury_risk ? ` ⚠️injury` : ''
-    return `${p.id}|${p.name}(${p.yahoo_positions.join('/')},$${p.auction_value ?? '?'}${injuryTag}):pts=${fmt(s?.pts,false)} reb=${fmt(s?.reb,false)} ast=${fmt(s?.ast,false)} stl=${fmt(s?.stl,false)} blk=${fmt(s?.blk,false)} 3pm=${fmt(s?.three_pm,false)} fg%=${fmt(s?.fg_pct,true)} ft%=${fmt(s?.ft_pct,true)} to=${fmt(s?.to,false)}`
+    return `${p.id}|${p.name}(${p.yahoo_positions.join('/')},$${p.auction_value ?? '?'}${injuryTag}):${formatCandidateStats(p, sport)}`
   }).join('\n')
 
   const strategyLabel = AUCTION_STRATEGY_LABELS[strategy] ?? strategy
@@ -412,7 +423,7 @@ function buildNominationMessages(leagueConfig, boardState, categoryGaps, topCand
 
   const scoringLine = statCategories?.length
     ? `Scoring: ${statCategories.map(c => c.higherIsBetter ? c.name : `${c.name}↓`).join(', ')}`
-    : 'Scoring: PTS, REB, AST, STL, BLK, TO↓, FG%, FT%, 3PM'
+    : defaultScoringLine(sport)
   const starterSlots = rosterPositions?.filter(p => p.isStarter)
   const slotsLine = starterSlots?.length
     ? `Roster: ${starterSlots.map(p => `${p.position}×${p.count}`).join(' ')}`
@@ -455,7 +466,7 @@ Reply ONLY with raw JSON — no markdown, no explanation, no extra text:
 {"ceiling":42,"verdict":"buy","reason":"2-3 sentences"}`
 
 function buildBidAdviceMessages(leagueConfig, boardState, categoryGaps, philosophy = {}, auctionContext = {}, bidTarget = null) {
-  const { numTeams, scoringFormat } = leagueConfig
+  const { numTeams, scoringFormat, sport = 'nba' } = leagueConfig
   const { userPicksWithData, userPicksRemaining } = boardState
   const { strategy = 'beane', injuryTolerance = 'moderate' } = philosophy
   const { budgetRemaining, spendableBudget, avgCostPerRemainingSpot } = auctionContext
@@ -491,7 +502,7 @@ function buildBidAdviceMessages(leagueConfig, boardState, categoryGaps, philosop
   ].filter(Boolean).join(' · ')
 
   const strategyLabel = AUCTION_STRATEGY_LABELS[strategy] ?? strategy
-  const statsLine = `pts=${fmt(s?.pts,false)} reb=${fmt(s?.reb,false)} ast=${fmt(s?.ast,false)} stl=${fmt(s?.stl,false)} blk=${fmt(s?.blk,false)} 3pm=${fmt(s?.three_pm,false)} fg%=${fmt(s?.fg_pct,true)} ft%=${fmt(s?.ft_pct,true)} to=${fmt(s?.to,false)}`
+  const statsLine = formatCandidateStats(player, sport)
 
   const user = `${numTeams} teams (${scoringFormat}). Strategy: ${strategyLabel}. Injury tolerance: ${injuryTolerance}.
 Budget: ${budgetLine}.

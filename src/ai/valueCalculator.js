@@ -7,6 +7,7 @@ export function rankByFit(available, categoryGaps, sportConfig, currentPickNumbe
   if (available.length === 0) return []
 
   const { strategy = 'beane', puntCategories = [], injuryTolerance = 'moderate' } = philosophy
+  const lowerBetterSet = new Set(sportConfig.lowerIsBetter ?? [])
 
   // Punted categories are treated as already covered — don't try to fill them
   const weakCatIds = categoryGaps
@@ -42,15 +43,15 @@ export function rankByFit(available, categoryGaps, sportConfig, currentPickNumbe
       const val = player.prior_season?.[catId]
       if (!stat || val == null) continue
       const z = (val - stat.mean) / stat.stdDev
-      // For TOs, lower is better — invert z so "fewer TOs" scores positively
-      categoryFit += catId === 'to' ? -z * 1.5 : z * 1.5
+      // Lower-is-better categories (TO, ERA, WHIP): invert z so lower values score positively
+      categoryFit += lowerBetterSet.has(catId) ? -z * 1.5 : z * 1.5
     }
     for (const catId of strongCatIds) {
       const stat = poolStats[catId]
       const val = player.prior_season?.[catId]
       if (!stat || val == null) continue
       const z = (val - stat.mean) / stat.stdDev
-      categoryFit -= catId === 'to' ? -z * 0.3 : z * 0.3
+      categoryFit -= lowerBetterSet.has(catId) ? -z * 0.3 : z * 0.3
     }
 
     let score = (adpValue * adpWeight) + (categoryFit * catFitWeight)
@@ -78,6 +79,7 @@ export function rankByFitAuction(available, categoryGaps, sportConfig, boardStat
 
   const { strategy = 'beane', puntCategories = [], injuryTolerance = 'moderate' } = philosophy
   const { spendableBudget, avgCostPerRemainingSpot } = boardState
+  const lowerBetterSet = new Set(sportConfig.lowerIsBetter ?? [])
 
   const weakCatIds = categoryGaps
     .filter(g => (g.grade === 'weak' || g.grade === 'missing') && !puntCategories.includes(g.id))
@@ -115,14 +117,14 @@ export function rankByFitAuction(available, categoryGaps, sportConfig, boardStat
       const val = player.prior_season?.[catId]
       if (!stat || val == null) continue
       const z = (val - stat.mean) / stat.stdDev
-      categoryFit += catId === 'to' ? -z * 1.5 : z * 1.5
+      categoryFit += lowerBetterSet.has(catId) ? -z * 1.5 : z * 1.5
     }
     for (const catId of strongCatIds) {
       const stat = poolStats[catId]
       const val = player.prior_season?.[catId]
       if (!stat || val == null) continue
       const z = (val - stat.mean) / stat.stdDev
-      categoryFit -= catId === 'to' ? -z * 0.3 : z * 0.3
+      categoryFit -= lowerBetterSet.has(catId) ? -z * 0.3 : z * 0.3
     }
 
     let score = (valueSignal * valueWeight) + (categoryFit * catFitWeight)

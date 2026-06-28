@@ -56,7 +56,8 @@ export default function SeasonHub() {
     setSyncing(true)
     setSyncError(null)
     try {
-      const res = await fetch(`/api/yahoo/sync-rosters?leagueKey=${encodeURIComponent(league.config.yahooLeagueKey)}`)
+      const sport = league.config.sport ?? 'nba'
+      const res = await fetch(`/api/yahoo/sync-rosters?leagueKey=${encodeURIComponent(league.config.yahooLeagueKey)}&sport=${sport}`)
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Sync failed')
       setLeagueRosters(league.id, data)

@@ -32,8 +32,6 @@ export function getScarcityAlerts(scarcity) {
     })
 }
 
-// Primary positions for depth analysis — flex slots (G, F) are derived from these.
-const PRIMARY_POSITIONS = ['PG', 'SG', 'SF', 'PF', 'C']
 // Slot types that don't count as starters (excluded from quality threshold + demand).
 const BENCH_SLOT_TYPES = new Set(['BN', 'IL', 'IL+'])
 // Severity ratio thresholds: laterCount / remainingDemand.
@@ -70,7 +68,7 @@ export function computePositionalDepth(available, picksUntilNext, numTeams, tota
 
   const projected = available.slice(picksUntilNext)
 
-  return PRIMARY_POSITIONS.map(pos => {
+  return sportConfig.filterPositions.map(pos => {
     // Per-position demand: direct slot + any flex slot this position qualifies for.
     let slotsPerTeam = slotCountByType(pos)
     for (const [flexSlot, eligiblePositions] of Object.entries(sportConfig.slotEligibility)) {

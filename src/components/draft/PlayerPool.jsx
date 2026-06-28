@@ -1,5 +1,8 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
-import players from '@/data/players.json'
+import nbaPlayers from '@/data/players.json'
+import mlbPlayers from '@/data/mlb_players.json'
+
+const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers }
 import FilterBar from './FilterBar'
 import UndoModal from './UndoModal'
 import useLeagueStore from '@/store/leagueStore'
@@ -10,7 +13,9 @@ export default function PlayerPool() {
   const { activeLeagueId, addPick, undoPick, removePick, reassignPick, getActiveLeague } = useLeagueStore()
   const activeLeague = getActiveLeague()
   const picks = activeLeague?.draft?.picks ?? []
-  const sportConfig = getSportConfig(activeLeague?.config?.sport)
+  const sport = activeLeague?.config?.sport ?? 'nba'
+  const sportConfig = getSportConfig(sport)
+  const players = PLAYER_DATA[sport] ?? nbaPlayers
   const draftType = activeLeague?.config?.draftType ?? 'snake'
   const totalSlots = activeLeague?.rosterSlots?.length ?? Infinity
   const numTeams = activeLeague?.config?.numTeams ?? 10

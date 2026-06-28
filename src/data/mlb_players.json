@@ -1,0 +1,9101 @@
+[
+  {
+    "id": "shohei-ohtani",
+    "name": "Shohei Ohtani",
+    "team": "LAD",
+    "positions": [
+      "SP",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "SP",
+      "DH"
+    ],
+    "player_type": "pitcher",
+    "adp": 1,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 65,
+    "prior_season": {
+      "w": 1,
+      "sv": 0,
+      "k": 62,
+      "era": 2.87,
+      "whip": 1.043,
+      "gp": 14,
+      "gs": 14
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "aaron-judge",
+    "name": "Aaron Judge",
+    "team": "NYY",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 1.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 58,
+    "prior_season": {
+      "r": 137,
+      "hr": 53,
+      "rbi": 114,
+      "sb": 12,
+      "avg": 0.331,
+      "gp": 152
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bobby-witt",
+    "name": "Bobby Witt Jr.",
+    "team": "KC",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 3.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 50,
+    "prior_season": {
+      "r": 99,
+      "hr": 23,
+      "rbi": 88,
+      "sb": 38,
+      "avg": 0.295,
+      "gp": 157
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "juan-soto",
+    "name": "Juan Soto",
+    "team": "NYM",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 3.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 50,
+    "prior_season": {
+      "r": 120,
+      "hr": 43,
+      "rbi": 105,
+      "sb": 38,
+      "avg": 0.263,
+      "gp": 160
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jose-ramirez",
+    "name": "Jose Ramirez",
+    "team": "CLE",
+    "positions": [
+      "3B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "3B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 5.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 45,
+    "prior_season": {
+      "r": 103,
+      "hr": 30,
+      "rbi": 85,
+      "sb": 44,
+      "avg": 0.283,
+      "gp": 158
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ronald-acuna",
+    "name": "Ronald Acuna Jr.",
+    "team": "ATL",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 6.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 43,
+    "prior_season": {
+      "r": 74,
+      "hr": 21,
+      "rbi": 42,
+      "sb": 9,
+      "avg": 0.29,
+      "gp": 95
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tarik-skubal",
+    "name": "Tarik Skubal",
+    "team": "DET",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 6.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 42,
+    "prior_season": {
+      "w": 13,
+      "sv": 0,
+      "k": 241,
+      "era": 2.21,
+      "whip": 0.891,
+      "gp": 31,
+      "gs": 31
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "elly-de-la-cruz",
+    "name": "Elly De La Cruz",
+    "team": "CIN",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 7.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 41,
+    "prior_season": {
+      "r": 102,
+      "hr": 22,
+      "rbi": 86,
+      "sb": 37,
+      "avg": 0.264,
+      "gp": 162
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "paul-skenes",
+    "name": "Paul Skenes",
+    "team": "PIT",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 9,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 39,
+    "prior_season": {
+      "w": 10,
+      "sv": 0,
+      "k": 216,
+      "era": 1.97,
+      "whip": 0.948,
+      "gp": 32,
+      "gs": 32
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "julio-rodriguez",
+    "name": "Julio Rodriguez",
+    "team": "SEA",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 10,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 38,
+    "prior_season": {
+      "r": 106,
+      "hr": 32,
+      "rbi": 95,
+      "sb": 30,
+      "avg": 0.267,
+      "gp": 160
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kyle-tucker",
+    "name": "Kyle Tucker",
+    "team": "LAD",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 10.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 37,
+    "prior_season": {
+      "r": 91,
+      "hr": 22,
+      "rbi": 73,
+      "sb": 25,
+      "avg": 0.266,
+      "gp": 136
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "garrett-crochet",
+    "name": "Garrett Crochet",
+    "team": "BOS",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 12,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 36,
+    "prior_season": {
+      "w": 18,
+      "sv": 0,
+      "k": 255,
+      "era": 2.59,
+      "whip": 1.028,
+      "gp": 32,
+      "gs": 32
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "fernando-tatis",
+    "name": "Fernando Tatis Jr.",
+    "team": "SD",
+    "positions": [
+      "2B",
+      "OF"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 13,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 35,
+    "prior_season": {
+      "r": 111,
+      "hr": 25,
+      "rbi": 71,
+      "sb": 32,
+      "avg": 0.268,
+      "gp": 155
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "corbin-carroll",
+    "name": "Corbin Carroll",
+    "team": "ARI",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 13.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 34,
+    "prior_season": {
+      "r": 107,
+      "hr": 31,
+      "rbi": 84,
+      "sb": 32,
+      "avg": 0.259,
+      "gp": 143
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cal-raleigh",
+    "name": "Cal Raleigh",
+    "team": "SEA",
+    "positions": [
+      "C",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "C",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 14.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 33,
+    "prior_season": {
+      "r": 110,
+      "hr": 60,
+      "rbi": 125,
+      "sb": 14,
+      "avg": 0.247,
+      "gp": 159
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "gunnar-henderson",
+    "name": "Gunnar Henderson",
+    "team": "BAL",
+    "positions": [
+      "SS",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "SS",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 15.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 33,
+    "prior_season": {
+      "r": 85,
+      "hr": 17,
+      "rbi": 68,
+      "sb": 30,
+      "avg": 0.274,
+      "gp": 154
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "junior-caminero",
+    "name": "Junior Caminero",
+    "team": "TB",
+    "positions": [
+      "3B"
+    ],
+    "yahoo_positions": [
+      "3B"
+    ],
+    "player_type": "hitter",
+    "adp": 16.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 32,
+    "prior_season": {
+      "r": 93,
+      "hr": 45,
+      "rbi": 110,
+      "sb": 7,
+      "avg": 0.264,
+      "gp": 154
+    },
+    "age": 21,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "vladimir-guerrero",
+    "name": "Vladimir Guerrero Jr.",
+    "team": "TOR",
+    "positions": [
+      "1B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 18.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 31,
+    "prior_season": {
+      "r": 96,
+      "hr": 23,
+      "rbi": 84,
+      "sb": 6,
+      "avg": 0.292,
+      "gp": 156
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "nick-kurtz",
+    "name": "Nick Kurtz",
+    "team": "ATH",
+    "positions": [
+      "1B"
+    ],
+    "yahoo_positions": [
+      "1B"
+    ],
+    "player_type": "hitter",
+    "adp": 19.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 30,
+    "prior_season": {
+      "r": 90,
+      "hr": 36,
+      "rbi": 86,
+      "sb": 2,
+      "avg": 0.29,
+      "gp": 117
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kyle-schwarber",
+    "name": "Kyle Schwarber",
+    "team": "PHI",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 21,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 29,
+    "prior_season": {
+      "r": 111,
+      "hr": 56,
+      "rbi": 132,
+      "sb": 10,
+      "avg": 0.24,
+      "gp": 162
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jackson-chourio",
+    "name": "Jackson Chourio",
+    "team": "MIL",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 21.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 29,
+    "prior_season": {
+      "r": 88,
+      "hr": 21,
+      "rbi": 78,
+      "sb": 21,
+      "avg": 0.27,
+      "gp": 131
+    },
+    "age": 21,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jazz-chisholm",
+    "name": "Jazz Chisholm Jr.",
+    "team": "NYY",
+    "positions": [
+      "2B",
+      "3B"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "3B"
+    ],
+    "player_type": "hitter",
+    "adp": 21.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 29,
+    "prior_season": {
+      "r": 75,
+      "hr": 31,
+      "rbi": 80,
+      "sb": 31,
+      "avg": 0.242,
+      "gp": 130
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "yoshinobu-yamamoto",
+    "name": "Yoshinobu Yamamoto",
+    "team": "LAD",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 24.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 27,
+    "prior_season": {
+      "w": 12,
+      "sv": 0,
+      "k": 201,
+      "era": 2.49,
+      "whip": 0.99,
+      "gp": 30,
+      "gs": 30
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "pete-alonso",
+    "name": "Pete Alonso",
+    "team": "BAL",
+    "positions": [
+      "1B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 24.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 27,
+    "prior_season": {
+      "r": 87,
+      "hr": 38,
+      "rbi": 126,
+      "sb": 1,
+      "avg": 0.272,
+      "gp": 162
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "francisco-lindor",
+    "name": "Francisco Lindor",
+    "team": "NYM",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 25,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 27,
+    "prior_season": {
+      "r": 117,
+      "hr": 31,
+      "rbi": 86,
+      "sb": 31,
+      "avg": 0.267,
+      "gp": 160
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ketel-marte",
+    "name": "Ketel Marte",
+    "team": "ARI",
+    "positions": [
+      "2B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 26.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 26,
+    "prior_season": {
+      "r": 87,
+      "hr": 28,
+      "rbi": 72,
+      "sb": 4,
+      "avg": 0.283,
+      "gp": 126
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cristopher-sanchez",
+    "name": "Cristopher Sanchez",
+    "team": "PHI",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 26.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 26,
+    "prior_season": {
+      "w": 13,
+      "sv": 0,
+      "k": 212,
+      "era": 2.5,
+      "whip": 1.064,
+      "gp": 32,
+      "gs": 32
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "trea-turner",
+    "name": "Trea Turner",
+    "team": "PHI",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 27,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 26,
+    "prior_season": {
+      "r": 94,
+      "hr": 15,
+      "rbi": 69,
+      "sb": 36,
+      "avg": 0.304,
+      "gp": 141
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "yordan-alvarez",
+    "name": "Yordan Alvarez",
+    "team": "HOU",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 30.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 25,
+    "prior_season": {
+      "r": 17,
+      "hr": 6,
+      "rbi": 27,
+      "sb": 1,
+      "avg": 0.273,
+      "gp": 48
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "manny-machado",
+    "name": "Manny Machado",
+    "team": "SD",
+    "positions": [
+      "3B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "3B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 30.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 25,
+    "prior_season": {
+      "r": 91,
+      "hr": 27,
+      "rbi": 95,
+      "sb": 14,
+      "avg": 0.275,
+      "gp": 159
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "pete-crow-armstrong",
+    "name": "Pete Crow-Armstrong",
+    "team": "CHC",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 30.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 25,
+    "prior_season": {
+      "r": 91,
+      "hr": 31,
+      "rbi": 95,
+      "sb": 35,
+      "avg": 0.247,
+      "gp": 157
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "james-wood",
+    "name": "James Wood",
+    "team": "WSH",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 32.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 24,
+    "prior_season": {
+      "r": 87,
+      "hr": 31,
+      "rbi": 94,
+      "sb": 15,
+      "avg": 0.256,
+      "gp": 157
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "zach-neto",
+    "name": "Zach Neto",
+    "team": "LAA",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 34,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 23,
+    "prior_season": {
+      "r": 82,
+      "hr": 26,
+      "rbi": 62,
+      "sb": 26,
+      "avg": 0.257,
+      "gp": 128
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bryan-woo",
+    "name": "Bryan Woo",
+    "team": "SEA",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 35.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 23,
+    "prior_season": {
+      "w": 15,
+      "sv": 0,
+      "k": 198,
+      "era": 2.94,
+      "whip": 0.927,
+      "gp": 30,
+      "gs": 30
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "matt-olson",
+    "name": "Matt Olson",
+    "team": "ATL",
+    "positions": [
+      "1B"
+    ],
+    "yahoo_positions": [
+      "1B"
+    ],
+    "player_type": "hitter",
+    "adp": 36,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 23,
+    "prior_season": {
+      "r": 98,
+      "hr": 29,
+      "rbi": 95,
+      "sb": 1,
+      "avg": 0.272,
+      "gp": 162
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "hunter-brown",
+    "name": "Hunter Brown",
+    "team": "HOU",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 36.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 23,
+    "prior_season": {
+      "w": 12,
+      "sv": 0,
+      "k": 206,
+      "era": 2.43,
+      "whip": 1.025,
+      "gp": 31,
+      "gs": 31
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bryce-harper",
+    "name": "Bryce Harper",
+    "team": "PHI",
+    "positions": [
+      "1B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 37.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 22,
+    "prior_season": {
+      "r": 72,
+      "hr": 27,
+      "rbi": 75,
+      "sb": 12,
+      "avg": 0.261,
+      "gp": 132
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "logan-gilbert",
+    "name": "Logan Gilbert",
+    "team": "SEA",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 39,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 22,
+    "prior_season": {
+      "w": 6,
+      "sv": 0,
+      "k": 173,
+      "era": 3.44,
+      "whip": 1.031,
+      "gp": 25,
+      "gs": 25
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "chris-sale",
+    "name": "Chris Sale",
+    "team": "ATL",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 39,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 22,
+    "prior_season": {
+      "w": 7,
+      "sv": 0,
+      "k": 165,
+      "era": 2.58,
+      "whip": 1.066,
+      "gp": 21,
+      "gs": 20
+    },
+    "age": 36,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brent-rooker",
+    "name": "Brent Rooker",
+    "team": "ATH",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 41.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 21,
+    "prior_season": {
+      "r": 92,
+      "hr": 30,
+      "rbi": 89,
+      "sb": 6,
+      "avg": 0.262,
+      "gp": 162
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "rafael-devers",
+    "name": "Rafael Devers",
+    "team": "SF",
+    "positions": [
+      "1B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 42.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 21,
+    "prior_season": {
+      "r": 99,
+      "hr": 35,
+      "rbi": 109,
+      "sb": 1,
+      "avg": 0.252,
+      "gp": 163
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "mason-miller",
+    "name": "Mason Miller",
+    "team": "SD",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 42.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 21,
+    "prior_season": {
+      "w": 1,
+      "sv": 22,
+      "k": 104,
+      "era": 2.63,
+      "whip": 0.908,
+      "gp": 60,
+      "gs": 0
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "wyatt-langford",
+    "name": "Wyatt Langford",
+    "team": "TEX",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 44.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 20,
+    "prior_season": {
+      "r": 73,
+      "hr": 22,
+      "rbi": 62,
+      "sb": 22,
+      "avg": 0.241,
+      "gp": 134
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "max-fried",
+    "name": "Max Fried",
+    "team": "NYY",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 44.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 20,
+    "prior_season": {
+      "w": 19,
+      "sv": 0,
+      "k": 189,
+      "era": 2.86,
+      "whip": 1.101,
+      "gp": 32,
+      "gs": 32
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brice-turang",
+    "name": "Brice Turang",
+    "team": "MIL",
+    "positions": [
+      "2B"
+    ],
+    "yahoo_positions": [
+      "2B"
+    ],
+    "player_type": "hitter",
+    "adp": 44.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 20,
+    "prior_season": {
+      "r": 97,
+      "hr": 18,
+      "rbi": 81,
+      "sb": 24,
+      "avg": 0.288,
+      "gp": 156
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "logan-webb",
+    "name": "Logan Webb",
+    "team": "SF",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 46.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 20,
+    "prior_season": {
+      "w": 15,
+      "sv": 0,
+      "k": 224,
+      "era": 3.22,
+      "whip": 1.237,
+      "gp": 34,
+      "gs": 34
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "mookie-betts",
+    "name": "Mookie Betts",
+    "team": "LAD",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 46.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 20,
+    "prior_season": {
+      "r": 95,
+      "hr": 20,
+      "rbi": 82,
+      "sb": 8,
+      "avg": 0.258,
+      "gp": 150
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "roman-anthony",
+    "name": "Roman Anthony",
+    "team": "BOS",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 47.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 20,
+    "prior_season": {
+      "r": 48,
+      "hr": 8,
+      "rbi": 32,
+      "sb": 4,
+      "avg": 0.292,
+      "gp": 71
+    },
+    "age": 21,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "edwin-diaz",
+    "name": "Edwin Diaz",
+    "team": "LAD",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 47.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 20,
+    "prior_season": {
+      "w": 6,
+      "sv": 28,
+      "k": 98,
+      "era": 1.63,
+      "whip": 0.874,
+      "gp": 62,
+      "gs": 0
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cole-ragans",
+    "name": "Cole Ragans",
+    "team": "KC",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 50,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 19,
+    "prior_season": {
+      "w": 3,
+      "sv": 0,
+      "k": 98,
+      "era": 4.67,
+      "whip": 1.184,
+      "gp": 13,
+      "gs": 13
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "freddie-freeman",
+    "name": "Freddie Freeman",
+    "team": "LAD",
+    "positions": [
+      "1B"
+    ],
+    "yahoo_positions": [
+      "1B"
+    ],
+    "player_type": "hitter",
+    "adp": 50.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 19,
+    "prior_season": {
+      "r": 81,
+      "hr": 24,
+      "rbi": 90,
+      "sb": 6,
+      "avg": 0.295,
+      "gp": 147
+    },
+    "age": 35,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jacob-degrom",
+    "name": "Jacob deGrom",
+    "team": "TEX",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 50.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 19,
+    "prior_season": {
+      "w": 12,
+      "sv": 0,
+      "k": 185,
+      "era": 2.97,
+      "whip": 0.921,
+      "gp": 30,
+      "gs": 30
+    },
+    "age": 37,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cody-bellinger",
+    "name": "Cody Bellinger",
+    "team": "NYY",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 55.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 18,
+    "prior_season": {
+      "r": 89,
+      "hr": 29,
+      "rbi": 98,
+      "sb": 13,
+      "avg": 0.272,
+      "gp": 152
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "austin-riley",
+    "name": "Austin Riley",
+    "team": "ATL",
+    "positions": [
+      "3B"
+    ],
+    "yahoo_positions": [
+      "3B"
+    ],
+    "player_type": "hitter",
+    "adp": 55.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 18,
+    "prior_season": {
+      "r": 54,
+      "hr": 16,
+      "rbi": 54,
+      "sb": 2,
+      "avg": 0.26,
+      "gp": 102
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "william-contreras",
+    "name": "William Contreras",
+    "team": "MIL",
+    "positions": [
+      "C",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "C",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 56,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 18,
+    "prior_season": {
+      "r": 89,
+      "hr": 17,
+      "rbi": 76,
+      "sb": 6,
+      "avg": 0.26,
+      "gp": 150
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "freddy-peralta",
+    "name": "Freddy Peralta",
+    "team": "NYM",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 56.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 18,
+    "prior_season": {
+      "w": 17,
+      "sv": 0,
+      "k": 204,
+      "era": 2.7,
+      "whip": 1.075,
+      "gp": 33,
+      "gs": 33
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "josh-naylor",
+    "name": "Josh Naylor",
+    "team": "SEA",
+    "positions": [
+      "1B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 57.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 17,
+    "prior_season": {
+      "r": 81,
+      "hr": 20,
+      "rbi": 92,
+      "sb": 30,
+      "avg": 0.295,
+      "gp": 147
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "geraldo-perdomo",
+    "name": "Geraldo Perdomo",
+    "team": "ARI",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 60.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 17,
+    "prior_season": {
+      "r": 98,
+      "hr": 20,
+      "rbi": 100,
+      "sb": 27,
+      "avg": 0.29,
+      "gp": 161
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jarren-duran",
+    "name": "Jarren Duran",
+    "team": "BOS",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 61.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 17,
+    "prior_season": {
+      "r": 86,
+      "hr": 16,
+      "rbi": 84,
+      "sb": 24,
+      "avg": 0.256,
+      "gp": 157
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cade-smith",
+    "name": "Cade Smith",
+    "team": "CLE",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 62.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 16,
+    "prior_season": {
+      "w": 8,
+      "sv": 16,
+      "k": 104,
+      "era": 2.93,
+      "whip": 1.005,
+      "gp": 76,
+      "gs": 0
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jhoan-duran",
+    "name": "Jhoan Duran",
+    "team": "PHI",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 62.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 16,
+    "prior_season": {
+      "w": 7,
+      "sv": 32,
+      "k": 80,
+      "era": 2.06,
+      "whip": 1.1,
+      "gp": 72,
+      "gs": 0
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "riley-greene",
+    "name": "Riley Greene",
+    "team": "DET",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 62.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 16,
+    "prior_season": {
+      "r": 84,
+      "hr": 36,
+      "rbi": 111,
+      "sb": 2,
+      "avg": 0.258,
+      "gp": 157
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "maikel-garcia",
+    "name": "Maikel Garcia",
+    "team": "KC",
+    "positions": [
+      "2B",
+      "3B",
+      "SS",
+      "OF"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "3B",
+      "SS",
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 64.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 16,
+    "prior_season": {
+      "r": 81,
+      "hr": 16,
+      "rbi": 74,
+      "sb": 23,
+      "avg": 0.286,
+      "gp": 160
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "george-kirby",
+    "name": "George Kirby",
+    "team": "SEA",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 64.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 16,
+    "prior_season": {
+      "w": 10,
+      "sv": 0,
+      "k": 137,
+      "era": 4.21,
+      "whip": 1.19,
+      "gp": 23,
+      "gs": 23
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ben-rice",
+    "name": "Ben Rice",
+    "team": "NYY",
+    "positions": [
+      "C",
+      "1B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "C",
+      "1B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 65.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 16,
+    "prior_season": {
+      "r": 74,
+      "hr": 26,
+      "rbi": 65,
+      "sb": 3,
+      "avg": 0.255,
+      "gp": 138
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jackson-merrill",
+    "name": "Jackson Merrill",
+    "team": "SD",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 65.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 16,
+    "prior_season": {
+      "r": 59,
+      "hr": 16,
+      "rbi": 67,
+      "sb": 1,
+      "avg": 0.264,
+      "gp": 115
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "andres-munoz",
+    "name": "Andres Munoz",
+    "team": "SEA",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 66,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 16,
+    "prior_season": {
+      "w": 3,
+      "sv": 38,
+      "k": 83,
+      "era": 1.73,
+      "whip": 1.027,
+      "gp": 64,
+      "gs": 0
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "shea-langeliers",
+    "name": "Shea Langeliers",
+    "team": "ATH",
+    "positions": [
+      "C",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "C",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 67.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 15,
+    "prior_season": {
+      "r": 73,
+      "hr": 31,
+      "rbi": 72,
+      "sb": 7,
+      "avg": 0.277,
+      "gp": 123
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cj-abrams",
+    "name": "CJ Abrams",
+    "team": "WSH",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 68.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 15,
+    "prior_season": {
+      "r": 92,
+      "hr": 19,
+      "rbi": 60,
+      "sb": 31,
+      "avg": 0.257,
+      "gp": 144
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dylan-cease",
+    "name": "Dylan Cease",
+    "team": "TOR",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 71.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 15,
+    "prior_season": {
+      "w": 8,
+      "sv": 0,
+      "k": 215,
+      "era": 4.55,
+      "whip": 1.327,
+      "gp": 32,
+      "gs": 32
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "byron-buxton",
+    "name": "Byron Buxton",
+    "team": "MIN",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 72,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 15,
+    "prior_season": {
+      "r": 97,
+      "hr": 35,
+      "rbi": 83,
+      "sb": 24,
+      "avg": 0.264,
+      "gp": 126
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "joe-ryan",
+    "name": "Joe Ryan",
+    "team": "MIN",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 72.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 15,
+    "prior_season": {
+      "w": 13,
+      "sv": 0,
+      "k": 194,
+      "era": 3.42,
+      "whip": 1.035,
+      "gp": 31,
+      "gs": 30
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jesus-luzardo",
+    "name": "Jesus Luzardo",
+    "team": "PHI",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 72.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 15,
+    "prior_season": {
+      "w": 15,
+      "sv": 0,
+      "k": 216,
+      "era": 3.92,
+      "whip": 1.22,
+      "gp": 32,
+      "gs": 32
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "hunter-goodman",
+    "name": "Hunter Goodman",
+    "team": "COL",
+    "positions": [
+      "C",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "C",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 72.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 15,
+    "prior_season": {
+      "r": 73,
+      "hr": 31,
+      "rbi": 91,
+      "sb": 1,
+      "avg": 0.278,
+      "gp": 144
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "framber-valdez",
+    "name": "Framber Valdez",
+    "team": "DET",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 73.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 14,
+    "prior_season": {
+      "w": 13,
+      "sv": 0,
+      "k": 187,
+      "era": 3.66,
+      "whip": 1.245,
+      "gp": 31,
+      "gs": 31
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "vinnie-pasquantino",
+    "name": "Vinnie Pasquantino",
+    "team": "KC",
+    "positions": [
+      "1B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 74.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 14,
+    "prior_season": {
+      "r": 72,
+      "hr": 32,
+      "rbi": 113,
+      "sb": 1,
+      "avg": 0.264,
+      "gp": 160
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "george-springer",
+    "name": "George Springer",
+    "team": "TOR",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 75.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 14,
+    "prior_season": {
+      "r": 106,
+      "hr": 32,
+      "rbi": 84,
+      "sb": 18,
+      "avg": 0.309,
+      "gp": 140
+    },
+    "age": 35,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kyle-bradish",
+    "name": "Kyle Bradish",
+    "team": "BAL",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 78.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 14,
+    "prior_season": {
+      "w": 6,
+      "sv": 0,
+      "k": 127,
+      "era": 5.05,
+      "whip": 1.311,
+      "gp": 27,
+      "gs": 27
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tyler-soderstrom",
+    "name": "Tyler Soderstrom",
+    "team": "ATH",
+    "positions": [
+      "1B",
+      "OF"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 81.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 13,
+    "prior_season": {
+      "r": 75,
+      "hr": 25,
+      "rbi": 93,
+      "sb": 8,
+      "avg": 0.276,
+      "gp": 158
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "david-bednar",
+    "name": "David Bednar",
+    "team": "NYY",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 82.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 13,
+    "prior_season": {
+      "w": 6,
+      "sv": 27,
+      "k": 86,
+      "era": 2.3,
+      "whip": 1.037,
+      "gp": 64,
+      "gs": 0
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "randy-arozarena",
+    "name": "Randy Arozarena",
+    "team": "SEA",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 83,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 13,
+    "prior_season": {
+      "r": 95,
+      "hr": 27,
+      "rbi": 76,
+      "sb": 31,
+      "avg": 0.238,
+      "gp": 160
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "corey-seager",
+    "name": "Corey Seager",
+    "team": "TEX",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 83.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 13,
+    "prior_season": {
+      "r": 61,
+      "hr": 21,
+      "rbi": 50,
+      "sb": 3,
+      "avg": 0.271,
+      "gp": 102
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "aroldis-chapman",
+    "name": "Aroldis Chapman",
+    "team": "BOS",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 84.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 13,
+    "prior_season": {
+      "w": 5,
+      "sv": 32,
+      "k": 85,
+      "era": 1.17,
+      "whip": 0.701,
+      "gp": 67,
+      "gs": 0
+    },
+    "age": 37,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bo-bichette",
+    "name": "Bo Bichette",
+    "team": "NYM",
+    "positions": [
+      "3B",
+      "SS"
+    ],
+    "yahoo_positions": [
+      "3B",
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 84.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 13,
+    "prior_season": {
+      "r": 78,
+      "hr": 18,
+      "rbi": 94,
+      "sb": 4,
+      "avg": 0.311,
+      "gp": 139
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "eugenio-suarez",
+    "name": "Eugenio Suarez",
+    "team": "CIN",
+    "positions": [
+      "3B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "3B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 84.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 13,
+    "prior_season": {
+      "r": 91,
+      "hr": 49,
+      "rbi": 118,
+      "sb": 4,
+      "avg": 0.228,
+      "gp": 159
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "oneil-cruz",
+    "name": "Oneil Cruz",
+    "team": "PIT",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 84.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 13,
+    "prior_season": {
+      "r": 62,
+      "hr": 20,
+      "rbi": 61,
+      "sb": 38,
+      "avg": 0.2,
+      "gp": 135
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "nick-pivetta",
+    "name": "Nick Pivetta",
+    "team": "SD",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 88.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 12,
+    "prior_season": {
+      "w": 13,
+      "sv": 0,
+      "k": 190,
+      "era": 2.87,
+      "whip": 0.985,
+      "gp": 31,
+      "gs": 31
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "alex-bregman",
+    "name": "Alex Bregman",
+    "team": "CHC",
+    "positions": [
+      "3B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "3B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 88.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 12,
+    "prior_season": {
+      "r": 64,
+      "hr": 18,
+      "rbi": 62,
+      "sb": 1,
+      "avg": 0.273,
+      "gp": 114
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "devin-williams",
+    "name": "Devin Williams",
+    "team": "NYM",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 89,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 12,
+    "prior_season": {
+      "w": 4,
+      "sv": 18,
+      "k": 90,
+      "era": 4.79,
+      "whip": 1.129,
+      "gp": 67,
+      "gs": 0
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "christian-yelich",
+    "name": "Christian Yelich",
+    "team": "MIL",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 89.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 12,
+    "prior_season": {
+      "r": 88,
+      "hr": 29,
+      "rbi": 103,
+      "sb": 16,
+      "avg": 0.264,
+      "gp": 150
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "nico-hoerner",
+    "name": "Nico Hoerner",
+    "team": "CHC",
+    "positions": [
+      "2B",
+      "SS"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 90,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 12,
+    "prior_season": {
+      "r": 89,
+      "hr": 7,
+      "rbi": 61,
+      "sb": 29,
+      "avg": 0.297,
+      "gp": 156
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "nolan-mclean",
+    "name": "Nolan McLean",
+    "team": "NYM",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 91,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 12,
+    "prior_season": {
+      "w": 5,
+      "sv": 0,
+      "k": 57,
+      "era": 2.06,
+      "whip": 1.042,
+      "gp": 8,
+      "gs": 8
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "eury-perez",
+    "name": "Eury Perez",
+    "team": "MIA",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 91.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 12,
+    "prior_season": {
+      "w": 7,
+      "sv": 0,
+      "k": 105,
+      "era": 4.25,
+      "whip": 1.049,
+      "gp": 20,
+      "gs": 20
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "seiya-suzuki",
+    "name": "Seiya Suzuki",
+    "team": "CHC",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 93.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 12,
+    "prior_season": {
+      "r": 75,
+      "hr": 32,
+      "rbi": 103,
+      "sb": 5,
+      "avg": 0.245,
+      "gp": 151
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "salvador-perez",
+    "name": "Salvador Perez",
+    "team": "KC",
+    "positions": [
+      "C",
+      "1B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "C",
+      "1B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 95,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 11,
+    "prior_season": {
+      "r": 54,
+      "hr": 30,
+      "rbi": 100,
+      "sb": 0,
+      "avg": 0.236,
+      "gp": 155
+    },
+    "age": 35,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "will-smith",
+    "name": "Will Smith",
+    "team": "LAD",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "player_type": "hitter",
+    "adp": 95.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 11,
+    "prior_season": {
+      "r": 64,
+      "hr": 17,
+      "rbi": 61,
+      "sb": 2,
+      "avg": 0.296,
+      "gp": 110
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kevin-gausman",
+    "name": "Kevin Gausman",
+    "team": "TOR",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 96,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 11,
+    "prior_season": {
+      "w": 10,
+      "sv": 0,
+      "k": 189,
+      "era": 3.59,
+      "whip": 1.062,
+      "gp": 32,
+      "gs": 32
+    },
+    "age": 34,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jose-altuve",
+    "name": "Jose Altuve",
+    "team": "HOU",
+    "positions": [
+      "2B",
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 96.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 11,
+    "prior_season": {
+      "r": 80,
+      "hr": 26,
+      "rbi": 77,
+      "sb": 10,
+      "avg": 0.265,
+      "gp": 155
+    },
+    "age": 35,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "michael-harris",
+    "name": "Michael Harris II",
+    "team": "ATL",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 97.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 11,
+    "prior_season": {
+      "r": 55,
+      "hr": 20,
+      "rbi": 86,
+      "sb": 20,
+      "avg": 0.249,
+      "gp": 160
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "michael-busch",
+    "name": "Michael Busch",
+    "team": "CHC",
+    "positions": [
+      "1B"
+    ],
+    "yahoo_positions": [
+      "1B"
+    ],
+    "player_type": "hitter",
+    "adp": 99.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 11,
+    "prior_season": {
+      "r": 78,
+      "hr": 34,
+      "rbi": 90,
+      "sb": 4,
+      "avg": 0.261,
+      "gp": 155
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "sonny-gray",
+    "name": "Sonny Gray",
+    "team": "BOS",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 101.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 11,
+    "prior_season": {
+      "w": 14,
+      "sv": 0,
+      "k": 201,
+      "era": 4.28,
+      "whip": 1.234,
+      "gp": 32,
+      "gs": 32
+    },
+    "age": 35,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "drake-baldwin",
+    "name": "Drake Baldwin",
+    "team": "ATL",
+    "positions": [
+      "C",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "C",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 101.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 11,
+    "prior_season": {
+      "r": 56,
+      "hr": 19,
+      "rbi": 80,
+      "sb": 0,
+      "avg": 0.274,
+      "gp": 124
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jeremy-pena",
+    "name": "Jeremy Pena",
+    "team": "HOU",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 105.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 10,
+    "prior_season": {
+      "r": 68,
+      "hr": 17,
+      "rbi": 62,
+      "sb": 20,
+      "avg": 0.304,
+      "gp": 125
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "willy-adames",
+    "name": "Willy Adames",
+    "team": "SF",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 106.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 10,
+    "prior_season": {
+      "r": 94,
+      "hr": 30,
+      "rbi": 87,
+      "sb": 12,
+      "avg": 0.225,
+      "gp": 160
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jacob-misiorowski",
+    "name": "Jacob Misiorowski",
+    "team": "MIL",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 106.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 10,
+    "prior_season": {
+      "w": 5,
+      "sv": 0,
+      "k": 87,
+      "era": 4.36,
+      "whip": 1.242,
+      "gp": 15,
+      "gs": 14
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "spencer-strider",
+    "name": "Spencer Strider",
+    "team": "ATL",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 108.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 10,
+    "prior_season": {
+      "w": 7,
+      "sv": 0,
+      "k": 131,
+      "era": 4.45,
+      "whip": 1.396,
+      "gp": 23,
+      "gs": 23
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "teoscar-hernandez",
+    "name": "Teoscar Hernandez",
+    "team": "LAD",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 109,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 10,
+    "prior_season": {
+      "r": 65,
+      "hr": 25,
+      "rbi": 89,
+      "sb": 5,
+      "avg": 0.247,
+      "gp": 134
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "agustin-ramirez",
+    "name": "Agustin Ramirez",
+    "team": "MIA",
+    "positions": [
+      "C",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "C",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 111.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 9,
+    "prior_season": {
+      "r": 72,
+      "hr": 21,
+      "rbi": 67,
+      "sb": 16,
+      "avg": 0.231,
+      "gp": 136
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "luke-keaschall",
+    "name": "Luke Keaschall",
+    "team": "MIN",
+    "positions": [
+      "2B"
+    ],
+    "yahoo_positions": [
+      "2B"
+    ],
+    "player_type": "hitter",
+    "adp": 112.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 9,
+    "prior_season": {
+      "r": 25,
+      "hr": 4,
+      "rbi": 28,
+      "sb": 14,
+      "avg": 0.302,
+      "gp": 49
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tyler-glasnow",
+    "name": "Tyler Glasnow",
+    "team": "LAD",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 112.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 9,
+    "prior_season": {
+      "w": 4,
+      "sv": 0,
+      "k": 106,
+      "era": 3.19,
+      "whip": 1.096,
+      "gp": 18,
+      "gs": 18
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "raisel-iglesias",
+    "name": "Raisel Iglesias",
+    "team": "ATL",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 113.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 9,
+    "prior_season": {
+      "w": 4,
+      "sv": 29,
+      "k": 73,
+      "era": 3.21,
+      "whip": 0.995,
+      "gp": 70,
+      "gs": 0
+    },
+    "age": 35,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "chase-burns",
+    "name": "Chase Burns",
+    "team": "CIN",
+    "positions": [
+      "SP",
+      "RP"
+    ],
+    "yahoo_positions": [
+      "SP",
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 114.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 9,
+    "prior_season": {
+      "w": 4,
+      "sv": 0,
+      "k": 31,
+      "era": 3.4,
+      "whip": 1.111,
+      "gp": 35,
+      "gs": 0
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "trevor-story",
+    "name": "Trevor Story",
+    "team": "BOS",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 114.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 9,
+    "prior_season": {
+      "r": 91,
+      "hr": 25,
+      "rbi": 96,
+      "sb": 31,
+      "avg": 0.263,
+      "gp": 157
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kyle-stowers",
+    "name": "Kyle Stowers",
+    "team": "MIA",
+    "positions": [
+      "1B",
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 117.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 9,
+    "prior_season": {
+      "r": 61,
+      "hr": 25,
+      "rbi": 73,
+      "sb": 5,
+      "avg": 0.288,
+      "gp": 117
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "taylor-ward",
+    "name": "Taylor Ward",
+    "team": "BAL",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 117.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 9,
+    "prior_season": {
+      "r": 86,
+      "hr": 36,
+      "rbi": 103,
+      "sb": 4,
+      "avg": 0.228,
+      "gp": 157
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "luis-robert",
+    "name": "Luis Robert Jr.",
+    "team": "NYM",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 119.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 9,
+    "prior_season": {
+      "r": 52,
+      "hr": 14,
+      "rbi": 53,
+      "sb": 33,
+      "avg": 0.223,
+      "gp": 110
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "josh-hader",
+    "name": "Josh Hader",
+    "team": "HOU",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 121,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 9,
+    "prior_season": {
+      "w": 6,
+      "sv": 28,
+      "k": 76,
+      "era": 2.05,
+      "whip": 0.854,
+      "gp": 48,
+      "gs": 0
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jo-adell",
+    "name": "Jo Adell",
+    "team": "LAA",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 121.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 9,
+    "prior_season": {
+      "r": 63,
+      "hr": 37,
+      "rbi": 98,
+      "sb": 5,
+      "avg": 0.236,
+      "gp": 152
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cam-schlittler",
+    "name": "Cam Schlittler",
+    "team": "NYY",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 123,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 8,
+    "prior_season": {
+      "w": 4,
+      "sv": 0,
+      "k": 84,
+      "era": 2.96,
+      "whip": 1.219,
+      "gp": 14,
+      "gs": 14
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "blake-snell",
+    "name": "Blake Snell",
+    "team": "LAD",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 125,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 8,
+    "prior_season": {
+      "w": 5,
+      "sv": 0,
+      "k": 72,
+      "era": 2.35,
+      "whip": 1.255,
+      "gp": 11,
+      "gs": 11
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "nick-lodolo",
+    "name": "Nick Lodolo",
+    "team": "CIN",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 125.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 8,
+    "prior_season": {
+      "w": 9,
+      "sv": 0,
+      "k": 156,
+      "era": 3.33,
+      "whip": 1.079,
+      "gp": 29,
+      "gs": 28
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "matt-chapman",
+    "name": "Matt Chapman",
+    "team": "SF",
+    "positions": [
+      "3B"
+    ],
+    "yahoo_positions": [
+      "3B"
+    ],
+    "player_type": "hitter",
+    "adp": 126,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 8,
+    "prior_season": {
+      "r": 76,
+      "hr": 21,
+      "rbi": 61,
+      "sb": 9,
+      "avg": 0.231,
+      "gp": 128
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brandon-woodruff",
+    "name": "Brandon Woodruff",
+    "team": "MIL",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 126.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 8,
+    "prior_season": {
+      "w": 7,
+      "sv": 0,
+      "k": 83,
+      "era": 3.2,
+      "whip": 0.912,
+      "gp": 12,
+      "gs": 12
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "yandy-diaz",
+    "name": "Yandy Diaz",
+    "team": "TB",
+    "positions": [
+      "1B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 126.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 8,
+    "prior_season": {
+      "r": 79,
+      "hr": 25,
+      "rbi": 83,
+      "sb": 3,
+      "avg": 0.3,
+      "gp": 150
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "zack-wheeler",
+    "name": "Zack Wheeler",
+    "team": "PHI",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 127.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 8,
+    "prior_season": {
+      "w": 10,
+      "sv": 0,
+      "k": 195,
+      "era": 2.71,
+      "whip": 0.935,
+      "gp": 24,
+      "gs": 24
+    },
+    "age": 35,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ozzie-albies",
+    "name": "Ozzie Albies",
+    "team": "ATL",
+    "positions": [
+      "2B"
+    ],
+    "yahoo_positions": [
+      "2B"
+    ],
+    "player_type": "hitter",
+    "adp": 128,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 8,
+    "prior_season": {
+      "r": 74,
+      "hr": 16,
+      "rbi": 74,
+      "sb": 14,
+      "avg": 0.24,
+      "gp": 157
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brandon-nimmo",
+    "name": "Brandon Nimmo",
+    "team": "TEX",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 129.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 8,
+    "prior_season": {
+      "r": 81,
+      "hr": 25,
+      "rbi": 92,
+      "sb": 13,
+      "avg": 0.262,
+      "gp": 155
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "carlos-estevez",
+    "name": "Carlos Estevez",
+    "team": "KC",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 130.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 8,
+    "prior_season": {
+      "w": 4,
+      "sv": 42,
+      "k": 54,
+      "era": 2.45,
+      "whip": 1.061,
+      "gp": 67,
+      "gs": 0
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "nathan-eovaldi",
+    "name": "Nathan Eovaldi",
+    "team": "TEX",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 130.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 8,
+    "prior_season": {
+      "w": 11,
+      "sv": 0,
+      "k": 129,
+      "era": 1.73,
+      "whip": 0.854,
+      "gp": 22,
+      "gs": 22
+    },
+    "age": 35,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ryan-pepiot",
+    "name": "Ryan Pepiot",
+    "team": "TB",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 133,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 7,
+    "prior_season": {
+      "w": 11,
+      "sv": 0,
+      "k": 167,
+      "era": 3.86,
+      "whip": 1.163,
+      "gp": 31,
+      "gs": 31
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "michael-king",
+    "name": "Michael King",
+    "team": "SD",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 134.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 7,
+    "prior_season": {
+      "w": 5,
+      "sv": 0,
+      "k": 76,
+      "era": 3.44,
+      "whip": 1.2,
+      "gp": 15,
+      "gs": 15
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "emmet-sheehan",
+    "name": "Emmet Sheehan",
+    "team": "LAD",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 135.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 7,
+    "prior_season": {
+      "w": 6,
+      "sv": 0,
+      "k": 89,
+      "era": 2.82,
+      "whip": 0.968,
+      "gp": 15,
+      "gs": 12
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jeff-hoffman",
+    "name": "Jeff Hoffman",
+    "team": "TOR",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 137,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 7,
+    "prior_season": {
+      "w": 9,
+      "sv": 33,
+      "k": 84,
+      "era": 4.37,
+      "whip": 1.191,
+      "gp": 71,
+      "gs": 0
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "lawrence-butler",
+    "name": "Lawrence Butler",
+    "team": "ATH",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 138.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 7,
+    "prior_season": {
+      "r": 83,
+      "hr": 21,
+      "rbi": 63,
+      "sb": 22,
+      "avg": 0.234,
+      "gp": 152
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "emilio-pagan",
+    "name": "Emilio Pagan",
+    "team": "CIN",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 139,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 7,
+    "prior_season": {
+      "w": 2,
+      "sv": 32,
+      "k": 81,
+      "era": 2.88,
+      "whip": 0.917,
+      "gp": 70,
+      "gs": 0
+    },
+    "age": 34,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jakob-marsee",
+    "name": "Jakob Marsee",
+    "team": "MIA",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 139.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 7,
+    "prior_season": {
+      "r": 28,
+      "hr": 5,
+      "rbi": 33,
+      "sb": 14,
+      "avg": 0.292,
+      "gp": 55
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "andy-pages",
+    "name": "Andy Pages",
+    "team": "LAD",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 140,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 7,
+    "prior_season": {
+      "r": 74,
+      "hr": 27,
+      "rbi": 86,
+      "sb": 14,
+      "avg": 0.272,
+      "gp": 156
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "luis-castillo",
+    "name": "Luis Castillo",
+    "team": "SEA",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 141,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 7,
+    "prior_season": {
+      "w": 11,
+      "sv": 0,
+      "k": 162,
+      "era": 3.54,
+      "whip": 1.185,
+      "gp": 32,
+      "gs": 32
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "daniel-palencia",
+    "name": "Daniel Palencia",
+    "team": "CHC",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 141,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 7,
+    "prior_season": {
+      "w": 1,
+      "sv": 22,
+      "k": 61,
+      "era": 2.91,
+      "whip": 1.139,
+      "gp": 54,
+      "gs": 0
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ryan-helsley",
+    "name": "Ryan Helsley",
+    "team": "BAL",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 143.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 7,
+    "prior_season": {
+      "w": 3,
+      "sv": 21,
+      "k": 63,
+      "era": 4.5,
+      "whip": 1.536,
+      "gp": 58,
+      "gs": 0
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "yainer-diaz",
+    "name": "Yainer Diaz",
+    "team": "HOU",
+    "positions": [
+      "C",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "C",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 144.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 6,
+    "prior_season": {
+      "r": 56,
+      "hr": 20,
+      "rbi": 70,
+      "sb": 1,
+      "avg": 0.256,
+      "gp": 143
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "gavin-williams",
+    "name": "Gavin Williams",
+    "team": "CLE",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 145,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 6,
+    "prior_season": {
+      "w": 12,
+      "sv": 0,
+      "k": 173,
+      "era": 3.06,
+      "whip": 1.27,
+      "gp": 31,
+      "gs": 31
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "noelvi-marte",
+    "name": "Noelvi Marte",
+    "team": "CIN",
+    "positions": [
+      "3B",
+      "OF"
+    ],
+    "yahoo_positions": [
+      "3B",
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 145,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 6,
+    "prior_season": {
+      "r": 45,
+      "hr": 14,
+      "rbi": 51,
+      "sb": 10,
+      "avg": 0.263,
+      "gp": 90
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "mackenzie-gore",
+    "name": "MacKenzie Gore",
+    "team": "TEX",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 145.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 6,
+    "prior_season": {
+      "w": 5,
+      "sv": 0,
+      "k": 185,
+      "era": 4.17,
+      "whip": 1.353,
+      "gp": 30,
+      "gs": 30
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "sandy-alcantara",
+    "name": "Sandy Alcantara",
+    "team": "MIA",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 145.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 6,
+    "prior_season": {
+      "w": 11,
+      "sv": 0,
+      "k": 142,
+      "era": 5.36,
+      "whip": 1.271,
+      "gp": 31,
+      "gs": 31
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ian-happ",
+    "name": "Ian Happ",
+    "team": "CHC",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 146.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 6,
+    "prior_season": {
+      "r": 87,
+      "hr": 23,
+      "rbi": 79,
+      "sb": 6,
+      "avg": 0.243,
+      "gp": 150
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "steven-kwan",
+    "name": "Steven Kwan",
+    "team": "CLE",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 147.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 6,
+    "prior_season": {
+      "r": 81,
+      "hr": 11,
+      "rbi": 56,
+      "sb": 21,
+      "avg": 0.272,
+      "gp": 156
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "trevor-rogers",
+    "name": "Trevor Rogers",
+    "team": "BAL",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 147.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 6,
+    "prior_season": {
+      "w": 9,
+      "sv": 0,
+      "k": 103,
+      "era": 1.81,
+      "whip": 0.903,
+      "gp": 18,
+      "gs": 18
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "hunter-greene",
+    "name": "Hunter Greene",
+    "team": "CIN",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 150.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 6,
+    "prior_season": {
+      "w": 7,
+      "sv": 0,
+      "k": 132,
+      "era": 2.76,
+      "whip": 0.938,
+      "gp": 19,
+      "gs": 19
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bubba-chandler",
+    "name": "Bubba Chandler",
+    "team": "PIT",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 150.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 6,
+    "prior_season": {
+      "w": 2,
+      "sv": 0,
+      "k": 82,
+      "era": 6.52,
+      "whip": 1.551,
+      "gp": 21,
+      "gs": 21
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "adley-rutschman",
+    "name": "Adley Rutschman",
+    "team": "BAL",
+    "positions": [
+      "C",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "C",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 151,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 6,
+    "prior_season": {
+      "r": 37,
+      "hr": 9,
+      "rbi": 29,
+      "sb": 0,
+      "avg": 0.22,
+      "gp": 90
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "pete-fairbanks",
+    "name": "Pete Fairbanks",
+    "team": "MIA",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 152.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 6,
+    "prior_season": {
+      "w": 4,
+      "sv": 27,
+      "k": 59,
+      "era": 2.83,
+      "whip": 1.044,
+      "gp": 61,
+      "gs": 0
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ceddanne-rafaela",
+    "name": "Ceddanne Rafaela",
+    "team": "BOS",
+    "positions": [
+      "2B",
+      "OF"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 153,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 6,
+    "prior_season": {
+      "r": 84,
+      "hr": 16,
+      "rbi": 63,
+      "sb": 20,
+      "avg": 0.249,
+      "gp": 156
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brandon-lowe",
+    "name": "Brandon Lowe",
+    "team": "PIT",
+    "positions": [
+      "2B"
+    ],
+    "yahoo_positions": [
+      "2B"
+    ],
+    "player_type": "hitter",
+    "adp": 153.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 6,
+    "prior_season": {
+      "r": 79,
+      "hr": 31,
+      "rbi": 83,
+      "sb": 3,
+      "avg": 0.256,
+      "gp": 134
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "robbie-ray",
+    "name": "Robbie Ray",
+    "team": "SF",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 155,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 6,
+    "prior_season": {
+      "w": 11,
+      "sv": 0,
+      "k": 186,
+      "era": 3.65,
+      "whip": 1.212,
+      "gp": 32,
+      "gs": 32
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "trevor-megill",
+    "name": "Trevor Megill",
+    "team": "MIL",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 157,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 5,
+    "prior_season": {
+      "w": 6,
+      "sv": 30,
+      "k": 60,
+      "era": 2.49,
+      "whip": 1.128,
+      "gp": 50,
+      "gs": 0
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "xavier-edwards",
+    "name": "Xavier Edwards",
+    "team": "MIA",
+    "positions": [
+      "2B",
+      "SS"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 158,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 5,
+    "prior_season": {
+      "r": 75,
+      "hr": 3,
+      "rbi": 43,
+      "sb": 27,
+      "avg": 0.283,
+      "gp": 139
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "shota-imanaga",
+    "name": "Shota Imanaga",
+    "team": "CHC",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 158.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 5,
+    "prior_season": {
+      "w": 9,
+      "sv": 0,
+      "k": 117,
+      "era": 3.73,
+      "whip": 0.988,
+      "gp": 25,
+      "gs": 25
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "drew-rasmussen",
+    "name": "Drew Rasmussen",
+    "team": "TB",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 160.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 5,
+    "prior_season": {
+      "w": 10,
+      "sv": 0,
+      "k": 127,
+      "era": 2.76,
+      "whip": 1.02,
+      "gp": 31,
+      "gs": 31
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dansby-swanson",
+    "name": "Dansby Swanson",
+    "team": "CHC",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 161.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 5,
+    "prior_season": {
+      "r": 84,
+      "hr": 24,
+      "rbi": 77,
+      "sb": 20,
+      "avg": 0.244,
+      "gp": 159
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kenley-jansen",
+    "name": "Kenley Jansen",
+    "team": "DET",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 161.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 5,
+    "prior_season": {
+      "w": 5,
+      "sv": 29,
+      "k": 57,
+      "era": 2.59,
+      "whip": 0.949,
+      "gp": 62,
+      "gs": 0
+    },
+    "age": 37,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ranger-suarez",
+    "name": "Ranger Suarez",
+    "team": "BOS",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 162.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 5,
+    "prior_season": {
+      "w": 12,
+      "sv": 0,
+      "k": 151,
+      "era": 3.2,
+      "whip": 1.22,
+      "gp": 26,
+      "gs": 26
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jacob-wilson",
+    "name": "Jacob Wilson",
+    "team": "ATH",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 166.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 5,
+    "prior_season": {
+      "r": 62,
+      "hr": 13,
+      "rbi": 63,
+      "sb": 5,
+      "avg": 0.311,
+      "gp": 125
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tatsuya-imai",
+    "name": "Tatsuya Imai",
+    "team": "HOU",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 167.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 5,
+    "prior_season": {
+      "w": 9,
+      "sv": 0,
+      "k": 117,
+      "era": 3.73,
+      "whip": 0.988,
+      "gp": 25,
+      "gs": 25
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kazuma-okamoto",
+    "name": "Kazuma Okamoto",
+    "team": "TOR",
+    "positions": [
+      "1B",
+      "3B"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "3B"
+    ],
+    "player_type": "hitter",
+    "adp": 167.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 5,
+    "prior_season": {
+      "r": 85,
+      "hr": 21,
+      "rbi": 69,
+      "sb": 6,
+      "avg": 0.256,
+      "gp": 157
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "mike-trout",
+    "name": "Mike Trout",
+    "team": "LAA",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 167.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 5,
+    "prior_season": {
+      "r": 73,
+      "hr": 26,
+      "rbi": 64,
+      "sb": 2,
+      "avg": 0.232,
+      "gp": 130
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "chandler-simpson",
+    "name": "Chandler Simpson",
+    "team": "TB",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 169.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 5,
+    "prior_season": {
+      "r": 53,
+      "hr": 0,
+      "rbi": 26,
+      "sb": 44,
+      "avg": 0.295,
+      "gp": 109
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "alec-burleson",
+    "name": "Alec Burleson",
+    "team": "STL",
+    "positions": [
+      "1B",
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 172.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 4,
+    "prior_season": {
+      "r": 54,
+      "hr": 18,
+      "rbi": 69,
+      "sb": 5,
+      "avg": 0.29,
+      "gp": 139
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "matt-mclain",
+    "name": "Matt McLain",
+    "team": "CIN",
+    "positions": [
+      "2B",
+      "SS"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 174,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 4,
+    "prior_season": {
+      "r": 73,
+      "hr": 15,
+      "rbi": 50,
+      "sb": 18,
+      "avg": 0.22,
+      "gp": 147
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tanner-bibee",
+    "name": "Tanner Bibee",
+    "team": "CLE",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 174.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 4,
+    "prior_season": {
+      "w": 12,
+      "sv": 0,
+      "k": 162,
+      "era": 4.24,
+      "whip": 1.229,
+      "gp": 31,
+      "gs": 31
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jackson-holliday",
+    "name": "Jackson Holliday",
+    "team": "BAL",
+    "positions": [
+      "2B",
+      "SS"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 175.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 4,
+    "prior_season": {
+      "r": 70,
+      "hr": 17,
+      "rbi": 55,
+      "sb": 17,
+      "avg": 0.242,
+      "gp": 149
+    },
+    "age": 21,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "trey-yesavage",
+    "name": "Trey Yesavage",
+    "team": "TOR",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 175.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 4,
+    "prior_season": {
+      "w": 3,
+      "sv": 4,
+      "k": 74,
+      "era": 2.95,
+      "whip": 1.048,
+      "gp": 67,
+      "gs": 5
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ivan-herrera",
+    "name": "Ivan Herrera",
+    "team": "STL",
+    "positions": [
+      "C",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "C",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 176,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 4,
+    "prior_season": {
+      "r": 54,
+      "hr": 19,
+      "rbi": 66,
+      "sb": 8,
+      "avg": 0.284,
+      "gp": 107
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "alejandro-kirk",
+    "name": "Alejandro Kirk",
+    "team": "TOR",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "player_type": "hitter",
+    "adp": 176.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 4,
+    "prior_season": {
+      "r": 45,
+      "hr": 15,
+      "rbi": 76,
+      "sb": 1,
+      "avg": 0.282,
+      "gp": 130
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jac-caglianone",
+    "name": "Jac Caglianone",
+    "team": "KC",
+    "positions": [
+      "1B",
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 177.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 4,
+    "prior_season": {
+      "r": 19,
+      "hr": 7,
+      "rbi": 18,
+      "sb": 1,
+      "avg": 0.157,
+      "gp": 62
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bryan-reynolds",
+    "name": "Bryan Reynolds",
+    "team": "PIT",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 178.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 4,
+    "prior_season": {
+      "r": 68,
+      "hr": 16,
+      "rbi": 73,
+      "sb": 3,
+      "avg": 0.245,
+      "gp": 154
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "spencer-torkelson",
+    "name": "Spencer Torkelson",
+    "team": "DET",
+    "positions": [
+      "1B"
+    ],
+    "yahoo_positions": [
+      "1B"
+    ],
+    "player_type": "hitter",
+    "adp": 180.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 4,
+    "prior_season": {
+      "r": 82,
+      "hr": 31,
+      "rbi": 78,
+      "sb": 2,
+      "avg": 0.24,
+      "gp": 155
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "willson-contreras",
+    "name": "Willson Contreras",
+    "team": "BOS",
+    "positions": [
+      "1B"
+    ],
+    "yahoo_positions": [
+      "1B"
+    ],
+    "player_type": "hitter",
+    "adp": 181,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 4,
+    "prior_season": {
+      "r": 70,
+      "hr": 20,
+      "rbi": 80,
+      "sb": 5,
+      "avg": 0.257,
+      "gp": 135
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "colson-montgomery",
+    "name": "Colson Montgomery",
+    "team": "CWS",
+    "positions": [
+      "3B",
+      "SS"
+    ],
+    "yahoo_positions": [
+      "3B",
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 181.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 4,
+    "prior_season": {
+      "r": 43,
+      "hr": 21,
+      "rbi": 55,
+      "sb": 0,
+      "avg": 0.239,
+      "gp": 71
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kris-bubic",
+    "name": "Kris Bubic",
+    "team": "KC",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 183.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 4,
+    "prior_season": {
+      "w": 8,
+      "sv": 0,
+      "k": 116,
+      "era": 2.55,
+      "whip": 1.178,
+      "gp": 20,
+      "gs": 20
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bryson-stott",
+    "name": "Bryson Stott",
+    "team": "PHI",
+    "positions": [
+      "2B",
+      "SS"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 184.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 4,
+    "prior_season": {
+      "r": 66,
+      "hr": 13,
+      "rbi": 66,
+      "sb": 24,
+      "avg": 0.257,
+      "gp": 147
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cade-horton",
+    "name": "Cade Horton",
+    "team": "CHC",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 186,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "w": 11,
+      "sv": 0,
+      "k": 97,
+      "era": 2.67,
+      "whip": 1.085,
+      "gp": 23,
+      "gs": 22
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "munetaka-murakami",
+    "name": "Munetaka Murakami",
+    "team": "CWS",
+    "positions": [
+      "1B",
+      "3B"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "3B"
+    ],
+    "player_type": "hitter",
+    "adp": 187,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "r": 27,
+      "hr": 5,
+      "rbi": 22,
+      "sb": 8,
+      "avg": 0.213,
+      "gp": 71
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "konnor-griffin",
+    "name": "Konnor Griffin",
+    "team": "PIT",
+    "positions": [
+      "SS",
+      "OF"
+    ],
+    "yahoo_positions": [
+      "SS",
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 188.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "r": 16,
+      "hr": 0,
+      "rbi": 7,
+      "sb": 2,
+      "avg": 0.19,
+      "gp": 63
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jack-flaherty",
+    "name": "Jack Flaherty",
+    "team": "DET",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 189.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "w": 8,
+      "sv": 0,
+      "k": 188,
+      "era": 4.64,
+      "whip": 1.28,
+      "gp": 31,
+      "gs": 31
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "edward-cabrera",
+    "name": "Edward Cabrera",
+    "team": "CHC",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 189.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "w": 8,
+      "sv": 0,
+      "k": 150,
+      "era": 3.53,
+      "whip": 1.228,
+      "gp": 26,
+      "gs": 26
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "sal-stewart",
+    "name": "Sal Stewart",
+    "team": "CIN",
+    "positions": [
+      "1B",
+      "2B",
+      "3B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "2B",
+      "3B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 190,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "r": 87,
+      "hr": 28,
+      "rbi": 72,
+      "sb": 4,
+      "avg": 0.283,
+      "gp": 126
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dennis-santana",
+    "name": "Dennis Santana",
+    "team": "PIT",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 190.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "w": 4,
+      "sv": 16,
+      "k": 60,
+      "era": 2.18,
+      "whip": 0.867,
+      "gp": 70,
+      "gs": 0
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "carlos-rodon",
+    "name": "Carlos Rodon",
+    "team": "NYY",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 191.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "w": 18,
+      "sv": 0,
+      "k": 203,
+      "era": 3.09,
+      "whip": 1.049,
+      "gp": 33,
+      "gs": 33
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "daulton-varsho",
+    "name": "Daulton Varsho",
+    "team": "TOR",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 193.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "r": 43,
+      "hr": 20,
+      "rbi": 55,
+      "sb": 2,
+      "avg": 0.238,
+      "gp": 71
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "abner-uribe",
+    "name": "Abner Uribe",
+    "team": "MIL",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 195,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "w": 3,
+      "sv": 7,
+      "k": 90,
+      "era": 1.67,
+      "whip": 1.035,
+      "gp": 75,
+      "gs": 0
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "christian-walker",
+    "name": "Christian Walker",
+    "team": "HOU",
+    "positions": [
+      "1B"
+    ],
+    "yahoo_positions": [
+      "1B"
+    ],
+    "player_type": "hitter",
+    "adp": 195.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "r": 72,
+      "hr": 27,
+      "rbi": 88,
+      "sb": 2,
+      "avg": 0.238,
+      "gp": 154
+    },
+    "age": 34,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "isaac-paredes",
+    "name": "Isaac Paredes",
+    "team": "HOU",
+    "positions": [
+      "1B",
+      "3B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "3B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 196.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "r": 53,
+      "hr": 20,
+      "rbi": 53,
+      "sb": 0,
+      "avg": 0.254,
+      "gp": 102
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ryan-walker",
+    "name": "Ryan Walker",
+    "team": "SF",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 196.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "w": 5,
+      "sv": 17,
+      "k": 60,
+      "era": 4.11,
+      "whip": 1.272,
+      "gp": 68,
+      "gs": 0
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "matthew-boyd",
+    "name": "Matthew Boyd",
+    "team": "CHC",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 197.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "w": 14,
+      "sv": 0,
+      "k": 154,
+      "era": 3.21,
+      "whip": 1.091,
+      "gp": 31,
+      "gs": 31
+    },
+    "age": 34,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "andrew-abbott",
+    "name": "Andrew Abbott",
+    "team": "CIN",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 198,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "w": 10,
+      "sv": 0,
+      "k": 149,
+      "era": 2.87,
+      "whip": 1.148,
+      "gp": 29,
+      "gs": 29
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "daylen-lile",
+    "name": "Daylen Lile",
+    "team": "WSH",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 198.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "r": 51,
+      "hr": 9,
+      "rbi": 41,
+      "sb": 8,
+      "avg": 0.299,
+      "gp": 91
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jorge-polanco",
+    "name": "Jorge Polanco",
+    "team": "NYM",
+    "positions": [
+      "2B",
+      "3B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "3B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 201,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "r": 64,
+      "hr": 26,
+      "rbi": 78,
+      "sb": 6,
+      "avg": 0.265,
+      "gp": 138
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "shane-baz",
+    "name": "Shane Baz",
+    "team": "BAL",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 201.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "w": 10,
+      "sv": 0,
+      "k": 176,
+      "era": 4.87,
+      "whip": 1.335,
+      "gp": 31,
+      "gs": 31
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jose-caballero",
+    "name": "Jose Caballero",
+    "team": "NYY",
+    "positions": [
+      "2B",
+      "3B",
+      "SS",
+      "OF"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "3B",
+      "SS",
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 202.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 3,
+    "prior_season": {
+      "r": 52,
+      "hr": 5,
+      "rbi": 36,
+      "sb": 49,
+      "avg": 0.236,
+      "gp": 126
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "addison-barger",
+    "name": "Addison Barger",
+    "team": "TOR",
+    "positions": [
+      "3B",
+      "OF"
+    ],
+    "yahoo_positions": [
+      "3B",
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 203.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "r": 61,
+      "hr": 21,
+      "rbi": 74,
+      "sb": 4,
+      "avg": 0.243,
+      "gp": 135
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "zac-gallen",
+    "name": "Zac Gallen",
+    "team": "ARI",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 203.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "w": 13,
+      "sv": 0,
+      "k": 175,
+      "era": 4.83,
+      "whip": 1.26,
+      "gp": 33,
+      "gs": 33
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "marcus-semien",
+    "name": "Marcus Semien",
+    "team": "NYM",
+    "positions": [
+      "2B"
+    ],
+    "yahoo_positions": [
+      "2B"
+    ],
+    "player_type": "hitter",
+    "adp": 203.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "r": 62,
+      "hr": 15,
+      "rbi": 62,
+      "sb": 11,
+      "avg": 0.23,
+      "gp": 127
+    },
+    "age": 34,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "gerrit-cole",
+    "name": "Gerrit Cole",
+    "team": "NYY",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 204,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "w": 2,
+      "sv": 2,
+      "k": 82,
+      "era": 2.35,
+      "whip": 0.946,
+      "gp": 67,
+      "gs": 0
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "shane-mcclanahan",
+    "name": "Shane McClanahan",
+    "team": "TB",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 205.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "w": 5,
+      "sv": 0,
+      "k": 57,
+      "era": 2.06,
+      "whip": 1.042,
+      "gp": 8,
+      "gs": 8
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "robert-suarez",
+    "name": "Robert Suarez",
+    "team": "ATL",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 205.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "w": 4,
+      "sv": 40,
+      "k": 75,
+      "era": 2.97,
+      "whip": 0.904,
+      "gp": 70,
+      "gs": 0
+    },
+    "age": 34,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "aaron-nola",
+    "name": "Aaron Nola",
+    "team": "PHI",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 206.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "w": 5,
+      "sv": 0,
+      "k": 97,
+      "era": 6.01,
+      "whip": 1.346,
+      "gp": 17,
+      "gs": 17
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "sal-frelick",
+    "name": "Sal Frelick",
+    "team": "MIL",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 206.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "r": 76,
+      "hr": 12,
+      "rbi": 63,
+      "sb": 19,
+      "avg": 0.288,
+      "gp": 142
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "gleyber-torres",
+    "name": "Gleyber Torres",
+    "team": "DET",
+    "positions": [
+      "2B"
+    ],
+    "yahoo_positions": [
+      "2B"
+    ],
+    "player_type": "hitter",
+    "adp": 207.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "r": 79,
+      "hr": 16,
+      "rbi": 74,
+      "sb": 4,
+      "avg": 0.256,
+      "gp": 145
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jonathan-aranda",
+    "name": "Jonathan Aranda",
+    "team": "TB",
+    "positions": [
+      "1B"
+    ],
+    "yahoo_positions": [
+      "1B"
+    ],
+    "player_type": "hitter",
+    "adp": 208.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "r": 56,
+      "hr": 14,
+      "rbi": 59,
+      "sb": 0,
+      "avg": 0.316,
+      "gp": 106
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "wilyer-abreu",
+    "name": "Wilyer Abreu",
+    "team": "BOS",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 210.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "r": 53,
+      "hr": 22,
+      "rbi": 69,
+      "sb": 6,
+      "avg": 0.247,
+      "gp": 115
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "heliot-ramos",
+    "name": "Heliot Ramos",
+    "team": "SF",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 211.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "r": 85,
+      "hr": 21,
+      "rbi": 69,
+      "sb": 6,
+      "avg": 0.256,
+      "gp": 157
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brenton-doyle",
+    "name": "Brenton Doyle",
+    "team": "COL",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 211.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "r": 57,
+      "hr": 15,
+      "rbi": 57,
+      "sb": 18,
+      "avg": 0.233,
+      "gp": 138
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "gabriel-moreno",
+    "name": "Gabriel Moreno",
+    "team": "ARI",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "player_type": "hitter",
+    "adp": 215.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "r": 44,
+      "hr": 9,
+      "rbi": 40,
+      "sb": 2,
+      "avg": 0.285,
+      "gp": 83
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ezequiel-tovar",
+    "name": "Ezequiel Tovar",
+    "team": "COL",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 218,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "r": 44,
+      "hr": 9,
+      "rbi": 33,
+      "sb": 5,
+      "avg": 0.253,
+      "gp": 95
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "adolis-garcia",
+    "name": "Adolis Garcia",
+    "team": "PHI",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 218.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 2,
+    "prior_season": {
+      "r": 58,
+      "hr": 19,
+      "rbi": 75,
+      "sb": 13,
+      "avg": 0.227,
+      "gp": 135
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jj-wetherholt",
+    "name": "JJ Wetherholt",
+    "team": "STL",
+    "positions": [
+      "2B",
+      "3B",
+      "SS"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "3B",
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 222.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 65,
+      "hr": 13,
+      "rbi": 45,
+      "sb": 1,
+      "avg": 0.256,
+      "gp": 137
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "royce-lewis",
+    "name": "Royce Lewis",
+    "team": "MIN",
+    "positions": [
+      "1B",
+      "3B"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "3B"
+    ],
+    "player_type": "hitter",
+    "adp": 222.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 36,
+      "hr": 13,
+      "rbi": 52,
+      "sb": 12,
+      "avg": 0.237,
+      "gp": 106
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brendan-donovan",
+    "name": "Brendan Donovan",
+    "team": "SEA",
+    "positions": [
+      "2B",
+      "3B",
+      "SS",
+      "OF"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "3B",
+      "SS",
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 223.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 64,
+      "hr": 10,
+      "rbi": 50,
+      "sb": 3,
+      "avg": 0.287,
+      "gp": 118
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "griffin-jax",
+    "name": "Griffin Jax",
+    "team": "TB",
+    "positions": [
+      "SP",
+      "RP"
+    ],
+    "yahoo_positions": [
+      "SP",
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 223.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 1,
+      "sv": 0,
+      "k": 99,
+      "era": 4.23,
+      "whip": 1.288,
+      "gp": 73,
+      "gs": 2
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ramon-laureano",
+    "name": "Ramon Laureano",
+    "team": "SD",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 225.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 72,
+      "hr": 24,
+      "rbi": 76,
+      "sb": 7,
+      "avg": 0.281,
+      "gp": 132
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jordan-westburg",
+    "name": "Jordan Westburg",
+    "team": "BAL",
+    "positions": [
+      "2B",
+      "3B"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "3B"
+    ],
+    "player_type": "hitter",
+    "adp": 227.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 59,
+      "hr": 17,
+      "rbi": 41,
+      "sb": 1,
+      "avg": 0.265,
+      "gp": 85
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "samuel-basallo",
+    "name": "Samuel Basallo",
+    "team": "BAL",
+    "positions": [
+      "C",
+      "1B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "C",
+      "1B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 229,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 76,
+      "hr": 12,
+      "rbi": 63,
+      "sb": 19,
+      "avg": 0.288,
+      "gp": 142
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "alec-bohm",
+    "name": "Alec Bohm",
+    "team": "PHI",
+    "positions": [
+      "1B",
+      "3B"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "3B"
+    ],
+    "player_type": "hitter",
+    "adp": 229.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 53,
+      "hr": 11,
+      "rbi": 59,
+      "sb": 2,
+      "avg": 0.287,
+      "gp": 120
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "caleb-durbin",
+    "name": "Caleb Durbin",
+    "team": "BOS",
+    "positions": [
+      "2B",
+      "3B"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "3B"
+    ],
+    "player_type": "hitter",
+    "adp": 230,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 60,
+      "hr": 11,
+      "rbi": 53,
+      "sb": 18,
+      "avg": 0.256,
+      "gp": 136
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "carter-jensen",
+    "name": "Carter Jensen",
+    "team": "KC",
+    "positions": [
+      "C",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "C",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 230,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 31,
+      "hr": 5,
+      "rbi": 25,
+      "sb": 14,
+      "avg": 0.247,
+      "gp": 63
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "merrill-kelly",
+    "name": "Merrill Kelly",
+    "team": "ARI",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 230.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 12,
+      "sv": 0,
+      "k": 167,
+      "era": 3.52,
+      "whip": 1.114,
+      "gp": 32,
+      "gs": 32
+    },
+    "age": 36,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kerry-carpenter",
+    "name": "Kerry Carpenter",
+    "team": "DET",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 231.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 66,
+      "hr": 26,
+      "rbi": 62,
+      "sb": 1,
+      "avg": 0.252,
+      "gp": 130
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "max-muncy",
+    "name": "Max Muncy",
+    "team": "LAD",
+    "positions": [
+      "3B"
+    ],
+    "yahoo_positions": [
+      "3B"
+    ],
+    "player_type": "hitter",
+    "adp": 232,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 48,
+      "hr": 19,
+      "rbi": 67,
+      "sb": 4,
+      "avg": 0.243,
+      "gp": 100
+    },
+    "age": 34,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "trent-grisham",
+    "name": "Trent Grisham",
+    "team": "NYY",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 232.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 87,
+      "hr": 34,
+      "rbi": 74,
+      "sb": 3,
+      "avg": 0.235,
+      "gp": 143
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "luis-arraez",
+    "name": "Luis Arraez",
+    "team": "SF",
+    "positions": [
+      "1B",
+      "2B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "2B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 232.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 66,
+      "hr": 8,
+      "rbi": 61,
+      "sb": 11,
+      "avg": 0.292,
+      "gp": 154
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jt-realmuto",
+    "name": "J.T. Realmuto",
+    "team": "PHI",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "player_type": "hitter",
+    "adp": 233.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 57,
+      "hr": 12,
+      "rbi": 52,
+      "sb": 8,
+      "avg": 0.257,
+      "gp": 134
+    },
+    "age": 34,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bryan-abreu",
+    "name": "Bryan Abreu",
+    "team": "HOU",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 236.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 3,
+      "sv": 7,
+      "k": 105,
+      "era": 2.28,
+      "whip": 1.155,
+      "gp": 70,
+      "gs": 0
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "giancarlo-stanton",
+    "name": "Giancarlo Stanton",
+    "team": "NYY",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 237.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 36,
+      "hr": 24,
+      "rbi": 66,
+      "sb": 0,
+      "avg": 0.273,
+      "gp": 77
+    },
+    "age": 35,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "carlos-correa",
+    "name": "Carlos Correa",
+    "team": "HOU",
+    "positions": [
+      "3B",
+      "SS"
+    ],
+    "yahoo_positions": [
+      "3B",
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 238,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 63,
+      "hr": 13,
+      "rbi": 52,
+      "sb": 0,
+      "avg": 0.276,
+      "gp": 144
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "mickey-moniak",
+    "name": "Mickey Moniak",
+    "team": "COL",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 238.3,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 62,
+      "hr": 24,
+      "rbi": 68,
+      "sb": 9,
+      "avg": 0.27,
+      "gp": 135
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "austin-wells",
+    "name": "Austin Wells",
+    "team": "NYY",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "player_type": "hitter",
+    "adp": 238.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 51,
+      "hr": 21,
+      "rbi": 71,
+      "sb": 5,
+      "avg": 0.219,
+      "gp": 126
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tj-friedl",
+    "name": "TJ Friedl",
+    "team": "CIN",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 239.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 82,
+      "hr": 14,
+      "rbi": 53,
+      "sb": 12,
+      "avg": 0.261,
+      "gp": 152
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "joe-musgrove",
+    "name": "Joe Musgrove",
+    "team": "SD",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 241.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 2,
+      "sv": 0,
+      "k": 39,
+      "era": 5.12,
+      "whip": 1.471,
+      "gp": 37,
+      "gs": 1
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ryne-nelson",
+    "name": "Ryne Nelson",
+    "team": "ARI",
+    "positions": [
+      "SP",
+      "RP"
+    ],
+    "yahoo_positions": [
+      "SP",
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 244.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 7,
+      "sv": 1,
+      "k": 132,
+      "era": 3.39,
+      "whip": 1.071,
+      "gp": 33,
+      "gs": 23
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kyle-manzardo",
+    "name": "Kyle Manzardo",
+    "team": "CLE",
+    "positions": [
+      "1B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 245,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 47,
+      "hr": 27,
+      "rbi": 70,
+      "sb": 2,
+      "avg": 0.234,
+      "gp": 142
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kodai-senga",
+    "name": "Kodai Senga",
+    "team": "NYM",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 245.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 7,
+      "sv": 0,
+      "k": 109,
+      "era": 3.02,
+      "whip": 1.315,
+      "gp": 22,
+      "gs": 22
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dylan-crews",
+    "name": "Dylan Crews",
+    "team": "WSH",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 246.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 43,
+      "hr": 10,
+      "rbi": 27,
+      "sb": 17,
+      "avg": 0.208,
+      "gp": 85
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jack-leiter",
+    "name": "Jack Leiter",
+    "team": "TEX",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 246.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 10,
+      "sv": 0,
+      "k": 148,
+      "era": 3.86,
+      "whip": 1.279,
+      "gp": 29,
+      "gs": 29
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "noah-cameron",
+    "name": "Noah Cameron",
+    "team": "KC",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 246.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 9,
+      "sv": 0,
+      "k": 114,
+      "era": 2.99,
+      "whip": 1.099,
+      "gp": 24,
+      "gs": 24
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "roki-sasaki",
+    "name": "Roki Sasaki",
+    "team": "LAD",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 248.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 3,
+      "sv": 0,
+      "k": 95,
+      "era": 4.52,
+      "whip": 1.126,
+      "gp": 22,
+      "gs": 17
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kevin-mcgonigle",
+    "name": "Kevin McGonigle",
+    "team": "DET",
+    "positions": [
+      "3B",
+      "SS"
+    ],
+    "yahoo_positions": [
+      "3B",
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 248.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 54,
+      "hr": 13,
+      "rbi": 57,
+      "sb": 0,
+      "avg": 0.278,
+      "gp": 126
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jung-hoo-lee",
+    "name": "Jung Hoo Lee",
+    "team": "SF",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 249.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 73,
+      "hr": 8,
+      "rbi": 55,
+      "sb": 10,
+      "avg": 0.266,
+      "gp": 150
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "xander-bogaerts",
+    "name": "Xander Bogaerts",
+    "team": "SD",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 249.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 63,
+      "hr": 11,
+      "rbi": 53,
+      "sb": 20,
+      "avg": 0.263,
+      "gp": 136
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "francisco-alvarez",
+    "name": "Francisco Alvarez",
+    "team": "NYM",
+    "positions": [
+      "C",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "C",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 251.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 32,
+      "hr": 11,
+      "rbi": 32,
+      "sb": 0,
+      "avg": 0.256,
+      "gp": 76
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "colton-cowser",
+    "name": "Colton Cowser",
+    "team": "BAL",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 253,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 36,
+      "hr": 16,
+      "rbi": 40,
+      "sb": 14,
+      "avg": 0.196,
+      "gp": 92
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "seranthony-dominguez",
+    "name": "Seranthony Dominguez",
+    "team": "CWS",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 255.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 4,
+      "sv": 2,
+      "k": 79,
+      "era": 3.16,
+      "whip": 1.277,
+      "gp": 67,
+      "gs": 0
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "luis-garcia",
+    "name": "Luis Garcia",
+    "team": "WSH",
+    "positions": [
+      "1B",
+      "2B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "2B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 257.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 67,
+      "hr": 16,
+      "rbi": 66,
+      "sb": 14,
+      "avg": 0.252,
+      "gp": 139
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ernie-clement",
+    "name": "Ernie Clement",
+    "team": "TOR",
+    "positions": [
+      "1B",
+      "2B",
+      "3B",
+      "SS"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "2B",
+      "3B",
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 257.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 83,
+      "hr": 9,
+      "rbi": 50,
+      "sb": 6,
+      "avg": 0.277,
+      "gp": 157
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jordan-beck",
+    "name": "Jordan Beck",
+    "team": "COL",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 259,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 62,
+      "hr": 16,
+      "rbi": 53,
+      "sb": 19,
+      "avg": 0.258,
+      "gp": 148
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dillon-dingler",
+    "name": "Dillon Dingler",
+    "team": "DET",
+    "positions": [
+      "C",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "C",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 259.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 54,
+      "hr": 13,
+      "rbi": 57,
+      "sb": 0,
+      "avg": 0.278,
+      "gp": 126
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "shane-smith",
+    "name": "Shane Smith",
+    "team": "CWS",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 260.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 7,
+      "sv": 0,
+      "k": 145,
+      "era": 3.81,
+      "whip": 1.196,
+      "gp": 29,
+      "gs": 29
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "shane-bieber",
+    "name": "Shane Bieber",
+    "team": "TOR",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 261.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 10,
+      "sv": 0,
+      "k": 176,
+      "era": 4.87,
+      "whip": 1.335,
+      "gp": 31,
+      "gs": 31
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kyle-teel",
+    "name": "Kyle Teel",
+    "team": "CWS",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "player_type": "hitter",
+    "adp": 263.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 38,
+      "hr": 8,
+      "rbi": 35,
+      "sb": 3,
+      "avg": 0.273,
+      "gp": 78
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "logan-o-hoppe",
+    "name": "Logan O'Hoppe",
+    "team": "LAA",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "player_type": "hitter",
+    "adp": 266.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 35,
+      "hr": 19,
+      "rbi": 43,
+      "sb": 2,
+      "avg": 0.213,
+      "gp": 119
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jake-burger",
+    "name": "Jake Burger",
+    "team": "TEX",
+    "positions": [
+      "1B"
+    ],
+    "yahoo_positions": [
+      "1B"
+    ],
+    "player_type": "hitter",
+    "adp": 267,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 43,
+      "hr": 16,
+      "rbi": 53,
+      "sb": 1,
+      "avg": 0.236,
+      "gp": 103
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "andrew-vaughn",
+    "name": "Andrew Vaughn",
+    "team": "MIL",
+    "positions": [
+      "1B"
+    ],
+    "yahoo_positions": [
+      "1B"
+    ],
+    "player_type": "hitter",
+    "adp": 269,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 35,
+      "hr": 14,
+      "rbi": 65,
+      "sb": 0,
+      "avg": 0.254,
+      "gp": 112
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "connelly-early",
+    "name": "Connelly Early",
+    "team": "BOS",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 269.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 3,
+      "sv": 0,
+      "k": 48,
+      "era": 4.1,
+      "whip": 1.179,
+      "gp": 9,
+      "gs": 9
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "yusei-kikuchi",
+    "name": "Yusei Kikuchi",
+    "team": "LAA",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 269.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 7,
+      "sv": 0,
+      "k": 174,
+      "era": 3.99,
+      "whip": 1.424,
+      "gp": 33,
+      "gs": 33
+    },
+    "age": 34,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "otto-lopez",
+    "name": "Otto Lopez",
+    "team": "MIA",
+    "positions": [
+      "2B",
+      "SS"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 270.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 66,
+      "hr": 15,
+      "rbi": 77,
+      "sb": 15,
+      "avg": 0.246,
+      "gp": 143
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "spencer-steer",
+    "name": "Spencer Steer",
+    "team": "CIN",
+    "positions": [
+      "1B",
+      "2B",
+      "OF"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "2B",
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 271.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 66,
+      "hr": 21,
+      "rbi": 75,
+      "sb": 7,
+      "avg": 0.238,
+      "gp": 146
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ryan-weathers",
+    "name": "Ryan Weathers",
+    "team": "NYY",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 271.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 5,
+      "sv": 17,
+      "k": 60,
+      "era": 4.11,
+      "whip": 1.272,
+      "gp": 68,
+      "gs": 0
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "chase-delauter",
+    "name": "Chase DeLauter",
+    "team": "CLE",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 272.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 54,
+      "hr": 5,
+      "rbi": 23,
+      "sb": 14,
+      "avg": 0.253,
+      "gp": 122
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "clay-holmes",
+    "name": "Clay Holmes",
+    "team": "NYM",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 273.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 12,
+      "sv": 0,
+      "k": 129,
+      "era": 3.53,
+      "whip": 1.304,
+      "gp": 33,
+      "gs": 31
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "braxton-ashcraft",
+    "name": "Braxton Ashcraft",
+    "team": "PIT",
+    "positions": [
+      "SP",
+      "RP"
+    ],
+    "yahoo_positions": [
+      "SP",
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 274.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 4,
+      "sv": 0,
+      "k": 71,
+      "era": 2.71,
+      "whip": 1.249,
+      "gp": 26,
+      "gs": 8
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tyler-stephenson",
+    "name": "Tyler Stephenson",
+    "team": "CIN",
+    "positions": [
+      "C"
+    ],
+    "yahoo_positions": [
+      "C"
+    ],
+    "player_type": "hitter",
+    "adp": 275,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 40,
+      "hr": 13,
+      "rbi": 50,
+      "sb": 0,
+      "avg": 0.231,
+      "gp": 88
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ryan-o-hearn",
+    "name": "Ryan O'Hearn",
+    "team": "PIT",
+    "positions": [
+      "1B",
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 275.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 67,
+      "hr": 17,
+      "rbi": 63,
+      "sb": 3,
+      "avg": 0.281,
+      "gp": 144
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cody-ponce",
+    "name": "Cody Ponce",
+    "team": "TOR",
+    "positions": [
+      "SP",
+      "RP"
+    ],
+    "yahoo_positions": [
+      "SP",
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 276.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 3,
+      "sv": 0,
+      "k": 48,
+      "era": 4.1,
+      "whip": 1.179,
+      "gp": 9,
+      "gs": 9
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bryce-miller",
+    "name": "Bryce Miller",
+    "team": "SEA",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 277,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 4,
+      "sv": 0,
+      "k": 74,
+      "era": 5.68,
+      "whip": 1.406,
+      "gp": 18,
+      "gs": 18
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "mike-burrows",
+    "name": "Mike Burrows",
+    "team": "HOU",
+    "positions": [
+      "SP",
+      "RP"
+    ],
+    "yahoo_positions": [
+      "SP",
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 280,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 2,
+      "sv": 0,
+      "k": 97,
+      "era": 3.94,
+      "whip": 1.24,
+      "gp": 23,
+      "gs": 19
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "casey-mize",
+    "name": "Casey Mize",
+    "team": "DET",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 280.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 14,
+      "sv": 0,
+      "k": 139,
+      "era": 3.87,
+      "whip": 1.268,
+      "gp": 28,
+      "gs": 28
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "grayson-rodriguez",
+    "name": "Grayson Rodriguez",
+    "team": "LAA",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 281.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 3,
+      "sv": 4,
+      "k": 67,
+      "era": 1.78,
+      "whip": 0.888,
+      "gp": 50,
+      "gs": 0
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "justin-crawford",
+    "name": "Justin Crawford",
+    "team": "PHI",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 284.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 69,
+      "hr": 12,
+      "rbi": 58,
+      "sb": 8,
+      "avg": 0.265,
+      "gp": 157
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bailey-ober",
+    "name": "Bailey Ober",
+    "team": "MIN",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 284.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 6,
+      "sv": 0,
+      "k": 120,
+      "era": 5.1,
+      "whip": 1.298,
+      "gp": 27,
+      "gs": 27
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "joey-cantillo",
+    "name": "Joey Cantillo",
+    "team": "CLE",
+    "positions": [
+      "SP",
+      "RP"
+    ],
+    "yahoo_positions": [
+      "SP",
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 286.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 5,
+      "sv": 1,
+      "k": 108,
+      "era": 3.21,
+      "whip": 1.259,
+      "gp": 34,
+      "gs": 13
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "willi-castro",
+    "name": "Willi Castro",
+    "team": "COL",
+    "positions": [
+      "1B",
+      "2B",
+      "3B",
+      "SS",
+      "OF"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "2B",
+      "3B",
+      "SS",
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 287.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 58,
+      "hr": 11,
+      "rbi": 33,
+      "sb": 10,
+      "avg": 0.226,
+      "gp": 120
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "marcell-ozuna",
+    "name": "Marcell Ozuna",
+    "team": "PIT",
+    "positions": [
+      "DH"
+    ],
+    "yahoo_positions": [
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 288,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 61,
+      "hr": 21,
+      "rbi": 68,
+      "sb": 0,
+      "avg": 0.232,
+      "gp": 145
+    },
+    "age": 34,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "mark-vientos",
+    "name": "Mark Vientos",
+    "team": "NYM",
+    "positions": [
+      "1B",
+      "3B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "3B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 288.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 44,
+      "hr": 17,
+      "rbi": 61,
+      "sb": 1,
+      "avg": 0.233,
+      "gp": 121
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "miguel-vargas",
+    "name": "Miguel Vargas",
+    "team": "CWS",
+    "positions": [
+      "1B",
+      "3B"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "3B"
+    ],
+    "player_type": "hitter",
+    "adp": 289,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 80,
+      "hr": 16,
+      "rbi": 60,
+      "sb": 6,
+      "avg": 0.234,
+      "gp": 138
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "evan-carter",
+    "name": "Evan Carter",
+    "team": "TEX",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 289.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 31,
+      "hr": 5,
+      "rbi": 25,
+      "sb": 14,
+      "avg": 0.247,
+      "gp": 63
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "sean-manaea",
+    "name": "Sean Manaea",
+    "team": "NYM",
+    "positions": [
+      "SP",
+      "RP"
+    ],
+    "yahoo_positions": [
+      "SP",
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 290.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 2,
+      "sv": 0,
+      "k": 75,
+      "era": 5.64,
+      "whip": 1.22,
+      "gp": 15,
+      "gs": 12
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "masyn-winn",
+    "name": "Masyn Winn",
+    "team": "STL",
+    "positions": [
+      "SS"
+    ],
+    "yahoo_positions": [
+      "SS"
+    ],
+    "player_type": "hitter",
+    "adp": 291.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 72,
+      "hr": 9,
+      "rbi": 51,
+      "sb": 9,
+      "avg": 0.253,
+      "gp": 129
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "andrew-painter",
+    "name": "Andrew Painter",
+    "team": "PHI",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 292,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 6,
+      "sv": 0,
+      "k": 111,
+      "era": 5.31,
+      "whip": 1.445,
+      "gp": 31,
+      "gs": 31
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "robert-garcia",
+    "name": "Robert Garcia",
+    "team": "TEX",
+    "positions": [
+      "RP"
+    ],
+    "yahoo_positions": [
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 292.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 4,
+      "sv": 9,
+      "k": 68,
+      "era": 2.95,
+      "whip": 1.25,
+      "gp": 71,
+      "gs": 0
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jasson-dominguez",
+    "name": "Jasson Dominguez",
+    "team": "NYY",
+    "positions": [
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 292.2,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 58,
+      "hr": 10,
+      "rbi": 47,
+      "sb": 23,
+      "avg": 0.257,
+      "gp": 123
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "spencer-schwellenbach",
+    "name": "Spencer Schwellenbach",
+    "team": "ATL",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 292.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 7,
+      "sv": 0,
+      "k": 108,
+      "era": 3.09,
+      "whip": 0.967,
+      "gp": 17,
+      "gs": 17
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "matt-shaw",
+    "name": "Matt Shaw",
+    "team": "CHC",
+    "positions": [
+      "2B",
+      "3B",
+      "OF",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "2B",
+      "3B",
+      "OF",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 292.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 57,
+      "hr": 13,
+      "rbi": 44,
+      "sb": 17,
+      "avg": 0.226,
+      "gp": 126
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ian-seymour",
+    "name": "Ian Seymour",
+    "team": "TB",
+    "positions": [
+      "SP",
+      "RP"
+    ],
+    "yahoo_positions": [
+      "SP",
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 293,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 4,
+      "sv": 0,
+      "k": 64,
+      "era": 3.63,
+      "whip": 1.175,
+      "gp": 19,
+      "gs": 5
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "quinn-priester",
+    "name": "Quinn Priester",
+    "team": "MIL",
+    "positions": [
+      "SP",
+      "RP"
+    ],
+    "yahoo_positions": [
+      "SP",
+      "RP"
+    ],
+    "player_type": "pitcher",
+    "adp": 293.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 13,
+      "sv": 0,
+      "k": 132,
+      "era": 3.32,
+      "whip": 1.239,
+      "gp": 29,
+      "gs": 24
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "josh-lowe",
+    "name": "Josh Lowe",
+    "team": "LAA",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 297.5,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 56,
+      "hr": 11,
+      "rbi": 40,
+      "sb": 18,
+      "avg": 0.22,
+      "gp": 108
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "logan-henderson",
+    "name": "Logan Henderson",
+    "team": "MIL",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 297.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 2,
+      "sv": 0,
+      "k": 104,
+      "era": 4.56,
+      "whip": 1.408,
+      "gp": 26,
+      "gs": 26
+    },
+    "age": 35,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brady-singer",
+    "name": "Brady Singer",
+    "team": "CIN",
+    "positions": [
+      "SP"
+    ],
+    "yahoo_positions": [
+      "SP"
+    ],
+    "player_type": "pitcher",
+    "adp": 297.8,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "w": 14,
+      "sv": 0,
+      "k": 163,
+      "era": 4.03,
+      "whip": 1.238,
+      "gp": 32,
+      "gs": 32
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "carson-benge",
+    "name": "Carson Benge",
+    "team": "NYM",
+    "positions": [
+      "OF"
+    ],
+    "yahoo_positions": [
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 298.6,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 48,
+      "hr": 17,
+      "rbi": 50,
+      "sb": 2,
+      "avg": 0.249,
+      "gp": 111
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "lenyn-sosa",
+    "name": "Lenyn Sosa",
+    "team": "TOR",
+    "positions": [
+      "1B",
+      "2B",
+      "DH"
+    ],
+    "yahoo_positions": [
+      "1B",
+      "2B",
+      "DH"
+    ],
+    "player_type": "hitter",
+    "adp": 300.5,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 57,
+      "hr": 22,
+      "rbi": 75,
+      "sb": 2,
+      "avg": 0.264,
+      "gp": 140
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jordan-lawlar",
+    "name": "Jordan Lawlar",
+    "team": "ARI",
+    "positions": [
+      "3B",
+      "OF"
+    ],
+    "yahoo_positions": [
+      "3B",
+      "OF"
+    ],
+    "player_type": "hitter",
+    "adp": 301.4,
+    "adp_source": "FantasyPros Yahoo 10-team 2026 MLB",
+    "auction_value": 1,
+    "prior_season": {
+      "r": 62,
+      "hr": 16,
+      "rbi": 53,
+      "sb": 19,
+      "avg": 0.258,
+      "gp": 148
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  }
+]

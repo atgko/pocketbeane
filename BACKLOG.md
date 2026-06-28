@@ -1,6 +1,6 @@
 # PocketBeane — Active Backlog
 
-Last updated: 2026-06-27 (Y-04 shipped; NHL-01, NFL-01, MLB-01, D-01 tickets added)
+Last updated: 2026-06-27 (MLB-01 complete — 300 players, full multi-sport architecture)
 
 Items are grouped by dependency tier. Within each tier, order reflects rough priority / logical sequencing.
 
@@ -12,7 +12,7 @@ After cross-referencing the PMF backlog against the codebase, we split the PMF
 gap tickets into two buckets:
 
 **Build — makes the product genuinely better:**
-PMF-01 (rate limiting), PMF-02 (philosophy quiz UX), PMF-04 (shareable recap
+~~PMF-01~~ ✅ (rate limiting), ~~PMF-02~~ ✅ (philosophy quiz UX), ~~PMF-04~~ ✅ (shareable recap
 card), PMF-08 (data refresh). These improve the actual draft/season experience
 regardless of whether PocketBeane ever has other users.
 
@@ -25,6 +25,8 @@ the portfolio story without a fake paywall.
 
 Yahoo roadmap: Y-02 ✅ → Y-04 ✅ → Y-03 (August build / September validate) → Y-05 (next).
 Note: Y-03 requires a live Yahoo draft for end-to-end validation so infrastructure ships in August. Y-05 is now unblocked — Y-04 provides the full league roster data it depends on.
+
+Multi-sport: MLB-01 ✅ → NHL-01 (August data) → NFL-01 (August data).
 
 ---
 
@@ -119,33 +121,8 @@ All sport expansions require a `{sport}_players.json` file with ADP rankings and
 
 ---
 
-### MLB-01 · MLB League Support 🟡
-**Status: Active league — draft complete, 6 weeks into 2026 season**
-
-**Goal:** Full MLB draft experience (recommendation engine, category grading, Draft DNA) plus Season Hub roster sync against a real active league.
-
-**Complexity note:** MLB is the most structurally complex of the three sports. Pitching and hitting categories are completely separate stat pools, and SP/RP slot distinctions require position-aware slot logic. ERA and WHIP are lower-is-better categories — the grading engine will need a `lowerIsBetter` flag to avoid inverting their grades.
-
-**What's needed:**
-- `mlb_players.json` — ~250 batters + ~150 pitchers, separate ADP curves for each group
-  - Source: FantasyPros MLB ADP (available now for active leagues), Baseball Reference for prior season stats
-- `sports.js` MLB config entry:
-  - `filterPositions: ['C', '1B', '2B', '3B', 'SS', 'OF', 'SP', 'RP', 'UTIL', 'BN']`
-  - Categories: `AVG`, `R`, `HR`, `RBI`, `SB` (hitting) + `W`, `SV`, `K`, `ERA`, `WHIP` (pitching)
-  - `percentageCategories: ['avg']`
-  - `lowerIsBetter: ['era', 'whip']` — new config field needed in grading logic
-- `sync-rosters.js` adjustment: `game_codes=mlb` for user team identity call
-- Claude prompt tuning: MLB-aware language for recommendations and bold prediction
-
-**Season Hub opportunity:** With an active 2026 MLB league, Y-05-style features (waiver advisor, matchup outlook) can be validated against live data. Worth unlocking even before full Season Management Suite is built.
-
-**Acceptance criteria:**
-- Can create an MLB league in setup, complete a mock draft, receive recommendations
-- Category grades correctly flip ERA/WHIP (lower = better = stronger grade)
-- Draft DNA classifies correctly against MLB-specific stat signals
-- `sync-rosters.js` correctly fetches the active MLB league roster
-
-**Prerequisite:** `mlb_players.json` — data available now from FantasyPros and Baseball Reference.
+### ~~MLB-01 · MLB League Support~~ ✅ DONE
+Full MLB 5×5 draft experience shipped 2026-06-27. Multi-sport architecture generalized across the entire codebase — `lowerIsBetter` config field drives ERA/WHIP grading correctly; `filterPositions` drives scarcity engine; `game_codes=mlb` wired into roster sync. `mlb_players.json` built from FantasyPros 2026 ADP + Baseball Reference 2025 stats via `scripts/build-mlb-players.js` — 300 players (181 hitters, 119 pitchers), 28 rookies/injured included with `prior_season: null` so they appear on board by ADP.
 
 ---
 
@@ -266,6 +243,7 @@ Before touching code, define the visual direction:
 | PMF-04 · Draft DNA System | Done — Spotify Wrapped-style archetype identity system. 9 archetypes (Moneyball GM → Contrarian catch-all) classified from ADP deltas, category grades, and GM profile. DraftDNACard modal auto-shows on first draft completion; re-openable via button below Category Report. Bold prediction via Haiku API, cached in league state. Web Share API primary; clipboard fallback with "Copied!" state. DraftRecap.jsx replaces DraftComplete.jsx. |
 | PMF-04 UAT polish (2026-06-27) | Setup page: Yahoo Sync reordered before League Name; already-synced Yahoo leagues disabled in dropdown. DraftDNACard: share redesigned to Web Share API only (no hardcoded social buttons). Category Report reverted to original bar-chart. Moneyball GM threshold raised 3→4 value picks. classifyDraftDNA emits console.debug for every archetype evaluated. Archetype distribution silently tracked in localStorage key pocketbeane_archetype_stats. |
 | Y-04 · Post-Draft Roster Sync | Done — `/api/yahoo/sync-rosters` fetches all team rosters + standings in parallel, name-matches to players.json IDs, stored as league.leagueRosters. Season Hub rebuilt: standings table with expandable rosters, user's team highlighted and auto-expanded, Refresh button for in-season updates. |
+| MLB-01 · MLB League Support | Done — full 5×5 draft + recommendations + Draft DNA + Season Hub sync. `lowerIsBetter` config field, sport-aware scarcity, 300-player `mlb_players.json` (FantasyPros 2026 ADP + BBRef 2025 stats). `build-mlb-players.js` script for future data refreshes. |
 
 ---
 

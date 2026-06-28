@@ -57,6 +57,63 @@ export const SPORT_CONFIGS = {
       cSlots: 1,  utilSlots: 2, bnSlots: 4,
       ilSlots: 1, ilPlusSlots: 0,
     },
+    // Lower is better for turnovers
+    lowerIsBetter: ['to'],
+  },
+
+  mlb: {
+    id: 'mlb',
+    label: 'MLB',
+
+    filterPositions: ['C', '1B', '2B', '3B', 'SS', 'OF', 'SP', 'RP'],
+
+    slotOrder: [
+      { type: 'C',    configKey: 'cSlots',      default: 1 },
+      { type: '1B',   configKey: 'firstSlots',   default: 1 },
+      { type: '2B',   configKey: 'secondSlots',  default: 1 },
+      { type: '3B',   configKey: 'thirdSlots',   default: 1 },
+      { type: 'SS',   configKey: 'ssSlots',      default: 1 },
+      { type: 'OF',   configKey: 'ofSlots',      default: 3, max: 5 },
+      { type: 'UTIL', configKey: 'utilSlots',    default: 1, max: 3 },
+      { type: 'SP',   configKey: 'spSlots',      default: 2, max: 5 },
+      { type: 'RP',   configKey: 'rpSlots',      default: 2, max: 5 },
+      { type: 'BN',   configKey: 'bnSlots',      default: 5, max: 8 },
+    ],
+
+    // UTIL can hold any hitter; pitchers have their own SP/RP slots only
+    slotEligibility: {
+      UTIL: ['C', '1B', '2B', '3B', 'SS', 'OF'],
+    },
+
+    categories: [
+      { id: 'r',    label: 'R',    description: 'Runs' },
+      { id: 'hr',   label: 'HR',   description: 'Home Runs' },
+      { id: 'rbi',  label: 'RBI',  description: 'RBI' },
+      { id: 'sb',   label: 'SB',   description: 'Stolen Bases' },
+      { id: 'avg',  label: 'AVG',  description: 'Batting Average' },
+      { id: 'w',    label: 'W',    description: 'Wins' },
+      { id: 'sv',   label: 'SV',   description: 'Saves' },
+      { id: 'k',    label: 'K',    description: 'Strikeouts' },
+      { id: 'era',  label: 'ERA',  description: 'Earned Run Average' },
+      { id: 'whip', label: 'WHIP', description: 'WHIP' },
+    ],
+
+    // AVG, ERA, WHIP are rate stats — averaged across players, not summed
+    percentageCategories: ['avg', 'era', 'whip'],
+    lowerIsBetter: ['era', 'whip'],
+
+    // Benchmarks represent a competitive team's expected totals at full draft
+    // (season totals for counting stats; rate for avg/era/whip)
+    benchmarks: {
+      r: 1100, hr: 200, rbi: 950, sb: 100, avg: 0.265,
+      w: 75, sv: 45, k: 1050, era: 3.90, whip: 1.28,
+    },
+
+    defaultRosterConfig: {
+      cSlots: 1, firstSlots: 1, secondSlots: 1, thirdSlots: 1,
+      ssSlots: 1, ofSlots: 3, utilSlots: 1,
+      spSlots: 2, rpSlots: 2, bnSlots: 5,
+    },
   },
 
   // Future sports — add an entry here when ready:
