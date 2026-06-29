@@ -1,5 +1,6 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
-import players from '@/data/players.json'
+import nbaPlayers from '@/data/players.json'
+import mlbPlayers from '@/data/mlb_players.json'
 import { getSportConfig } from '@/config/sports'
 import { buildPlayerMap } from '@/utils/roster'
 import { isUserTurn, getNextUserPickNum } from '@/utils/snake'
@@ -10,7 +11,7 @@ import { rankByFit, computeSleepers } from '@/ai/valueCalculator'
 import { getSessionId } from '@/utils/session'
 import { resolveProfile } from '@/utils/gmProfile'
 
-const playerMap = buildPlayerMap(players)
+const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers }
 
 export default function RecommendationPanel({ league }) {
   const [result, setResult] = useState(null)
@@ -28,7 +29,10 @@ export default function RecommendationPanel({ league }) {
   const [bidAmount, setBidAmount] = useState('')
   const bidSearchRef = useRef(null)
 
-  const sportConfig = getSportConfig(league.config.sport)
+  const sport = league.config.sport ?? 'nba'
+  const sportConfig = getSportConfig(sport)
+  const players = PLAYER_DATA[sport] ?? nbaPlayers
+  const playerMap = useMemo(() => buildPlayerMap(players), [players])
   const numTeams = league.config.numTeams
   const draftPosition = league.config.draftPosition
   const draftType = league.config.draftType ?? 'snake'
@@ -52,7 +56,7 @@ export default function RecommendationPanel({ league }) {
     const bs = computeBoardState(league, players)
     const gaps = analyzeCategoryGaps(bs.userPicks, playerMap, sportConfig, bs.totalRosterSlots)
     const scarcity = computeScarcity(players, bs.draftedIds, sportConfig)
-    const alerts = getSmartScarcityAlerts(scarcity, bs.userPicks, playerMap)
+    const alerts = getSmartScarcityAlerts(scarcity, bs.userPicks, playerMap, sport)
     const ranked = rankByFit(bs.available, gaps, sportConfig, bs.currentPick, philosophy)
     const sleeperList = computeSleepers(bs.available, bs.currentPick)
     return { boardState: bs, categoryGaps: gaps, scarcityAlerts: alerts, topCandidates: ranked, sleepers: sleeperList }
@@ -96,6 +100,7 @@ export default function RecommendationPanel({ league }) {
       scoringFormat: league.config.scoringFormat,
       statCategories: league.config.yahooStatCategories ?? null,
       rosterPositions: league.config.yahooRosterPositions ?? null,
+      sport,
     },
     boardState: {
       userPicksWithData: boardState.userPicks.map(p => playerMap[p.playerId]).filter(Boolean),

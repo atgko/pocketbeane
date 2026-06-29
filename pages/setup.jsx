@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect, useCallback } from 'react'
 import useLeagueStore, { DEFAULT_CONFIG, DEFAULT_PHILOSOPHY } from '@/store/leagueStore'
 import LeagueSetup from '@/components/league/LeagueSetup'
+import { getSportConfig } from '@/config/sports'
 import ProfileOverrideScreen from '@/components/ProfileOverrideScreen'
 import { useYahooAuth } from '@/hooks/useYahooAuth'
 import { getGMProfile, INJURY_DISPLAY, CATEGORY_DISPLAY, STRATEGY_DISPLAY } from '@/utils/gmProfile'
@@ -49,14 +50,37 @@ export default function Setup() {
   useEffect(() => {
     if (!mounted || !yahoo.connected) return
     setLeaguesLoading(true)
-    fetch('/api/yahoo/my-leagues')
+    fetch(`/api/yahoo/my-leagues?sport=${config.sport ?? 'nba'}`)
       .then(r => r.json())
       .then(d => { setYahooLeagues(d.leagues ?? []); setLeaguesLoading(false) })
       .catch(() => setLeaguesLoading(false))
-  }, [mounted, yahoo.connected])
+  }, [mounted, yahoo.connected, config.sport])
 
   const updateField = (field, value) =>
     setConfig((prev) => ({ ...prev, [field]: value }))
+
+  const handleSportChange = (newSport) => {
+    if (newSport === config.sport) return
+    const newSportConfig = getSportConfig(newSport)
+    const defaultScoringFormat = newSport === 'mlb' ? '5x5' : '9cat'
+    const slotDefaults = Object.fromEntries(
+      newSportConfig.slotOrder.map(slot => [slot.configKey, slot.default])
+    )
+    setSyncState(null)
+    setSyncError(null)
+    setYahooLeagues([])
+    setConfig(prev => ({
+      ...prev,
+      sport: newSport,
+      categories: newSportConfig.categories.map(c => c.id),
+      scoringFormat: defaultScoringFormat,
+      yahooLeagueKey: null,
+      yahooLeagueName: null,
+      yahooStatCategories: null,
+      yahooRosterPositions: null,
+      ...slotDefaults,
+    }))
+  }
 
   const toggleCategory = (catId) =>
     setConfig((prev) => {
@@ -69,7 +93,7 @@ export default function Setup() {
       }
     })
 
-  const handleLeagueSelect = useCallback(async (leagueKey, leagueName) => {
+  const handleLeagueSelect = useCallback(async (leagueKey, leagueName, season = null) => {
     if (!leagueKey) return
     setSyncState('loading')
     setSyncError(null)
@@ -86,6 +110,7 @@ export default function Setup() {
         yahooLeagueName: leagueName ?? data.leagueName ?? null,
         yahooStatCategories: data.statCategories,
         yahooRosterPositions: data.rosterPositions,
+        ...(season != null && { yahooSeason: season }),
         ...(data.numTeams && { numTeams: data.numTeams }),
         ...(data.leagueName && !prev.name && { name: data.leagueName }),
         ...(data.draftType && { draftType: data.draftType }),
@@ -113,7 +138,7 @@ export default function Setup() {
 
     if (config.yahooLeagueKey) {
       try {
-        const res = await fetch(`/api/yahoo/sync-draft?leagueKey=${encodeURIComponent(config.yahooLeagueKey)}`)
+        const res = await fetch(`/api/yahoo/sync-draft?leagueKey=${encodeURIComponent(config.yahooLeagueKey)}&sport=${config.sport ?? 'nba'}`)
         const data = await res.json()
         if (res.ok && data.total > 0) {
           importDraft(leagueId, data.picks, data.draftPosition)
@@ -161,6 +186,27 @@ export default function Setup() {
             </div>
           </div>
 
+          {/* Sport — must be first so Yahoo Sync filters correctly */}
+          <div className="mb-4 bg-surface rounded-lg border border-border px-5 py-4">
+            <label className="block text-xs text-gray-400 mb-1.5">Sport</label>
+            <div className="flex gap-1.5">
+              {[{ value: 'nba', label: 'NBA' }, { value: 'mlb', label: 'MLB' }].map(opt => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => handleSportChange(opt.value)}
+                  className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+                    (config.sport ?? 'nba') === opt.value
+                      ? 'bg-pick text-white'
+                      : 'bg-bg border border-border text-gray-400 hover:border-pick hover:text-gray-200'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Yahoo Sync */}
           {yahoo.connected && (
             <div className="mb-4 bg-surface rounded-lg border border-border p-4 space-y-3">
@@ -188,7 +234,7 @@ export default function Setup() {
                     if (!l) return
                     const alreadyUsed = !isEditing && leagues.some(existing => existing.config.yahooLeagueKey === l.leagueKey)
                     if (alreadyUsed) return
-                    handleLeagueSelect(l.leagueKey, l.name)
+                    handleLeagueSelect(l.leagueKey, l.name, l.season)
                   }}
                   className="w-full bg-bg border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-pick"
                 >

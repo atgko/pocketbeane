@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/router'
-import players from '@/data/players.json'
+import nbaPlayers from '@/data/players.json'
+import mlbPlayers from '@/data/mlb_players.json'
 import { getSportConfig } from '@/config/sports'
 import { buildPlayerMap, computeRosterAssignment } from '@/utils/roster'
 import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
@@ -10,7 +11,26 @@ import { resolveProfile } from '@/utils/gmProfile'
 import { classifyDraftDNA, getTopCategories, FALLBACK_PREDICTIONS, trackArchetypeStat } from '@/utils/draftDNA'
 import DraftDNACard from '@/components/DraftDNACard'
 
-const playerMap = buildPlayerMap(players)
+const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers }
+
+const ROSTER_STAT_COLS = {
+  nba: [
+    { label: 'PTS',  cell: p => fmtStat(p, 'pts') },
+    { label: 'REB',  cell: p => fmtStat(p, 'reb') },
+    { label: 'AST',  cell: p => fmtStat(p, 'ast') },
+    { label: 'STL',  cell: p => fmtStat(p, 'stl') },
+    { label: 'BLK',  cell: p => fmtStat(p, 'blk') },
+    { label: '3PM',  cell: p => fmtStat(p, 'three_pm') },
+    { label: 'FG%',  cell: p => fmtPct(p, 'fg_pct') },
+  ],
+  mlb: [
+    { label: 'R/W',     cell: p => p?.player_type === 'pitcher' ? fmtStat(p, 'w')    : fmtStat(p, 'r') },
+    { label: 'HR/SV',   cell: p => p?.player_type === 'pitcher' ? fmtStat(p, 'sv')   : fmtStat(p, 'hr') },
+    { label: 'RBI/K',   cell: p => p?.player_type === 'pitcher' ? fmtStat(p, 'k')    : fmtStat(p, 'rbi') },
+    { label: 'SB/ERA',  cell: p => p?.player_type === 'pitcher' ? fmtStat(p, 'era')  : fmtStat(p, 'sb') },
+    { label: 'AVG/WHP', cell: p => p?.player_type === 'pitcher' ? fmtStat(p, 'whip') : fmtPct(p, 'avg') },
+  ],
+}
 
 export default function DraftRecap({ league }) {
   const router = useRouter()
@@ -22,7 +42,11 @@ export default function DraftRecap({ league }) {
   const [boldPrediction, setBoldPrediction] = useState(league.draftDNA?.boldPrediction ?? null)
   const [predictionLoading, setPredictionLoading] = useState(false)
 
-  const sportConfig = getSportConfig(league.config.sport)
+  const sport = league.config.sport ?? 'nba'
+  const sportConfig = getSportConfig(sport)
+  const players = PLAYER_DATA[sport] ?? nbaPlayers
+  const playerMap = useMemo(() => buildPlayerMap(players), [players])
+  const statCols = ROSTER_STAT_COLS[sport] ?? ROSTER_STAT_COLS.nba
 
   const userPicks = useMemo(
     () => league.draft.picks.filter(p => p.draftedBy === 'user'),
@@ -31,17 +55,17 @@ export default function DraftRecap({ league }) {
 
   const categoryGaps = useMemo(
     () => analyzeCategoryGaps(userPicks, playerMap, sportConfig, league.rosterSlots.length),
-    [userPicks, league.rosterSlots.length]
+    [userPicks, playerMap, league.rosterSlots.length]
   )
 
   const slots = useMemo(
     () => computeRosterAssignment(league.config, userPicks, playerMap, sportConfig),
-    [userPicks, league.config]
+    [userPicks, playerMap, league.config]
   )
 
   const archetype = useMemo(
     () => classifyDraftDNA(userPicks, playerMap, categoryGaps, league.config.numTeams, resolveProfile(league.profileOverride)),
-    [userPicks, categoryGaps, league.config.numTeams, league.profileOverride]
+    [userPicks, playerMap, categoryGaps, league.config.numTeams, league.profileOverride]
   )
 
   const topCategories = useMemo(() => getTopCategories(categoryGaps), [categoryGaps])
@@ -76,6 +100,7 @@ export default function DraftRecap({ league }) {
             numTeams: league.config.numTeams,
             draftPosition: league.config.draftPosition,
             scoringFormat: league.config.scoringFormat,
+            sport,
           },
           boardState: { userPicksWithData },
           categoryGaps,
@@ -106,6 +131,7 @@ export default function DraftRecap({ league }) {
           archetypeName: archetype.name,
           topCategories,
           rosterPlayers: rosterNames,
+          sport,
         }),
       })
       const data = await res.json()
@@ -178,13 +204,9 @@ export default function DraftRecap({ league }) {
                   <th className="text-left px-4 py-2 w-12">Slot</th>
                   <th className="text-left px-4 py-2">Player</th>
                   <th className="text-left px-4 py-2 w-16">Pos</th>
-                  <th className="text-right px-3 py-2 w-12">PTS</th>
-                  <th className="text-right px-3 py-2 w-12">REB</th>
-                  <th className="text-right px-3 py-2 w-12">AST</th>
-                  <th className="text-right px-3 py-2 w-12">STL</th>
-                  <th className="text-right px-3 py-2 w-12">BLK</th>
-                  <th className="text-right px-3 py-2 w-14">3PM</th>
-                  <th className="text-right px-3 py-2 w-14">FG%</th>
+                  {statCols.map(col => (
+                    <th key={col.label} className="text-right px-3 py-2 w-14">{col.label}</th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -202,13 +224,11 @@ export default function DraftRecap({ league }) {
                       <td className="px-4 py-2 font-mono text-gray-400">
                         {player?.yahoo_positions?.join('/') ?? ''}
                       </td>
-                      <td className="text-right px-3 py-2 font-mono text-gray-300">{fmtStat(player, 'pts')}</td>
-                      <td className="text-right px-3 py-2 font-mono text-gray-300">{fmtStat(player, 'reb')}</td>
-                      <td className="text-right px-3 py-2 font-mono text-gray-300">{fmtStat(player, 'ast')}</td>
-                      <td className="text-right px-3 py-2 font-mono text-gray-300">{fmtStat(player, 'stl')}</td>
-                      <td className="text-right px-3 py-2 font-mono text-gray-300">{fmtStat(player, 'blk')}</td>
-                      <td className="text-right px-3 py-2 font-mono text-gray-300">{fmtStat(player, 'three_pm')}</td>
-                      <td className="text-right px-3 py-2 font-mono text-gray-300">{fmtPct(player, 'fg_pct')}</td>
+                      {statCols.map(col => (
+                        <td key={col.label} className="text-right px-3 py-2 font-mono text-gray-300">
+                          {col.cell(player)}
+                        </td>
+                      ))}
                     </tr>
                   )
                 })}

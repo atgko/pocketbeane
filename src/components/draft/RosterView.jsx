@@ -1,5 +1,6 @@
-import { useState, useRef } from 'react'
-import players from '@/data/players.json'
+import { useState, useRef, useMemo } from 'react'
+import nbaPlayers from '@/data/players.json'
+import mlbPlayers from '@/data/mlb_players.json'
 import { getSportConfig } from '@/config/sports'
 import {
   buildPlayerMap,
@@ -8,13 +9,15 @@ import {
 import UndoModal from './UndoModal'
 import useLeagueStore from '@/store/leagueStore'
 
-const playerMap = buildPlayerMap(players)
+const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers }
 
 export default function RosterView({ league }) {
   const { removePick, reassignPick } = useLeagueStore()
   const { config, draft } = league
   const picks = draft.picks
   const sportConfig = getSportConfig(config.sport)
+  const players = PLAYER_DATA[config.sport] ?? nbaPlayers
+  const playerMap = useMemo(() => buildPlayerMap(players), [players])
 
   const [undoTarget, setUndoTarget] = useState(null)
   const [reassignError, setReassignError] = useState(null)
@@ -122,6 +125,7 @@ export default function RosterView({ league }) {
       {undoTarget && (
         <UndoModal
           pick={undoTarget}
+          players={players}
           onReturnToBoard={handleReturnToBoard}
           onReassign={handleReassign}
           onCancel={() => { setUndoTarget(null); setReassignError(null) }}

@@ -1,6 +1,4 @@
-import players from '@/data/players.json'
-
-export default function UndoModal({ pick, onReturnToBoard, onReassign, onCancel, reassignError }) {
+export default function UndoModal({ pick, players = [], onReturnToBoard, onReassign, onCancel, reassignError }) {
   const player = players.find(p => p.id === pick.playerId)
   const isUserPick = pick.draftedBy === 'user'
 

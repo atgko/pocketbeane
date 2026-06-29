@@ -92,13 +92,13 @@ export function computePositionalDepth(available, picksUntilNext, numTeams, tota
 }
 
 const ELITE_ADP_THRESHOLD = 35
-const GUARD_POSITIONS = ['PG', 'SG']
-const FRONT_COURT_POSITIONS = ['SF', 'PF', 'C']
+const NBA_GUARD_POSITIONS = ['PG', 'SG']
+const NBA_FRONT_COURT_POSITIONS = ['SF', 'PF', 'C']
 
 // Scarcity alerts that account for the user's existing team composition.
 // Suppresses alerts for positions the user is already covered at, and surfaces
-// positional imbalances (e.g. elite guards but no front-court picks yet).
-export function getSmartScarcityAlerts(scarcity, userPicks, playerMap) {
+// positional imbalances (NBA only: elite guards but no front-court picks yet).
+export function getSmartScarcityAlerts(scarcity, userPicks, playerMap, sport = 'nba') {
   const coveredPositions = new Set()
   let guardCount = 0
   let frontCourtCount = 0
@@ -110,11 +110,13 @@ export function getSmartScarcityAlerts(scarcity, userPicks, playerMap) {
     const isElite = player.adp <= ELITE_ADP_THRESHOLD
     for (const pos of player.yahoo_positions) {
       if (isElite) coveredPositions.add(pos)
-      if (GUARD_POSITIONS.includes(pos)) {
-        guardCount++
-        if (isElite) hasEliteGuard = true
+      if (sport === 'nba') {
+        if (NBA_GUARD_POSITIONS.includes(pos)) {
+          guardCount++
+          if (isElite) hasEliteGuard = true
+        }
+        if (NBA_FRONT_COURT_POSITIONS.includes(pos)) frontCourtCount++
       }
-      if (FRONT_COURT_POSITIONS.includes(pos)) frontCourtCount++
     }
   }
 
@@ -130,7 +132,7 @@ export function getSmartScarcityAlerts(scarcity, userPicks, playerMap) {
       return `Only ${s.eliteAvailable} elite ${pos} left — don't wait too long.`
     })
 
-  if (hasEliteGuard && guardCount >= 2 && frontCourtCount === 0 && userPicks.length >= 2) {
+  if (sport === 'nba' && hasEliteGuard && guardCount >= 2 && frontCourtCount === 0 && userPicks.length >= 2) {
     alerts.push('Guards are set — the front court pool is thinning, address it before it dries up.')
   }
 

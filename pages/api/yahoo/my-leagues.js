@@ -12,13 +12,18 @@ async function yahooFetch(token, path) {
   return res.json()
 }
 
+const SPORT_GAME_CODES = { nba: 'nba', mlb: 'mlb' }
+
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).end()
 
   const token = await getValidToken(req, res)
   if (!token) return res.status(401).json({ error: 'Not connected to Yahoo' })
 
-  const data = await yahooFetch(token, '/users;use_login=1/games;game_codes=nba/leagues')
+  const sport = req.query.sport ?? 'nba'
+  const gameCode = SPORT_GAME_CODES[sport] ?? 'nba'
+
+  const data = await yahooFetch(token, `/users;use_login=1/games;game_codes=${gameCode}/leagues`)
   const games = data?.fantasy_content?.users?.[0]?.user?.[1]?.games
   const gameCount = games?.count ?? 0
 
@@ -27,7 +32,7 @@ export default async function handler(req, res) {
     const gameArr = games[i]?.game
     if (!gameArr) continue
     const gameMeta = gameArr[0]
-    if (gameMeta?.code !== 'nba') continue
+    if (gameMeta?.code !== gameCode) continue
 
     const leaguesObj = gameArr[1]?.leagues
     const leagueCount = leaguesObj?.count ?? 0

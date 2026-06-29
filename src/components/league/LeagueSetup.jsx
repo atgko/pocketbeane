@@ -5,11 +5,20 @@ const DRAFT_TYPE_OPTIONS = [
   { value: 'auction', label: 'Auction' },
 ]
 
-const SCORING_OPTIONS = [
-  { value: '9cat',   label: '9-Cat' },
-  { value: '8cat',   label: '8-Cat' },
-  { value: 'points', label: 'Points' },
-]
+const SCORING_OPTIONS = {
+  nba: [
+    { value: '9cat',   label: '9-Cat' },
+    { value: '8cat',   label: '8-Cat' },
+    { value: 'points', label: 'Points' },
+  ],
+  mlb: [
+    { value: '5x5',   label: '5×5 Roto' },
+    { value: '6x6',   label: '6×6' },
+    { value: 'points', label: 'Points' },
+  ],
+}
+
+const DEFAULT_SCORING_FORMAT = { nba: '9cat', mlb: '5x5' }
 
 const STRATEGY_OPTIONS = [
   { value: 'beane',            label: 'Beane Mode' },
@@ -46,10 +55,14 @@ const INJURY_TOLERANCE_DESCRIPTIONS = {
 }
 
 export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYahooSynced = false }) {
-  const sportConfig = getSportConfig(config.sport)
+  const sport = config.sport ?? 'nba'
+  const sportConfig = getSportConfig(sport)
   const rosterSlots = sportConfig.slotOrder.filter(s => s.type !== 'BN')
   const bnSlot = sportConfig.slotOrder.find(s => s.type === 'BN')
   const lockedClass = 'opacity-40 pointer-events-none select-none'
+  const scoringOptions = SCORING_OPTIONS[sport] ?? SCORING_OPTIONS.nba
+  const defaultScoringFormat = DEFAULT_SCORING_FORMAT[sport] ?? '9cat'
+  const isNonDefaultFormat = config.scoringFormat !== defaultScoringFormat
 
   return (
     <div className="space-y-4">
@@ -189,14 +202,14 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
           <div>
             <label className="block text-xs text-gray-400 mb-1.5">Scoring Format</label>
             <ToggleGroup
-              options={SCORING_OPTIONS}
+              options={scoringOptions}
               value={config.scoringFormat}
               disabled={isYahooSynced}
               onChange={v => onUpdate('scoringFormat', v)}
             />
-            {config.scoringFormat !== '9cat' && (
+            {isNonDefaultFormat && (
               <p className="text-xs text-value mt-1.5 font-mono">
-                {config.scoringFormat === 'points' ? 'Points' : '8-Cat'} coming in a future phase — 9-cat only for now.
+                {config.scoringFormat === 'points' ? 'Points' : scoringOptions.find(o => o.value === config.scoringFormat)?.label ?? config.scoringFormat} coming in a future phase — {defaultScoringFormat === '9cat' ? '9-cat' : '5×5 Roto'} only for now.
               </p>
             )}
           </div>
@@ -227,8 +240,8 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
                 disabled={isYahooSynced}
               />
             )}
-            <SlotCountRow label="IL"  value={config.ilSlots ?? 0}     onChange={v => onUpdate('ilSlots', v)}     disabled={isYahooSynced} />
-            <SlotCountRow label="IL+" value={config.ilPlusSlots ?? 0} onChange={v => onUpdate('ilPlusSlots', v)} disabled={isYahooSynced} />
+            <SlotCountRow label="IL"  value={config.ilSlots ?? 0}     onChange={v => onUpdate('ilSlots', v)}     max={6} disabled={isYahooSynced} />
+            <SlotCountRow label="IL+" value={config.ilPlusSlots ?? 0} onChange={v => onUpdate('ilPlusSlots', v)} max={4} disabled={isYahooSynced} />
           </div>
         </div>
 

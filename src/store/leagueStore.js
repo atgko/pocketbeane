@@ -181,6 +181,11 @@ const useLeagueStore = create(
           ),
         })),
 
+      archiveLeague: (id) =>
+        set((state) => ({
+          leagues: state.leagues.map((l) => (l.id === id ? { ...l, status: 'complete' } : l)),
+        })),
+
       importDraft: (id, picks, draftPosition) =>
         set((state) => ({
           leagues: state.leagues.map((l) => {
@@ -198,7 +203,7 @@ const useLeagueStore = create(
               draftSynced: true,
               ...(draftPosition ? { draftPosition } : {}),
             }
-            return { ...l, config: newConfig, draft: { picks: validPicks }, status: 'complete' }
+            return { ...l, config: newConfig, draft: { picks: validPicks }, status: 'season' }
           }),
         })),
 
@@ -209,7 +214,24 @@ const useLeagueStore = create(
         return leagues.find((l) => l.id === activeLeagueId) ?? leagues[0] ?? null
       },
     }),
-    { name: 'pocketbeane-v2' }
+    {
+      name: 'pocketbeane-v2',
+      version: 1,
+      migrate: (state, version) => {
+        if (version === 0) {
+          // importDraft previously set status:'complete'; fix existing leagues to 'season'
+          return {
+            ...state,
+            leagues: (state.leagues ?? []).map(l =>
+              l.status === 'complete' && l.config?.draftSynced
+                ? { ...l, status: 'season' }
+                : l
+            ),
+          }
+        }
+        return state
+      },
+    }
   )
 )
 

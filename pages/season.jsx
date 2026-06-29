@@ -1,8 +1,10 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import useLeagueStore from '@/store/leagueStore'
 import { useYahooAuth } from '@/hooks/useYahooAuth'
+
+const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000
 
 const COMING_SOON = [
   { title: 'Head-to-Head Matchup Advisor', description: 'Weekly category projections vs. your current opponent with lineup suggestions.' },
@@ -12,6 +14,11 @@ const COMING_SOON = [
   { title: 'Start / Sit Advisor', description: 'Optimal weekly lineup given schedule, matchup, recent form, and injury status.' },
   { title: 'League Pulse', description: "Weekly league-wide summary — who's dominating, who's weak, who might trade." },
 ]
+
+function isSyncStale(syncedAt) {
+  if (!syncedAt) return true
+  return Date.now() - new Date(syncedAt).getTime() > SEVEN_DAYS_MS
+}
 
 function formatSyncedAt(iso) {
   return new Date(iso).toLocaleString('en-US', {
@@ -27,17 +34,37 @@ export default function SeasonHub() {
   const [mounted, setMounted] = useState(false)
   const [syncing, setSyncing] = useState(false)
   const [syncError, setSyncError] = useState(null)
-  const [expandedTeam, setExpandedTeam] = useState(null)
+  const autoSyncAttempted = useRef(false)
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  useEffect(() => { setMounted(true) }, [])
 
-  useEffect(() => {
-    if (league?.leagueRosters?.userTeamKey) {
-      setExpandedTeam(league.leagueRosters.userTeamKey)
+  const canSync = Boolean(league?.config.yahooLeagueKey)
+  const rosters = league?.leagueRosters ?? null
+
+  async function handleSync() {
+    if (!league?.config.yahooLeagueKey) return
+    setSyncing(true)
+    setSyncError(null)
+    try {
+      const sport = league.config.sport ?? 'nba'
+      const res = await fetch(`/api/yahoo/sync-rosters?leagueKey=${encodeURIComponent(league.config.yahooLeagueKey)}&sport=${sport}`)
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Sync failed')
+      setLeagueRosters(league.id, data)
+    } catch (err) {
+      setSyncError(err.message)
+    } finally {
+      setSyncing(false)
     }
-  }, [league?.leagueRosters?.userTeamKey])
+  }
+
+  useEffect(() => {
+    if (!mounted || !canSync || !yahoo.connected || autoSyncAttempted.current) return
+    if (isSyncStale(rosters?.syncedAt)) {
+      autoSyncAttempted.current = true
+      handleSync()
+    }
+  }, [mounted, yahoo.connected, canSync])
 
   if (!mounted) return null
 
@@ -47,30 +74,6 @@ export default function SeasonHub() {
         <p className="text-gray-500 text-sm">No active league. <button onClick={() => router.push('/')} className="text-pick hover:underline">Go home →</button></p>
       </div>
     )
-  }
-
-  const rosters = league.leagueRosters ?? null
-  const canSync = Boolean(league.config.yahooLeagueKey)
-
-  async function handleSync() {
-    setSyncing(true)
-    setSyncError(null)
-    try {
-      const sport = league.config.sport ?? 'nba'
-      const res = await fetch(`/api/yahoo/sync-rosters?leagueKey=${encodeURIComponent(league.config.yahooLeagueKey)}&sport=${sport}`)
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Sync failed')
-      setLeagueRosters(league.id, data)
-      if (data.userTeamKey) setExpandedTeam(data.userTeamKey)
-    } catch (err) {
-      setSyncError(err.message)
-    } finally {
-      setSyncing(false)
-    }
-  }
-
-  function toggleTeam(teamKey) {
-    setExpandedTeam(prev => prev === teamKey ? null : teamKey)
   }
 
   return (
@@ -104,126 +107,33 @@ export default function SeasonHub() {
 
           <p className="text-xs text-blue-400 font-mono mb-8">Season Mode</p>
 
-          {/* Roster Sync section */}
+          {/* Sync status */}
           {canSync ? (
-            <div className="mb-10">
-              {!rosters ? (
-                /* Pre-sync prompt */
-                <div className="bg-surface border border-border rounded-lg p-5 mb-4">
-                  <p className="text-sm font-semibold text-white mb-1">Sync league rosters</p>
-                  <p className="text-xs text-gray-500 font-mono mb-4">
-                    Pull all {league.config.numTeams} team rosters from Yahoo to enable season features.
-                    {!yahoo.connected && <span className="text-yellow-500/70"> Connect to Yahoo first.</span>}
-                  </p>
-                  <button
-                    onClick={handleSync}
-                    disabled={syncing || !yahoo.connected}
-                    className="px-5 py-2 bg-pick text-white rounded-lg text-sm font-semibold hover:bg-green-500 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                  >
-                    {syncing ? 'Syncing…' : 'Sync Rosters from Yahoo'}
-                  </button>
-                  {syncError && <p className="text-xs text-red-400 mt-3 font-mono">{syncError}</p>}
-                </div>
+            <div className="flex items-center gap-2 mb-10 text-xs font-mono">
+              {syncing ? (
+                <span className="text-gray-500">Syncing rosters…</span>
+              ) : rosters ? (
+                <>
+                  <span className="text-gray-600">
+                    Synced {formatSyncedAt(rosters.syncedAt)} · {rosters.matched}/{rosters.total} matched
+                  </span>
+                  {yahoo.connected && (
+                    <button
+                      onClick={handleSync}
+                      className="text-gray-600 hover:text-gray-300 transition-colors ml-1"
+                    >
+                      · Refresh
+                    </button>
+                  )}
+                </>
+              ) : yahoo.connected ? (
+                <span className="text-gray-500">Syncing rosters…</span>
               ) : (
-                /* Post-sync header */
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-xs font-mono text-gray-500">
-                    Synced {formatSyncedAt(rosters.syncedAt)} · {rosters.matched}/{rosters.total} players matched
-                  </p>
-                  <button
-                    onClick={handleSync}
-                    disabled={syncing}
-                    className="text-xs font-mono px-3 py-1.5 rounded bg-white/5 border border-border text-gray-400 hover:text-white hover:border-pick transition-colors disabled:opacity-40"
-                  >
-                    {syncing ? 'Syncing…' : 'Refresh'}
-                  </button>
-                </div>
+                <span className="text-yellow-500/70">Connect Yahoo to sync rosters</span>
               )}
-
-              {syncError && rosters && (
-                <p className="text-xs text-red-400 mb-3 font-mono">{syncError}</p>
-              )}
-
-              {/* League standings + rosters table */}
-              {rosters && (
-                <div className="bg-surface border border-border rounded-lg overflow-hidden">
-                  <div className="px-4 py-3 border-b border-border">
-                    <h3 className="text-xs font-mono text-gray-500 uppercase tracking-wider">League Standings</h3>
-                  </div>
-                  <table className="w-full text-xs">
-                    <thead>
-                      <tr className="border-b border-border text-gray-600 uppercase tracking-wider">
-                        <th className="text-left px-4 py-2 w-8">#</th>
-                        <th className="text-left px-4 py-2">Team</th>
-                        <th className="text-left px-4 py-2 hidden sm:table-cell text-gray-600">Manager</th>
-                        <th className="text-center px-3 py-2 w-20">W–L</th>
-                        <th className="text-right px-4 py-2 w-16">Players</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {rosters.teams.map((team) => {
-                        const isExpanded = expandedTeam === team.teamKey
-                        return [
-                          <tr
-                            key={team.teamKey}
-                            onClick={() => toggleTeam(team.teamKey)}
-                            className={`border-b border-border cursor-pointer transition-colors ${
-                              team.isUser ? 'bg-pick/5 hover:bg-pick/8' : 'hover:bg-white/3'
-                            }`}
-                          >
-                            <td className="px-4 py-2.5 font-mono text-gray-600">{team.rank ?? '—'}</td>
-                            <td className="px-4 py-2.5">
-                              <span className={team.isUser ? 'text-pick font-semibold' : 'text-white font-medium'}>
-                                {team.teamName}
-                              </span>
-                              {team.isUser && (
-                                <span className="ml-2 text-xs font-mono text-pick/50">you</span>
-                              )}
-                            </td>
-                            <td className="px-4 py-2.5 text-gray-500 hidden sm:table-cell font-mono">{team.manager ?? '—'}</td>
-                            <td className="px-3 py-2.5 text-center text-gray-400 font-mono tabular-nums">
-                              {team.wins}–{team.losses}{team.ties > 0 ? `–${team.ties}` : ''}
-                            </td>
-                            <td className="px-4 py-2.5 text-right text-gray-500 font-mono">
-                              <span>{team.roster.length}</span>
-                              <span className="ml-1.5 text-gray-700">{isExpanded ? '↑' : '↓'}</span>
-                            </td>
-                          </tr>,
-                          isExpanded && (
-                            <tr key={`${team.teamKey}-roster`} className={team.isUser ? 'bg-pick/3' : 'bg-white/2'}>
-                              <td colSpan={5} className="px-4 py-3 border-b border-border">
-                                <div className="flex flex-wrap gap-1.5">
-                                  {team.roster.map((p, i) => (
-                                    <span
-                                      key={i}
-                                      className={`text-xs font-mono px-2 py-0.5 rounded border ${
-                                        p.playerId
-                                          ? 'text-gray-300 border-border bg-white/3'
-                                          : 'text-gray-600 border-border/40'
-                                      }`}
-                                    >
-                                      {p.name ?? p.playerKey}
-                                      {p.positions && (
-                                        <span className="text-gray-600 ml-1">{p.positions}</span>
-                                      )}
-                                      {p.status && p.status !== 'active' && (
-                                        <span className="text-yellow-500/70 ml-1">{p.status}</span>
-                                      )}
-                                    </span>
-                                  ))}
-                                </div>
-                              </td>
-                            </tr>
-                          ),
-                        ]
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              )}
+              {syncError && <span className="text-red-400 ml-2">{syncError}</span>}
             </div>
           ) : (
-            /* No Yahoo key — prompt to link a league */
             <div className="bg-surface border border-border rounded-lg p-5 mb-10">
               <p className="text-sm text-gray-400">
                 This league isn't linked to Yahoo.{' '}

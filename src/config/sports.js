@@ -137,16 +137,6 @@ export const SPORT_CONFIGS = {
   //   percentageCategories: [],
   //   ...
   // },
-  //
-  // mlb: {
-  //   id: 'mlb', label: 'MLB',
-  //   filterPositions: ['C', '1B', '2B', '3B', 'SS', 'OF', 'SP', 'RP'],
-  //   slotOrder: [...],
-  //   slotEligibility: { UTIL: [...], ... },
-  //   categories: [...],
-  //   percentageCategories: ['avg', 'era', 'whip'],
-  //   ...
-  // },
 }
 
 export function getSportConfig(sport) {

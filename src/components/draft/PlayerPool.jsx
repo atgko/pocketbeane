@@ -377,6 +377,7 @@ export default function PlayerPool() {
       {undoTarget && (
         <UndoModal
           pick={undoTarget}
+          players={players}
           onReturnToBoard={handleReturnToBoard}
           onReassign={handleReassign}
           onCancel={() => { setUndoTarget(null); setReassignError(null) }}

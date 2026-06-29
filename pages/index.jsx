@@ -5,18 +5,47 @@ import { useEffect, useState } from 'react'
 import useLeagueStore from '@/store/leagueStore'
 import { useYahooAuth } from '@/hooks/useYahooAuth'
 
-const STATUS_LABEL = { drafting: 'In Draft', complete: 'Complete', season: 'Season' }
-const STATUS_COLOR = { drafting: 'text-pick', complete: 'text-gray-500', season: 'text-blue-400' }
+const STATUS_LABEL = { drafting: 'In Draft', complete: 'Archived', season: 'Season' }
+const STATUS_COLOR = { drafting: 'text-pick', complete: 'text-gray-600', season: 'text-blue-400' }
+
+const SPORT_ORDER = ['nba', 'mlb']
+const SPORT_LABELS = { nba: 'NBA', mlb: 'MLB' }
+
+function getLeagueYear(league) {
+  if (league.config.yahooSeason) return Number(league.config.yahooSeason)
+  const ts = parseInt(league.id.split('-')[1])
+  return isNaN(ts) ? null : new Date(ts).getFullYear()
+}
+
+function formatSeasonYear(year, sport) {
+  if (!year) return 'Unknown'
+  if (sport === 'nba') return `${year - 1}–${String(year).slice(-2)}`
+  return String(year)
+}
 
 export default function Home() {
   const router = useRouter()
-  const { leagues, setActiveLeague, deleteLeague, setLeagueStatus } = useLeagueStore()
+  const { leagues, setActiveLeague, deleteLeague, setLeagueStatus, archiveLeague } = useLeagueStore()
   const [mounted, setMounted] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(null)
   const [yahooToast, setYahooToast] = useState(null)
   const yahoo = useYahooAuth()
 
   useEffect(() => { setMounted(true) }, [])
+
+  // Auto-archive season leagues inactive for 7+ days (last roster sync)
+  useEffect(() => {
+    if (!mounted) return
+    const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000
+    for (const l of leagues) {
+      if (l.status !== 'season') continue
+      const syncedAt = l.leagueRosters?.syncedAt
+      if (!syncedAt) continue
+      if (Date.now() - new Date(syncedAt).getTime() > SEVEN_DAYS) {
+        archiveLeague(l.id)
+      }
+    }
+  }, [mounted])
 
   useEffect(() => {
     if (!mounted) return
@@ -50,6 +79,37 @@ export default function Home() {
     } else {
       setConfirmDelete(id)
     }
+  }
+
+  // Group leagues by sport, split active vs archived within each sport
+  const grouped = {}
+  for (const l of leagues) {
+    const sport = l.config.sport ?? 'nba'
+    if (!grouped[sport]) grouped[sport] = { active: [], archived: [] }
+    if (l.status === 'complete') {
+      grouped[sport].archived.push(l)
+    } else {
+      grouped[sport].active.push(l)
+    }
+  }
+
+  const sportGroups = [
+    ...SPORT_ORDER.filter(s => grouped[s]),
+    ...Object.keys(grouped).filter(s => !SPORT_ORDER.includes(s)),
+  ].map(s => ({ sport: s, ...grouped[s] }))
+
+  const hasMultipleSports = sportGroups.length > 1
+
+  const sharedCardProps = {
+    yahooConnected: yahoo.connected,
+    onEnterDraft: handleEnterDraft,
+    onEnterSeason: handleEnterSeason,
+    onEdit: (id) => router.push(`/setup?id=${id}`),
+    onDelete: handleDelete,
+    onCancelDelete: () => setConfirmDelete(null),
+    confirmDelete,
+    archiveLeague,
+    onUnarchive: (id) => setLeagueStatus(id, 'season'),
   }
 
   return (
@@ -101,19 +161,38 @@ export default function Home() {
           {leagues.length === 0 ? (
             <EmptyState />
           ) : (
-            <div className="space-y-3">
-              {leagues.map((league) => (
-                <LeagueCard
-                  key={league.id}
-                  league={league}
-                  yahooConnected={yahoo.connected}
-                  confirmingDelete={confirmDelete === league.id}
-                  onEnterDraft={() => handleEnterDraft(league.id)}
-                  onEnterSeason={() => handleEnterSeason(league.id)}
-                  onEdit={() => router.push(`/setup?id=${league.id}`)}
-                  onDelete={() => handleDelete(league.id)}
-                  onCancelDelete={() => setConfirmDelete(null)}
-                />
+            <div className="space-y-8">
+              {sportGroups.map(({ sport, active, archived }) => (
+                <div key={sport}>
+                  {hasMultipleSports && (
+                    <div className="flex items-center gap-3 mb-3">
+                      <h2 className="text-xs font-mono text-gray-500 uppercase tracking-wider">
+                        {SPORT_LABELS[sport] ?? sport.toUpperCase()}
+                      </h2>
+                      <div className="flex-1 border-t border-border" />
+                    </div>
+                  )}
+
+                  <div className="space-y-3">
+                    {active.map((league) => (
+                      <LeagueCard
+                        key={league.id}
+                        league={league}
+                        confirmingDelete={confirmDelete === league.id}
+                        {...sharedCardProps}
+                      />
+                    ))}
+                  </div>
+
+                  {archived.length > 0 && (
+                    <ArchivedSection
+                      leagues={archived}
+                      sport={sport}
+                      confirmDelete={confirmDelete}
+                      {...sharedCardProps}
+                    />
+                  )}
+                </div>
               ))}
             </div>
           )}
@@ -123,14 +202,68 @@ export default function Home() {
   )
 }
 
-function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, onEnterSeason, onEdit, onDelete, onCancelDelete }) {
+function ArchivedSection({ leagues, sport, confirmDelete, ...cardProps }) {
+  const [expanded, setExpanded] = useState(false)
+
+  // Group by season year, sorted newest first
+  const byYear = {}
+  for (const l of leagues) {
+    const year = getLeagueYear(l) ?? 'Other'
+    if (!byYear[year]) byYear[year] = []
+    byYear[year].push(l)
+  }
+  const years = Object.keys(byYear).sort((a, b) => {
+    if (a === 'Other') return 1
+    if (b === 'Other') return -1
+    return Number(b) - Number(a)
+  })
+
+  return (
+    <div className="mt-3">
+      <button
+        onClick={() => setExpanded(p => !p)}
+        className="text-xs font-mono text-gray-600 hover:text-gray-400 transition-colors"
+      >
+        {expanded ? '↑' : '↓'} Archived ({leagues.length})
+      </button>
+      {expanded && (
+        <div className="mt-3 space-y-5">
+          {years.map(year => (
+            <div key={year}>
+              <div className="flex items-center gap-3 mb-2">
+                <span className="text-xs font-mono text-gray-700">
+                  {year === 'Other' ? 'Other' : formatSeasonYear(Number(year), sport)}
+                </span>
+                <div className="flex-1 border-t border-border/40" />
+              </div>
+              <div className="space-y-3">
+                {byYear[year].map((league) => (
+                  <LeagueCard
+                    key={league.id}
+                    league={league}
+                    confirmingDelete={confirmDelete === league.id}
+                    {...cardProps}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, onEnterSeason, onEdit, onDelete, onCancelDelete, archiveLeague, onUnarchive }) {
   const { config, status, draft } = league
-  const { updateLeagueConfig, setLeagueStatus, importDraft } = useLeagueStore()
+  const { updateLeagueConfig, importDraft } = useLeagueStore()
   const pickCount = draft.picks.length
   const round = pickCount > 0 ? Math.ceil(pickCount / config.numTeams) : 0
   const isSeason = status === 'season'
-  const draftComplete = Boolean(config.draftSynced) || status === 'complete'
-  const showSeasonHub = isSeason || draftComplete
+  const isDrafting = status === 'drafting'
+  const isArchived = status === 'complete'
+  const draftComplete = Boolean(config.draftSynced) || isSeason || isArchived
+  const showSeasonHub = isSeason || isArchived || draftComplete
 
   const [picker, setPicker] = useState({ open: false, loading: false, leagues: [], error: null })
   const [syncState, setSyncState] = useState({ loading: false, error: null })
@@ -138,7 +271,8 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
   const openPicker = async () => {
     setPicker({ open: true, loading: true, leagues: [], error: null })
     try {
-      const res = await fetch('/api/yahoo/my-leagues')
+      const sport = config.sport ?? 'nba'
+      const res = await fetch(`/api/yahoo/my-leagues?sport=${sport}`)
       const data = await res.json()
       if (!res.ok) throw new Error(data.error ?? 'Failed to load leagues')
       setPicker({ open: true, loading: false, leagues: data.leagues, error: null })
@@ -148,14 +282,19 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
   }
 
   const selectLeague = (yl) => {
-    updateLeagueConfig(league.id, { yahooLeagueKey: yl.leagueKey, yahooLeagueName: yl.name })
+    updateLeagueConfig(league.id, {
+      yahooLeagueKey: yl.leagueKey,
+      yahooLeagueName: yl.name,
+      ...(yl.season != null && { yahooSeason: yl.season }),
+    })
     setPicker({ open: false, loading: false, leagues: [], error: null })
   }
 
   const syncDraft = async () => {
     setSyncState({ loading: true, error: null })
     try {
-      const res = await fetch(`/api/yahoo/sync-draft?leagueKey=${encodeURIComponent(config.yahooLeagueKey)}`)
+      const sport = config.sport ?? 'nba'
+      const res = await fetch(`/api/yahoo/sync-draft?leagueKey=${encodeURIComponent(config.yahooLeagueKey)}&sport=${sport}`)
       const data = await res.json()
       if (!res.ok) throw new Error(data.error ?? 'Sync failed')
       importDraft(league.id, data.picks, data.draftPosition)
@@ -179,35 +318,35 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
           </div>
           <div className="text-xs text-gray-500 mt-0.5 font-mono">
             {config.numTeams} teams · Pick {config.draftPosition} · {config.scoringFormat?.toUpperCase() ?? '9CAT'}
-            {!draftComplete && pickCount > 0 && ` · R${round} P${pickCount + 1}`}
+            {isDrafting && pickCount > 0 && ` · R${round} P${pickCount + 1}`}
           </div>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
           {showSeasonHub ? (
             <button
-              onClick={onEnterSeason}
+              onClick={() => onEnterSeason(league.id)}
               className="px-4 py-1.5 bg-blue-600 text-white rounded text-xs font-semibold hover:bg-blue-500 transition-colors"
             >
               Season Hub
             </button>
           ) : (
             <button
-              onClick={onEnterDraft}
+              onClick={() => onEnterDraft(league.id)}
               className="px-4 py-1.5 bg-pick text-white rounded text-xs font-semibold hover:bg-green-500 transition-colors"
             >
               Draft Board
             </button>
           )}
           <button
-            onClick={onEdit}
+            onClick={() => onEdit(league.id)}
             className="px-3 py-1.5 border border-border text-gray-400 rounded text-xs hover:text-gray-200 hover:border-gray-400 transition-colors"
           >
             Edit
           </button>
           {showSeasonHub && (
             <button
-              onClick={onEnterDraft}
+              onClick={() => onEnterDraft(league.id)}
               className="px-3 py-1.5 border border-border text-gray-600 rounded text-xs hover:text-gray-400 hover:border-gray-400 transition-colors"
             >
               ← Draft
@@ -216,7 +355,7 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
         </div>
       </div>
 
-      {/* Bottom row: Yahoo (left) + Delete (right) */}
+      {/* Bottom row: Yahoo (left) + archive/delete (right) */}
       <div className="mt-3 pt-3 border-t border-border flex items-start justify-between gap-4">
 
         {/* Yahoo side */}
@@ -266,7 +405,7 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
                     {picker.loading && <p className="text-xs text-gray-500 font-mono">Loading leagues…</p>}
                     {picker.error && <p className="text-xs text-red-400">{picker.error}</p>}
                     {!picker.loading && !picker.error && picker.leagues.length === 0 && (
-                      <p className="text-xs text-gray-500">No active NBA leagues found.</p>
+                      <p className="text-xs text-gray-500">No active leagues found.</p>
                     )}
                     {!picker.loading && picker.leagues.length > 0 && (
                       <div className="flex flex-col gap-1 mt-1">
@@ -289,12 +428,28 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
           )}
         </div>
 
-        {/* Delete side */}
-        <div className="shrink-0">
+        {/* Archive + Delete side */}
+        <div className="shrink-0 flex items-center gap-3">
+          {isSeason && (
+            <button
+              onClick={() => archiveLeague(league.id)}
+              className="text-xs text-gray-600 hover:text-gray-400 transition-colors"
+            >
+              Archive
+            </button>
+          )}
+          {isArchived && (
+            <button
+              onClick={() => onUnarchive(league.id)}
+              className="text-xs text-gray-600 hover:text-gray-400 transition-colors"
+            >
+              Restore
+            </button>
+          )}
           {confirmingDelete ? (
             <div className="flex items-center gap-2">
               <button
-                onClick={onDelete}
+                onClick={() => onDelete(league.id)}
                 className="px-3 py-1 bg-injury text-white rounded text-xs font-semibold hover:bg-red-700 transition-colors"
               >
                 Confirm
@@ -308,7 +463,7 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
             </div>
           ) : (
             <button
-              onClick={onDelete}
+              onClick={() => onDelete(league.id)}
               className="text-xs text-gray-600 hover:text-injury transition-colors"
             >
               Delete
