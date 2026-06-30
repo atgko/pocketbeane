@@ -64,6 +64,7 @@ function extractJSON(text) {
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
 
+  try {
   const token = await getValidToken(req, res)
   if (!token) return res.status(401).json({ error: 'Not connected to Yahoo' })
 
@@ -80,7 +81,8 @@ export default async function handler(req, res) {
   }
 
   const scoreboardSection = leagueArr[1]?.scoreboard
-  const weekNum = scoreboardSection?.week ?? '?'
+  const firstMatchup = scoreboardSection?.matchups?.['0']?.matchup
+  const weekNum = scoreboardSection?.week ?? firstMatchup?.week ?? '?'
 
   // Find user's matchup in the scoreboard — try both nesting patterns Yahoo uses
   const userTeamKey = leagueRosters.userTeamKey
@@ -93,10 +95,16 @@ export default async function handler(req, res) {
     const matchupEntry = matchupsObj[i]?.matchup
     if (!matchupEntry) continue
 
-    // matchup is an array: [meta_obj, { teams: {...} }]
+    // Yahoo returns teams at matchupEntry.teams, matchupEntry["0"].teams, or inside an array
     let teamsObj = null
-    for (const entry of matchupEntry) {
-      if (entry?.teams) { teamsObj = entry.teams; break }
+    if (Array.isArray(matchupEntry)) {
+      for (const entry of matchupEntry) {
+        if (entry?.teams) { teamsObj = entry.teams; break }
+      }
+    } else if (matchupEntry?.teams) {
+      teamsObj = matchupEntry.teams
+    } else if (matchupEntry?.['0']?.teams) {
+      teamsObj = matchupEntry['0'].teams
     }
     if (!teamsObj) continue
 
@@ -115,7 +123,29 @@ export default async function handler(req, res) {
   }
 
   if (!opponentTeamKey) {
-    return res.status(404).json({ error: 'Could not find your matchup this week. Try refreshing your rosters first.' })
+    // Collect debug info so we can diagnose the mismatch
+    const debugMatchups = []
+    for (let i = 0; i < matchupCount; i++) {
+      const entry = matchupsObj[i]?.matchup
+      const teamsSection = Array.isArray(entry)
+        ? entry.find(e => e?.teams)?.teams
+        : entry?.teams
+      const count = teamsSection?.count ?? 0
+      const keys = []
+      for (let j = 0; j < count; j++) {
+        const t = teamsSection[j]?.team
+        const m = Array.isArray(t?.[0]) ? extractMeta(t[0]) : {}
+        keys.push(m.team_key ?? `[no key at ${j}]`)
+      }
+      debugMatchups.push(keys)
+    }
+    console.error('[matchup-advice] userTeamKey:', userTeamKey)
+    console.error('[matchup-advice] scoreboard matchup team keys:', JSON.stringify(debugMatchups))
+    console.error('[matchup-advice] raw matchupsObj[0]:', JSON.stringify(matchupsObj?.[0]))
+    return res.status(404).json({
+      error: 'Could not find your matchup this week. Try refreshing your rosters first.',
+      debug: { userTeamKey, scoreboardTeamKeys: debugMatchups, rawMatchup0: matchupsObj?.[0] ?? null },
+    })
   }
 
   // Load player data for enriching rosters
@@ -178,18 +208,19 @@ ${oppRosterLines.join('\n')}
 
 Give me the matchup breakdown.`
 
-  try {
-    const message = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 700,
-      system: [{ type: 'text', text: systemPrompt }],
-      messages: [{ role: 'user', content: userPrompt }],
-    })
-    const text = message.content[0]?.text ?? ''
-    const parsed = extractJSON(text)
-    res.json({ ...parsed, week: weekNum })
+  const message = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 700,
+    system: [{ type: 'text', text: systemPrompt }],
+    messages: [{ role: 'user', content: userPrompt }],
+  })
+  const text = message.content[0]?.text ?? ''
+  const parsed = extractJSON(text)
+  res.json({ ...parsed, week: weekNum })
+
   } catch (err) {
-    console.error('[matchup-advice]', err)
-    res.status(500).json({ error: err.message })
+    const cause = err.cause?.message ?? err.cause ?? ''
+    console.error('[matchup-advice] error:', err.message, cause ? `| cause: ${cause}` : '')
+    res.status(500).json({ error: cause ? `${err.message}: ${cause}` : err.message })
   }
 }

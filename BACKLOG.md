@@ -1,6 +1,6 @@
 # PocketBeane — Active Backlog
 
-Last updated: 2026-06-30 (Y-05 — waiver wire + matchup advisors built, UAT pending; start/sit is next sub-feature after UAT)
+Last updated: 2026-06-30 (Y-05 waiver wire + matchup advisor UAT complete; T1/T2/T3 current-season data + email tiers added as next priority)
 
 Items are grouped by dependency tier. Within each tier, order reflects rough priority / logical sequencing.
 
@@ -82,8 +82,8 @@ button for in-season updates.
 
 | Sub-feature | Status | Description |
 |---|---|---|
-| Waiver wire advisor | Built — UAT pending | `/api/season/waiver-advice` — diffs all team rosters vs players.json, top 25 FAs by ADP, Claude add/drop recs |
-| Head-to-head matchup advisor | Built — UAT pending | `/api/season/matchup-advice` — fetches scoreboard, finds opponent, Claude category-by-category breakdown |
+| Waiver wire advisor | ✅ UAT complete | `/api/season/waiver-advice` — diffs all team rosters vs players.json, top 25 FAs by ADP, Claude add/drop recs |
+| Head-to-head matchup advisor | ✅ UAT complete | `/api/season/matchup-advice` — fetches scoreboard, finds opponent, Claude category-by-category breakdown |
 | Start/sit advisor | Next (after UAT) | Optimal weekly lineup given schedule, matchup, recent form, injury status |
 | Trade analyzer | 4th (own sprint) | Input give/receive — Claude evaluates net category impact, positional balance, buy-low/sell-high signal |
 | Trade value index | Later | Running power ranking of roster trade value — who to sell high, buy low, or hold |
@@ -95,6 +95,226 @@ button for in-season updates.
 - Both return structured JSON rendered in Season Hub panels: headline/moves for waiver, outlook/win-lose-tossup/keyNote for matchup.
 
 **Prerequisite:** Y-01 ✓, Y-02 ✓, Y-04 ✓
+
+---
+
+---
+
+## Current Season Data Model (T1) + AI Integration (T2) + Email (T3)
+
+*Added 2026-06-30. These take priority over Y-05 start/sit and trade analyzer. T1 → T2 → T3 in sequence; T1 and T3 do not depend on each other and can be parallelized.*
+
+*Note on T3 vs PMF-05: PMF-05 (deferred) is freemium commercial email capture infrastructure. T3 is email as a product feature for personal in-season use — waiver wire digest and draft recap. Architecturally distinct, scoped for personal use now, not gated behind a paywall.*
+
+---
+
+### T1-1 · Current Season Data Schema
+
+**Goal:** Extend the player data model to support a current-season snapshot alongside the frozen prior-season stats.
+
+**Schema to add — `current_season` object per player:**
+```json
+"current_season": {
+  "as_of_date": "2026-11-15",
+  "pts": 14.2,
+  "reb": 6.1,
+  "ast": 4.8,
+  "stl": 1.1,
+  "blk": 0.6,
+  "to": 2.9,
+  "fg_pct": 0.471,
+  "ft_pct": 0.802,
+  "three_pm": 1.8,
+  "gp": 12,
+  "trend": "declining",
+  "source": "hermes_weekly_pull",
+  "note": null
+}
+```
+
+**Field notes:**
+- `as_of_date` — required, always present; used for staleness transparency in UI and AI prompts
+- `trend` — one of `"improving" | "stable" | "declining"` — computed in this codebase (T1-3), not set externally
+- `source` — `"hermes_weekly_pull"` or `"manual_entry"` — provenance tracking for data quality debugging
+- `note` — nullable, reserved for future use (e.g. "role change", "injury return"); leave null, no UI needed yet
+
+**Storage:** `current_season` is an optional/nullable field on each player object in `players.json`. All existing reads must handle `null` gracefully.
+
+**Acceptance criteria:**
+- [ ] Schema documented (players.json or schema reference file — match existing project convention)
+- [ ] At least 5 sample players manually populated with `current_season` data for testing
+- [ ] Draft board, recommendations, and Season Hub do not break when `current_season` is null
+
+---
+
+### T1-2 · Data Ingestion / Merge Script
+
+**Goal:** Build a CLI script that safely merges incoming current-season snapshots into `players.json` without touching any other field.
+
+**Input shape:**
+```json
+{
+  "as_of_date": "2026-11-15",
+  "players": [
+    { "id": "nikola-jokic", "pts": 27.1, "reb": 13.2, ... }
+  ]
+}
+```
+
+**What to build:** `scripts/mergeCurrentSeasonData.js`, runnable as:
+```
+node scripts/mergeCurrentSeasonData.js path/to/incoming-data.json
+```
+
+**Behaviour:**
+- Validates incoming file against T1-1 schema — rejects and logs clearly if malformed (before any writes)
+- Matches players by `id` field
+- On match: updates `current_season`, sets `source: "hermes_weekly_pull"`, computes `trend` (T1-3)
+- On no match: skips with a warning log, continues processing the rest (do not fail the batch)
+- Writes updated `players.json` back to disk
+- Outputs a clear console summary: players updated, players skipped with reasons, validation errors
+
+**Critical safety:** Script must NEVER modify `prior_season`, `adp`, `injury_risk`, or any other existing field — only `current_season`. A test must verify this.
+
+**Acceptance criteria:**
+- [ ] Runs from command line with a file path argument
+- [ ] Successfully matches and updates players by ID
+- [ ] Unmatched players skipped with warning, no crash
+- [ ] Malformed input rejected before any writes
+- [ ] No field other than `current_season` is ever modified — verified with a test
+- [ ] Console summary is clear and scannable
+- [ ] Test run with: valid players + one unmatched ID + one malformed entry — all three cases handled correctly in one run
+
+---
+
+### T1-3 · Trend Calculation Logic
+
+**Goal:** Pure function that computes whether a player is trending up, down, or stable vs. their prior-season baseline.
+
+**Signature:** `calculateTrend(priorSeason, currentSeason)` → `"improving" | "stable" | "declining"`
+
+**Logic:** Compare weighted core stats (`pts`, `reb`, `ast` as primary signal — most stable cross-position indicators). More than 15% combined deviation in either direction = trending; otherwise `"stable"`. Threshold is a named constant, not a magic number.
+
+**Called from:** Inside the T1-2 merge script, every time a player's `current_season` is updated.
+
+**Acceptance criteria:**
+- [ ] Function is pure and unit-testable (no side effects, no API calls)
+- [ ] Test cases: significantly improving, significantly declining, roughly stable
+- [ ] Threshold is a named constant (e.g. `TREND_THRESHOLD = 0.15`)
+
+---
+
+### T2-1 · Inject Current Season Data into AI Prompts
+
+**Goal:** Make waiver wire, trade analyzer, and matchup advisors aware of both prior-season baseline and current-season performance.
+
+**Applies to:** Waiver wire advisor, trade analyzer, matchup advisor. Does NOT apply to draft-day engine — that is correctly scoped to `prior_season` + ADP only.
+
+**Per-player data block to add to prompts:**
+```
+Player: [name]
+Prior season average: [prior_season stats summary]
+Current season average (as of [as_of_date], [gp] games played): [current_season stats summary]
+Trend: [trend]
+```
+
+**Reasoning instruction to add:**
+> When current_season data is available, reason explicitly about any gap between prior_season and current_season performance. Consider: buy-low opportunity (underperforming, likely to regress upward), genuine decline (role change/age/injury, likely to continue), or sell-high opportunity (overperformance unlikely to sustain). If current_season is unavailable or as_of_date is more than 14 days old, note that the assessment is based on prior season data only.
+
+**Acceptance criteria:**
+- [ ] Trade analyzer visibly references current vs. prior season gaps when `current_season` exists for involved players
+- [ ] Waiver wire advisor surfaces trending players appropriately
+- [ ] `current_season: null` falls back to prior season gracefully — no broken prompt text
+- [ ] Staleness check: if `as_of_date` is 14+ days old, recommendation includes a staleness caveat
+
+---
+
+### T2-2 · Surface Trend and Staleness in UI
+
+**Goal:** Make current-season data and its freshness visible in Season Hub wherever player data is shown.
+
+**What to build:**
+- Trend arrow/icon (↑ / → / ↓) next to player name when `current_season` exists
+- Small "Stats as of [date]" text near any current-season figures shown
+- If `current_season` is null or stale (14+ days old): subtle "prior season data" label
+
+**Design constraint:** Lightweight — small badge/icon addition, not a screen redesign.
+
+**Acceptance criteria:**
+- [ ] Trend indicator visible next to relevant players in Season Hub views
+- [ ] "Stats as of [date]" shown wherever current_season figures are displayed
+- [ ] Stale or missing data clearly distinguished from fresh data
+- [ ] No layout breakage on existing Season Hub screens
+
+---
+
+### T3-1 · Resend Integration via Serverless Function
+
+**Goal:** Email sending capability as a serverless function, following the same security pattern as `/api/recommend`.
+
+**What to build:**
+- New function: `pages/api/send-email.js`
+- Accepts: recipient email, subject, body (HTML or plain text), email type identifier for logging
+- `RESEND_API_KEY` in Vercel env vars — never client-side exposed
+- Manual step: create Resend account and obtain API key
+
+**Acceptance criteria:**
+- [ ] Test email successfully sends to a real address
+- [ ] API key not exposed in any client-side code or network request
+- [ ] Function returns clear success/failure response
+- [ ] Failed sends logged with enough detail to debug
+
+---
+
+### T3-2 · User Email Storage (Personal Use)
+
+**Goal:** Store an email address per user so PocketBeane knows where to send digests.
+
+**What to build:** Simple email input in a settings/profile area. Stored in localStorage alongside existing PocketBeane state. Optional — Season Hub functions fully without one set.
+
+**Acceptance criteria:**
+- [ ] User can enter and save an email address in settings
+- [ ] Email persists across sessions via localStorage
+- [ ] No email set → digest emails simply don't send; no broken states
+
+---
+
+### T3-3 · Monday Morning Waiver Wire Digest Email *(priority)*
+
+**Goal:** Deliver waiver wire recommendations to the user's inbox — the highest-value email use case from PMF research.
+
+**What to build:** Manual trigger button in Season Hub: "Email me this week's waiver wire recommendations". Button triggers existing waiver wire advisor logic, formats output as email body, calls `/api/send-email`.
+
+**Note on scheduling:** Do NOT build a serverless cron inside Vercel for this. Manual trigger is correct MVP scope. Automatic weekly scheduling is a future integration point (likely Hermes calling this endpoint on a schedule), not in scope here.
+
+**Email template:**
+- Subject: `"Your Week [X] Waiver Wire Picks — [League Name]"`
+- Content: top 3 recommendations with one-line rationale each, league name clearly shown
+- PocketBeane voice — scannable digest, not a report
+
+**Acceptance criteria:**
+- [ ] Button in Season Hub triggers digest generation and send
+- [ ] Email arrives with correct, current waiver wire recommendations
+- [ ] Works correctly for both leagues independently (correct league data, clearly labeled)
+- [ ] No email saved → button shows prompt to add email instead of failing silently
+- [ ] In-app confirmation shown after successful send
+
+---
+
+### T3-4 · Draft DNA Recap Email *(lower priority)*
+
+**Goal:** Automatically send the Draft DNA card recap via email after draft completion.
+
+**Trigger:** Draft marked complete AND email already saved in settings. If no email saved, skip silently — do not interrupt the Draft Recap flow.
+
+**Email content:** Archetype name, tagline, top category edges, bold prediction — mirrors the shareable card.
+
+**Acceptance criteria:**
+- [ ] Email sends automatically on draft completion if email is set
+- [ ] Draft Recap flow completely unaffected if no email is set
+- [ ] Email content matches in-app Draft DNA card
+
+**Priority note:** Build after T3-3 is solid. The waiver wire digest is the retention driver; this reinforces the shareable draft moment but is not where core product value lives.
 
 ---
 
