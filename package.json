@@ -8,7 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "build-players": "node scripts/build-players.js",
-    "build-players:apply": "node scripts/build-players.js --apply-fixes"
+    "build-players:apply": "node scripts/build-players.js --apply-fixes",
+    "merge-current-season": "node scripts/mergeCurrentSeasonData.js",
+    "test:calculate-trend": "node scripts/test/calculateTrend.test.js",
+    "test:merge-current-season": "node scripts/test/mergeCurrentSeasonData.test.js",
+    "test": "npm run test:calculate-trend && npm run test:merge-current-season"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.95.2",

@@ -3,8 +3,49 @@ import { useRouter } from 'next/router'
 import { useState, useEffect, useRef } from 'react'
 import useLeagueStore from '@/store/leagueStore'
 import { useYahooAuth } from '@/hooks/useYahooAuth'
+import nbaPlayers from '@/data/players.json'
+import mlbPlayers from '@/data/mlb_players.json'
+import { normalizeName } from '@/utils/playerName'
+import { STALENESS_DAYS } from '@/ai/seasonStats'
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000
+
+const TREND_STYLES = {
+  improving: { icon: '↑', color: 'text-green-400' },
+  declining: { icon: '↓', color: 'text-red-400' },
+  stable:    { icon: '→', color: 'text-gray-400' },
+}
+
+function findPlayerByName(players, name) {
+  if (!name) return null
+  const target = normalizeName(name)
+  return players.find(p => normalizeName(p.name) === target) ?? null
+}
+
+function isCurrentSeasonStale(asOfDate) {
+  if (!asOfDate) return false
+  const ageDays = (Date.now() - new Date(asOfDate).getTime()) / (1000 * 60 * 60 * 24)
+  return ageDays >= STALENESS_DAYS
+}
+
+// Trend indicator for current-season data — renders nothing when current_season
+// doesn't exist for a player (no badge = no in-season snapshot yet, rather than
+// labeling every player without one).
+function TrendBadge({ player }) {
+  const cs = player?.current_season
+  if (!cs) return null
+  const style = TREND_STYLES[cs.trend] ?? TREND_STYLES.stable
+  const stale = isCurrentSeasonStale(cs.as_of_date)
+  const dateLabel = new Date(cs.as_of_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })
+  return (
+    <span
+      className={`ml-1 text-[10px] font-mono whitespace-nowrap ${stale ? 'text-gray-600' : style.color}`}
+      title={`Current season stats as of ${cs.as_of_date} (${cs.gp} GP)${stale ? ' — stale, treat as prior-season-only' : ''}`}
+    >
+      {style.icon} {stale ? `stale·${dateLabel}` : dateLabel}
+    </span>
+  )
+}
 
 const COMING_SOON = [
   { title: 'Start / Sit Advisor', description: 'Optimal weekly lineup given schedule, matchup, recent form, and injury status.' },
@@ -34,12 +75,13 @@ function WaiverPanel({ league, rosters }) {
   const [advice, setAdvice] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const sport = league.config.sport ?? 'nba'
+  const players = sport === 'mlb' ? mlbPlayers : nbaPlayers
 
   async function handleGetAdvice() {
     setLoading(true)
     setError(null)
     try {
-      const sport = league.config.sport ?? 'nba'
       const res = await fetch('/api/season/waiver-advice', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -93,23 +135,33 @@ function WaiverPanel({ league, rosters }) {
           {advice.headline && (
             <p className="text-xs text-gray-400 italic leading-relaxed">{advice.headline}</p>
           )}
-          {advice.moves?.map((move, i) => (
-            <div key={i} className="border border-border rounded-md px-4 py-3">
-              <div className="flex flex-wrap items-center gap-2 mb-2">
-                <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${PRIORITY_STYLES[move.priority] ?? 'bg-gray-800 text-gray-500'}`}>
-                  {move.priority ?? 'add'}
-                </span>
-                <span className="text-xs text-green-400 font-medium">+ {move.add}</span>
-                {move.drop && (
-                  <>
-                    <span className="text-gray-700 text-xs">·</span>
-                    <span className="text-xs text-red-400">− {move.drop}</span>
-                  </>
-                )}
+          {advice.moves?.map((move, i) => {
+            const addPlayer = findPlayerByName(players, move.add)
+            const dropPlayer = move.drop ? findPlayerByName(players, move.drop) : null
+            return (
+              <div key={i} className="border border-border rounded-md px-4 py-3">
+                <div className="flex flex-wrap items-center gap-2 mb-2">
+                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${PRIORITY_STYLES[move.priority] ?? 'bg-gray-800 text-gray-500'}`}>
+                    {move.priority ?? 'add'}
+                  </span>
+                  <span className="text-xs text-green-400 font-medium flex items-center">
+                    + {move.add}
+                    <TrendBadge player={addPlayer} />
+                  </span>
+                  {move.drop && (
+                    <>
+                      <span className="text-gray-700 text-xs">·</span>
+                      <span className="text-xs text-red-400 flex items-center">
+                        − {move.drop}
+                        <TrendBadge player={dropPlayer} />
+                      </span>
+                    </>
+                  )}
+                </div>
+                <p className="text-xs text-gray-400 leading-relaxed">{move.reason}</p>
               </div>
-              <p className="text-xs text-gray-400 leading-relaxed">{move.reason}</p>
-            </div>
-          ))}
+            )
+          })}
         </div>
       )}
     </div>

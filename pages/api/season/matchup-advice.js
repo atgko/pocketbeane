@@ -3,18 +3,11 @@ import { getValidToken } from '@/utils/yahooAuth'
 import fs from 'fs'
 import path from 'path'
 import { getSportConfig } from '@/config/sports'
+import { formatStats, formatCurrentSeasonLine, CURRENT_SEASON_REASONING_INSTRUCTION } from '@/ai/seasonStats'
+import { normalizeName } from '@/utils/playerName'
 
 const client = new Anthropic()
 const BASE = 'https://fantasysports.yahooapis.com/fantasy/v2'
-
-function normalizeName(name) {
-  return name
-    .toLowerCase()
-    .replace(/[.']/g, '')
-    .replace(/\b(jr|sr|ii|iii|iv)\b/g, '')
-    .replace(/\s+/g, ' ')
-    .trim()
-}
 
 function extractMeta(arr) {
   if (!Array.isArray(arr)) return {}
@@ -30,22 +23,6 @@ async function yahooFetch(token, endpoint) {
     throw new Error(`Yahoo API ${res.status}: ${text}`)
   }
   return res.json()
-}
-
-function fmt(val, isPct) {
-  if (val == null) return '—'
-  return isPct ? val.toFixed(3) : val.toFixed(1)
-}
-
-function formatStats(player, sport) {
-  const s = player?.prior_season
-  if (!s) return 'rookie/no stats'
-  if (sport === 'mlb') {
-    const isPitcher = player.yahoo_positions?.some(p => ['SP', 'RP', 'P'].includes(p))
-    if (isPitcher) return `w=${fmt(s.w,false)} sv=${fmt(s.sv,false)} k=${fmt(s.k,false)} era=${fmt(s.era,false)} whip=${fmt(s.whip,false)}`
-    return `r=${fmt(s.r,false)} hr=${fmt(s.hr,false)} rbi=${fmt(s.rbi,false)} sb=${fmt(s.sb,false)} avg=${fmt(s.avg,true)}`
-  }
-  return `pts=${fmt(s.pts,false)} reb=${fmt(s.reb,false)} ast=${fmt(s.ast,false)} stl=${fmt(s.stl,false)} blk=${fmt(s.blk,false)} 3pm=${fmt(s.three_pm,false)} fg%=${fmt(s.fg_pct,true)} ft%=${fmt(s.ft_pct,true)}`
 }
 
 function extractJSON(text) {
@@ -171,7 +148,7 @@ export default async function handler(req, res) {
     return roster.map(r => {
       const p = (r.playerId && playerById[r.playerId]) || playerByName[normalizeName(r.name)]
       const injuryTag = p?.injury_risk ? ' ⚠️' : ''
-      return `${r.name}(${r.positions ?? '?'}${injuryTag}): ${p ? formatStats(p, sport) : 'no stats'}`
+      return `${r.name}(${r.positions ?? '?'}${injuryTag}): ${p ? formatStats(p, sport) : 'no stats'}${p ? formatCurrentSeasonLine(p, sport) : ''}`
     })
   }
 
@@ -190,9 +167,11 @@ export default async function handler(req, res) {
 
   const systemPrompt = `You are Billy Beane previewing a ${sportLabel} fantasy matchup.
 
-Compare both rosters player-by-player. Determine which categories my team wins, loses, or is a tossup based on the stats. Give an honest 2-3 sentence matchup narrative (Beane voice — direct, data-focused) and one specific lineup or roster note for the week.
+Compare both rosters player-by-player. Determine which categories my team wins, loses, or is a tossup based on the stats. Weigh CURRENT season performance over prior-season baseline when both are available — a player trending down in-season may not deliver their prior-season numbers this week, and vice versa. Give an honest 2-3 sentence matchup narrative (Beane voice — direct, data-focused) and one specific lineup or roster note for the week.
 
 All categories in loseCategories and tossupCategories must also appear in winCategories+loseCategories+tossupCategories — don't omit any league categories.
+
+${CURRENT_SEASON_REASONING_INSTRUCTION}
 
 Reply ONLY with raw JSON — no markdown, no extra text:
 {"opponent":"Team Name","outlook":"2-3 sentence narrative","winCategories":["R","HR"],"loseCategories":["ERA","WHIP"],"tossupCategories":["RBI","AVG"],"keyNote":"1 sentence action item"}`

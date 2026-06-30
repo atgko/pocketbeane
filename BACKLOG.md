@@ -141,9 +141,9 @@ button for in-season updates.
 **Storage:** `current_season` is an optional/nullable field on each player object in `players.json`. All existing reads must handle `null` gracefully.
 
 **Acceptance criteria:**
-- [ ] Schema documented (players.json or schema reference file — match existing project convention)
-- [ ] At least 5 sample players manually populated with `current_season` data for testing
-- [ ] Draft board, recommendations, and Season Hub do not break when `current_season` is null
+- [x] Schema documented (players.json or schema reference file — match existing project convention)
+- [x] At least 5 sample players manually populated with `current_season` data for testing
+- [x] Draft board, recommendations, and Season Hub do not break when `current_season` is null — verified: all consumers (PlayerPool, RecommendationPanel, RosterView, DraftComplete, DraftRecap, scarcity.js, matchup-advice.js, waiver-advice.js, recommend.js) destructure specific fields or route through `formatStats()`/`enrichRoster()`, never serialize full player objects
 
 ---
 
@@ -177,13 +177,15 @@ node scripts/mergeCurrentSeasonData.js path/to/incoming-data.json
 **Critical safety:** Script must NEVER modify `prior_season`, `adp`, `injury_risk`, or any other existing field — only `current_season`. A test must verify this.
 
 **Acceptance criteria:**
-- [ ] Runs from command line with a file path argument
-- [ ] Successfully matches and updates players by ID
-- [ ] Unmatched players skipped with warning, no crash
-- [ ] Malformed input rejected before any writes
-- [ ] No field other than `current_season` is ever modified — verified with a test
-- [ ] Console summary is clear and scannable
-- [ ] Test run with: valid players + one unmatched ID + one malformed entry — all three cases handled correctly in one run
+- [x] Runs from command line with a file path argument
+- [x] Successfully matches and updates players by ID
+- [x] Unmatched players skipped with warning, no crash
+- [x] Malformed input rejected before any writes
+- [x] No field other than `current_season` is ever modified — verified with a test
+- [x] Console summary is clear and scannable
+- [x] Test run with: valid players + one unmatched ID + one malformed entry — all three cases handled correctly in one run
+
+**Implemented:** `scripts/mergeCurrentSeasonData.js` + `npm run merge-current-season -- <file>`. Tests in `scripts/test/mergeCurrentSeasonData.test.js` (`npm run test:merge-current-season`), including a CLI integration test against temp files.
 
 ---
 
@@ -198,17 +200,19 @@ node scripts/mergeCurrentSeasonData.js path/to/incoming-data.json
 **Called from:** Inside the T1-2 merge script, every time a player's `current_season` is updated.
 
 **Acceptance criteria:**
-- [ ] Function is pure and unit-testable (no side effects, no API calls)
-- [ ] Test cases: significantly improving, significantly declining, roughly stable
-- [ ] Threshold is a named constant (e.g. `TREND_THRESHOLD = 0.15`)
+- [x] Function is pure and unit-testable (no side effects, no API calls)
+- [x] Test cases: significantly improving, significantly declining, roughly stable
+- [x] Threshold is a named constant (e.g. `TREND_THRESHOLD = 0.15`)
+
+**Implemented:** `scripts/calculateTrend.js`. Built alongside T1-2 since the merge script has a hard dependency on it. Tests in `scripts/test/calculateTrend.test.js` (`npm run test:calculate-trend`).
 
 ---
 
 ### T2-1 · Inject Current Season Data into AI Prompts
 
-**Goal:** Make waiver wire, trade analyzer, and matchup advisors aware of both prior-season baseline and current-season performance.
+**Goal:** Make waiver wire, trade analyzer, matchup, and start/sit advisors aware of both prior-season baseline and current-season performance.
 
-**Applies to:** Waiver wire advisor, trade analyzer, matchup advisor. Does NOT apply to draft-day engine — that is correctly scoped to `prior_season` + ADP only.
+**Applies to:** Waiver wire advisor, trade analyzer, matchup advisor, start/sit advisor. Does NOT apply to draft-day engine — that is correctly scoped to `prior_season` + ADP only.
 
 **Per-player data block to add to prompts:**
 ```
@@ -222,10 +226,13 @@ Trend: [trend]
 > When current_season data is available, reason explicitly about any gap between prior_season and current_season performance. Consider: buy-low opportunity (underperforming, likely to regress upward), genuine decline (role change/age/injury, likely to continue), or sell-high opportunity (overperformance unlikely to sustain). If current_season is unavailable or as_of_date is more than 14 days old, note that the assessment is based on prior season data only.
 
 **Acceptance criteria:**
-- [ ] Trade analyzer visibly references current vs. prior season gaps when `current_season` exists for involved players
-- [ ] Waiver wire advisor surfaces trending players appropriately
-- [ ] `current_season: null` falls back to prior season gracefully — no broken prompt text
-- [ ] Staleness check: if `as_of_date` is 14+ days old, recommendation includes a staleness caveat
+- [ ] Trade analyzer visibly references current vs. prior season gaps when `current_season` exists for involved players — **deferred**, trade analyzer doesn't exist yet (Y-05 tier-4, own sprint). Apply this same pattern (`formatCurrentSeasonLine` + `CURRENT_SEASON_REASONING_INSTRUCTION` from `src/ai/seasonStats.js`) when it's built.
+- [ ] Start/sit advisor weighs current-season form alongside prior-season baseline when recommending a weekly lineup — **deferred**, start/sit advisor doesn't exist yet (Y-05, next sub-feature after UAT). Apply the same `src/ai/seasonStats.js` pattern when it's built.
+- [x] Waiver wire advisor surfaces trending players appropriately
+- [x] `current_season: null` falls back to prior season gracefully — no broken prompt text
+- [x] Staleness check: if `as_of_date` is 14+ days old, recommendation includes a staleness caveat
+
+**Implemented:** Extracted shared `src/ai/seasonStats.js` (`formatStats`, `formatCurrentSeasonLine`, `CURRENT_SEASON_REASONING_INSTRUCTION`, `STALENESS_DAYS = 14`) — both `waiver-advice.js` and `matchup-advice.js` already duplicated `formatStats`/`fmt`, so the new current-season logic was added there once instead of tripling the duplication. Each roster/FA line now gets a `CURRENT (as of ..., N GP, trend[, STALE])` suffix when `current_season` exists; staleness is computed server-side (not left to the model) and tagged inline. Verified against the 5 real sample players (Jokic/Wembanyama/SGA/Luka/Embiid) — trend labels and stale-tagging both correct.
 
 ---
 
@@ -241,10 +248,14 @@ Trend: [trend]
 **Design constraint:** Lightweight — small badge/icon addition, not a screen redesign.
 
 **Acceptance criteria:**
-- [ ] Trend indicator visible next to relevant players in Season Hub views
-- [ ] "Stats as of [date]" shown wherever current_season figures are displayed
-- [ ] Stale or missing data clearly distinguished from fresh data
-- [ ] No layout breakage on existing Season Hub screens
+- [x] Trend indicator visible next to relevant players in Season Hub views
+- [x] "Stats as of [date]" shown wherever current_season figures are displayed
+- [x] Stale or missing data clearly distinguished from fresh data
+- [x] No layout breakage on existing Season Hub screens
+
+**Implemented:** `TrendBadge` in `pages/season.jsx`, wired into the Waiver Wire Advisor's add/drop player names — the only place individual player names actually render in the current Season Hub (the Y-04 "standings table with expandable rosters" described in this backlog doesn't exist in `season.jsx` as written; the Matchup Advisor only shows category win/lose/tossup badges, no per-player rows). Renders `↑/→/↓ {date}` colored by trend, muted gray + `stale·{date}` prefix when `as_of_date` is 14+ days old (reuses `STALENESS_DAYS` from `src/ai/seasonStats.js`), nothing at all when `current_season` is null — chosen over an explicit "prior season data" label everywhere since only 5/350 players currently have a snapshot and badging all the rest would violate the "lightweight, not a redesign" constraint. Player names are matched back to `players.json` via a shared `normalizeName` (extracted to `src/utils/playerName.js`, deduplicating what `waiver-advice.js`/`matchup-advice.js` each had inline). Verified via a real `/api/season/waiver-advice` call (no Yahoo needed) — Claude recommended Wembanyama/SGA citing their actual current-season numbers, and both names resolved to correct badges (↑ green, → gray). Caught and fixed a real timezone bug in the process: `toLocaleDateString` without `timeZone: 'UTC'` shifted date-only strings back a day on this UTC-6 machine.
+
+Start/sit advisor and trade analyzer don't exist yet — apply the same `TrendBadge` pattern when those are built (see T2-1's deferred notes).
 
 ---
 
