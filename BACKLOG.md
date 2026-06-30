@@ -1,6 +1,6 @@
 # PocketBeane — Active Backlog
 
-Last updated: 2026-06-30 (MLB-01 polish complete — UAT fixes, home page overhaul, Y-05 is next)
+Last updated: 2026-06-30 (Y-05 — waiver wire + matchup advisors built, UAT pending; start/sit is next sub-feature after UAT)
 
 Items are grouped by dependency tier. Within each tier, order reflects rough priority / logical sequencing.
 
@@ -75,24 +75,24 @@ button for in-season updates.
 
 ---
 
-### Y-05 · Season Management Suite ← NEXT
+### Y-05 · Season Management Suite (in progress)
 **Goal:** Full in-season advisor powered by live Yahoo data.
 
-**Sub-features (ship in this order):**
+**Sub-features:**
 
-| Sub-feature | Priority | Description |
+| Sub-feature | Status | Description |
 |---|---|---|
-| Waiver wire advisor | 1st | Recommend adds/drops based on roster gaps, schedule density, recent trend |
-| Head-to-head matchup advisor | 2nd | Weekly outlook vs. current opponent — category projections and lineup suggestions |
-| Start/sit advisor | 3rd | Optimal weekly lineup given schedule, matchup, recent form, injury status |
+| Waiver wire advisor | Built — UAT pending | `/api/season/waiver-advice` — diffs all team rosters vs players.json, top 25 FAs by ADP, Claude add/drop recs |
+| Head-to-head matchup advisor | Built — UAT pending | `/api/season/matchup-advice` — fetches scoreboard, finds opponent, Claude category-by-category breakdown |
+| Start/sit advisor | Next (after UAT) | Optimal weekly lineup given schedule, matchup, recent form, injury status |
 | Trade analyzer | 4th (own sprint) | Input give/receive — Claude evaluates net category impact, positional balance, buy-low/sell-high signal |
-| Trade value index | 5th | Running power ranking of roster trade value — who to sell high, buy low, or hold |
-| League pulse | 6th | Weekly league-wide summary — who's dominating, who's weak, who might be open to trading |
+| Trade value index | Later | Running power ranking of roster trade value — who to sell high, buy low, or hold |
+| League pulse | Later | Weekly league-wide summary — who's dominating, who's weak, who might be open to trading |
 
-**Foundation already in place:**
-- `league.leagueRosters` (from Y-04) provides full team rosters + standings for all 10 teams
-- Season Hub auto-syncs on mount if data is >7 days stale (built during MLB-01 UAT sprint)
-- `sport` field on `leagueConfig` is threaded through all API calls — Y-05 will be sport-agnostic from day one
+**Architecture:**
+- Waiver advice: pure POST (no Yahoo token needed) — uses `leagueRosters` state + players.json. Sport-agnostic (nba/mlb).
+- Matchup advice: POST with Yahoo token — fetches `/league/{key}/scoreboard` for current week opponent, then enriches both rosters with players.json stats.
+- Both return structured JSON rendered in Season Hub panels: headline/moves for waiver, outlook/win-lose-tossup/keyNote for matchup.
 
 **Prerequisite:** Y-01 ✓, Y-02 ✓, Y-04 ✓
 
