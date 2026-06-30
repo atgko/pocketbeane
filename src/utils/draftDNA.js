@@ -136,8 +136,8 @@ export function classifyDraftDNA(userPicks, playerMap, categoryGaps, numTeams, g
   const valuePicks = enriched.filter(e => e.adpDelta >= 10)
 
   // 1. Moneyball GM — 4+ value steals, positive net value
-  const moneyballFired = valuePicks.length >= 4 && netAdpValue > 0
-  log('moneyball_gm', moneyballFired, `valuePicks=${valuePicks.length}(need≥4), netValue=${netAdpValue.toFixed(1)}(need>0)`)
+  const moneyballFired = valuePicks.length >= 5 && netAdpValue > 0
+  log('moneyball_gm', moneyballFired, `valuePicks=${valuePicks.length}(need≥5), netValue=${netAdpValue.toFixed(1)}(need>0)`)
   if (moneyballFired) return ARCHETYPES.moneyball_gm
 
   // 2. Category Surgeon — dominant in 3+ cats, deliberately punting others
