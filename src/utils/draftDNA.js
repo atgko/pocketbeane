@@ -55,6 +55,16 @@ export const ARCHETYPES = {
   },
 }
 
+export function getFallbackPrediction(archetypeId, sport = 'nba') {
+  const mlbOverrides = {
+    architect:     'Consistent production across all categories will quietly put you in playoff position by June.',
+    ceiling_chaser: 'One of your upside picks is going to be the most-discussed player in your league by July.',
+    floor_builder:  'Durability wins leagues in August when everyone else is scrambling for replacements.',
+  }
+  if (sport === 'mlb' && mlbOverrides[archetypeId]) return mlbOverrides[archetypeId]
+  return FALLBACK_PREDICTIONS[archetypeId]
+}
+
 export const FALLBACK_PREDICTIONS = {
   moneyball_gm: 'The value you found on this board will show up in the standings by week 6.',
   category_surgeon: 'Your category focus will be unbeatable in your target stats — opponents won\'t see it coming.',
@@ -111,7 +121,7 @@ export function trackArchetypeStat(archetypeId) {
   } catch {}
 }
 
-export function classifyDraftDNA(userPicks, playerMap, categoryGaps, numTeams, gmProfile = null) {
+export function classifyDraftDNA(userPicks, playerMap, categoryGaps, numTeams, gmProfile = null, sport = 'nba') {
   const enriched = calculateAdpDeltas(userPicks, playerMap, numTeams)
   if (enriched.length === 0) return ARCHETYPES.contrarian
 
@@ -151,7 +161,10 @@ export function classifyDraftDNA(userPicks, playerMap, categoryGaps, numTeams, g
 
   // 5. Riverboat Gambler — maximum variance across the board
   const allInjuryPicks = enriched.filter(e => e.player.injury_risk)
-  const lowGpPicks = enriched.filter(e => (e.player.prior_season?.gp ?? 82) < 65)
+  // MLB: pitchers have naturally low gp (30 starts vs 162 games), so use injury_risk as the variance signal instead
+  const lowGpPicks = sport === 'mlb'
+    ? enriched.filter(e => e.player.injury_risk)
+    : enriched.filter(e => (e.player.prior_season?.gp ?? 82) < 65)
   const riverboatFired = allInjuryPicks.length >= 3 && lowGpPicks.length >= 2 && strongCats.length >= 2 && weakCats.length >= 2
   log('riverboat_gambler', riverboatFired, `allInjury=${allInjuryPicks.length}(need≥3), lowGp=${lowGpPicks.length}(need≥2), strong=${strongCats.length}(need≥2), weak=${weakCats.length}(need≥2)`)
   if (riverboatFired) return ARCHETYPES.riverboat_gambler
@@ -175,7 +188,9 @@ export function classifyDraftDNA(userPicks, playerMap, categoryGaps, numTeams, g
 
   // 8. Floor Builder — zero injury risks, high games played
   const avgGp = enriched.reduce((s, e) => s + (e.player.prior_season?.gp ?? 0), 0) / enriched.length
-  const floorFired = allInjuryPicks.length === 0 && avgGp > 70
+  // MLB: SP have ~30 starts vs batters' ~140 games; threshold of 20 ensures any healthy mixed roster qualifies
+  const gpFloorThreshold = sport === 'mlb' ? 20 : 70
+  const floorFired = allInjuryPicks.length === 0 && avgGp > gpFloorThreshold
   log('floor_builder', floorFired, `injuryPicks=${allInjuryPicks.length}(need=0), avgGp=${avgGp.toFixed(1)}(need>70)`)
   if (floorFired) return ARCHETYPES.floor_builder
 

@@ -8,7 +8,7 @@ import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
 import useLeagueStore from '@/store/leagueStore'
 import { getSessionId } from '@/utils/session'
 import { resolveProfile } from '@/utils/gmProfile'
-import { classifyDraftDNA, getTopCategories, FALLBACK_PREDICTIONS, trackArchetypeStat } from '@/utils/draftDNA'
+import { classifyDraftDNA, getTopCategories, getFallbackPrediction, trackArchetypeStat } from '@/utils/draftDNA'
 import DraftDNACard from '@/components/DraftDNACard'
 
 const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers }
@@ -64,8 +64,8 @@ export default function DraftRecap({ league }) {
   )
 
   const archetype = useMemo(
-    () => classifyDraftDNA(userPicks, playerMap, categoryGaps, league.config.numTeams, resolveProfile(league.profileOverride)),
-    [userPicks, playerMap, categoryGaps, league.config.numTeams, league.profileOverride]
+    () => classifyDraftDNA(userPicks, playerMap, categoryGaps, league.config.numTeams, resolveProfile(league.profileOverride), sport),
+    [userPicks, playerMap, categoryGaps, league.config.numTeams, league.profileOverride, sport]
   )
 
   const topCategories = useMemo(() => getTopCategories(categoryGaps), [categoryGaps])
@@ -135,7 +135,7 @@ export default function DraftRecap({ league }) {
         }),
       })
       const data = await res.json()
-      const prediction = (res.ok && data.boldPrediction) ? data.boldPrediction : FALLBACK_PREDICTIONS[archetype.id]
+      const prediction = (res.ok && data.boldPrediction) ? data.boldPrediction : getFallbackPrediction(archetype.id, sport)
       setBoldPrediction(prediction)
       setDraftDNA(league.id, {
         archetypeId: archetype.id,
@@ -143,7 +143,7 @@ export default function DraftRecap({ league }) {
         generatedAt: new Date().toISOString(),
       })
     } catch {
-      const fallback = FALLBACK_PREDICTIONS[archetype.id]
+      const fallback = getFallbackPrediction(archetype.id, sport)
       setBoldPrediction(fallback)
       setDraftDNA(league.id, {
         archetypeId: archetype.id,

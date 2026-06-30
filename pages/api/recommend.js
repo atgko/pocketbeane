@@ -314,20 +314,29 @@ ${candidates}`
 
 // ─── Advice mode — fires during opponent turns ────────────────────────────────
 
-const ADVICE_SYSTEM = `You are Billy Beane watching opponents draft. Give ONE casual, confident 1-2 sentence take. No intro, no sign-off, no "as Billy Beane".
+function buildAdviceSystem(sport) {
+  const examples = sport === 'mlb' ? [
+    '"I\'d keep an eye on Witt — steals and average, exactly what we need. He won\'t last much longer."',
+    '"The market\'s sleeping on closers right now. If one falls to us, that\'s our pick."',
+    '"Let them fight over starting pitchers. We\'re waiting for the bat who fixes our AVG."',
+  ] : [
+    '"I\'d keep an eye on Barnes — threes and boards, exactly what we need. He won\'t last much longer."',
+    '"The market\'s sleeping on rebounders right now. If one falls to us, that\'s our pick."',
+    '"Let them fight over point guards. We\'re waiting for the big who fixes our FG%."',
+  ]
+  return `You are Billy Beane watching opponents draft. Give ONE casual, confident 1-2 sentence take. No intro, no sign-off, no "as Billy Beane".
 
 Style examples:
-- "I'd keep an eye on Barnes — threes and boards, exactly what we need. He won't last much longer."
-- "The market's sleeping on rebounders right now. If one falls to us, that's our pick."
-- "Let them fight over point guards. We're waiting for the big who fixes our FG%."
+- ${examples.join('\n- ')}
 
 Reply ONLY with raw JSON — no markdown, no explanation: {"briefing":"your 1-2 sentence casual take"}`
+}
 
 function buildAdviceMessages(leagueConfig, boardState, categoryGaps, topCandidates) {
   const { numTeams } = leagueConfig
   const { userPicksWithData, totalPicks, currentRound } = boardState
 
-  const system = [{ type: 'text', text: ADVICE_SYSTEM, cache_control: { type: 'ephemeral' } }]
+  const system = [{ type: 'text', text: buildAdviceSystem(leagueConfig.sport ?? 'nba'), cache_control: { type: 'ephemeral' } }]
 
   const opponentPicksLeft = numTeams - (totalPicks % numTeams) - 1
   const weakCats  = categoryGaps.filter(g => g.grade === 'weak' || g.grade === 'missing').map(g => g.label).join(', ')
@@ -517,21 +526,30 @@ Weak: ${weakCats || 'none'}.`
 
 // ─── Auction: watching mode — fires while opponents nominate/bid ──────────────
 
-const AUCTION_WATCHING_SYSTEM = `You are Billy Beane watching opponents nominate and bid. Give ONE casual, confident 1-2 sentence take on the market dynamics. No intro, no sign-off, no "as Billy Beane".
+function buildAuctionWatchingSystem(sport) {
+  const examples = sport === 'mlb' ? [
+    '"The room\'s burning through budget on starting pitchers. Let them — we\'ll own the lineup while they\'re broke."',
+    '"That went $14 over value. Our budget advantage keeps growing."',
+    '"Three $1 minimum bids in a row. The market\'s exhausted — this is when we make our move."',
+  ] : [
+    '"The room\'s burning through budget on guards. Let them — we\'ll own the frontcourt while they\'re broke."',
+    '"That went $14 over value. Our budget advantage keeps growing."',
+    '"Three $1 minimum bids in a row. The market\'s exhausted — this is when we make our move."',
+  ]
+  return `You are Billy Beane watching opponents nominate and bid. Give ONE casual, confident 1-2 sentence take on the market dynamics. No intro, no sign-off, no "as Billy Beane".
 
 Style examples:
-- "The room's burning through budget on guards. Let them — we'll own the frontcourt while they're broke."
-- "That went $14 over value. Our budget advantage keeps growing."
-- "Three $1 minimum bids in a row. The market's exhausted — this is when we make our move."
+- ${examples.join('\n- ')}
 
 Reply ONLY with raw JSON — no markdown, no explanation: {"briefing":"your 1-2 sentence casual take"}`
+}
 
 function buildAuctionWatchingMessages(leagueConfig, boardState, categoryGaps, topCandidates, auctionContext = {}) {
   const { numTeams } = leagueConfig
   const { userPicksWithData } = boardState
   const { nominationNumber, budgetRemaining, spendableBudget } = auctionContext
 
-  const system = [{ type: 'text', text: AUCTION_WATCHING_SYSTEM, cache_control: { type: 'ephemeral' } }]
+  const system = [{ type: 'text', text: buildAuctionWatchingSystem(leagueConfig.sport ?? 'nba'), cache_control: { type: 'ephemeral' } }]
 
   const weakCats  = categoryGaps.filter(g => g.grade === 'weak' || g.grade === 'missing').map(g => g.label).join(', ')
   const watchList = (topCandidates ?? []).slice(0, 3).map(c => `${c.player.name}($${c.player.auction_value ?? '?'})`).join(', ')
