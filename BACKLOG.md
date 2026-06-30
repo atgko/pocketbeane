@@ -1,6 +1,6 @@
 # PocketBeane — Active Backlog
 
-Last updated: 2026-06-27 (MLB-01 complete — 300 players, full multi-sport architecture)
+Last updated: 2026-06-30 (MLB-01 polish complete — UAT fixes, home page overhaul, Y-05 is next)
 
 Items are grouped by dependency tier. Within each tier, order reflects rough priority / logical sequencing.
 
@@ -23,8 +23,8 @@ billing infrastructure. Building them now adds complexity that makes the tool
 worse to use personally. The PMF simulation + product architecture already tell
 the portfolio story without a fake paywall.
 
-Yahoo roadmap: Y-02 ✅ → Y-04 ✅ → Y-03 (August build / September validate) → Y-05 (next).
-Note: Y-03 requires a live Yahoo draft for end-to-end validation so infrastructure ships in August. Y-05 is now unblocked — Y-04 provides the full league roster data it depends on.
+Yahoo roadmap: Y-02 ✅ → Y-04 ✅ → Y-03 (August build / September validate) → **Y-05 (active next)**.
+Note: Y-03 requires a live Yahoo draft for end-to-end validation so infrastructure ships in August. Y-05 is fully unblocked — start with waiver wire advisor + head-to-head matchup advisor, then trade analyzer as a separate sprint.
 
 Multi-sport: MLB-01 ✅ → NHL-01 (August data) → NFL-01 (August data).
 
@@ -75,21 +75,26 @@ button for in-season updates.
 
 ---
 
-### Y-05 · Season Management Suite
+### Y-05 · Season Management Suite ← NEXT
 **Goal:** Full in-season advisor powered by live Yahoo data.
 
-**Sub-features (can ship incrementally):**
+**Sub-features (ship in this order):**
 
-| Sub-feature | Description |
-|---|---|
-| Head-to-head matchup advisor | Weekly outlook vs. current opponent — category projections and lineup suggestions |
-| Waiver wire advisor | Recommend adds/drops based on roster gaps, schedule density, recent trend |
-| Trade analyzer | Input give/receive — Claude evaluates net category impact, positional balance, buy-low/sell-high signal |
-| Trade value index | Running power ranking of roster trade value based on recent performance vs. ADP expectations — who to sell high, buy low, or hold |
-| Start/sit advisor | Optimal weekly lineup given schedule, matchup, recent form, injury status |
-| League pulse | Weekly league-wide summary — who's dominating, who's weak, who might be open to trading |
+| Sub-feature | Priority | Description |
+|---|---|---|
+| Waiver wire advisor | 1st | Recommend adds/drops based on roster gaps, schedule density, recent trend |
+| Head-to-head matchup advisor | 2nd | Weekly outlook vs. current opponent — category projections and lineup suggestions |
+| Start/sit advisor | 3rd | Optimal weekly lineup given schedule, matchup, recent form, injury status |
+| Trade analyzer | 4th (own sprint) | Input give/receive — Claude evaluates net category impact, positional balance, buy-low/sell-high signal |
+| Trade value index | 5th | Running power ranking of roster trade value — who to sell high, buy low, or hold |
+| League pulse | 6th | Weekly league-wide summary — who's dominating, who's weak, who might be open to trading |
 
-**Prerequisite:** Y-01 ✓, Y-02 ✓, Y-04
+**Foundation already in place:**
+- `league.leagueRosters` (from Y-04) provides full team rosters + standings for all 10 teams
+- Season Hub auto-syncs on mount if data is >7 days stale (built during MLB-01 UAT sprint)
+- `sport` field on `leagueConfig` is threaded through all API calls — Y-05 will be sport-agnostic from day one
+
+**Prerequisite:** Y-01 ✓, Y-02 ✓, Y-04 ✓
 
 ---
 
@@ -244,6 +249,7 @@ Before touching code, define the visual direction:
 | PMF-04 UAT polish (2026-06-27) | Setup page: Yahoo Sync reordered before League Name; already-synced Yahoo leagues disabled in dropdown. DraftDNACard: share redesigned to Web Share API only (no hardcoded social buttons). Category Report reverted to original bar-chart. Moneyball GM threshold raised 3→4 value picks. classifyDraftDNA emits console.debug for every archetype evaluated. Archetype distribution silently tracked in localStorage key pocketbeane_archetype_stats. |
 | Y-04 · Post-Draft Roster Sync | Done — `/api/yahoo/sync-rosters` fetches all team rosters + standings in parallel, name-matches to players.json IDs, stored as league.leagueRosters. Season Hub rebuilt: standings table with expandable rosters, user's team highlighted and auto-expanded, Refresh button for in-season updates. |
 | MLB-01 · MLB League Support | Done — full 5×5 draft + recommendations + Draft DNA + Season Hub sync. `lowerIsBetter` config field, sport-aware scarcity, 300-player `mlb_players.json` (FantasyPros 2026 ADP + BBRef 2025 stats). `build-mlb-players.js` script for future data refreshes. |
+| MLB-01 UAT fixes + polish (2026-06-29) | `sync-draft.js` was hardcoded to NBA — fixed with `?sport=` param, `mlb_players.json`, `game_codes=mlb`. IL `SlotCountRow` max raised from 3→6 so value=4 renders correctly. `importDraft` now sets `status: 'season'` (was `'complete'`); Zustand migration v0→v1 converts existing affected leagues on first load. Setup page: sport selector moved above Yahoo Sync and filters the dropdown by sport. `yahooSeason` threaded from my-leagues response → league config for year-based archive grouping. Season Hub: standings table removed; weekly auto-sync on mount (stale after 7 days). Home page: leagues grouped by sport with section headers; archive/restore system (manual archive for `season` leagues; NBA auto-archives after 7 days inactive; restore button on archived leagues; archived grouped by year within sport). Draft DNA: `getFallbackPrediction(archetypeId, sport)` with MLB month-aware overrides; `lowGpPicks` uses `injury_risk` flag for MLB instead of gp count; `gpFloorThreshold` 70→20 for MLB; Moneyball GM threshold raised 4→5. `recommend.js`: `buildAdviceSystem(sport)` and `buildAuctionWatchingSystem(sport)` replace static constants with MLB-specific style examples. |
 
 ---
 
