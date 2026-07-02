@@ -527,7 +527,7 @@ function EmptyState() {
     <div className="border border-dashed border-border rounded-lg px-8 py-14 text-center">
       <p className="text-gray-400 mb-1">No leagues set up yet.</p>
       <p className="text-gray-600 text-sm mb-6">
-        Add one for each draft you're running — Yahoo, ESPN, mock drafts, whatever platform you're on.
+        Add one for each Yahoo draft you're running. ESPN and other platforms are coming soon.
         PocketBeane runs alongside your live draft and tells you who to pick.
       </p>
       <Link
