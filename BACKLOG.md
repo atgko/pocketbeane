@@ -1,6 +1,6 @@
 # PocketBeane — Active Backlog
 
-Last updated: 2026-07-06 (T1/T2 current-season data + AI/UI integration done; T3-1/T3-2/T3-3 email digest built — send verified up to Resend, pending a real API key; MLB current-season pipeline debugged end-to-end + T1-3 trend calc extended to MLB with 5-tier granularity; merged POCKETBEANE_PMF_BACKLOG.md and bugreport.md into this file — see "PMF Simulation Reference" and "Data Pipeline Incident Log" sections near the end)
+Last updated: 2026-07-07 (Y-05 Start/Sit Advisor built — NBA + MLB, schedule-aware via new `nba_schedule.json`/`mlb_schedule.json` + `src/utils/schedule.js`; `sports.js` generalized with `playerFile`/`scheduleFile`/`getPlayerFile`/`getScheduleFile`/`hasScheduleSupport` so NHL/NFL start/sit needs zero code changes once their data lands, only a config entry + data files; new Y-05c ticket tracks MLB pitcher probable-starts as a future accuracy upgrade, not a blocker)
 
 Items are grouped by dependency tier. Within each tier, order reflects rough priority / logical sequencing.
 
@@ -84,7 +84,7 @@ button for in-season updates.
 |---|---|---|
 | Waiver wire advisor | ✅ UAT complete | `/api/season/waiver-advice` — diffs all team rosters vs players.json, top 25 FAs by ADP, Claude add/drop recs |
 | Head-to-head matchup advisor | ✅ UAT complete | `/api/season/matchup-advice` — fetches scoreboard, finds opponent, Claude category-by-category breakdown |
-| Start/sit advisor | Next (after UAT) | Optimal weekly lineup given schedule, matchup, recent form, injury status |
+| Start/sit advisor | ✅ Built (2026-07-07) — needs browser UAT | `/api/season/startsit-advice` — schedule-aware (games-this-week, back-to-back), form, and injury-aware weekly lineup recommendation. NBA and MLB (MLB pitcher signal is an approximate schedule proxy, see Y-05c). NHL/NFL return a clean "not available yet" until their data lands — no code changes needed when it does, see docs/SCHEMA.md. |
 | Trade analyzer | 4th (own sprint) | Input give/receive — Claude evaluates net category impact, positional balance, buy-low/sell-high signal |
 | Trade value index | Later | Running power ranking of roster trade value — who to sell high, buy low, or hold |
 | League pulse | Later | Weekly league-wide summary — who's dominating, who's weak, who might be open to trading |
@@ -96,6 +96,32 @@ button for in-season updates.
 - Both return structured JSON rendered in Season Hub panels: headline/moves for waiver, outlook/win-lose-tossup/keyNote for matchup.
 
 **Prerequisite:** Y-01 ✓, Y-02 ✓, Y-04 ✓
+
+---
+
+### Start/Sit Advisor · UAT (pending — needs a browser pass)
+
+Endpoint logic was verified end-to-end against real `players.json`/`mlb_players.json` data and live Claude calls (not just curl against synthetic fixtures) — including catching and fixing three real model-output bugs (duplicate player across two slots, position-ineligible placements, an eligibility violation that survived the first fix and needed a server-side validation pass). `npm run test:schedule` covers the pure date-math. What's *not* yet verified — the part that needs the actual UI and a synced league:
+
+- [ ] Season Hub, NBA league with synced rosters — click "Get Beane's Take" on the Start/Sit panel, confirm loading/error states match the other two panels and a real lineup renders (slot badges, trend badges, games-this-week/B2B tags, bench notes)
+- [ ] Same for an MLB league — confirm the panel is NOT hidden (MLB is unblocked, not NBA-only) and the lineup covers hitters + SP/RP correctly
+- [ ] Confirm the panel is hidden/shows the "Not available for {sport} yet" note for any sport with no `scheduleFile` configured (currently none reachable in the UI since only nba/mlb are selectable today — revisit this check once NHL/NFL are added)
+- [ ] Since today's real date is NBA off-season, confirm the default (no explicit week) request against a real NBA league correctly returns the "no games scheduled" empty state rather than erroring
+- [ ] Confirm an MLB league's default (no explicit week) request returns a real lineup, since the seeded `mlb_schedule.json` window matches the current calendar week
+- [ ] Refresh the advice at least twice on the same roster — confirm no duplicate-player or wrong-slot output slips through in the browser the way it initially did in direct API testing (the fixes were verified via curl, not yet via repeated real UI use)
+
+Once this passes, flip the Y-05 status table's Start/sit advisor row to "✅ UAT complete", matching the waiver and matchup advisor rows.
+
+---
+
+### Y-05c · MLB Pitcher Probable-Start Tracking
+**Goal:** Sharpen the Start/Sit Advisor's MLB pitcher signal. Deferred out of the initial Start/Sit Advisor build (2026-07-07) because it's a fundamentally different data problem from the NBA/MLB team-schedule work that ticket shipped.
+
+**Why this is separate:** MLB hitters play ~6 games/week almost every week (162g/~26wk), so team-schedule density isn't a differentiating signal for hitters — the schedule-file approach already covers them fine. The real MLB lineup lever is pitcher probable starts (a 1-start vs. 2-start week is the single biggest swing in a category league), but starting rotations are only announced ~5 days out — not known for a full season the way team schedules are. That makes this a weekly dynamic-data problem much closer to `mergeCurrentSeasonData.js`/Hermes than the ship-once `mlb_schedule.json` file.
+
+**Current state:** the Start/Sit Advisor already runs for MLB using team-schedule games-this-week as an approximate proxy for pitcher starts, with an explicit lower-confidence caveat in the Claude prompt. This ticket is about replacing that proxy with real data, not unblocking MLB (it's already unblocked).
+
+**Prerequisite:** a probable-starts data source (Hermes or similar) + a weekly ingestion script analogous to T1-2/`mergeCurrentSeasonData.js`.
 
 ---
 
@@ -237,7 +263,7 @@ Trend: [trend]
 
 **Acceptance criteria:**
 - [ ] Trade analyzer visibly references current vs. prior season gaps when `current_season` exists for involved players — **deferred**, trade analyzer doesn't exist yet (Y-05 tier-4, own sprint). Apply this same pattern (`formatCurrentSeasonLine` + `CURRENT_SEASON_REASONING_INSTRUCTION` from `src/ai/seasonStats.js`) when it's built.
-- [ ] Start/sit advisor weighs current-season form alongside prior-season baseline when recommending a weekly lineup — **deferred**, start/sit advisor doesn't exist yet (Y-05, next sub-feature after UAT). Apply the same `src/ai/seasonStats.js` pattern when it's built.
+- [x] Start/sit advisor weighs current-season form alongside prior-season baseline when recommending a weekly lineup — implemented 2026-07-07, uses the same `formatStats`/`formatCurrentSeasonLine`/`CURRENT_SEASON_REASONING_INSTRUCTION` from `src/ai/seasonStats.js` as the other two advisors.
 - [x] Waiver wire advisor surfaces trending players appropriately
 - [x] `current_season: null` falls back to prior season gracefully — no broken prompt text
 - [x] Staleness check: if `as_of_date` is 14+ days old, recommendation includes a staleness caveat

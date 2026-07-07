@@ -2,7 +2,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import { getValidToken } from '@/utils/yahooAuth'
 import fs from 'fs'
 import path from 'path'
-import { getSportConfig } from '@/config/sports'
+import { getSportConfig, getPlayerFile } from '@/config/sports'
 import { formatStats, formatCurrentSeasonLine, CURRENT_SEASON_REASONING_INSTRUCTION } from '@/ai/seasonStats'
 import { normalizeName } from '@/utils/playerName'
 
@@ -126,8 +126,7 @@ export default async function handler(req, res) {
   }
 
   // Load player data for enriching rosters
-  const playerFile = sport === 'mlb' ? 'mlb_players.json' : 'players.json'
-  const players = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/data', playerFile), 'utf8'))
+  const players = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/data', getPlayerFile(sport)), 'utf8'))
   const playerById = {}
   const playerByName = {}
   for (const p of players) {

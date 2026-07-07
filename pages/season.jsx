@@ -7,6 +7,7 @@ import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
 import { normalizeName } from '@/utils/playerName'
 import { STALENESS_DAYS } from '@/ai/seasonStats'
+import { hasScheduleSupport } from '@/config/sports'
 import { getUserEmail } from '@/utils/userSettings'
 import Link from 'next/link'
 
@@ -52,7 +53,6 @@ function TrendBadge({ player }) {
 }
 
 const COMING_SOON = [
-  { title: 'Start / Sit Advisor', description: 'Optimal weekly lineup given schedule, matchup, recent form, and injury status.' },
   { title: 'Trade Analyzer', description: 'Input a give/receive — Claude evaluates net category impact and positional balance.' },
   { title: 'Trade Value Index', description: 'Running power ranking of roster trade value. Who to sell high, buy low, or hold.' },
   { title: 'League Pulse', description: "Weekly league-wide summary — who's dominating, who's weak, who might trade." },
@@ -337,6 +337,128 @@ function MatchupPanel({ league, rosters, yahooConnected }) {
   )
 }
 
+const SLOT_CONFIG_KEYS = [
+  'pgSlots', 'sgSlots', 'gSlots', 'sfSlots', 'pfSlots', 'fSlots', 'cSlots', 'utilSlots', 'bnSlots',
+  'firstSlots', 'secondSlots', 'thirdSlots', 'ssSlots', 'ofSlots', 'spSlots', 'rpSlots',
+]
+
+function StartSitPanel({ league, rosters }) {
+  const [advice, setAdvice] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const sport = league.config.sport ?? 'nba'
+  const players = sport === 'mlb' ? mlbPlayers : nbaPlayers
+  const supported = hasScheduleSupport(sport)
+
+  async function handleGetAdvice() {
+    setLoading(true)
+    setError(null)
+    try {
+      const rosterConfig = Object.fromEntries(
+        SLOT_CONFIG_KEYS.filter(k => league.config[k] != null).map(k => [k, league.config[k]])
+      )
+      const res = await fetch('/api/season/startsit-advice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sport,
+          leagueRosters: rosters,
+          rosterConfig,
+          gmProfile: { injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate' },
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Advice failed')
+      setAdvice(data)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="bg-surface border border-border rounded-lg px-5 py-5">
+      <div className="flex items-start justify-between gap-4 mb-1">
+        <div>
+          <p className="text-sm font-semibold text-gray-200">Start / Sit Advisor</p>
+          <p className="text-xs text-gray-500 mt-0.5">
+            Optimal weekly lineup given schedule, recent form, and injury status.
+          </p>
+        </div>
+        {supported ? (
+          <button
+            onClick={handleGetAdvice}
+            disabled={loading}
+            className="shrink-0 text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            {advice ? 'Refresh' : "Get Beane's Take"}
+          </button>
+        ) : (
+          <span className="shrink-0 text-xs text-yellow-500/60 font-mono">Not available for {sport.toUpperCase()} yet</span>
+        )}
+      </div>
+
+      {loading && (
+        <p className="text-xs text-gray-500 font-mono mt-4 animate-pulse">Setting your lineup…</p>
+      )}
+
+      {error && !loading && (
+        <p className="text-xs text-red-400 font-mono mt-4">{error}</p>
+      )}
+
+      {advice && !loading && (
+        <div className="mt-4 space-y-3">
+          {advice.week && (
+            <p className="text-xs text-gray-500 font-mono">
+              Week of {advice.week.start} – {advice.week.end}
+            </p>
+          )}
+          {advice.headline && (
+            <p className="text-xs text-gray-400 italic leading-relaxed">{advice.headline}</p>
+          )}
+          {advice.startingLineup?.length > 0 && (
+            <div className="space-y-2">
+              {advice.startingLineup.map((entry, i) => {
+                const player = findPlayerByName(players, entry.player)
+                return (
+                  <div key={i} className="border border-border rounded-md px-4 py-3">
+                    <div className="flex flex-wrap items-center gap-2 mb-1">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-gray-800 text-gray-400">
+                        {entry.slot}
+                      </span>
+                      <span className="text-xs text-gray-200 font-medium flex items-center">
+                        {entry.player}
+                        <TrendBadge player={player} />
+                      </span>
+                      {entry.gamesThisWeek != null && (
+                        <span className="text-[10px] font-mono text-gray-500">
+                          {entry.gamesThisWeek}g{entry.backToBack ? ' · B2B' : ''}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-gray-400 leading-relaxed">{entry.reason}</p>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+          {advice.benchNotes?.length > 0 && (
+            <div className="pt-3 border-t border-border space-y-2">
+              <p className="text-[10px] font-mono text-gray-600 uppercase tracking-wider">Bench notes</p>
+              {advice.benchNotes.map((note, i) => (
+                <p key={i} className="text-xs text-gray-500 leading-relaxed">
+                  <span className="text-gray-300">{note.player}:</span> {note.reason}
+                </p>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function SeasonHub() {
   const router = useRouter()
   const league = useLeagueStore((s) => s.getActiveLeague())
@@ -461,6 +583,7 @@ export default function SeasonHub() {
               <p className="text-xs font-mono text-gray-600 uppercase tracking-wider mb-3">Season Advisors</p>
               <WaiverPanel league={league} rosters={rosters} />
               <MatchupPanel league={league} rosters={rosters} yahooConnected={yahoo.connected} />
+              <StartSitPanel league={league} rosters={rosters} />
             </div>
           ) : canSync ? (
             <div className="mb-8">

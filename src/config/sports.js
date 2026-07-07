@@ -5,6 +5,16 @@ export const SPORT_CONFIGS = {
     id: 'nba',
     label: 'NBA',
 
+    // Player pool + schedule data files, relative to src/data/. Sports without
+    // a scheduleFile don't support the Start/Sit Advisor yet (see
+    // getScheduleFile/hasScheduleSupport below) — adding a sport there is a
+    // pure data-file drop, no code changes.
+    playerFile: 'players.json',
+    scheduleFile: 'nba_schedule.json',
+    // Back-to-back is a meaningful fatigue signal for this sport's start/sit
+    // advisor (dense schedule, teams sometimes play on consecutive days).
+    backToBackRelevant: true,
+
     // Position buttons shown in the draft board filter bar
     filterPositions: ['PG', 'SG', 'G', 'SF', 'PF', 'F', 'C'],
 
@@ -65,6 +75,15 @@ export const SPORT_CONFIGS = {
     id: 'mlb',
     label: 'MLB',
 
+    playerFile: 'mlb_players.json',
+    scheduleFile: 'mlb_schedule.json',
+    // Teams play near-daily — team-schedule density isn't a meaningful
+    // fatigue signal here (unlike NBA/NHL), so the Start/Sit Advisor doesn't
+    // surface back-to-back tags for this sport. Games-this-week is still
+    // used as an approximate proxy for pitcher start count until real
+    // probable-starts data exists (see BACKLOG Y-05c).
+    backToBackRelevant: false,
+
     filterPositions: ['C', '1B', '2B', '3B', 'SS', 'OF', 'SP', 'RP'],
 
     slotOrder: [
@@ -120,6 +139,8 @@ export const SPORT_CONFIGS = {
   //
   // nhl: {
   //   id: 'nhl', label: 'NHL',
+  //   playerFile: 'nhl_players.json', scheduleFile: 'nhl_schedule.json',
+  //   backToBackRelevant: true, // dense schedule like NBA
   //   filterPositions: ['C', 'LW', 'RW', 'W', 'D', 'G'],
   //   slotOrder: [...],
   //   slotEligibility: { W: ['LW', 'RW'], UTIL: ['C', 'LW', 'RW', 'D'], ... },
@@ -130,6 +151,8 @@ export const SPORT_CONFIGS = {
   //
   // nfl: {
   //   id: 'nfl', label: 'NFL',
+  //   playerFile: 'nfl_players.json', scheduleFile: 'nfl_schedule.json',
+  //   backToBackRelevant: false, // one game/week — bye weeks fall out of the same {date,home,away} schedule shape as zero entries for a team in range
   //   filterPositions: ['QB', 'RB', 'WR', 'TE', 'K', 'DEF'],
   //   slotOrder: [...],
   //   slotEligibility: { FLEX: ['RB', 'WR', 'TE'], ... },
@@ -141,4 +164,24 @@ export const SPORT_CONFIGS = {
 
 export function getSportConfig(sport) {
   return SPORT_CONFIGS[sport] ?? SPORT_CONFIGS.nba
+}
+
+// Player pool file for a sport, relative to src/data/. Centralizes the
+// sport -> data file mapping that was previously duplicated as an inline
+// ternary in each /api/season/*.js advisor.
+export function getPlayerFile(sport) {
+  return getSportConfig(sport).playerFile ?? 'players.json'
+}
+
+// Schedule file for a sport, relative to src/data/, or null if that sport
+// has no schedule data configured yet (Start/Sit Advisor unavailable).
+export function getScheduleFile(sport) {
+  return SPORT_CONFIGS[sport]?.scheduleFile ?? null
+}
+
+// Whether the Start/Sit Advisor has schedule data to work with for this
+// sport. Used by both the API route (to 400 gracefully) and the UI (to hide
+// the panel's action button) so they can't drift out of sync.
+export function hasScheduleSupport(sport) {
+  return Boolean(getScheduleFile(sport))
 }

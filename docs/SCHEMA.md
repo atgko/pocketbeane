@@ -177,6 +177,40 @@ The sport-agnostic wrapper (`as_of_date`, `trend`, `injury_status`, `injury_note
 
 ---
 
+## Team Schedule (`nba_schedule.json`, `mlb_schedule.json`)
+
+Season-long game list, one file per sport that supports the Start/Sit Advisor (Y-05). Unlike `current_season` player stats, a team's full-season schedule is fixed and known in advance — these files are a one-time-per-season data drop, not a weekly-refreshed pipeline output. `src/config/sports.js`'s `getScheduleFile(sport)`/`hasScheduleSupport(sport)` drive which sports have this data; a sport with no `scheduleFile` configured (currently NHL, NFL) gets a clean "not available yet" response from the advisor instead of a hardcoded sport check — adding NHL/NFL support later is a pure data-file drop plus one `sports.js` config entry, no code changes to the advisor.
+
+```json
+{
+  "season": "2026-27",
+  "sport": "nba",
+  "source": "manual_seed_sample",
+  "games": [
+    { "date": "2026-11-16", "home": "DEN", "away": "LAL" }
+  ]
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `season` | string | Season label, e.g. `"2026-27"` (NBA) or `"2026"` (MLB) |
+| `sport` | string | `"nba"` or `"mlb"` |
+| `source` | string | `"manual_seed_sample"` (current placeholder data) or the name of a future import script |
+| `games[].date` | string (ISO date) | Game date, no time component |
+| `games[].home` | string | Home team code — **must match `player.team` codes exactly** in the corresponding player file, including this project's non-standard NBA abbreviations (`PHO`, `UTH`, `NOR`, `WAS`) |
+| `games[].away` | string | Away team code, same rules |
+
+**Current state:** both files are hand-seeded samples, **not real, verified schedules** — `nba_schedule.json` covers 6 teams across two weeks (Nov 16–29, 2026); `mlb_schedule.json` covers 6 teams for the week of Jul 6–12, 2026 (chosen to match `mlb_players.json`'s real `current_season.as_of_date`, so the MLB advisor is live-demoable with no params). Swapping in a real season export is a pure data-file replacement — same `{season, sport, source, games[]}` shape, no changes needed in `src/utils/schedule.js` or `pages/api/season/startsit-advice.js`.
+
+**MLB caveat:** MLB hitters play near-daily, so team-schedule density isn't a strong start/sit signal for hitters the way it is for NBA. The real MLB signal — pitcher probable starts (1-start vs. 2-start weeks) — isn't tracked yet; the advisor uses team-schedule games-this-week as an approximate proxy for pitchers in the meantime and says so in its output. See BACKLOG Y-05c for the planned upgrade.
+
+### Schedule utility
+
+`src/utils/schedule.js` — pure date-math functions (`getTeamGamesInRange`, `countGamesInRange`, `findBackToBacks`, `hasBackToBack`, `getWeekRange`), sport-agnostic by design. Written as CommonJS (like `scripts/calculateTrend.js`) so it's testable via plain `node` (`scripts/test/schedule.test.js`, `npm run test:schedule`) and still importable from Next.js API routes.
+
+---
+
 ## Field ownership rules
 
 These rules exist to prevent the merge script from corrupting curated data.
@@ -191,3 +225,4 @@ These rules exist to prevent the merge script from corrupting curated data.
 | `injury_status` (top-level) | Manual curation | Merge script |
 | `current_season` | Merge script / Hermes | Manual (except for `manual_entry` source) |
 | `current_season.trend` | `calculateTrend()` utility | External data sources |
+| `nba_schedule.json` / `mlb_schedule.json` (whole file) | Manual curation / future schedule-import script | Merge script, `calculateTrend()` |

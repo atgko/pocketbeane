@@ -1,7 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk'
 import fs from 'fs'
 import path from 'path'
-import { getSportConfig } from '@/config/sports'
+import { getSportConfig, getPlayerFile } from '@/config/sports'
 import { formatStats, formatCurrentSeasonLine, CURRENT_SEASON_REASONING_INSTRUCTION } from '@/ai/seasonStats'
 import { normalizeName } from '@/utils/playerName'
 
@@ -23,8 +23,7 @@ function extractJSON(text) {
 export async function getWaiverAdvice({ sport = 'nba', leagueRosters, gmProfile }) {
   if (!leagueRosters?.teams) throw new Error('leagueRosters required')
 
-  const playerFile = sport === 'mlb' ? 'mlb_players.json' : 'players.json'
-  const players = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/data', playerFile), 'utf8'))
+  const players = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/data', getPlayerFile(sport)), 'utf8'))
 
   // Build owned player name set across all teams
   const ownedNames = new Set()

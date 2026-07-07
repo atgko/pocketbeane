@@ -12,7 +12,8 @@
     "merge-current-season": "node scripts/mergeCurrentSeasonData.js",
     "test:calculate-trend": "node scripts/test/calculateTrend.test.js",
     "test:merge-current-season": "node scripts/test/mergeCurrentSeasonData.test.js",
-    "test": "npm run test:calculate-trend && npm run test:merge-current-season"
+    "test:schedule": "node scripts/test/schedule.test.js",
+    "test": "npm run test:calculate-trend && npm run test:merge-current-season && npm run test:schedule"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.95.2",
