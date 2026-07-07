@@ -7,13 +7,17 @@ import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
 import { normalizeName } from '@/utils/playerName'
 import { STALENESS_DAYS } from '@/ai/seasonStats'
+import { getUserEmail } from '@/utils/userSettings'
+import Link from 'next/link'
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000
 
 const TREND_STYLES = {
   improving: { icon: '↑', color: 'text-green-400' },
-  declining: { icon: '↓', color: 'text-red-400' },
+  'slightly-improving': { icon: '↗', color: 'text-green-400/70' },
   stable:    { icon: '→', color: 'text-gray-400' },
+  'slightly-declining': { icon: '↘', color: 'text-red-400/70' },
+  declining: { icon: '↓', color: 'text-red-400' },
 }
 
 function findPlayerByName(players, name) {
@@ -75,8 +79,16 @@ function WaiverPanel({ league, rosters }) {
   const [advice, setAdvice] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [emailSending, setEmailSending] = useState(false)
+  const [emailError, setEmailError] = useState(null)
+  const [emailSentTo, setEmailSentTo] = useState(null)
   const sport = league.config.sport ?? 'nba'
   const players = sport === 'mlb' ? mlbPlayers : nbaPlayers
+
+  const gmProfile = {
+    injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
+    draftStrategy: league.config.philosophy?.strategy ?? 'beane',
+  }
 
   async function handleGetAdvice() {
     setLoading(true)
@@ -85,14 +97,7 @@ function WaiverPanel({ league, rosters }) {
       const res = await fetch('/api/season/waiver-advice', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          sport,
-          leagueRosters: rosters,
-          gmProfile: {
-            injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
-            draftStrategy: league.config.philosophy?.strategy ?? 'beane',
-          },
-        }),
+        body: JSON.stringify({ sport, leagueRosters: rosters, gmProfile }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Advice failed')
@@ -103,6 +108,37 @@ function WaiverPanel({ league, rosters }) {
       setLoading(false)
     }
   }
+
+  async function handleEmailDigest() {
+    const email = getUserEmail()
+    if (!email) return
+
+    setEmailSending(true)
+    setEmailError(null)
+    setEmailSentTo(null)
+    try {
+      const res = await fetch('/api/season/email-waiver-digest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: email,
+          leagueName: league.config.name || 'Your League',
+          sport,
+          leagueRosters: rosters,
+          gmProfile,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Send failed')
+      setEmailSentTo(email)
+    } catch (err) {
+      setEmailError(err.message)
+    } finally {
+      setEmailSending(false)
+    }
+  }
+
+  const userEmail = typeof window !== 'undefined' ? getUserEmail() : null
 
   return (
     <div className="bg-surface border border-border rounded-lg px-5 py-5">
@@ -162,6 +198,24 @@ function WaiverPanel({ league, rosters }) {
               </div>
             )
           })}
+
+          <div className="pt-3 border-t border-border flex items-center gap-3">
+            {userEmail ? (
+              <button
+                onClick={handleEmailDigest}
+                disabled={emailSending}
+                className="text-xs font-mono text-gray-500 hover:text-gray-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                {emailSending ? 'Sending…' : `Email me this week's picks`}
+              </button>
+            ) : (
+              <p className="text-xs text-gray-600">
+                <Link href="/gm-profile" className="text-pick hover:underline">Add your email</Link> to send this digest to your inbox.
+              </p>
+            )}
+            {emailSentTo && <span className="text-xs text-value">Sent to {emailSentTo}.</span>}
+            {emailError && <span className="text-xs text-injury">{emailError}</span>}
+          </div>
         </div>
       )}
     </div>

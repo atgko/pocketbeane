@@ -1,6 +1,6 @@
 # PocketBeane — Active Backlog
 
-Last updated: 2026-06-30 (Y-05 waiver wire + matchup advisor UAT complete; T1/T2/T3 current-season data + email tiers added as next priority)
+Last updated: 2026-07-06 (T1/T2 current-season data + AI/UI integration done; T3-1/T3-2/T3-3 email digest built — send verified up to Resend, pending a real API key; MLB current-season pipeline debugged end-to-end + T1-3 trend calc extended to MLB with 5-tier granularity — see bugreport.md)
 
 Items are grouped by dependency tier. Within each tier, order reflects rough priority / logical sequencing.
 
@@ -193,18 +193,27 @@ node scripts/mergeCurrentSeasonData.js path/to/incoming-data.json
 
 **Goal:** Pure function that computes whether a player is trending up, down, or stable vs. their prior-season baseline.
 
-**Signature:** `calculateTrend(priorSeason, currentSeason)` → `"improving" | "stable" | "declining"`
+**Signature:** `calculateTrend(priorSeason, currentSeason, profile?)` → `"improving" | "slightly-improving" | "stable" | "slightly-declining" | "declining"`
 
-**Logic:** Compare weighted core stats (`pts`, `reb`, `ast` as primary signal — most stable cross-position indicators). More than 15% combined deviation in either direction = trending; otherwise `"stable"`. Threshold is a named constant, not a magic number.
+**Logic:** Compare weighted core stats (`pts`, `reb`, `ast` as primary signal for NBA — most stable cross-position indicators; sport-specific profiles for MLB, see T1-3 follow-up below). Deviation beyond `TREND_THRESHOLD` (15%) in either direction = full `"improving"`/`"declining"`; beyond `TREND_MINOR_THRESHOLD` (5%) but not 15% = `"slightly-improving"`/`"slightly-declining"`; otherwise `"stable"`. Both thresholds are named constants, not magic numbers.
 
 **Called from:** Inside the T1-2 merge script, every time a player's `current_season` is updated.
 
 **Acceptance criteria:**
 - [x] Function is pure and unit-testable (no side effects, no API calls)
-- [x] Test cases: significantly improving, significantly declining, roughly stable
-- [x] Threshold is a named constant (e.g. `TREND_THRESHOLD = 0.15`)
+- [x] Test cases: significantly improving, significantly declining, roughly stable, slightly improving, slightly declining
+- [x] Threshold is a named constant (e.g. `TREND_THRESHOLD = 0.15`, `TREND_MINOR_THRESHOLD = 0.05`)
 
 **Implemented:** `scripts/calculateTrend.js`. Built alongside T1-2 since the merge script has a hard dependency on it. Tests in `scripts/test/calculateTrend.test.js` (`npm run test:calculate-trend`).
+
+**T1-3 follow-up (2026-07-06) — MLB support + 5-tier granularity:** Original implementation was NBA-only (`pts`/`reb`/`ast` hardcoded) and only had a single ±15% threshold, so any real-but-modest movement (e.g. a player quietly trending up 8%) read identically to a player with zero change — both showed `"stable"`. Fixed in the same session as the MLB data pipeline bug fixes (see `bugreport.md` #6):
+- Added `TREND_PROFILES` (`nba`, `mlb_hitter`, `mlb_pitcher`) so MLB players get a real signal instead of always defaulting to `"stable"`.
+- `hr`/`rbi`/`k` are season-to-date totals, not rates — normalized to per-game rates before comparison (`mergeCurrentSeasonData.js`'s `buildTrendInputs()`) so a partial current season doesn't read as "declining" against a full prior season purely from fewer games played.
+- Pitcher profile (`era`/`whip` sign-flipped, lower-is-better) uses an averaged per-stat percentage deviation rather than one summed-total deviation — summing a sign-flipped stat against a "higher is better" one could push the total negative and invert the result for small samples (caught via Carlos Estévez: a disastrous 1-game outing was initially reading as `"improving"`).
+- Added `TREND_MINOR_THRESHOLD = 0.05` and the `"slightly-improving"`/`"slightly-declining"` tiers on top of the fixes above.
+- UI: `TREND_STYLES` in `pages/season.jsx` renders `↗`/`↘` at 70% opacity for the slight tiers vs. full-strength `↑`/`↓` for the significant ones.
+- AI prompts: `waiver-advice.js`'s system prompt now references `slightly-improving` explicitly and instructs the model to treat the slight tiers as real-but-modest, not noise and not full-strength.
+- Real MLB data distribution after this fix (293 players): 52 improving, 26 slightly-improving, 58 stable, 47 slightly-declining, 110 declining.
 
 ---
 
@@ -270,10 +279,12 @@ Start/sit advisor and trade analyzer don't exist yet — apply the same `TrendBa
 - Manual step: create Resend account and obtain API key
 
 **Acceptance criteria:**
-- [ ] Test email successfully sends to a real address
-- [ ] API key not exposed in any client-side code or network request
-- [ ] Function returns clear success/failure response
-- [ ] Failed sends logged with enough detail to debug
+- [ ] Test email successfully sends to a real address — **not yet verified against a real Resend account**; no `RESEND_API_KEY` configured locally. Endpoint is built and validated end-to-end except for the live Resend call.
+- [x] API key not exposed in any client-side code or network request
+- [x] Function returns clear success/failure response
+- [x] Failed sends logged with enough detail to debug
+
+**Implemented:** `src/server/email.js` (`sendEmail({ to, subject, html, type })`, lazily constructs the Resend client so a missing `RESEND_API_KEY` is a caught, JSON error rather than a process-level crash at import time) + `pages/api/send-email.js` (validates `to`/`subject`/`body`, delegates to `sendEmail`). `RESEND_API_KEY` / `RESEND_FROM_EMAIL` added to `.env.example`. Verified locally: missing key, invalid email, and missing fields all return clean `{ error }` JSON with matching status codes instead of a Next.js crash page.
 
 ---
 
@@ -284,9 +295,11 @@ Start/sit advisor and trade analyzer don't exist yet — apply the same `TrendBa
 **What to build:** Simple email input in a settings/profile area. Stored in localStorage alongside existing PocketBeane state. Optional — Season Hub functions fully without one set.
 
 **Acceptance criteria:**
-- [ ] User can enter and save an email address in settings
-- [ ] Email persists across sessions via localStorage
-- [ ] No email set → digest emails simply don't send; no broken states
+- [x] User can enter and save an email address in settings
+- [x] Email persists across sessions via localStorage
+- [x] No email set → digest emails simply don't send; no broken states
+
+**Implemented:** `src/utils/userSettings.js` (`getUserEmail`/`saveUserEmail`/`clearUserEmail`, `localStorage` key `pocketbeane_user_email` — same pattern as `gmProfile.js`). New `EmailDigestSettings` card on `/gm-profile` (a global, not per-league, settings area — matches how GM Profile itself is scoped) with edit/save/clear and inline validation. Waiver Wire Advisor on Season Hub reads `getUserEmail()` and shows an "Add your email" prompt linking to GM Profile instead of a send button when none is set.
 
 ---
 
@@ -304,11 +317,28 @@ Start/sit advisor and trade analyzer don't exist yet — apply the same `TrendBa
 - PocketBeane voice — scannable digest, not a report
 
 **Acceptance criteria:**
-- [ ] Button in Season Hub triggers digest generation and send
-- [ ] Email arrives with correct, current waiver wire recommendations
-- [ ] Works correctly for both leagues independently (correct league data, clearly labeled)
-- [ ] No email saved → button shows prompt to add email instead of failing silently
-- [ ] In-app confirmation shown after successful send
+- [x] Button in Season Hub triggers digest generation and send
+- [ ] Email arrives with correct, current waiver wire recommendations — logic verified end-to-end (real roster → Claude recs → formatted HTML), send call verified up to Resend; not confirmed against a real inbox pending a `RESEND_API_KEY` (see T3-1)
+- [x] Works correctly for both leagues independently (correct league data, clearly labeled)
+- [x] No email saved → button shows prompt to add email instead of failing silently
+- [x] In-app confirmation shown after successful send
+
+**Implemented:** `pages/api/season/email-waiver-digest.js` — reuses `getWaiverAdvice()` (extracted from `waiver-advice.js`'s handler so the Claude prompt/roster logic isn't duplicated), formats the top 3 moves into an inline-styled HTML email (dark theme, matches app palette), computes an ISO week number for the subject line (`Your Week [X] Waiver Wire Picks — [League Name]`), sends via `sendEmail()`. Season Hub's `WaiverPanel` gained an "Email me this week's picks" action next to the existing recs, plus inline sent/error state. Verified with real `players.json` data through to the Resend call boundary.
+
+---
+
+### T3-1/T3-2/T3-3 · UAT (pending — needs a live Resend key + browser pass)
+
+Everything below the Resend send call was verified with curl (validation errors, malformed input, missing-config paths) and the waiver logic was verified end-to-end against real `players.json` data. What's *not* yet verified — the part a real user has to check in-browser and in a real inbox:
+
+- [ ] Create a real Resend account, add `RESEND_API_KEY` (and a verified sender / `RESEND_FROM_EMAIL`) to `.env.local`
+- [ ] `/gm-profile` — add, edit, and clear an email address through the actual UI; confirm it survives a page refresh (localStorage) and the invalid-email inline error shows correctly
+- [ ] Season Hub waiver panel — with no email saved, confirm the "Add your email" prompt shows and links to `/gm-profile`; with one saved, click "Email me this week's picks" and confirm the in-app "Sent to …" confirmation appears
+- [ ] Open the actual received email — confirm it renders sanely in at least one real client (Gmail web/app is the most likely one in practice). The template uses a dark background with inline styles; several clients (Gmail, Outlook) strip or override `<body>` background color and some apply their own dark-mode color inversion, so the as-sent look may not match the in-app dark theme — check for legibility, not just that it arrived
+- [ ] Repeat the send for a second league (NBA + MLB, if both are in use) — confirm subject/league name/week number are correct per-league and nothing bleeds across leagues
+- [ ] Confirm `RESEND_API_KEY` never appears in any client-side network request (Network tab, POST to `/api/season/email-waiver-digest`) — should only ever see `to`/`leagueName`/`sport`/roster data in the request body
+
+Once this passes, flip T3-1/T3-2/T3-3's remaining unchecked acceptance criteria above and mark the trio UAT complete in the Y-05-style status table.
 
 ---
 

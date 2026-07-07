@@ -36,12 +36,85 @@
 
 const fs = require('fs')
 const path = require('path')
-const { calculateTrend } = require('./calculateTrend')
+const { calculateTrend, TREND_PROFILES } = require('./calculateTrend')
 
-const REQUIRED_STAT_FIELDS = ['pts', 'reb', 'ast', 'stl', 'blk', 'to', 'fg_pct', 'ft_pct', 'three_pm', 'gp']
-const VALID_INJURY_STATUSES = ['healthy', 'day-to-day', 'out']
+const REQUIRED_STAT_FIELDS = ['pts', 'reb', 'ast', 'stl', 'blk', 'to', 'fg_pct', 'ft_pct', 'three_pm', 'gp'] // legacy default (nba)
+const VALID_INJURY_STATUSES = ['healthy', 'day-to-day', 'out', null]
 const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/
 const SOURCE = 'hermes_weekly_pull'
+
+const SPORT_SCHEMAS = {
+  mlb: {
+    hitter: ['avg', 'obp', 'slg', 'ops', 'hr', 'rbi', 'r', 'sb', 'bb', 'so', 'pa', 'g'],
+    pitcher: ['w', 'l', 'sv', 'era', 'whip', 'so', 'ip', 'bb', 'g', 'gs'],
+  },
+  nba: ['pts', 'reb', 'ast', 'stl', 'blk', 'to', 'fg_pct', 'ft_pct', 'three_pm', 'gp'],
+  nhl: {
+    skater: ['g', 'a', 'pts', 'plus_minus', 'pim', 'ppg', 'shg', 'sog', 'gp'],
+    goalie: ['w', 'l', 'ga', 'sv_pct', 'gaa', 'so', 'gp'],
+  },
+  nfl: {
+    QB: ['pass_yds', 'pass_td', 'int', 'rush_yds', 'rush_td', 'g'],
+    RB: ['rush_yds', 'rush_td', 'rec_yds', 'rec_td', 'rec', 'g'],
+    WR: ['rec_yds', 'rec_td', 'rec', 'g'],
+    TE: ['rec_yds', 'rec_td', 'rec', 'g'],
+  },
+}
+
+function getRequiredFields(sport, positionType) {
+  const schema = SPORT_SCHEMAS[sport]
+  if (!schema) return REQUIRED_STAT_FIELDS
+  if (Array.isArray(schema)) return schema // flat, single stat-set (e.g. nba)
+  if (typeof schema === 'object') {
+    if (positionType && schema[positionType]) return schema[positionType]
+    // fallback to first sub-schema
+    const keys = Object.keys(schema)
+    return schema[keys[0]] || REQUIRED_STAT_FIELDS
+  }
+  return REQUIRED_STAT_FIELDS
+}
+
+function perGame(total, games) {
+  if (typeof total !== 'number' || typeof games !== 'number' || games === 0) return null
+  return total / games
+}
+
+// Builds the (prior, current, profile) trend inputs for calculateTrend().
+// Counting stats (hr/rbi/k) are normalized to a per-game rate before
+// comparison — comparing a partial current season's raw total against a
+// full prior season's total would read as "declining" almost every week
+// regardless of actual form. Rate stats (avg/era/whip) are passed through
+// as-is. NBA already stores pts/reb/ast as per-game rates, so it passes
+// straight through unchanged.
+function buildTrendInputs(sport, positionType, priorSeason, incomingStats) {
+  if (sport === 'mlb' && positionType === 'pitcher') {
+    const prior = priorSeason && {
+      k: perGame(priorSeason.k, priorSeason.gp),
+      era: priorSeason.era,
+      whip: priorSeason.whip,
+    }
+    const current = {
+      k: perGame(incomingStats.so, incomingStats.g),
+      era: incomingStats.era,
+      whip: incomingStats.whip,
+    }
+    return { prior, current, profile: TREND_PROFILES.mlb_pitcher }
+  }
+  if (sport === 'mlb') {
+    const prior = priorSeason && {
+      hr: perGame(priorSeason.hr, priorSeason.gp),
+      rbi: perGame(priorSeason.rbi, priorSeason.gp),
+      avg: priorSeason.avg,
+    }
+    const current = {
+      hr: perGame(incomingStats.hr, incomingStats.g),
+      rbi: perGame(incomingStats.rbi, incomingStats.g),
+      avg: incomingStats.avg,
+    }
+    return { prior, current, profile: TREND_PROFILES.mlb_hitter }
+  }
+  return { prior: priorSeason, current: incomingStats, profile: TREND_PROFILES.nba }
+}
 
 function isPlainObject(v) {
   return typeof v === 'object' && v !== null && !Array.isArray(v)
@@ -69,22 +142,25 @@ function validateBatchShape(data) {
 }
 
 // Validates a single incoming player entry. Returns an array of error strings (empty = valid).
-function validatePlayerEntry(entry) {
+function validatePlayerEntry(entry, sport, positionType) {
   if (!isPlainObject(entry)) return ['entry is not an object']
 
   const errors = []
   if (typeof entry.id !== 'string' || !entry.id.trim()) {
     errors.push('missing or invalid "id"')
   }
-  for (const field of REQUIRED_STAT_FIELDS) {
-    if (typeof entry[field] !== 'number' || Number.isNaN(entry[field])) {
+  const requiredFields = getRequiredFields(sport, positionType)
+  for (const field of requiredFields) {
+    if (typeof entry.current_season?.[field] !== 'number' || Number.isNaN(entry.current_season[field])) {
       errors.push(`missing or non-numeric "${field}"`)
     }
   }
-  if (entry.injury_status !== undefined && !VALID_INJURY_STATUSES.includes(entry.injury_status)) {
+  const rawStatus = entry.current_season?.injury_status
+  if (rawStatus !== undefined && !VALID_INJURY_STATUSES.includes(rawStatus)) {
     errors.push(`invalid "injury_status" (must be one of: ${VALID_INJURY_STATUSES.join(', ')})`)
   }
-  if (entry.injury_note !== undefined && entry.injury_note !== null && typeof entry.injury_note !== 'string') {
+  const rawNote = entry.current_season?.injury_note
+  if (rawNote !== undefined && rawNote !== null && typeof rawNote !== 'string') {
     errors.push('invalid "injury_note" (must be string or null)')
   }
   return errors
@@ -110,7 +186,9 @@ function mergeCurrentSeasonData(incomingData, existingPlayers) {
   const invalid = []
 
   for (const entry of incomingData.players) {
-    const entryErrors = validatePlayerEntry(entry)
+    const sport = incomingData.sport || 'nba'
+    const positionType = isPlainObject(entry.current_season) ? entry.current_season.position_type : undefined
+    const entryErrors = validatePlayerEntry(entry, sport, positionType)
     if (entryErrors.length > 0) {
       invalid.push({ id: isPlainObject(entry) ? entry.id : undefined, errors: entryErrors })
       continue
@@ -123,14 +201,26 @@ function mergeCurrentSeasonData(incomingData, existingPlayers) {
     }
 
     const incomingStats = {}
-    for (const field of REQUIRED_STAT_FIELDS) incomingStats[field] = entry[field]
+    const requiredFields = getRequiredFields(sport, positionType)
+    for (const field of requiredFields) {
+      incomingStats[field] = entry.current_season?.[field]
+    }
 
-    const trend = calculateTrend(existing.prior_season ?? null, incomingStats)
+    const { prior: trendPrior, current: trendCurrent, profile: trendProfile } =
+      buildTrendInputs(sport, positionType, existing.prior_season ?? null, incomingStats)
+    const trend = calculateTrend(trendPrior, trendCurrent, trendProfile)
 
     const previousCurrentSeason = existing.current_season ?? null
-    const injuryStatus = entry.injury_status ?? previousCurrentSeason?.injury_status ?? 'healthy'
-    const injuryNote = entry.injury_status !== undefined
-      ? (entry.injury_note ?? null)
+    // injury_status/injury_note live on entry.current_season, not top-level entry.
+    // Presence is checked via `!== undefined` (not `??`) so an explicit `null`
+    // (injury page unavailable this pull) is preserved rather than defaulted —
+    // only a genuinely *omitted* key falls back to the carried-forward value.
+    const hasIncomingInjuryStatus = entry.current_season?.injury_status !== undefined
+    const injuryStatus = hasIncomingInjuryStatus
+      ? entry.current_season.injury_status
+      : (previousCurrentSeason?.injury_status ?? 'healthy')
+    const injuryNote = hasIncomingInjuryStatus
+      ? (entry.current_season.injury_note ?? null)
       : (previousCurrentSeason?.injury_note ?? null)
 
     existing.current_season = {

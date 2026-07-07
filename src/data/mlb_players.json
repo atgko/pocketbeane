@@ -29,7 +29,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 8,
+      "l": 2,
+      "sv": 0,
+      "era": 1.79,
+      "whip": 0.946,
+      "so": 95,
+      "ip": 85.2,
+      "bb": 26,
+      "g": 14,
+      "gs": 14,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "aaron-judge",
@@ -60,7 +78,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.248,
+      "obp": 0.375,
+      "slg": 0.533,
+      "ops": 0.907,
+      "hr": 17,
+      "rbi": 38,
+      "r": 43,
+      "sb": 5,
+      "bb": 42,
+      "so": 72,
+      "pa": 261,
+      "g": 59,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "bobby-witt",
@@ -89,7 +127,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.29,
+      "obp": 0.362,
+      "slg": 0.466,
+      "ops": 0.829,
+      "hr": 12,
+      "rbi": 36,
+      "r": 46,
+      "sb": 30,
+      "bb": 38,
+      "so": 62,
+      "pa": 370,
+      "g": 84,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "juan-soto",
@@ -120,7 +178,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.299,
+      "obp": 0.407,
+      "slg": 0.559,
+      "ops": 0.966,
+      "hr": 18,
+      "rbi": 43,
+      "r": 40,
+      "sb": 6,
+      "bb": 47,
+      "so": 38,
+      "pa": 303,
+      "g": 71,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jose-ramirez",
@@ -151,7 +229,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.239,
+      "obp": 0.339,
+      "slg": 0.418,
+      "ops": 0.757,
+      "hr": 10,
+      "rbi": 33,
+      "r": 42,
+      "sb": 24,
+      "bb": 41,
+      "so": 44,
+      "pa": 314,
+      "g": 72,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ronald-acuna",
@@ -180,7 +278,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.251,
+      "obp": 0.373,
+      "slg": 0.421,
+      "ops": 0.793,
+      "hr": 7,
+      "rbi": 22,
+      "r": 31,
+      "sb": 15,
+      "bb": 35,
+      "so": 52,
+      "pa": 236,
+      "g": 53,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tarik-skubal",
@@ -210,7 +328,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 4,
+      "sv": 0,
+      "era": 3.15,
+      "whip": 0.914,
+      "so": 75,
+      "ip": 65.2,
+      "bb": 8,
+      "g": 11,
+      "gs": 11,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "elly-de-la-cruz",
@@ -239,7 +375,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.272,
+      "obp": 0.343,
+      "slg": 0.477,
+      "ops": 0.82,
+      "hr": 13,
+      "rbi": 41,
+      "r": 44,
+      "sb": 13,
+      "bb": 29,
+      "so": 91,
+      "pa": 312,
+      "g": 70,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "paul-skenes",
@@ -269,7 +425,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 6,
+      "l": 8,
+      "sv": 0,
+      "era": 3.62,
+      "whip": 1.01,
+      "so": 119,
+      "ip": 97,
+      "bb": 22,
+      "g": 18,
+      "gs": 18,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "julio-rodriguez",
@@ -298,7 +472,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.259,
+      "obp": 0.323,
+      "slg": 0.424,
+      "ops": 0.747,
+      "hr": 14,
+      "rbi": 40,
+      "r": 46,
+      "sb": 12,
+      "bb": 29,
+      "so": 79,
+      "pa": 378,
+      "g": 87,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kyle-tucker",
@@ -329,7 +523,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.246,
+      "obp": 0.349,
+      "slg": 0.384,
+      "ops": 0.733,
+      "hr": 7,
+      "rbi": 45,
+      "r": 52,
+      "sb": 6,
+      "bb": 48,
+      "so": 73,
+      "pa": 358,
+      "g": 85,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "garrett-crochet",
@@ -359,7 +573,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 3,
+      "sv": 0,
+      "era": 6.3,
+      "whip": 1.467,
+      "so": 37,
+      "ip": 30,
+      "bb": 11,
+      "g": 6,
+      "gs": 6,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "fernando-tatis",
@@ -390,7 +622,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.284,
+      "obp": 0.345,
+      "slg": 0.386,
+      "ops": 0.731,
+      "hr": 5,
+      "rbi": 34,
+      "r": 41,
+      "sb": 21,
+      "bb": 32,
+      "so": 79,
+      "pa": 386,
+      "g": 88,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "corbin-carroll",
@@ -419,7 +671,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.266,
+      "obp": 0.356,
+      "slg": 0.506,
+      "ops": 0.862,
+      "hr": 13,
+      "rbi": 45,
+      "r": 50,
+      "sb": 9,
+      "bb": 42,
+      "so": 82,
+      "pa": 368,
+      "g": 86,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "cal-raleigh",
@@ -450,7 +722,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.164,
+      "obp": 0.264,
+      "slg": 0.309,
+      "ops": 0.573,
+      "hr": 9,
+      "rbi": 28,
+      "r": 22,
+      "sb": 2,
+      "bb": 31,
+      "so": 81,
+      "pa": 254,
+      "g": 59,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "gunnar-henderson",
@@ -481,7 +773,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.223,
+      "obp": 0.295,
+      "slg": 0.406,
+      "ops": 0.701,
+      "hr": 16,
+      "rbi": 40,
+      "r": 51,
+      "sb": 7,
+      "bb": 34,
+      "so": 93,
+      "pa": 413,
+      "g": 90,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "junior-caminero",
@@ -510,7 +822,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.288,
+      "obp": 0.378,
+      "slg": 0.561,
+      "ops": 0.939,
+      "hr": 26,
+      "rbi": 56,
+      "r": 57,
+      "sb": 1,
+      "bb": 49,
+      "so": 68,
+      "pa": 381,
+      "g": 87,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "vladimir-guerrero",
@@ -541,7 +873,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.266,
+      "obp": 0.348,
+      "slg": 0.349,
+      "ops": 0.698,
+      "hr": 4,
+      "rbi": 35,
+      "r": 46,
+      "sb": 6,
+      "bb": 38,
+      "so": 43,
+      "pa": 359,
+      "g": 85,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "nick-kurtz",
@@ -570,7 +922,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.275,
+      "obp": 0.415,
+      "slg": 0.512,
+      "ops": 0.928,
+      "hr": 20,
+      "rbi": 66,
+      "r": 61,
+      "sb": 7,
+      "bb": 76,
+      "so": 126,
+      "pa": 402,
+      "g": 89,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kyle-schwarber",
@@ -601,7 +973,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.254,
+      "obp": 0.37,
+      "slg": 0.567,
+      "ops": 0.936,
+      "hr": 30,
+      "rbi": 55,
+      "r": 55,
+      "sb": 2,
+      "bb": 56,
+      "so": 131,
+      "pa": 384,
+      "g": 86,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jackson-chourio",
@@ -630,7 +1022,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.297,
+      "obp": 0.352,
+      "slg": 0.533,
+      "ops": 0.885,
+      "hr": 13,
+      "rbi": 35,
+      "r": 38,
+      "sb": 6,
+      "bb": 19,
+      "so": 61,
+      "pa": 250,
+      "g": 54,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jazz-chisholm",
@@ -661,7 +1073,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.225,
+      "obp": 0.307,
+      "slg": 0.396,
+      "ops": 0.703,
+      "hr": 12,
+      "rbi": 33,
+      "r": 43,
+      "sb": 26,
+      "bb": 35,
+      "so": 97,
+      "pa": 336,
+      "g": 85,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "yoshinobu-yamamoto",
@@ -691,7 +1123,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 9,
+      "l": 5,
+      "sv": 0,
+      "era": 2.49,
+      "whip": 0.879,
+      "so": 100,
+      "ip": 104.2,
+      "bb": 21,
+      "g": 16,
+      "gs": 16,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "pete-alonso",
@@ -722,7 +1172,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.251,
+      "obp": 0.344,
+      "slg": 0.466,
+      "ops": 0.81,
+      "hr": 19,
+      "rbi": 60,
+      "r": 54,
+      "sb": 2,
+      "bb": 47,
+      "so": 96,
+      "pa": 393,
+      "g": 91,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "francisco-lindor",
@@ -751,7 +1221,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.225,
+      "obp": 0.31,
+      "slg": 0.38,
+      "ops": 0.69,
+      "hr": 4,
+      "rbi": 10,
+      "r": 20,
+      "sb": 2,
+      "bb": 14,
+      "so": 24,
+      "pa": 145,
+      "g": 33,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ketel-marte",
@@ -782,7 +1272,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.267,
+      "obp": 0.324,
+      "slg": 0.481,
+      "ops": 0.804,
+      "hr": 17,
+      "rbi": 54,
+      "r": 49,
+      "sb": 4,
+      "bb": 28,
+      "so": 49,
+      "pa": 374,
+      "g": 85,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "cristopher-sanchez",
@@ -812,7 +1322,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 10,
+      "l": 3,
+      "sv": 0,
+      "era": 2,
+      "whip": 1.085,
+      "so": 136,
+      "ip": 117,
+      "bb": 23,
+      "g": 18,
+      "gs": 18,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "trea-turner",
@@ -841,7 +1369,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.236,
+      "obp": 0.283,
+      "slg": 0.36,
+      "ops": 0.643,
+      "hr": 10,
+      "rbi": 31,
+      "r": 60,
+      "sb": 16,
+      "bb": 22,
+      "so": 89,
+      "pa": 389,
+      "g": 88,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "yordan-alvarez",
@@ -872,7 +1420,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.32,
+      "obp": 0.429,
+      "slg": 0.637,
+      "ops": 1.065,
+      "hr": 29,
+      "rbi": 67,
+      "r": 62,
+      "sb": 1,
+      "bb": 59,
+      "so": 67,
+      "pa": 392,
+      "g": 90,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "manny-machado",
@@ -903,7 +1471,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.189,
+      "obp": 0.282,
+      "slg": 0.41,
+      "ops": 0.692,
+      "hr": 18,
+      "rbi": 51,
+      "r": 44,
+      "sb": 2,
+      "bb": 43,
+      "so": 82,
+      "pa": 366,
+      "g": 87,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "pete-crow-armstrong",
@@ -932,7 +1520,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.292,
+      "obp": 0.383,
+      "slg": 0.527,
+      "ops": 0.91,
+      "hr": 19,
+      "rbi": 49,
+      "r": 57,
+      "sb": 23,
+      "bb": 41,
+      "so": 99,
+      "pa": 390,
+      "g": 90,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "james-wood",
@@ -963,7 +1571,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.266,
+      "obp": 0.393,
+      "slg": 0.533,
+      "ops": 0.926,
+      "hr": 23,
+      "rbi": 56,
+      "r": 78,
+      "sb": 13,
+      "bb": 70,
+      "so": 125,
+      "pa": 425,
+      "g": 91,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "zach-neto",
@@ -992,7 +1620,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.231,
+      "obp": 0.323,
+      "slg": 0.458,
+      "ops": 0.781,
+      "hr": 19,
+      "rbi": 45,
+      "r": 61,
+      "sb": 11,
+      "bb": 41,
+      "so": 126,
+      "pa": 396,
+      "g": 88,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "bryan-woo",
@@ -1022,7 +1670,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 7,
+      "l": 6,
+      "sv": 0,
+      "era": 4.17,
+      "whip": 1.027,
+      "so": 97,
+      "ip": 99.1,
+      "bb": 19,
+      "g": 17,
+      "gs": 17,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "matt-olson",
@@ -1051,7 +1717,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.271,
+      "obp": 0.341,
+      "slg": 0.531,
+      "ops": 0.872,
+      "hr": 22,
+      "rbi": 54,
+      "r": 59,
+      "sb": 2,
+      "bb": 37,
+      "so": 89,
+      "pa": 384,
+      "g": 88,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "hunter-brown",
@@ -1081,7 +1767,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 1,
+      "l": 0,
+      "sv": 0,
+      "era": 3.38,
+      "whip": 1.364,
+      "so": 35,
+      "ip": 29.1,
+      "bb": 17,
+      "g": 6,
+      "gs": 6,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "bryce-harper",
@@ -1112,7 +1816,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.27,
+      "obp": 0.37,
+      "slg": 0.522,
+      "ops": 0.892,
+      "hr": 20,
+      "rbi": 57,
+      "r": 56,
+      "sb": 5,
+      "bb": 54,
+      "so": 76,
+      "pa": 378,
+      "g": 90,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "logan-gilbert",
@@ -1142,7 +1866,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 7,
+      "l": 5,
+      "sv": 0,
+      "era": 3.19,
+      "whip": 0.95,
+      "so": 114,
+      "ip": 107.1,
+      "bb": 22,
+      "g": 18,
+      "gs": 18,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "chris-sale",
@@ -1172,7 +1914,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 9,
+      "l": 6,
+      "sv": 0,
+      "era": 2.27,
+      "whip": 1.116,
+      "so": 112,
+      "ip": 95,
+      "bb": 24,
+      "g": 16,
+      "gs": 16,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "brent-rooker",
@@ -1203,7 +1963,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.2,
+      "obp": 0.281,
+      "slg": 0.389,
+      "ops": 0.67,
+      "hr": 10,
+      "rbi": 29,
+      "r": 20,
+      "sb": 2,
+      "bb": 19,
+      "so": 65,
+      "pa": 203,
+      "g": 48,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "rafael-devers",
@@ -1234,7 +2014,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.248,
+      "obp": 0.31,
+      "slg": 0.481,
+      "ops": 0.791,
+      "hr": 18,
+      "rbi": 47,
+      "r": 43,
+      "sb": 0,
+      "bb": 31,
+      "so": 107,
+      "pa": 377,
+      "g": 89,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "mason-miller",
@@ -1264,7 +2064,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 2,
+      "l": 1,
+      "sv": 22,
+      "era": 0.98,
+      "whip": 0.818,
+      "so": 67,
+      "ip": 36.2,
+      "bb": 13,
+      "g": 35,
+      "gs": 0,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "wyatt-langford",
@@ -1293,7 +2111,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.278,
+      "obp": 0.324,
+      "slg": 0.5,
+      "ops": 0.824,
+      "hr": 8,
+      "rbi": 20,
+      "r": 23,
+      "sb": 6,
+      "bb": 10,
+      "so": 37,
+      "pa": 173,
+      "g": 40,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "max-fried",
@@ -1323,7 +2161,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 3,
+      "sv": 0,
+      "era": 3.21,
+      "whip": 1.005,
+      "so": 50,
+      "ip": 61.2,
+      "bb": 19,
+      "g": 10,
+      "gs": 10,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "brice-turang",
@@ -1352,7 +2208,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.268,
+      "obp": 0.363,
+      "slg": 0.457,
+      "ops": 0.82,
+      "hr": 12,
+      "rbi": 51,
+      "r": 62,
+      "sb": 13,
+      "bb": 50,
+      "so": 98,
+      "pa": 383,
+      "g": 84,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "logan-webb",
@@ -1382,7 +2258,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 5,
+      "l": 6,
+      "sv": 0,
+      "era": 3.66,
+      "whip": 1.168,
+      "so": 78,
+      "ip": 93.1,
+      "bb": 24,
+      "g": 15,
+      "gs": 15,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "mookie-betts",
@@ -1411,7 +2305,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.241,
+      "obp": 0.3,
+      "slg": 0.436,
+      "ops": 0.736,
+      "hr": 11,
+      "rbi": 29,
+      "r": 34,
+      "sb": 1,
+      "bb": 18,
+      "so": 28,
+      "pa": 240,
+      "g": 55,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "roman-anthony",
@@ -1442,7 +2356,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.229,
+      "obp": 0.354,
+      "slg": 0.321,
+      "ops": 0.675,
+      "hr": 1,
+      "rbi": 5,
+      "r": 12,
+      "sb": 2,
+      "bb": 20,
+      "so": 33,
+      "pa": 130,
+      "g": 30,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "edwin-diaz",
@@ -1472,7 +2406,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 1,
+      "l": 0,
+      "sv": 4,
+      "era": 10.5,
+      "whip": 2.333,
+      "so": 10,
+      "ip": 6,
+      "bb": 5,
+      "g": 7,
+      "gs": 0,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "cole-ragans",
@@ -1502,7 +2454,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 1,
+      "l": 4,
+      "sv": 0,
+      "era": 4.84,
+      "whip": 1.415,
+      "so": 45,
+      "ip": 35.1,
+      "bb": 23,
+      "g": 8,
+      "gs": 8,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "freddie-freeman",
@@ -1531,7 +2501,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.293,
+      "obp": 0.383,
+      "slg": 0.502,
+      "ops": 0.884,
+      "hr": 15,
+      "rbi": 49,
+      "r": 51,
+      "sb": 3,
+      "bb": 47,
+      "so": 62,
+      "pa": 384,
+      "g": 88,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jacob-degrom",
@@ -1561,7 +2551,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 7,
+      "l": 5,
+      "sv": 0,
+      "era": 3.48,
+      "whip": 0.993,
+      "so": 115,
+      "ip": 95.2,
+      "bb": 20,
+      "g": 17,
+      "gs": 17,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "cody-bellinger",
@@ -1590,7 +2598,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.251,
+      "obp": 0.348,
+      "slg": 0.426,
+      "ops": 0.774,
+      "hr": 11,
+      "rbi": 50,
+      "r": 46,
+      "sb": 10,
+      "bb": 50,
+      "so": 53,
+      "pa": 374,
+      "g": 87,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "austin-riley",
@@ -1619,7 +2647,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.211,
+      "obp": 0.289,
+      "slg": 0.34,
+      "ops": 0.629,
+      "hr": 9,
+      "rbi": 41,
+      "r": 36,
+      "sb": 4,
+      "bb": 29,
+      "so": 103,
+      "pa": 356,
+      "g": 88,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "william-contreras",
@@ -1650,7 +2698,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.295,
+      "obp": 0.358,
+      "slg": 0.416,
+      "ops": 0.774,
+      "hr": 9,
+      "rbi": 51,
+      "r": 47,
+      "sb": 1,
+      "bb": 31,
+      "so": 48,
+      "pa": 360,
+      "g": 83,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "freddy-peralta",
@@ -1680,7 +2748,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 5,
+      "l": 7,
+      "sv": 0,
+      "era": 4.81,
+      "whip": 1.416,
+      "so": 92,
+      "ip": 95.1,
+      "bb": 38,
+      "g": 18,
+      "gs": 18,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "josh-naylor",
@@ -1711,7 +2797,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.251,
+      "obp": 0.312,
+      "slg": 0.356,
+      "ops": 0.669,
+      "hr": 8,
+      "rbi": 35,
+      "r": 32,
+      "sb": 15,
+      "bb": 27,
+      "so": 46,
+      "pa": 363,
+      "g": 84,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "geraldo-perdomo",
@@ -1740,7 +2846,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.243,
+      "obp": 0.353,
+      "slg": 0.355,
+      "ops": 0.708,
+      "hr": 5,
+      "rbi": 31,
+      "r": 39,
+      "sb": 13,
+      "bb": 52,
+      "so": 46,
+      "pa": 364,
+      "g": 86,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jarren-duran",
@@ -1771,7 +2897,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.197,
+      "obp": 0.259,
+      "slg": 0.361,
+      "ops": 0.62,
+      "hr": 13,
+      "rbi": 43,
+      "r": 39,
+      "sb": 14,
+      "bb": 24,
+      "so": 105,
+      "pa": 352,
+      "g": 81,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "cade-smith",
@@ -1801,7 +2947,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 2,
+      "l": 1,
+      "sv": 26,
+      "era": 2.9,
+      "whip": 1.14,
+      "so": 57,
+      "ip": 40.1,
+      "bb": 10,
+      "g": 38,
+      "gs": 0,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jhoan-duran",
@@ -1831,7 +2995,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 1,
+      "l": 3,
+      "sv": 21,
+      "era": 1.52,
+      "whip": 0.944,
+      "so": 45,
+      "ip": 29.2,
+      "bb": 6,
+      "g": 31,
+      "gs": 0,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "riley-greene",
@@ -1862,7 +3044,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.292,
+      "obp": 0.38,
+      "slg": 0.474,
+      "ops": 0.854,
+      "hr": 13,
+      "rbi": 44,
+      "r": 46,
+      "sb": 2,
+      "bb": 46,
+      "so": 101,
+      "pa": 376,
+      "g": 89,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "maikel-garcia",
@@ -1897,7 +3099,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.261,
+      "obp": 0.32,
+      "slg": 0.373,
+      "ops": 0.693,
+      "hr": 3,
+      "rbi": 30,
+      "r": 32,
+      "sb": 5,
+      "bb": 24,
+      "so": 45,
+      "pa": 294,
+      "g": 69,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "george-kirby",
@@ -1927,7 +3149,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 7,
+      "l": 7,
+      "sv": 0,
+      "era": 3.81,
+      "whip": 1.317,
+      "so": 91,
+      "ip": 104,
+      "bb": 24,
+      "g": 17,
+      "gs": 17,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ben-rice",
@@ -1960,7 +3200,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.267,
+      "obp": 0.361,
+      "slg": 0.559,
+      "ops": 0.921,
+      "hr": 24,
+      "rbi": 56,
+      "r": 58,
+      "sb": 2,
+      "bb": 44,
+      "so": 84,
+      "pa": 360,
+      "g": 84,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jackson-merrill",
@@ -1989,7 +3249,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.214,
+      "obp": 0.271,
+      "slg": 0.355,
+      "ops": 0.626,
+      "hr": 10,
+      "rbi": 34,
+      "r": 38,
+      "sb": 18,
+      "bb": 25,
+      "so": 93,
+      "pa": 361,
+      "g": 86,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "andres-munoz",
@@ -2019,7 +3299,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 4,
+      "sv": 16,
+      "era": 4.45,
+      "whip": 1.33,
+      "so": 48,
+      "ip": 32.1,
+      "bb": 14,
+      "g": 35,
+      "gs": 0,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "shea-langeliers",
@@ -2050,7 +3348,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.264,
+      "obp": 0.328,
+      "slg": 0.494,
+      "ops": 0.822,
+      "hr": 20,
+      "rbi": 44,
+      "r": 51,
+      "sb": 2,
+      "bb": 28,
+      "so": 75,
+      "pa": 363,
+      "g": 80,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "cj-abrams",
@@ -2079,7 +3397,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.269,
+      "obp": 0.348,
+      "slg": 0.498,
+      "ops": 0.846,
+      "hr": 18,
+      "rbi": 61,
+      "r": 53,
+      "sb": 14,
+      "bb": 31,
+      "so": 80,
+      "pa": 368,
+      "g": 87,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "dylan-cease",
@@ -2109,7 +3447,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 5,
+      "l": 4,
+      "sv": 0,
+      "era": 2.79,
+      "whip": 1.185,
+      "so": 137,
+      "ip": 90.1,
+      "bb": 41,
+      "g": 16,
+      "gs": 16,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "byron-buxton",
@@ -2140,7 +3496,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.271,
+      "obp": 0.328,
+      "slg": 0.575,
+      "ops": 0.904,
+      "hr": 25,
+      "rbi": 45,
+      "r": 57,
+      "sb": 7,
+      "bb": 23,
+      "so": 83,
+      "pa": 335,
+      "g": 75,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "joe-ryan",
@@ -2170,7 +3546,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 6,
+      "l": 5,
+      "sv": 0,
+      "era": 3.36,
+      "whip": 1.045,
+      "so": 122,
+      "ip": 104.1,
+      "bb": 23,
+      "g": 19,
+      "gs": 19,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jesus-luzardo",
@@ -2200,7 +3594,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 7,
+      "l": 4,
+      "sv": 0,
+      "era": 3.75,
+      "whip": 1.268,
+      "so": 125,
+      "ip": 103.1,
+      "bb": 33,
+      "g": 18,
+      "gs": 18,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "hunter-goodman",
@@ -2231,7 +3643,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.254,
+      "obp": 0.318,
+      "slg": 0.552,
+      "ops": 0.87,
+      "hr": 27,
+      "rbi": 51,
+      "r": 58,
+      "sb": 5,
+      "bb": 27,
+      "so": 114,
+      "pa": 352,
+      "g": 84,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "framber-valdez",
@@ -2261,7 +3693,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 6,
+      "sv": 0,
+      "era": 4.29,
+      "whip": 1.381,
+      "so": 78,
+      "ip": 100.2,
+      "bb": 36,
+      "g": 18,
+      "gs": 18,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "vinnie-pasquantino",
@@ -2292,7 +3742,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.224,
+      "obp": 0.309,
+      "slg": 0.35,
+      "ops": 0.66,
+      "hr": 6,
+      "rbi": 32,
+      "r": 28,
+      "sb": 3,
+      "bb": 32,
+      "so": 51,
+      "pa": 291,
+      "g": 68,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "george-springer",
@@ -2323,7 +3793,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.221,
+      "obp": 0.308,
+      "slg": 0.373,
+      "ops": 0.681,
+      "hr": 8,
+      "rbi": 21,
+      "r": 29,
+      "sb": 6,
+      "bb": 28,
+      "so": 56,
+      "pa": 279,
+      "g": 63,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kyle-bradish",
@@ -2353,7 +3843,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 5,
+      "l": 9,
+      "sv": 0,
+      "era": 3.75,
+      "whip": 1.401,
+      "so": 101,
+      "ip": 100.2,
+      "bb": 48,
+      "g": 18,
+      "gs": 18,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tyler-soderstrom",
@@ -2384,7 +3892,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.242,
+      "obp": 0.343,
+      "slg": 0.46,
+      "ops": 0.803,
+      "hr": 13,
+      "rbi": 41,
+      "r": 41,
+      "sb": 1,
+      "bb": 43,
+      "so": 59,
+      "pa": 335,
+      "g": 80,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "david-bednar",
@@ -2414,7 +3942,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 2,
+      "l": 3,
+      "sv": 17,
+      "era": 3,
+      "whip": 1.194,
+      "so": 43,
+      "ip": 36,
+      "bb": 12,
+      "g": 34,
+      "gs": 0,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "randy-arozarena",
@@ -2443,7 +3989,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.286,
+      "obp": 0.375,
+      "slg": 0.451,
+      "ops": 0.826,
+      "hr": 9,
+      "rbi": 41,
+      "r": 55,
+      "sb": 19,
+      "bb": 32,
+      "so": 78,
+      "pa": 352,
+      "g": 83,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "corey-seager",
@@ -2472,7 +4038,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.182,
+      "obp": 0.292,
+      "slg": 0.374,
+      "ops": 0.667,
+      "hr": 10,
+      "rbi": 25,
+      "r": 28,
+      "sb": 1,
+      "bb": 28,
+      "so": 59,
+      "pa": 219,
+      "g": 51,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "aroldis-chapman",
@@ -2502,7 +4088,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 0,
+      "l": 3,
+      "sv": 18,
+      "era": 2.36,
+      "whip": 1.275,
+      "so": 35,
+      "ip": 26.2,
+      "bb": 12,
+      "g": 28,
+      "gs": 0,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "bo-bichette",
@@ -2533,7 +4137,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.258,
+      "obp": 0.304,
+      "slg": 0.385,
+      "ops": 0.689,
+      "hr": 10,
+      "rbi": 50,
+      "r": 46,
+      "sb": 1,
+      "bb": 24,
+      "so": 71,
+      "pa": 392,
+      "g": 90,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "eugenio-suarez",
@@ -2564,7 +4188,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.206,
+      "obp": 0.281,
+      "slg": 0.362,
+      "ops": 0.643,
+      "hr": 8,
+      "rbi": 31,
+      "r": 20,
+      "sb": 0,
+      "bb": 21,
+      "so": 80,
+      "pa": 242,
+      "g": 61,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "oneil-cruz",
@@ -2595,7 +4239,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.264,
+      "obp": 0.35,
+      "slg": 0.472,
+      "ops": 0.822,
+      "hr": 14,
+      "rbi": 44,
+      "r": 45,
+      "sb": 21,
+      "bb": 30,
+      "so": 98,
+      "pa": 283,
+      "g": 64,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "nick-pivetta",
@@ -2625,7 +4289,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 1,
+      "l": 2,
+      "sv": 0,
+      "era": 4.5,
+      "whip": 1.125,
+      "so": 24,
+      "ip": 16,
+      "bb": 6,
+      "g": 4,
+      "gs": 4,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "alex-bregman",
@@ -2656,7 +4338,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.241,
+      "obp": 0.34,
+      "slg": 0.345,
+      "ops": 0.685,
+      "hr": 7,
+      "rbi": 32,
+      "r": 42,
+      "sb": 2,
+      "bb": 47,
+      "so": 63,
+      "pa": 403,
+      "g": 88,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "devin-williams",
@@ -2686,7 +4388,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 2,
+      "sv": 13,
+      "era": 4.34,
+      "whip": 1.552,
+      "so": 43,
+      "ip": 29,
+      "bb": 16,
+      "g": 32,
+      "gs": 0,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "christian-yelich",
@@ -2717,7 +4437,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.243,
+      "obp": 0.326,
+      "slg": 0.383,
+      "ops": 0.71,
+      "hr": 6,
+      "rbi": 28,
+      "r": 40,
+      "sb": 6,
+      "bb": 25,
+      "so": 69,
+      "pa": 243,
+      "g": 55,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "nico-hoerner",
@@ -2748,7 +4488,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.241,
+      "obp": 0.315,
+      "slg": 0.338,
+      "ops": 0.653,
+      "hr": 4,
+      "rbi": 38,
+      "r": 36,
+      "sb": 12,
+      "bb": 35,
+      "so": 31,
+      "pa": 397,
+      "g": 88,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "nolan-mclean",
@@ -2778,7 +4538,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 6,
+      "l": 5,
+      "sv": 0,
+      "era": 3.73,
+      "whip": 1.115,
+      "so": 118,
+      "ip": 101.1,
+      "bb": 37,
+      "g": 18,
+      "gs": 18,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "eury-perez",
@@ -2808,7 +4586,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 5,
+      "l": 6,
+      "sv": 0,
+      "era": 3.84,
+      "whip": 1.105,
+      "so": 89,
+      "ip": 79.2,
+      "bb": 32,
+      "g": 15,
+      "gs": 15,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "seiya-suzuki",
@@ -2839,7 +4635,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.264,
+      "obp": 0.347,
+      "slg": 0.448,
+      "ops": 0.795,
+      "hr": 13,
+      "rbi": 42,
+      "r": 43,
+      "sb": 0,
+      "bb": 34,
+      "so": 84,
+      "pa": 317,
+      "g": 74,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "salvador-perez",
@@ -2872,7 +4688,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.202,
+      "obp": 0.241,
+      "slg": 0.329,
+      "ops": 0.57,
+      "hr": 10,
+      "rbi": 32,
+      "r": 29,
+      "sb": 0,
+      "bb": 12,
+      "so": 70,
+      "pa": 344,
+      "g": 82,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "will-smith",
@@ -2901,7 +4737,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.249,
+      "obp": 0.338,
+      "slg": 0.382,
+      "ops": 0.72,
+      "hr": 6,
+      "rbi": 23,
+      "r": 23,
+      "sb": 0,
+      "bb": 23,
+      "so": 34,
+      "pa": 201,
+      "g": 52,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kevin-gausman",
@@ -2931,7 +4787,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 7,
+      "sv": 0,
+      "era": 4.19,
+      "whip": 1.188,
+      "so": 100,
+      "ip": 101,
+      "bb": 24,
+      "g": 18,
+      "gs": 18,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jose-altuve",
@@ -2964,7 +4838,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.236,
+      "obp": 0.314,
+      "slg": 0.386,
+      "ops": 0.7,
+      "hr": 8,
+      "rbi": 22,
+      "r": 41,
+      "sb": 2,
+      "bb": 29,
+      "so": 63,
+      "pa": 291,
+      "g": 68,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "michael-harris",
@@ -2993,7 +4887,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.302,
+      "obp": 0.335,
+      "slg": 0.505,
+      "ops": 0.84,
+      "hr": 16,
+      "rbi": 51,
+      "r": 42,
+      "sb": 5,
+      "bb": 15,
+      "so": 64,
+      "pa": 319,
+      "g": 82,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "michael-busch",
@@ -3022,7 +4936,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.234,
+      "obp": 0.367,
+      "slg": 0.391,
+      "ops": 0.758,
+      "hr": 11,
+      "rbi": 47,
+      "r": 37,
+      "sb": 2,
+      "bb": 60,
+      "so": 91,
+      "pa": 398,
+      "g": 89,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "sonny-gray",
@@ -3052,7 +4986,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 10,
+      "l": 1,
+      "sv": 0,
+      "era": 2.61,
+      "whip": 1.104,
+      "so": 82,
+      "ip": 89.2,
+      "bb": 23,
+      "g": 16,
+      "gs": 16,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "drake-baldwin",
@@ -3083,7 +5035,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.251,
+      "obp": 0.336,
+      "slg": 0.451,
+      "ops": 0.787,
+      "hr": 15,
+      "rbi": 43,
+      "r": 48,
+      "sb": 1,
+      "bb": 27,
+      "so": 68,
+      "pa": 289,
+      "g": 65,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jeremy-pena",
@@ -3112,7 +5084,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.295,
+      "obp": 0.356,
+      "slg": 0.443,
+      "ops": 0.799,
+      "hr": 6,
+      "rbi": 21,
+      "r": 34,
+      "sb": 8,
+      "bb": 15,
+      "so": 35,
+      "pa": 202,
+      "g": 48,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "willy-adames",
@@ -3141,7 +5133,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.232,
+      "obp": 0.279,
+      "slg": 0.428,
+      "ops": 0.707,
+      "hr": 14,
+      "rbi": 34,
+      "r": 43,
+      "sb": 2,
+      "bb": 21,
+      "so": 101,
+      "pa": 355,
+      "g": 84,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jacob-misiorowski",
@@ -3171,7 +5183,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 9,
+      "l": 4,
+      "sv": 0,
+      "era": 1.47,
+      "whip": 0.779,
+      "so": 156,
+      "ip": 104,
+      "bb": 27,
+      "g": 17,
+      "gs": 17,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "spencer-strider",
@@ -3201,7 +5231,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 2,
+      "sv": 0,
+      "era": 5.31,
+      "whip": 1.359,
+      "so": 46,
+      "ip": 39,
+      "bb": 20,
+      "g": 8,
+      "gs": 8,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "teoscar-hernandez",
@@ -3230,7 +5278,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.261,
+      "obp": 0.335,
+      "slg": 0.419,
+      "ops": 0.754,
+      "hr": 8,
+      "rbi": 36,
+      "r": 34,
+      "sb": 2,
+      "bb": 22,
+      "so": 64,
+      "pa": 230,
+      "g": 57,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "agustin-ramirez",
@@ -3261,7 +5329,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.23,
+      "obp": 0.318,
+      "slg": 0.345,
+      "ops": 0.663,
+      "hr": 2,
+      "rbi": 14,
+      "r": 14,
+      "sb": 3,
+      "bb": 13,
+      "so": 28,
+      "pa": 129,
+      "g": 31,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "luke-keaschall",
@@ -3290,7 +5378,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.252,
+      "obp": 0.339,
+      "slg": 0.345,
+      "ops": 0.684,
+      "hr": 4,
+      "rbi": 26,
+      "r": 46,
+      "sb": 12,
+      "bb": 32,
+      "so": 50,
+      "pa": 333,
+      "g": 85,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tyler-glasnow",
@@ -3320,7 +5428,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 0,
+      "sv": 0,
+      "era": 2.72,
+      "whip": 0.832,
+      "so": 49,
+      "ip": 39.2,
+      "bb": 13,
+      "g": 7,
+      "gs": 7,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "raisel-iglesias",
@@ -3350,7 +5476,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 0,
+      "l": 2,
+      "sv": 17,
+      "era": 1.53,
+      "whip": 1.057,
+      "so": 32,
+      "ip": 29.1,
+      "bb": 6,
+      "g": 28,
+      "gs": 0,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "chase-burns",
@@ -3382,7 +5526,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 10,
+      "l": 1,
+      "sv": 0,
+      "era": 2.4,
+      "whip": 1.075,
+      "so": 116,
+      "ip": 97.2,
+      "bb": 31,
+      "g": 17,
+      "gs": 17,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "trevor-story",
@@ -3411,7 +5573,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.206,
+      "obp": 0.244,
+      "slg": 0.303,
+      "ops": 0.547,
+      "hr": 3,
+      "rbi": 19,
+      "r": 16,
+      "sb": 4,
+      "bb": 8,
+      "so": 57,
+      "pa": 176,
+      "g": 41,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kyle-stowers",
@@ -3444,7 +5626,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.247,
+      "obp": 0.335,
+      "slg": 0.47,
+      "ops": 0.804,
+      "hr": 11,
+      "rbi": 39,
+      "r": 35,
+      "sb": 1,
+      "bb": 27,
+      "so": 87,
+      "pa": 282,
+      "g": 66,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "taylor-ward",
@@ -3473,7 +5675,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.253,
+      "obp": 0.378,
+      "slg": 0.353,
+      "ops": 0.731,
+      "hr": 5,
+      "rbi": 23,
+      "r": 54,
+      "sb": 3,
+      "bb": 67,
+      "so": 87,
+      "pa": 413,
+      "g": 90,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "luis-robert",
@@ -3502,7 +5724,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.224,
+      "obp": 0.327,
+      "slg": 0.329,
+      "ops": 0.656,
+      "hr": 2,
+      "rbi": 8,
+      "r": 10,
+      "sb": 2,
+      "bb": 13,
+      "so": 17,
+      "pa": 98,
+      "g": 24,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "josh-hader",
@@ -3532,7 +5774,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 0,
+      "sv": 9,
+      "era": 0.6,
+      "whip": 0.6,
+      "so": 24,
+      "ip": 15,
+      "bb": 7,
+      "g": 15,
+      "gs": 0,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jo-adell",
@@ -3561,7 +5821,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.245,
+      "obp": 0.29,
+      "slg": 0.387,
+      "ops": 0.677,
+      "hr": 11,
+      "rbi": 47,
+      "r": 39,
+      "sb": 3,
+      "bb": 11,
+      "so": 84,
+      "pa": 376,
+      "g": 90,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "cam-schlittler",
@@ -3591,7 +5871,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 8,
+      "l": 5,
+      "sv": 0,
+      "era": 2.08,
+      "whip": 0.962,
+      "so": 123,
+      "ip": 104,
+      "bb": 21,
+      "g": 18,
+      "gs": 18,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "blake-snell",
@@ -3621,7 +5919,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 0,
+      "l": 1,
+      "sv": 0,
+      "era": 12,
+      "whip": 2.667,
+      "so": 5,
+      "ip": 3,
+      "bb": 2,
+      "g": 1,
+      "gs": 1,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "nick-lodolo",
@@ -3651,7 +5967,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 2,
+      "sv": 0,
+      "era": 4.68,
+      "whip": 1.457,
+      "so": 46,
+      "ip": 57.2,
+      "bb": 24,
+      "g": 11,
+      "gs": 11,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "matt-chapman",
@@ -3680,7 +6014,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.235,
+      "obp": 0.324,
+      "slg": 0.368,
+      "ops": 0.692,
+      "hr": 7,
+      "rbi": 42,
+      "r": 35,
+      "sb": 0,
+      "bb": 37,
+      "so": 81,
+      "pa": 352,
+      "g": 84,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "brandon-woodruff",
@@ -3710,7 +6064,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 2,
+      "l": 2,
+      "sv": 0,
+      "era": 2.98,
+      "whip": 0.838,
+      "so": 47,
+      "ip": 45.1,
+      "bb": 10,
+      "g": 9,
+      "gs": 9,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "yandy-diaz",
@@ -3741,7 +6113,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.321,
+      "obp": 0.404,
+      "slg": 0.489,
+      "ops": 0.893,
+      "hr": 12,
+      "rbi": 53,
+      "r": 46,
+      "sb": 1,
+      "bb": 37,
+      "so": 51,
+      "pa": 364,
+      "g": 83,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "zack-wheeler",
@@ -3771,7 +6163,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 8,
+      "l": 1,
+      "sv": 0,
+      "era": 2.36,
+      "whip": 0.938,
+      "so": 84,
+      "ip": 80,
+      "bb": 20,
+      "g": 13,
+      "gs": 13,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ozzie-albies",
@@ -3800,7 +6210,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.271,
+      "obp": 0.322,
+      "slg": 0.445,
+      "ops": 0.767,
+      "hr": 14,
+      "rbi": 49,
+      "r": 57,
+      "sb": 1,
+      "bb": 26,
+      "so": 45,
+      "pa": 379,
+      "g": 88,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "brandon-nimmo",
@@ -3831,7 +6261,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.258,
+      "obp": 0.329,
+      "slg": 0.412,
+      "ops": 0.741,
+      "hr": 8,
+      "rbi": 30,
+      "r": 35,
+      "sb": 3,
+      "bb": 29,
+      "so": 75,
+      "pa": 362,
+      "g": 84,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "carlos-estevez",
@@ -3861,7 +6311,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 0,
+      "l": 1,
+      "sv": 0,
+      "era": 162,
+      "whip": 18,
+      "so": 0,
+      "ip": 0.1,
+      "bb": 2,
+      "g": 1,
+      "gs": 0,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "nathan-eovaldi",
@@ -3891,7 +6359,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 9,
+      "l": 7,
+      "sv": 0,
+      "era": 4.02,
+      "whip": 1.168,
+      "so": 110,
+      "ip": 105.1,
+      "bb": 24,
+      "g": 17,
+      "gs": 17,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ryan-pepiot",
@@ -3951,7 +6437,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 5,
+      "l": 7,
+      "sv": 0,
+      "era": 3.52,
+      "whip": 1.163,
+      "so": 88,
+      "ip": 102.1,
+      "bb": 41,
+      "g": 18,
+      "gs": 18,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "emmet-sheehan",
@@ -3981,7 +6485,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 6,
+      "sv": 0,
+      "era": 4.91,
+      "whip": 1.273,
+      "so": 86,
+      "ip": 77,
+      "bb": 25,
+      "g": 16,
+      "gs": 16,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jeff-hoffman",
@@ -4011,7 +6533,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 5,
+      "l": 5,
+      "sv": 5,
+      "era": 4.42,
+      "whip": 1.422,
+      "so": 62,
+      "ip": 38.2,
+      "bb": 15,
+      "g": 41,
+      "gs": 0,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "lawrence-butler",
@@ -4040,7 +6580,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.202,
+      "obp": 0.296,
+      "slg": 0.305,
+      "ops": 0.601,
+      "hr": 5,
+      "rbi": 22,
+      "r": 31,
+      "sb": 6,
+      "bb": 30,
+      "so": 67,
+      "pa": 253,
+      "g": 82,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "emilio-pagan",
@@ -4070,7 +6630,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 2,
+      "l": 1,
+      "sv": 7,
+      "era": 6.46,
+      "whip": 1.5,
+      "so": 13,
+      "ip": 15.1,
+      "bb": 8,
+      "g": 17,
+      "gs": 0,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jakob-marsee",
@@ -4099,7 +6677,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.192,
+      "obp": 0.316,
+      "slg": 0.296,
+      "ops": 0.612,
+      "hr": 5,
+      "rbi": 22,
+      "r": 45,
+      "sb": 18,
+      "bb": 47,
+      "so": 84,
+      "pa": 367,
+      "g": 88,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "andy-pages",
@@ -4128,7 +6726,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.267,
+      "obp": 0.332,
+      "slg": 0.471,
+      "ops": 0.803,
+      "hr": 16,
+      "rbi": 63,
+      "r": 53,
+      "sb": 8,
+      "bb": 31,
+      "so": 75,
+      "pa": 389,
+      "g": 90,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "luis-castillo",
@@ -4158,7 +6776,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 7,
+      "sv": 0,
+      "era": 4.79,
+      "whip": 1.331,
+      "so": 77,
+      "ip": 82.2,
+      "bb": 27,
+      "g": 17,
+      "gs": 14,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "daniel-palencia",
@@ -4188,7 +6824,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 2,
+      "l": 1,
+      "sv": 3,
+      "era": 2.7,
+      "whip": 1.38,
+      "so": 19,
+      "ip": 16.2,
+      "bb": 6,
+      "g": 19,
+      "gs": 0,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ryan-helsley",
@@ -4218,7 +6872,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 0,
+      "l": 4,
+      "sv": 8,
+      "era": 4.11,
+      "whip": 1.435,
+      "so": 21,
+      "ip": 15.1,
+      "bb": 9,
+      "g": 17,
+      "gs": 0,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "yainer-diaz",
@@ -4249,7 +6921,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.235,
+      "obp": 0.261,
+      "slg": 0.362,
+      "ops": 0.624,
+      "hr": 4,
+      "rbi": 19,
+      "r": 13,
+      "sb": 0,
+      "bb": 5,
+      "so": 26,
+      "pa": 157,
+      "g": 39,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "gavin-williams",
@@ -4279,7 +6971,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 9,
+      "l": 4,
+      "sv": 0,
+      "era": 3.89,
+      "whip": 1.185,
+      "so": 123,
+      "ip": 106.1,
+      "bb": 36,
+      "g": 18,
+      "gs": 18,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "noelvi-marte",
@@ -4310,7 +7020,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.196,
+      "obp": 0.25,
+      "slg": 0.366,
+      "ops": 0.616,
+      "hr": 5,
+      "rbi": 9,
+      "r": 14,
+      "sb": 4,
+      "bb": 8,
+      "so": 30,
+      "pa": 120,
+      "g": 36,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "mackenzie-gore",
@@ -4340,7 +7070,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 5,
+      "l": 7,
+      "sv": 0,
+      "era": 4.31,
+      "whip": 1.271,
+      "so": 104,
+      "ip": 96,
+      "bb": 39,
+      "g": 18,
+      "gs": 18,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "sandy-alcantara",
@@ -4370,7 +7118,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 10,
+      "l": 4,
+      "sv": 0,
+      "era": 4,
+      "whip": 1.253,
+      "so": 92,
+      "ip": 123.2,
+      "bb": 33,
+      "g": 19,
+      "gs": 19,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ian-happ",
@@ -4399,7 +7165,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.219,
+      "obp": 0.327,
+      "slg": 0.441,
+      "ops": 0.768,
+      "hr": 17,
+      "rbi": 41,
+      "r": 59,
+      "sb": 4,
+      "bb": 47,
+      "so": 119,
+      "pa": 373,
+      "g": 86,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "steven-kwan",
@@ -4428,7 +7214,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.221,
+      "obp": 0.328,
+      "slg": 0.278,
+      "ops": 0.606,
+      "hr": 1,
+      "rbi": 14,
+      "r": 35,
+      "sb": 4,
+      "bb": 43,
+      "so": 34,
+      "pa": 334,
+      "g": 83,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "trevor-rogers",
@@ -4458,7 +7264,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 6,
+      "l": 7,
+      "sv": 0,
+      "era": 4.7,
+      "whip": 1.316,
+      "so": 65,
+      "ip": 84.1,
+      "bb": 29,
+      "g": 16,
+      "gs": 16,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "hunter-greene",
@@ -4488,7 +7312,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 0,
+      "l": 1,
+      "sv": 0,
+      "era": 21.6,
+      "whip": 3.3,
+      "so": 7,
+      "ip": 3.1,
+      "bb": 4,
+      "g": 1,
+      "gs": 1,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "bubba-chandler",
@@ -4518,7 +7360,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 8,
+      "sv": 0,
+      "era": 4.82,
+      "whip": 1.439,
+      "so": 79,
+      "ip": 89.2,
+      "bb": 52,
+      "g": 18,
+      "gs": 17,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "adley-rutschman",
@@ -4549,7 +7409,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.254,
+      "obp": 0.323,
+      "slg": 0.451,
+      "ops": 0.774,
+      "hr": 8,
+      "rbi": 45,
+      "r": 29,
+      "sb": 0,
+      "bb": 24,
+      "so": 39,
+      "pa": 254,
+      "g": 60,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "pete-fairbanks",
@@ -4579,7 +7459,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 3,
+      "sv": 12,
+      "era": 7.27,
+      "whip": 1.462,
+      "so": 34,
+      "ip": 26,
+      "bb": 12,
+      "g": 28,
+      "gs": 1,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ceddanne-rafaela",
@@ -4610,7 +7508,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.283,
+      "obp": 0.331,
+      "slg": 0.432,
+      "ops": 0.763,
+      "hr": 7,
+      "rbi": 36,
+      "r": 38,
+      "sb": 12,
+      "bb": 17,
+      "so": 68,
+      "pa": 339,
+      "g": 84,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "brandon-lowe",
@@ -4639,7 +7557,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.242,
+      "obp": 0.316,
+      "slg": 0.498,
+      "ops": 0.815,
+      "hr": 21,
+      "rbi": 63,
+      "r": 54,
+      "sb": 1,
+      "bb": 37,
+      "so": 98,
+      "pa": 376,
+      "g": 84,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "robbie-ray",
@@ -4669,7 +7607,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 8,
+      "l": 6,
+      "sv": 0,
+      "era": 3.45,
+      "whip": 1.23,
+      "so": 86,
+      "ip": 101.2,
+      "bb": 46,
+      "g": 18,
+      "gs": 17,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "trevor-megill",
@@ -4699,7 +7655,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 2,
+      "l": 2,
+      "sv": 13,
+      "era": 3.09,
+      "whip": 0.971,
+      "so": 44,
+      "ip": 35,
+      "bb": 10,
+      "g": 36,
+      "gs": 0,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "xavier-edwards",
@@ -4730,7 +7704,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.302,
+      "obp": 0.387,
+      "slg": 0.427,
+      "ops": 0.814,
+      "hr": 6,
+      "rbi": 35,
+      "r": 49,
+      "sb": 13,
+      "bb": 49,
+      "so": 45,
+      "pa": 383,
+      "g": 91,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "shota-imanaga",
@@ -4760,7 +7754,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 5,
+      "l": 7,
+      "sv": 0,
+      "era": 4.28,
+      "whip": 1.097,
+      "so": 100,
+      "ip": 103,
+      "bb": 26,
+      "g": 18,
+      "gs": 18,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "drew-rasmussen",
@@ -4790,7 +7802,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 7,
+      "l": 4,
+      "sv": 0,
+      "era": 2.78,
+      "whip": 0.897,
+      "so": 96,
+      "ip": 97,
+      "bb": 17,
+      "g": 17,
+      "gs": 17,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "dansby-swanson",
@@ -4819,7 +7849,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.207,
+      "obp": 0.295,
+      "slg": 0.421,
+      "ops": 0.716,
+      "hr": 16,
+      "rbi": 57,
+      "r": 56,
+      "sb": 10,
+      "bb": 37,
+      "so": 78,
+      "pa": 333,
+      "g": 86,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kenley-jansen",
@@ -4849,7 +7899,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 1,
+      "l": 4,
+      "sv": 10,
+      "era": 4.98,
+      "whip": 1.2,
+      "so": 23,
+      "ip": 21.2,
+      "bb": 12,
+      "g": 25,
+      "gs": 0,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ranger-suarez",
@@ -4879,7 +7947,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 3,
+      "sv": 0,
+      "era": 3.15,
+      "whip": 1.161,
+      "so": 97,
+      "ip": 91.1,
+      "bb": 26,
+      "g": 17,
+      "gs": 17,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jacob-wilson",
@@ -4908,7 +7994,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.277,
+      "obp": 0.31,
+      "slg": 0.386,
+      "ops": 0.696,
+      "hr": 4,
+      "rbi": 26,
+      "r": 23,
+      "sb": 2,
+      "bb": 10,
+      "so": 25,
+      "pa": 214,
+      "g": 50,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tatsuya-imai",
@@ -4938,7 +8044,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 5,
+      "l": 4,
+      "sv": 0,
+      "era": 6.14,
+      "whip": 1.469,
+      "so": 60,
+      "ip": 48.1,
+      "bb": 30,
+      "g": 12,
+      "gs": 12,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kazuma-okamoto",
@@ -4969,7 +8093,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.235,
+      "obp": 0.315,
+      "slg": 0.451,
+      "ops": 0.766,
+      "hr": 19,
+      "rbi": 54,
+      "r": 44,
+      "sb": 0,
+      "bb": 33,
+      "so": 112,
+      "pa": 355,
+      "g": 87,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "mike-trout",
@@ -5000,7 +8144,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.234,
+      "obp": 0.394,
+      "slg": 0.472,
+      "ops": 0.866,
+      "hr": 17,
+      "rbi": 36,
+      "r": 54,
+      "sb": 7,
+      "bb": 66,
+      "so": 83,
+      "pa": 335,
+      "g": 74,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "chandler-simpson",
@@ -5029,7 +8193,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.277,
+      "obp": 0.316,
+      "slg": 0.33,
+      "ops": 0.646,
+      "hr": 0,
+      "rbi": 16,
+      "r": 35,
+      "sb": 21,
+      "bb": 18,
+      "so": 33,
+      "pa": 328,
+      "g": 82,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "alec-burleson",
@@ -5062,7 +8246,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.281,
+      "obp": 0.345,
+      "slg": 0.473,
+      "ops": 0.818,
+      "hr": 14,
+      "rbi": 63,
+      "r": 46,
+      "sb": 3,
+      "bb": 30,
+      "so": 55,
+      "pa": 371,
+      "g": 86,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "matt-mclain",
@@ -5093,7 +8297,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.192,
+      "obp": 0.295,
+      "slg": 0.331,
+      "ops": 0.626,
+      "hr": 8,
+      "rbi": 25,
+      "r": 32,
+      "sb": 11,
+      "bb": 36,
+      "so": 82,
+      "pa": 307,
+      "g": 82,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tanner-bibee",
@@ -5123,7 +8347,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 2,
+      "l": 9,
+      "sv": 0,
+      "era": 4.06,
+      "whip": 1.138,
+      "so": 84,
+      "ip": 106.1,
+      "bb": 30,
+      "g": 19,
+      "gs": 19,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jackson-holliday",
@@ -5154,7 +8396,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.187,
+      "obp": 0.294,
+      "slg": 0.364,
+      "ops": 0.658,
+      "hr": 5,
+      "rbi": 14,
+      "r": 17,
+      "sb": 4,
+      "bb": 17,
+      "so": 34,
+      "pa": 126,
+      "g": 39,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "trey-yesavage",
@@ -5184,7 +8446,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 4,
+      "sv": 0,
+      "era": 3.31,
+      "whip": 1.077,
+      "so": 68,
+      "ip": 73.1,
+      "bb": 32,
+      "g": 13,
+      "gs": 13,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ivan-herrera",
@@ -5215,7 +8495,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.256,
+      "obp": 0.393,
+      "slg": 0.401,
+      "ops": 0.793,
+      "hr": 10,
+      "rbi": 39,
+      "r": 58,
+      "sb": 5,
+      "bb": 49,
+      "so": 64,
+      "pa": 392,
+      "g": 87,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "alejandro-kirk",
@@ -5244,7 +8544,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.189,
+      "obp": 0.247,
+      "slg": 0.297,
+      "ops": 0.544,
+      "hr": 2,
+      "rbi": 7,
+      "r": 7,
+      "sb": 0,
+      "bb": 6,
+      "so": 12,
+      "pa": 81,
+      "g": 21,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jac-caglianone",
@@ -5277,7 +8597,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.258,
+      "obp": 0.325,
+      "slg": 0.46,
+      "ops": 0.785,
+      "hr": 14,
+      "rbi": 31,
+      "r": 39,
+      "sb": 3,
+      "bb": 25,
+      "so": 94,
+      "pa": 317,
+      "g": 83,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "bryan-reynolds",
@@ -5308,7 +8648,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.282,
+      "obp": 0.393,
+      "slg": 0.474,
+      "ops": 0.867,
+      "hr": 13,
+      "rbi": 56,
+      "r": 62,
+      "sb": 6,
+      "bb": 57,
+      "so": 89,
+      "pa": 397,
+      "g": 91,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "spencer-torkelson",
@@ -5337,7 +8697,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.213,
+      "obp": 0.314,
+      "slg": 0.413,
+      "ops": 0.727,
+      "hr": 14,
+      "rbi": 38,
+      "r": 35,
+      "sb": 0,
+      "bb": 40,
+      "so": 113,
+      "pa": 348,
+      "g": 89,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "willson-contreras",
@@ -5366,7 +8746,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.284,
+      "obp": 0.378,
+      "slg": 0.542,
+      "ops": 0.921,
+      "hr": 20,
+      "rbi": 59,
+      "r": 45,
+      "sb": 2,
+      "bb": 34,
+      "so": 89,
+      "pa": 357,
+      "g": 86,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "colson-montgomery",
@@ -5397,7 +8797,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.224,
+      "obp": 0.309,
+      "slg": 0.492,
+      "ops": 0.801,
+      "hr": 23,
+      "rbi": 53,
+      "r": 42,
+      "sb": 1,
+      "bb": 30,
+      "so": 112,
+      "pa": 356,
+      "g": 85,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kris-bubic",
@@ -5427,7 +8847,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 2,
+      "sv": 0,
+      "era": 4.11,
+      "whip": 1.232,
+      "so": 51,
+      "ip": 50.1,
+      "bb": 26,
+      "g": 9,
+      "gs": 9,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "bryson-stott",
@@ -5458,7 +8896,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.247,
+      "obp": 0.305,
+      "slg": 0.397,
+      "ops": 0.702,
+      "hr": 7,
+      "rbi": 40,
+      "r": 36,
+      "sb": 16,
+      "bb": 23,
+      "so": 56,
+      "pa": 323,
+      "g": 84,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "cade-horton",
@@ -5488,7 +8946,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 1,
+      "l": 0,
+      "sv": 0,
+      "era": 2.45,
+      "whip": 0.818,
+      "so": 4,
+      "ip": 7.1,
+      "bb": 2,
+      "g": 2,
+      "gs": 2,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "munetaka-murakami",
@@ -5519,7 +8995,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.24,
+      "obp": 0.378,
+      "slg": 0.56,
+      "ops": 0.938,
+      "hr": 20,
+      "rbi": 41,
+      "r": 43,
+      "sb": 1,
+      "bb": 44,
+      "so": 80,
+      "pa": 246,
+      "g": 57,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "konnor-griffin",
@@ -5550,7 +9046,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.276,
+      "obp": 0.332,
+      "slg": 0.404,
+      "ops": 0.736,
+      "hr": 5,
+      "rbi": 25,
+      "r": 35,
+      "sb": 20,
+      "bb": 16,
+      "so": 65,
+      "pa": 247,
+      "g": 59,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jack-flaherty",
@@ -5580,7 +9096,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 2,
+      "l": 8,
+      "sv": 0,
+      "era": 4.6,
+      "whip": 1.454,
+      "so": 92,
+      "ip": 76.1,
+      "bb": 37,
+      "g": 17,
+      "gs": 17,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "edward-cabrera",
@@ -5610,7 +9144,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 5,
+      "l": 4,
+      "sv": 0,
+      "era": 5.1,
+      "whip": 1.396,
+      "so": 65,
+      "ip": 72.1,
+      "bb": 29,
+      "g": 14,
+      "gs": 14,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "sal-stewart",
@@ -5645,7 +9197,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.254,
+      "obp": 0.339,
+      "slg": 0.466,
+      "ops": 0.805,
+      "hr": 17,
+      "rbi": 61,
+      "r": 48,
+      "sb": 11,
+      "bb": 44,
+      "so": 83,
+      "pa": 387,
+      "g": 89,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "dennis-santana",
@@ -5675,7 +9247,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 2,
+      "l": 3,
+      "sv": 2,
+      "era": 4.82,
+      "whip": 1.393,
+      "so": 33,
+      "ip": 37.1,
+      "bb": 19,
+      "g": 39,
+      "gs": 0,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "carlos-rodon",
@@ -5705,7 +9295,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 2,
+      "sv": 0,
+      "era": 3.3,
+      "whip": 1.252,
+      "so": 52,
+      "ip": 46.1,
+      "bb": 26,
+      "g": 9,
+      "gs": 9,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "daulton-varsho",
@@ -5734,7 +9342,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.249,
+      "obp": 0.317,
+      "slg": 0.409,
+      "ops": 0.725,
+      "hr": 7,
+      "rbi": 23,
+      "r": 32,
+      "sb": 7,
+      "bb": 24,
+      "so": 59,
+      "pa": 284,
+      "g": 77,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "abner-uribe",
@@ -5764,7 +9392,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 2,
+      "sv": 5,
+      "era": 2.78,
+      "whip": 1.009,
+      "so": 34,
+      "ip": 35.2,
+      "bb": 12,
+      "g": 36,
+      "gs": 0,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "christian-walker",
@@ -5793,7 +9439,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.238,
+      "obp": 0.311,
+      "slg": 0.47,
+      "ops": 0.781,
+      "hr": 20,
+      "rbi": 57,
+      "r": 47,
+      "sb": 0,
+      "bb": 31,
+      "so": 85,
+      "pa": 373,
+      "g": 90,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "isaac-paredes",
@@ -5826,7 +9492,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.254,
+      "obp": 0.348,
+      "slg": 0.423,
+      "ops": 0.772,
+      "hr": 12,
+      "rbi": 47,
+      "r": 36,
+      "sb": 0,
+      "bb": 33,
+      "so": 55,
+      "pa": 356,
+      "g": 85,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ryan-walker",
@@ -5856,7 +9542,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 0,
+      "l": 1,
+      "sv": 3,
+      "era": 6.66,
+      "whip": 1.726,
+      "so": 19,
+      "ip": 24.1,
+      "bb": 14,
+      "g": 25,
+      "gs": 0,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "matthew-boyd",
@@ -5886,7 +9590,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 1,
+      "sv": 0,
+      "era": 5.08,
+      "whip": 1.396,
+      "so": 37,
+      "ip": 33.2,
+      "bb": 10,
+      "g": 7,
+      "gs": 7,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "andrew-abbott",
@@ -5916,7 +9638,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 5,
+      "l": 4,
+      "sv": 0,
+      "era": 3.88,
+      "whip": 1.442,
+      "so": 73,
+      "ip": 95,
+      "bb": 45,
+      "g": 18,
+      "gs": 18,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "daylen-lile",
@@ -5947,7 +9687,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.256,
+      "obp": 0.308,
+      "slg": 0.417,
+      "ops": 0.725,
+      "hr": 10,
+      "rbi": 43,
+      "r": 48,
+      "sb": 8,
+      "bb": 24,
+      "so": 65,
+      "pa": 380,
+      "g": 89,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jorge-polanco",
@@ -5980,7 +9740,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.179,
+      "obp": 0.246,
+      "slg": 0.286,
+      "ops": 0.532,
+      "hr": 1,
+      "rbi": 2,
+      "r": 3,
+      "sb": 0,
+      "bb": 5,
+      "so": 11,
+      "pa": 61,
+      "g": 14,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "shane-baz",
@@ -6010,7 +9790,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 8,
+      "sv": 0,
+      "era": 4.19,
+      "whip": 1.366,
+      "so": 87,
+      "ip": 101,
+      "bb": 39,
+      "g": 17,
+      "gs": 17,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jose-caballero",
@@ -6045,7 +9843,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.244,
+      "obp": 0.3,
+      "slg": 0.38,
+      "ops": 0.68,
+      "hr": 8,
+      "rbi": 29,
+      "r": 33,
+      "sb": 20,
+      "bb": 16,
+      "so": 61,
+      "pa": 274,
+      "g": 76,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "addison-barger",
@@ -6076,7 +9894,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.045,
+      "obp": 0.214,
+      "slg": 0.091,
+      "ops": 0.305,
+      "hr": 0,
+      "rbi": 2,
+      "r": 2,
+      "sb": 0,
+      "bb": 5,
+      "so": 7,
+      "pa": 28,
+      "g": 9,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "zac-gallen",
@@ -6106,7 +9944,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 8,
+      "sv": 0,
+      "era": 6.36,
+      "whip": 1.565,
+      "so": 56,
+      "ip": 92,
+      "bb": 28,
+      "g": 18,
+      "gs": 18,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "marcus-semien",
@@ -6135,7 +9991,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.214,
+      "obp": 0.271,
+      "slg": 0.341,
+      "ops": 0.613,
+      "hr": 9,
+      "rbi": 29,
+      "r": 30,
+      "sb": 6,
+      "bb": 23,
+      "so": 68,
+      "pa": 318,
+      "g": 80,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "gerrit-cole",
@@ -6165,7 +10041,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 3,
+      "sv": 0,
+      "era": 4.01,
+      "whip": 1.195,
+      "so": 41,
+      "ip": 42.2,
+      "bb": 10,
+      "g": 8,
+      "gs": 8,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "shane-mcclanahan",
@@ -6195,7 +10089,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 7,
+      "l": 5,
+      "sv": 0,
+      "era": 3.05,
+      "whip": 1.167,
+      "so": 77,
+      "ip": 79.2,
+      "bb": 28,
+      "g": 16,
+      "gs": 16,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "robert-suarez",
@@ -6225,7 +10137,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 0,
+      "sv": 4,
+      "era": 0.56,
+      "whip": 0.844,
+      "so": 26,
+      "ip": 32,
+      "bb": 6,
+      "g": 31,
+      "gs": 0,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "aaron-nola",
@@ -6255,7 +10185,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 6,
+      "sv": 0,
+      "era": 5.87,
+      "whip": 1.457,
+      "so": 94,
+      "ip": 92,
+      "bb": 29,
+      "g": 18,
+      "gs": 18,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "sal-frelick",
@@ -6284,7 +10232,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.242,
+      "obp": 0.312,
+      "slg": 0.329,
+      "ops": 0.641,
+      "hr": 3,
+      "rbi": 31,
+      "r": 31,
+      "sb": 6,
+      "bb": 25,
+      "so": 26,
+      "pa": 289,
+      "g": 82,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "gleyber-torres",
@@ -6313,7 +10281,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.28,
+      "obp": 0.395,
+      "slg": 0.395,
+      "ops": 0.79,
+      "hr": 4,
+      "rbi": 18,
+      "r": 26,
+      "sb": 0,
+      "bb": 29,
+      "so": 33,
+      "pa": 190,
+      "g": 43,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jonathan-aranda",
@@ -6342,7 +10330,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.287,
+      "obp": 0.388,
+      "slg": 0.452,
+      "ops": 0.841,
+      "hr": 13,
+      "rbi": 58,
+      "r": 45,
+      "sb": 0,
+      "bb": 49,
+      "so": 83,
+      "pa": 376,
+      "g": 86,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "wilyer-abreu",
@@ -6371,7 +10379,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.264,
+      "obp": 0.332,
+      "slg": 0.427,
+      "ops": 0.759,
+      "hr": 10,
+      "rbi": 41,
+      "r": 42,
+      "sb": 6,
+      "bb": 36,
+      "so": 76,
+      "pa": 373,
+      "g": 86,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "heliot-ramos",
@@ -6400,7 +10428,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.266,
+      "obp": 0.307,
+      "slg": 0.448,
+      "ops": 0.755,
+      "hr": 6,
+      "rbi": 23,
+      "r": 24,
+      "sb": 0,
+      "bb": 12,
+      "so": 52,
+      "pa": 205,
+      "g": 51,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "brenton-doyle",
@@ -6429,7 +10477,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.207,
+      "obp": 0.279,
+      "slg": 0.27,
+      "ops": 0.549,
+      "hr": 1,
+      "rbi": 4,
+      "r": 21,
+      "sb": 9,
+      "bb": 11,
+      "so": 40,
+      "pa": 122,
+      "g": 43,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "gabriel-moreno",
@@ -6458,7 +10526,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.282,
+      "obp": 0.369,
+      "slg": 0.426,
+      "ops": 0.795,
+      "hr": 6,
+      "rbi": 29,
+      "r": 30,
+      "sb": 4,
+      "bb": 28,
+      "so": 39,
+      "pa": 244,
+      "g": 62,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ezequiel-tovar",
@@ -6487,7 +10575,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.208,
+      "obp": 0.25,
+      "slg": 0.334,
+      "ops": 0.584,
+      "hr": 7,
+      "rbi": 30,
+      "r": 29,
+      "sb": 5,
+      "bb": 16,
+      "so": 84,
+      "pa": 316,
+      "g": 85,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "adolis-garcia",
@@ -6516,7 +10624,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.195,
+      "obp": 0.27,
+      "slg": 0.329,
+      "ops": 0.599,
+      "hr": 7,
+      "rbi": 21,
+      "r": 21,
+      "sb": 3,
+      "bb": 21,
+      "so": 84,
+      "pa": 259,
+      "g": 67,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jj-wetherholt",
@@ -6549,7 +10677,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.269,
+      "obp": 0.364,
+      "slg": 0.416,
+      "ops": 0.78,
+      "hr": 13,
+      "rbi": 36,
+      "r": 54,
+      "sb": 9,
+      "bb": 38,
+      "so": 59,
+      "pa": 379,
+      "g": 83,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "royce-lewis",
@@ -6580,7 +10728,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.217,
+      "obp": 0.293,
+      "slg": 0.382,
+      "ops": 0.675,
+      "hr": 8,
+      "rbi": 25,
+      "r": 24,
+      "sb": 6,
+      "bb": 21,
+      "so": 63,
+      "pa": 232,
+      "g": 57,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "brendan-donovan",
@@ -6615,7 +10783,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.274,
+      "obp": 0.386,
+      "slg": 0.452,
+      "ops": 0.839,
+      "hr": 3,
+      "rbi": 8,
+      "r": 9,
+      "sb": 1,
+      "bb": 11,
+      "so": 15,
+      "pa": 101,
+      "g": 25,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "griffin-jax",
@@ -6647,7 +10835,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 5,
+      "sv": 0,
+      "era": 3.45,
+      "whip": 1.267,
+      "so": 58,
+      "ip": 60,
+      "bb": 20,
+      "g": 23,
+      "gs": 12,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ramon-laureano",
@@ -6676,7 +10882,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.203,
+      "obp": 0.286,
+      "slg": 0.374,
+      "ops": 0.66,
+      "hr": 7,
+      "rbi": 21,
+      "r": 23,
+      "sb": 7,
+      "bb": 20,
+      "so": 65,
+      "pa": 206,
+      "g": 53,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jordan-westburg",
@@ -6740,7 +10966,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.256,
+      "obp": 0.321,
+      "slg": 0.468,
+      "ops": 0.789,
+      "hr": 14,
+      "rbi": 42,
+      "r": 31,
+      "sb": 0,
+      "bb": 25,
+      "so": 71,
+      "pa": 277,
+      "g": 77,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "alec-bohm",
@@ -6771,7 +11017,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.224,
+      "obp": 0.283,
+      "slg": 0.372,
+      "ops": 0.655,
+      "hr": 11,
+      "rbi": 46,
+      "r": 30,
+      "sb": 1,
+      "bb": 23,
+      "so": 49,
+      "pa": 343,
+      "g": 85,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "caleb-durbin",
@@ -6802,7 +11068,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.223,
+      "obp": 0.284,
+      "slg": 0.386,
+      "ops": 0.67,
+      "hr": 8,
+      "rbi": 37,
+      "r": 34,
+      "sb": 9,
+      "bb": 19,
+      "so": 42,
+      "pa": 291,
+      "g": 81,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "carter-jensen",
@@ -6833,7 +11119,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.247,
+      "obp": 0.309,
+      "slg": 0.443,
+      "ops": 0.752,
+      "hr": 13,
+      "rbi": 47,
+      "r": 41,
+      "sb": 1,
+      "bb": 27,
+      "so": 89,
+      "pa": 320,
+      "g": 83,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "merrill-kelly",
@@ -6863,7 +11169,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 6,
+      "l": 8,
+      "sv": 0,
+      "era": 5.71,
+      "whip": 1.558,
+      "so": 53,
+      "ip": 86.2,
+      "bb": 35,
+      "g": 15,
+      "gs": 15,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kerry-carpenter",
@@ -6894,7 +11218,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.234,
+      "obp": 0.306,
+      "slg": 0.484,
+      "ops": 0.79,
+      "hr": 13,
+      "rbi": 36,
+      "r": 25,
+      "sb": 0,
+      "bb": 17,
+      "so": 64,
+      "pa": 218,
+      "g": 67,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "max-muncy",
@@ -6923,7 +11267,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.264,
+      "obp": 0.358,
+      "slg": 0.504,
+      "ops": 0.861,
+      "hr": 17,
+      "rbi": 39,
+      "r": 53,
+      "sb": 1,
+      "bb": 37,
+      "so": 73,
+      "pa": 316,
+      "g": 84,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "trent-grisham",
@@ -6952,7 +11316,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.236,
+      "obp": 0.342,
+      "slg": 0.421,
+      "ops": 0.762,
+      "hr": 9,
+      "rbi": 37,
+      "r": 44,
+      "sb": 7,
+      "bb": 39,
+      "so": 46,
+      "pa": 275,
+      "g": 69,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "luis-arraez",
@@ -6985,7 +11369,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.326,
+      "obp": 0.362,
+      "slg": 0.461,
+      "ops": 0.823,
+      "hr": 4,
+      "rbi": 33,
+      "r": 45,
+      "sb": 6,
+      "bb": 20,
+      "so": 15,
+      "pa": 371,
+      "g": 84,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jt-realmuto",
@@ -7014,7 +11418,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.202,
+      "obp": 0.285,
+      "slg": 0.332,
+      "ops": 0.617,
+      "hr": 6,
+      "rbi": 27,
+      "r": 23,
+      "sb": 3,
+      "bb": 18,
+      "so": 47,
+      "pa": 235,
+      "g": 62,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "bryan-abreu",
@@ -7044,7 +11468,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 2,
+      "l": 3,
+      "sv": 5,
+      "era": 5.9,
+      "whip": 1.69,
+      "so": 37,
+      "ip": 29,
+      "bb": 25,
+      "g": 32,
+      "gs": 0,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "giancarlo-stanton",
@@ -7075,7 +11517,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.256,
+      "obp": 0.302,
+      "slg": 0.422,
+      "ops": 0.724,
+      "hr": 3,
+      "rbi": 14,
+      "r": 8,
+      "sb": 1,
+      "bb": 6,
+      "so": 29,
+      "pa": 96,
+      "g": 24,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "carlos-correa",
@@ -7106,7 +11568,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.279,
+      "obp": 0.369,
+      "slg": 0.418,
+      "ops": 0.787,
+      "hr": 3,
+      "rbi": 16,
+      "r": 22,
+      "sb": 1,
+      "bb": 18,
+      "so": 26,
+      "pa": 141,
+      "g": 32,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "mickey-moniak",
@@ -7137,7 +11619,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.277,
+      "obp": 0.329,
+      "slg": 0.602,
+      "ops": 0.931,
+      "hr": 15,
+      "rbi": 37,
+      "r": 29,
+      "sb": 1,
+      "bb": 12,
+      "so": 52,
+      "pa": 207,
+      "g": 56,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "austin-wells",
@@ -7166,7 +11668,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.153,
+      "obp": 0.25,
+      "slg": 0.233,
+      "ops": 0.483,
+      "hr": 4,
+      "rbi": 10,
+      "r": 16,
+      "sb": 1,
+      "bb": 23,
+      "so": 56,
+      "pa": 201,
+      "g": 60,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tj-friedl",
@@ -7195,7 +11717,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.178,
+      "obp": 0.258,
+      "slg": 0.276,
+      "ops": 0.534,
+      "hr": 3,
+      "rbi": 11,
+      "r": 17,
+      "sb": 5,
+      "bb": 15,
+      "so": 46,
+      "pa": 199,
+      "g": 54,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "joe-musgrove",
@@ -7257,7 +11799,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 5,
+      "sv": 0,
+      "era": 4.97,
+      "whip": 1.236,
+      "so": 62,
+      "ip": 83.1,
+      "bb": 22,
+      "g": 15,
+      "gs": 15,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kyle-manzardo",
@@ -7288,7 +11848,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.225,
+      "obp": 0.318,
+      "slg": 0.382,
+      "ops": 0.7,
+      "hr": 10,
+      "rbi": 29,
+      "r": 31,
+      "sb": 0,
+      "bb": 31,
+      "so": 90,
+      "pa": 286,
+      "g": 81,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kodai-senga",
@@ -7318,7 +11898,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 0,
+      "l": 7,
+      "sv": 0,
+      "era": 8.66,
+      "whip": 1.698,
+      "so": 42,
+      "ip": 35.1,
+      "bb": 23,
+      "g": 9,
+      "gs": 7,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "dylan-crews",
@@ -7347,7 +11945,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.232,
+      "obp": 0.287,
+      "slg": 0.381,
+      "ops": 0.668,
+      "hr": 6,
+      "rbi": 18,
+      "r": 23,
+      "sb": 5,
+      "bb": 8,
+      "so": 35,
+      "pa": 167,
+      "g": 41,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jack-leiter",
@@ -7377,7 +11995,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 7,
+      "sv": 0,
+      "era": 5.29,
+      "whip": 1.438,
+      "so": 83,
+      "ip": 80,
+      "bb": 35,
+      "g": 15,
+      "gs": 15,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "noah-cameron",
@@ -7407,7 +12043,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 6,
+      "sv": 0,
+      "era": 4.95,
+      "whip": 1.41,
+      "so": 75,
+      "ip": 83.2,
+      "bb": 25,
+      "g": 16,
+      "gs": 16,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "roki-sasaki",
@@ -7437,7 +12091,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 5,
+      "sv": 0,
+      "era": 5.4,
+      "whip": 1.4,
+      "so": 75,
+      "ip": 75,
+      "bb": 32,
+      "g": 15,
+      "gs": 15,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kevin-mcgonigle",
@@ -7468,7 +12140,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.284,
+      "obp": 0.395,
+      "slg": 0.422,
+      "ops": 0.817,
+      "hr": 7,
+      "rbi": 31,
+      "r": 55,
+      "sb": 11,
+      "bb": 57,
+      "so": 52,
+      "pa": 387,
+      "g": 87,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jung-hoo-lee",
@@ -7497,7 +12189,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.315,
+      "obp": 0.346,
+      "slg": 0.448,
+      "ops": 0.794,
+      "hr": 5,
+      "rbi": 33,
+      "r": 45,
+      "sb": 6,
+      "bb": 13,
+      "so": 30,
+      "pa": 327,
+      "g": 81,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "xander-bogaerts",
@@ -7526,7 +12238,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.231,
+      "obp": 0.321,
+      "slg": 0.337,
+      "ops": 0.658,
+      "hr": 8,
+      "rbi": 33,
+      "r": 36,
+      "sb": 10,
+      "bb": 37,
+      "so": 61,
+      "pa": 336,
+      "g": 85,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "francisco-alvarez",
@@ -7557,7 +12289,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.246,
+      "obp": 0.31,
+      "slg": 0.424,
+      "ops": 0.734,
+      "hr": 9,
+      "rbi": 19,
+      "r": 19,
+      "sb": 0,
+      "bb": 15,
+      "so": 56,
+      "pa": 212,
+      "g": 59,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "colton-cowser",
@@ -7586,7 +12338,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.224,
+      "obp": 0.317,
+      "slg": 0.365,
+      "ops": 0.681,
+      "hr": 8,
+      "rbi": 27,
+      "r": 28,
+      "sb": 4,
+      "bb": 26,
+      "so": 67,
+      "pa": 222,
+      "g": 79,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "seranthony-dominguez",
@@ -7616,7 +12388,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 3,
+      "sv": 12,
+      "era": 4.85,
+      "whip": 1.382,
+      "so": 36,
+      "ip": 29.2,
+      "bb": 18,
+      "g": 33,
+      "gs": 0,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "luis-garcia",
@@ -7649,7 +12439,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 0,
+      "l": 1,
+      "sv": 2,
+      "era": 9,
+      "whip": 1.933,
+      "so": 6,
+      "ip": 15,
+      "bb": 6,
+      "g": 15,
+      "gs": 0,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ernie-clement",
@@ -7684,7 +12492,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.293,
+      "obp": 0.316,
+      "slg": 0.429,
+      "ops": 0.745,
+      "hr": 7,
+      "rbi": 29,
+      "r": 38,
+      "sb": 2,
+      "bb": 12,
+      "so": 34,
+      "pa": 345,
+      "g": 87,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jordan-beck",
@@ -7713,7 +12541,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.183,
+      "obp": 0.227,
+      "slg": 0.305,
+      "ops": 0.532,
+      "hr": 1,
+      "rbi": 10,
+      "r": 7,
+      "sb": 2,
+      "bb": 5,
+      "so": 22,
+      "pa": 88,
+      "g": 30,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "dillon-dingler",
@@ -7744,7 +12592,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.265,
+      "obp": 0.327,
+      "slg": 0.521,
+      "ops": 0.847,
+      "hr": 19,
+      "rbi": 60,
+      "r": 47,
+      "sb": 0,
+      "bb": 23,
+      "so": 72,
+      "pa": 348,
+      "g": 83,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "shane-smith",
@@ -7774,7 +12642,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 0,
+      "l": 2,
+      "sv": 0,
+      "era": 10.8,
+      "whip": 2.52,
+      "so": 11,
+      "ip": 8.1,
+      "bb": 9,
+      "g": 3,
+      "gs": 3,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "shane-bieber",
@@ -7804,7 +12690,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 0,
+      "l": 1,
+      "sv": 0,
+      "era": 9,
+      "whip": 2.077,
+      "so": 9,
+      "ip": 13,
+      "bb": 7,
+      "g": 3,
+      "gs": 3,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kyle-teel",
@@ -7833,7 +12737,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.22,
+      "obp": 0.304,
+      "slg": 0.39,
+      "ops": 0.695,
+      "hr": 2,
+      "rbi": 10,
+      "r": 5,
+      "sb": 0,
+      "bb": 4,
+      "so": 18,
+      "pa": 46,
+      "g": 11,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "logan-o-hoppe",
@@ -7891,7 +12815,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.246,
+      "obp": 0.309,
+      "slg": 0.432,
+      "ops": 0.742,
+      "hr": 15,
+      "rbi": 53,
+      "r": 39,
+      "sb": 2,
+      "bb": 28,
+      "so": 90,
+      "pa": 349,
+      "g": 86,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "andrew-vaughn",
@@ -7920,7 +12864,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.328,
+      "obp": 0.417,
+      "slg": 0.507,
+      "ops": 0.924,
+      "hr": 2,
+      "rbi": 24,
+      "r": 18,
+      "sb": 0,
+      "bb": 19,
+      "so": 18,
+      "pa": 156,
+      "g": 48,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "connelly-early",
@@ -7950,7 +12914,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 7,
+      "l": 5,
+      "sv": 0,
+      "era": 3.44,
+      "whip": 1.255,
+      "so": 93,
+      "ip": 91.2,
+      "bb": 34,
+      "g": 17,
+      "gs": 17,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "yusei-kikuchi",
@@ -7980,7 +12962,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 0,
+      "l": 3,
+      "sv": 0,
+      "era": 5.81,
+      "whip": 1.581,
+      "so": 33,
+      "ip": 31,
+      "bb": 14,
+      "g": 7,
+      "gs": 7,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "otto-lopez",
@@ -8011,7 +13011,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.346,
+      "obp": 0.376,
+      "slg": 0.52,
+      "ops": 0.896,
+      "hr": 9,
+      "rbi": 43,
+      "r": 59,
+      "sb": 17,
+      "bb": 17,
+      "so": 51,
+      "pa": 383,
+      "g": 89,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "spencer-steer",
@@ -8044,7 +13064,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.238,
+      "obp": 0.317,
+      "slg": 0.422,
+      "ops": 0.739,
+      "hr": 14,
+      "rbi": 36,
+      "r": 50,
+      "sb": 3,
+      "bb": 32,
+      "so": 75,
+      "pa": 332,
+      "g": 85,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ryan-weathers",
@@ -8074,7 +13114,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 7,
+      "sv": 0,
+      "era": 4.29,
+      "whip": 1.245,
+      "so": 104,
+      "ip": 92.1,
+      "bb": 27,
+      "g": 17,
+      "gs": 17,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "chase-delauter",
@@ -8105,7 +13163,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.272,
+      "obp": 0.337,
+      "slg": 0.42,
+      "ops": 0.757,
+      "hr": 8,
+      "rbi": 41,
+      "r": 29,
+      "sb": 3,
+      "bb": 28,
+      "so": 42,
+      "pa": 306,
+      "g": 74,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "clay-holmes",
@@ -8135,7 +13213,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 4,
+      "sv": 0,
+      "era": 2.39,
+      "whip": 1.101,
+      "so": 45,
+      "ip": 52.2,
+      "bb": 18,
+      "g": 9,
+      "gs": 9,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "braxton-ashcraft",
@@ -8167,7 +13263,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 9,
+      "l": 3,
+      "sv": 0,
+      "era": 3.24,
+      "whip": 1.098,
+      "so": 122,
+      "ip": 108.1,
+      "bb": 25,
+      "g": 18,
+      "gs": 18,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tyler-stephenson",
@@ -8196,7 +13310,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.233,
+      "obp": 0.321,
+      "slg": 0.367,
+      "ops": 0.687,
+      "hr": 6,
+      "rbi": 24,
+      "r": 18,
+      "sb": 0,
+      "bb": 28,
+      "so": 59,
+      "pa": 240,
+      "g": 68,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ryan-o-hearn",
@@ -8261,7 +13395,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 0,
+      "l": 0,
+      "sv": 0,
+      "era": 3.86,
+      "whip": 0.857,
+      "so": 3,
+      "ip": 2.1,
+      "bb": 1,
+      "g": 1,
+      "gs": 1,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "bryce-miller",
@@ -8291,7 +13443,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 2,
+      "sv": 0,
+      "era": 1.71,
+      "whip": 0.665,
+      "so": 62,
+      "ip": 52.2,
+      "bb": 5,
+      "g": 9,
+      "gs": 8,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "mike-burrows",
@@ -8323,7 +13493,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 8,
+      "sv": 0,
+      "era": 5.58,
+      "whip": 1.506,
+      "so": 72,
+      "ip": 90.1,
+      "bb": 33,
+      "g": 17,
+      "gs": 16,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "casey-mize",
@@ -8353,7 +13541,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 4,
+      "l": 5,
+      "sv": 0,
+      "era": 2.64,
+      "whip": 0.977,
+      "so": 72,
+      "ip": 71.2,
+      "bb": 16,
+      "g": 13,
+      "gs": 13,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "grayson-rodriguez",
@@ -8383,7 +13589,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 2,
+      "l": 2,
+      "sv": 0,
+      "era": 8.06,
+      "whip": 1.831,
+      "so": 24,
+      "ip": 25.2,
+      "bb": 15,
+      "g": 6,
+      "gs": 6,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "justin-crawford",
@@ -8412,7 +13636,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.255,
+      "obp": 0.304,
+      "slg": 0.341,
+      "ops": 0.645,
+      "hr": 2,
+      "rbi": 19,
+      "r": 26,
+      "sb": 10,
+      "bb": 16,
+      "so": 56,
+      "pa": 275,
+      "g": 84,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "bailey-ober",
@@ -8442,7 +13686,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 6,
+      "l": 3,
+      "sv": 0,
+      "era": 4.59,
+      "whip": 1.215,
+      "so": 46,
+      "ip": 66.2,
+      "bb": 18,
+      "g": 12,
+      "gs": 12,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "joey-cantillo",
@@ -8474,7 +13736,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 7,
+      "l": 3,
+      "sv": 0,
+      "era": 3.86,
+      "whip": 1.363,
+      "so": 89,
+      "ip": 91,
+      "bb": 44,
+      "g": 18,
+      "gs": 18,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "willi-castro",
@@ -8511,7 +13791,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.269,
+      "obp": 0.339,
+      "slg": 0.384,
+      "ops": 0.723,
+      "hr": 6,
+      "rbi": 35,
+      "r": 38,
+      "sb": 6,
+      "bb": 25,
+      "so": 78,
+      "pa": 298,
+      "g": 76,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "marcell-ozuna",
@@ -8540,7 +13840,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.202,
+      "obp": 0.286,
+      "slg": 0.324,
+      "ops": 0.61,
+      "hr": 7,
+      "rbi": 26,
+      "r": 17,
+      "sb": 0,
+      "bb": 23,
+      "so": 73,
+      "pa": 238,
+      "g": 58,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "mark-vientos",
@@ -8573,7 +13893,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.211,
+      "obp": 0.253,
+      "slg": 0.388,
+      "ops": 0.641,
+      "hr": 11,
+      "rbi": 35,
+      "r": 25,
+      "sb": 0,
+      "bb": 12,
+      "so": 61,
+      "pa": 253,
+      "g": 72,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "miguel-vargas",
@@ -8604,7 +13944,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.247,
+      "obp": 0.363,
+      "slg": 0.494,
+      "ops": 0.857,
+      "hr": 20,
+      "rbi": 56,
+      "r": 61,
+      "sb": 11,
+      "bb": 55,
+      "so": 64,
+      "pa": 384,
+      "g": 88,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "evan-carter",
@@ -8633,7 +13993,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.187,
+      "obp": 0.299,
+      "slg": 0.335,
+      "ops": 0.634,
+      "hr": 7,
+      "rbi": 22,
+      "r": 30,
+      "sb": 10,
+      "bb": 30,
+      "so": 59,
+      "pa": 248,
+      "g": 72,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "sean-manaea",
@@ -8665,7 +14045,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 1,
+      "l": 4,
+      "sv": 0,
+      "era": 5.16,
+      "whip": 1.368,
+      "so": 68,
+      "ip": 68,
+      "bb": 23,
+      "g": 19,
+      "gs": 5,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "masyn-winn",
@@ -8694,7 +14092,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.25,
+      "obp": 0.323,
+      "slg": 0.342,
+      "ops": 0.666,
+      "hr": 4,
+      "rbi": 37,
+      "r": 38,
+      "sb": 7,
+      "bb": 28,
+      "so": 63,
+      "pa": 331,
+      "g": 79,
+      "trend": "slightly-improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "andrew-painter",
@@ -8724,7 +14142,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 1,
+      "l": 8,
+      "sv": 0,
+      "era": 7.06,
+      "whip": 1.662,
+      "so": 53,
+      "ip": 65,
+      "bb": 24,
+      "g": 14,
+      "gs": 12,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "robert-garcia",
@@ -8754,7 +14190,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 0,
+      "l": 1,
+      "sv": 0,
+      "era": 3.38,
+      "whip": 1.5,
+      "so": 6,
+      "ip": 8,
+      "bb": 7,
+      "g": 9,
+      "gs": 0,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jasson-dominguez",
@@ -8785,7 +14239,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.215,
+      "obp": 0.25,
+      "slg": 0.402,
+      "ops": 0.652,
+      "hr": 4,
+      "rbi": 10,
+      "r": 9,
+      "sb": 5,
+      "bb": 4,
+      "so": 23,
+      "pa": 113,
+      "g": 29,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "spencer-schwellenbach",
@@ -8850,7 +14324,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.246,
+      "obp": 0.322,
+      "slg": 0.415,
+      "ops": 0.737,
+      "hr": 4,
+      "rbi": 20,
+      "r": 20,
+      "sb": 4,
+      "bb": 12,
+      "so": 27,
+      "pa": 147,
+      "g": 56,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ian-seymour",
@@ -8882,7 +14376,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 5,
+      "l": 1,
+      "sv": 2,
+      "era": 4.02,
+      "whip": 1.089,
+      "so": 60,
+      "ip": 56,
+      "bb": 21,
+      "g": 31,
+      "gs": 4,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "quinn-priester",
@@ -8943,7 +14455,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.212,
+      "obp": 0.248,
+      "slg": 0.372,
+      "ops": 0.62,
+      "hr": 7,
+      "rbi": 19,
+      "r": 14,
+      "sb": 3,
+      "bb": 7,
+      "so": 48,
+      "pa": 166,
+      "g": 55,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "logan-henderson",
@@ -8973,7 +14505,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 2,
+      "l": 1,
+      "sv": 0,
+      "era": 2.74,
+      "whip": 1.043,
+      "so": 30,
+      "ip": 23,
+      "bb": 6,
+      "g": 5,
+      "gs": 5,
+      "trend": "improving",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "brady-singer",
@@ -9003,7 +14553,25 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "w": 3,
+      "l": 8,
+      "sv": 0,
+      "era": 5.03,
+      "whip": 1.543,
+      "so": 71,
+      "ip": 82.1,
+      "bb": 30,
+      "g": 17,
+      "gs": 17,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "carson-benge",
@@ -9032,7 +14600,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.255,
+      "obp": 0.312,
+      "slg": 0.392,
+      "ops": 0.704,
+      "hr": 10,
+      "rbi": 34,
+      "r": 45,
+      "sb": 11,
+      "bb": 23,
+      "so": 77,
+      "pa": 356,
+      "g": 87,
+      "trend": "slightly-declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "lenyn-sosa",
@@ -9065,7 +14653,27 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.195,
+      "obp": 0.207,
+      "slg": 0.283,
+      "ops": 0.49,
+      "hr": 1,
+      "rbi": 9,
+      "r": 11,
+      "sb": 0,
+      "bb": 1,
+      "so": 25,
+      "pa": 117,
+      "g": 40,
+      "trend": "declining",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jordan-lawlar",
@@ -9096,6 +14704,26 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-07-06",
+      "avg": 0.316,
+      "obp": 0.409,
+      "slg": 0.447,
+      "ops": 0.856,
+      "hr": 1,
+      "rbi": 4,
+      "r": 6,
+      "sb": 4,
+      "bb": 3,
+      "so": 10,
+      "pa": 44,
+      "g": 12,
+      "trend": "stable",
+      "injury_status": null,
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   }
 ]

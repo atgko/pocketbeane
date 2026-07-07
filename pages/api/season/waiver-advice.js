@@ -20,11 +20,8 @@ function extractJSON(text) {
   throw new Error('Malformed JSON in model response')
 }
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).end()
-
-  const { sport = 'nba', leagueRosters, gmProfile } = req.body
-  if (!leagueRosters?.teams) return res.status(400).json({ error: 'leagueRosters required' })
+export async function getWaiverAdvice({ sport = 'nba', leagueRosters, gmProfile }) {
+  if (!leagueRosters?.teams) throw new Error('leagueRosters required')
 
   const playerFile = sport === 'mlb' ? 'mlb_players.json' : 'players.json'
   const players = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/data', playerFile), 'utf8'))
@@ -39,7 +36,7 @@ export default async function handler(req, res) {
 
   // Find user's team
   const userTeam = leagueRosters.teams.find(t => t.isUser)
-  if (!userTeam) return res.status(400).json({ error: 'User team not found in rosters' })
+  if (!userTeam) throw new Error('User team not found in rosters')
 
   // Build lookup maps
   const playerById = {}
@@ -76,7 +73,7 @@ export default async function handler(req, res) {
 
   const systemPrompt = `You are Billy Beane advising a ${sportLabel} GM on waiver wire moves.
 
-Analyze the GM's roster against available free agents. Identify the team's weakest categories and recommend exactly 3 add/drop moves that address real gaps. Be specific — name exact players to add and drop. Explain each move in 2-3 sentences using Beane's direct, data-focused voice. Free agents marked CURRENT improving are trending up in-season — weigh them as legitimate adds even if their ADP/prior-season profile looks ordinary.
+Analyze the GM's roster against available free agents. Identify the team's weakest categories and recommend exactly 3 add/drop moves that address real gaps. Be specific — name exact players to add and drop. Explain each move in 2-3 sentences using Beane's direct, data-focused voice. Free agents marked CURRENT improving or slightly-improving are trending up in-season — weigh them as legitimate adds even if their ADP/prior-season profile looks ordinary. Treat "slightly-improving"/"slightly-declining" as real but modest movement, not noise — don't overstate it the way you would a full improving/declining trend.
 
 ${CURRENT_SEASON_REASONING_INSTRUCTION}
 
@@ -93,17 +90,27 @@ ${availableFAs.join('\n')}
 
 Recommend 3 waiver wire moves.`
 
+  const message = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 900,
+    system: [{ type: 'text', text: systemPrompt }],
+    messages: [{ role: 'user', content: userPrompt }],
+  })
+  const text = message.content[0]?.text ?? ''
+  return extractJSON(text)
+}
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end()
+
+  const { sport = 'nba', leagueRosters, gmProfile } = req.body
+
   try {
-    const message = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 900,
-      system: [{ type: 'text', text: systemPrompt }],
-      messages: [{ role: 'user', content: userPrompt }],
-    })
-    const text = message.content[0]?.text ?? ''
-    res.json(extractJSON(text))
+    const advice = await getWaiverAdvice({ sport, leagueRosters, gmProfile })
+    res.json(advice)
   } catch (err) {
     console.error('[waiver-advice]', err)
-    res.status(500).json({ error: err.message })
+    const status = ['leagueRosters required', 'User team not found in rosters'].includes(err.message) ? 400 : 500
+    res.status(status).json({ error: err.message })
   }
 }

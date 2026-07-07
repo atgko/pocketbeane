@@ -9,6 +9,100 @@ import {
   QUIZ_QUESTIONS,
   INJURY_DISPLAY, CATEGORY_DISPLAY, STRATEGY_DISPLAY,
 } from '@/utils/gmProfile'
+import { getUserEmail, saveUserEmail, clearUserEmail } from '@/utils/userSettings'
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
+function EmailDigestSettings() {
+  const [savedEmail, setSavedEmail] = useState(null)
+  const [draft, setDraft] = useState('')
+  const [editing, setEditing] = useState(false)
+  const [error, setError] = useState(null)
+  const [saved, setSaved] = useState(false)
+
+  useEffect(() => {
+    const existing = getUserEmail()
+    setSavedEmail(existing)
+    setDraft(existing ?? '')
+  }, [])
+
+  function handleSave() {
+    if (!isValidEmail(draft)) {
+      setError('Enter a valid email address')
+      return
+    }
+    saveUserEmail(draft)
+    setSavedEmail(draft)
+    setEditing(false)
+    setError(null)
+    setSaved(true)
+    setTimeout(() => setSaved(false), 2000)
+  }
+
+  function handleClear() {
+    clearUserEmail()
+    setSavedEmail(null)
+    setDraft('')
+    setEditing(false)
+  }
+
+  return (
+    <div className="bg-surface border border-border rounded-lg p-5 mb-4">
+      <p className="text-xs text-gray-400 mb-1 font-mono">Email Digests</p>
+      <p className="text-xs text-gray-600 mb-3">
+        Optional — used for waiver wire digests and draft recap emails. Season Hub works fully without one.
+      </p>
+
+      {!editing ? (
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-sm text-white">{savedEmail ?? 'No email set'}</p>
+          <div className="flex items-center gap-3 shrink-0">
+            <button
+              onClick={() => setEditing(true)}
+              className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
+            >
+              {savedEmail ? 'Edit' : 'Add email'}
+            </button>
+            {savedEmail && (
+              <button
+                onClick={handleClear}
+                className="text-xs text-gray-600 hover:text-injury transition-colors"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="flex items-center gap-2">
+          <input
+            type="email"
+            value={draft}
+            onChange={(e) => { setDraft(e.target.value); setError(null) }}
+            placeholder="you@example.com"
+            className="flex-1 bg-bg border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-pick"
+          />
+          <button
+            onClick={handleSave}
+            className="px-4 py-2 bg-pick text-white rounded text-xs font-semibold hover:bg-green-500 transition-colors"
+          >
+            Save
+          </button>
+          <button
+            onClick={() => { setEditing(false); setDraft(savedEmail ?? ''); setError(null) }}
+            className="px-3 py-2 border border-border text-gray-500 rounded text-xs hover:text-gray-300 transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
+      )}
+      {error && <p className="text-xs text-injury mt-2">{error}</p>}
+      {saved && <p className="text-xs text-value mt-2">Saved.</p>}
+    </div>
+  )
+}
 
 const DISPLAY_MAPS = {
   injuryTolerance: INJURY_DISPLAY,
@@ -73,6 +167,8 @@ export default function GMProfilePage() {
               </p>
             </div>
           </div>
+
+          <EmailDigestSettings />
 
           {!hasProfile ? (
             <div className="bg-surface border border-border rounded-lg px-6 py-8 text-center">

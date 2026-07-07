@@ -86,7 +86,7 @@ This document is the authoritative reference for the player data model used in `
 | `ft_pct` | number | Yes | Free throw percentage (0–1) |
 | `three_pm` | number | Yes | Three-pointers made per game |
 | `gp` | number | Yes | Games played this season |
-| `trend` | string | Yes | `"improving"`, `"stable"`, or `"declining"` — computed by `calculateTrend()` (T1-3), never set externally |
+| `trend` | string | Yes | `"improving"`, `"slightly-improving"`, `"stable"`, `"slightly-declining"`, or `"declining"` — computed by `calculateTrend()` (T1-3), never set externally |
 | `injury_status` | string | Yes | `"healthy"`, `"day-to-day"`, or `"out"` |
 | `injury_note` | string\|null | Yes | Human-readable injury detail (e.g. `"Left knee tendinopathy — re-evaluated daily"`). `null` when healthy. |
 | `source` | string | Yes | `"hermes_weekly_pull"` or `"manual_entry"` — provenance tracking for data quality debugging |
@@ -94,9 +94,9 @@ This document is the authoritative reference for the player data model used in `
 
 ### Trend calculation
 
-`trend` is computed by `calculateTrend(priorSeason, currentSeason)` (see `scripts/mergeCurrentSeasonData.js` and T1-3 spec). The primary signal is `pts`, `reb`, and `ast`. A combined deviation of more than 15% vs `prior_season` in either direction = `"improving"` or `"declining"`; otherwise `"stable"`.
+`trend` is computed by `calculateTrend(priorSeason, currentSeason, profile?)` (see `scripts/mergeCurrentSeasonData.js` and T1-3 spec). The primary signal is `pts`, `reb`, and `ast` for NBA (sport-specific profiles for MLB — see below). A combined deviation beyond `TREND_THRESHOLD` (15%) vs `prior_season` in either direction is a full `"improving"`/`"declining"`; a deviation beyond `TREND_MINOR_THRESHOLD` (5%) but not `TREND_THRESHOLD` is `"slightly-improving"`/`"slightly-declining"`; otherwise `"stable"`.
 
-The threshold is defined as `TREND_THRESHOLD = 0.15` in the calculation utility — tune there, not in the data.
+Both thresholds are named constants in the calculation utility (`TREND_THRESHOLD = 0.15`, `TREND_MINOR_THRESHOLD = 0.05`) — tune there, not in the data.
 
 ### Staleness
 
@@ -171,9 +171,9 @@ The sport-agnostic wrapper (`as_of_date`, `trend`, `injury_status`, `injury_note
 
 **Hitter `current_season` stats:** `r`, `hr`, `rbi`, `sb`, `avg`, `gp`
 
-`trend` for MLB uses `k`, `era`, `whip` as the primary signal for pitchers and `hr`, `rbi`, `avg` for hitters. Threshold is the same `TREND_THRESHOLD = 0.15` constant.
+`trend` for MLB uses `k`, `era`, `whip` as the primary signal for pitchers and `hr`, `rbi`, `avg` for hitters, normalized to per-game rates before comparison (`hr`/`rbi`/`k` are season-to-date totals in this schema, not rates — comparing raw totals against a full prior season would read as "declining" for most of the year regardless of real form). Same `TREND_THRESHOLD`/`TREND_MINOR_THRESHOLD` constants as NBA. Pitcher trend uses an averaged per-stat percentage deviation rather than a single summed-total deviation, since `era`/`whip` are sign-flipped (lower is better) and summing a sign-flipped stat against a "higher is better" one (`k`) can invert the result for small samples.
 
-**Note:** MLB `current_season` sample data is intentionally absent from `mlb_players.json` until the Hermes scraping pipeline is scoped for MLB. The schema above documents the intended shape for when that work begins.
+**Note:** MLB `current_season` data is live in `mlb_players.json` as of 2026-07-06 via `scripts/scrape_mlb.py` + `scripts/mergeCurrentSeasonData.js` (Hermes-sourced weekly pull, 293 players).
 
 ---
 

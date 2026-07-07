@@ -45,11 +45,15 @@ function makePlayer(overrides = {}) {
 }
 
 function validIncomingEntry(overrides = {}) {
+  const { current_season, ...topLevel } = overrides
   return {
     id: 'nikola-jokic',
-    pts: 26.8, reb: 12.5, ast: 10.9, stl: 1.2, blk: 0.7, to: 3.5,
-    fg_pct: 0.558, ft_pct: 0.819, three_pm: 1.5, gp: 14,
-    ...overrides,
+    current_season: {
+      pts: 26.8, reb: 12.5, ast: 10.9, stl: 1.2, blk: 0.7, to: 3.5,
+      fg_pct: 0.558, ft_pct: 0.819, three_pm: 1.5, gp: 14,
+      ...current_season,
+    },
+    ...topLevel,
   }
 }
 
@@ -83,18 +87,32 @@ test('validatePlayerEntry: valid entry has no errors', () => {
 
 test('validatePlayerEntry: flags missing required stat field', () => {
   const entry = validIncomingEntry()
-  delete entry.reb
+  delete entry.current_season.reb
   const errors = validatePlayerEntry(entry)
   assert.ok(errors.some(e => e.includes('reb')))
 })
 
 test('validatePlayerEntry: flags non-numeric stat field', () => {
-  const errors = validatePlayerEntry(validIncomingEntry({ pts: 'a lot' }))
+  const errors = validatePlayerEntry(validIncomingEntry({ current_season: { pts: 'a lot' } }))
   assert.ok(errors.some(e => e.includes('pts')))
 })
 
+test('validatePlayerEntry: sport="nba" (explicit) validates the full stat set, not just the first field', () => {
+  // Regression guard: SPORT_SCHEMAS.nba is a flat array. getRequiredFields()
+  // must return it as-is (Array.isArray check) rather than treating it like
+  // the multi-position-type schemas (nhl/nfl/mlb) and returning just the
+  // first array element as a bare string.
+  const errors = validatePlayerEntry(validIncomingEntry(), 'nba')
+  assert.deepStrictEqual(errors, [])
+
+  const missingAst = validIncomingEntry()
+  delete missingAst.current_season.ast
+  const missingAstErrors = validatePlayerEntry(missingAst, 'nba')
+  assert.ok(missingAstErrors.some(e => e.includes('ast')))
+})
+
 test('validatePlayerEntry: flags invalid injury_status', () => {
-  const errors = validatePlayerEntry(validIncomingEntry({ injury_status: 'maybe' }))
+  const errors = validatePlayerEntry(validIncomingEntry({ current_season: { injury_status: 'maybe' } }))
   assert.ok(errors.some(e => e.includes('injury_status')))
 })
 
@@ -139,7 +157,7 @@ test('skips unmatched id with a warning, does not crash or fail the batch', () =
 test('malformed entry is rejected and reported, does not block the rest of the batch', () => {
   const players = [makePlayer()]
   const malformed = validIncomingEntry()
-  delete malformed.pts
+  delete malformed.current_season.pts
   const incoming = { as_of_date: '2026-06-30', players: [malformed] }
   const result = mergeCurrentSeasonData(incoming, players)
 
@@ -153,7 +171,7 @@ test('malformed entry is rejected and reported, does not block the rest of the b
 test('combined run: valid + unmatched + malformed entries all handled correctly together', () => {
   const players = [makePlayer(), makePlayer({ id: 'luka-doncic', name: 'Luka Doncic' })]
   const malformed = validIncomingEntry({ id: 'luka-doncic' })
-  delete malformed.gp
+  delete malformed.current_season.gp
 
   const incoming = {
     as_of_date: '2026-06-30',
