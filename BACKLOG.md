@@ -1,6 +1,6 @@
 # PocketBeane — Active Backlog
 
-Last updated: 2026-07-06 (T1/T2 current-season data + AI/UI integration done; T3-1/T3-2/T3-3 email digest built — send verified up to Resend, pending a real API key; MLB current-season pipeline debugged end-to-end + T1-3 trend calc extended to MLB with 5-tier granularity — see bugreport.md)
+Last updated: 2026-07-06 (T1/T2 current-season data + AI/UI integration done; T3-1/T3-2/T3-3 email digest built — send verified up to Resend, pending a real API key; MLB current-season pipeline debugged end-to-end + T1-3 trend calc extended to MLB with 5-tier granularity; merged POCKETBEANE_PMF_BACKLOG.md and bugreport.md into this file — see "PMF Simulation Reference" and "Data Pipeline Incident Log" sections near the end)
 
 Items are grouped by dependency tier. Within each tier, order reflects rough priority / logical sequencing.
 
@@ -88,6 +88,7 @@ button for in-season updates.
 | Trade analyzer | 4th (own sprint) | Input give/receive — Claude evaluates net category impact, positional balance, buy-low/sell-high signal |
 | Trade value index | Later | Running power ranking of roster trade value — who to sell high, buy low, or hold |
 | League pulse | Later | Weekly league-wide summary — who's dominating, who's weak, who might be open to trading |
+| Roster health score | Later (PMF S5) | Single-team weekly 1–10 score — category win rate, injury exposure, upcoming schedule strength, waiver opportunity; trend arrow + one-line Claude insight. Requires user-logged weekly W/L per category (no Yahoo endpoint for this). |
 
 **Architecture:**
 - Waiver advice: pure POST (no Yahoo token needed) — uses `leagueRosters` state + players.json. Sport-agnostic (nba/mlb).
@@ -526,7 +527,7 @@ Before touching code, define the visual direction:
 
 ## PMF Gap Tickets — Active (makes the product better)
 *Added June 2026 — derived from cross-referencing PMF simulation tickets against the shipped codebase.*
-*Source document: POCKETBEANE_PMF_BACKLOG.md*
+*Source: "PMF Simulation Reference" section below (folded in from the former POCKETBEANE_PMF_BACKLOG.md on 2026-07-06 — see that section for the full simulation findings, pricing model, and distribution plan).*
 *See DECISION note at top of file for why commercial tickets are deferred.*
 
 Priority: 🔴 CRITICAL (pre-September) · 🟡 HIGH · 🟢 SEASON
@@ -626,3 +627,84 @@ Paywall trigger: when a free user's recommendation would include Steps 3–5, sh
 **Deferred reason:** Requires PMF-03 + Stripe + real users. Revisit if the project goes commercial.
 
 **Prerequisite:** PMF-03 (Freemium Tier Architecture) + Stripe account setup
+
+---
+
+## PMF Simulation Reference
+*Folded in from `POCKETBEANE_PMF_BACKLOG.md` on 2026-07-06 when the three backlog files (`BACKLOG.md`, `POCKETBEANE_PMF_BACKLOG.md`, `bugreport.md`) were merged into this single file. Original document generated June 2026 from a 5-round PMF simulation. The individual C1–C5/S1–S5 ticket write-ups from that document are not reproduced here — they're superseded by the more detailed, more current PMF-01..09 tickets above and the Y-05 sub-features table (mapping: C1→PMF-01, C2→PMF-02, C3→PMF-03, C4→PMF-04, C5→PMF-05, S1→PMF-06, S2→Y-05 waiver wire advisor + T3 email, S3→Y-05 start/sit advisor, S4→Y-05 trade analyzer, S5→Y-05 roster health score). What's kept below is the strategic context that isn't duplicated anywhere else: the findings, pricing model, distribution plan, and open questions.*
+
+### Product & positioning
+PocketBeane — a Moneyball-philosophy driven fantasy basketball GM assistant. Helps competitive multi-league players make smarter draft picks in real time, then manages the season through waiver wire, trade analysis, and start/sit decisions.
+
+**Target customer:** Competitive multi-league fantasy basketball players with prize pools on the line. Not casual players, not novices — people who feel the cost of a wrong draft pick.
+
+**Positioning (locked after Round 4):** "Most fantasy tools give you a list. PocketBeane gives you a call." The Moneyball identity is the moat — one opinionated recommendation with rationale, calibrated to the user's stated draft philosophy, vs. generic competitors' ranked lists.
+
+### Round-by-round simulation results
+
+| Round | Reached | Converted | Retained | Revenue | Key Move |
+|-------|---------|-----------|----------|---------|----------|
+| 1 | 220 | 1% | 55% | $15 | Baseline — unfocused |
+| 2 | 280 | 6% | 62% | $57 | Narrowed ICP, pain-first messaging |
+| 3 | 300 | 8% | 71% | $114 | Product paywall redesign, referral hook |
+| 4 | 320 | 10% | 73% | $209 | Moneyball positioning, philosophy onboarding |
+| 5 | 330 | 14% | 76% | $217 | $4.99 trial tier added |
+
+### Key findings
+
+1. **The draft is the acquisition event, not the product.** Season management is the product. Users who churned did so because they experienced the draft tool but never discovered the season features. → informed the T1/T2/T3 current-season-data priority and Y-05 season suite.
+2. **Philosophy onboarding is the highest-converting feature.** 2x conversion rate vs. users who skipped it. → PMF-02 (done).
+3. **The paywall moment was wrong.** An arbitrary round-6 cutoff felt like bait-and-switch; the correct moment is when the user actively needs category gap analysis mid-draft. → informs PMF-03 if ever built (deferred).
+4. **Positioning beat pricing.** Doubling down on the Moneyball identity outperformed price-matching a cheaper competitor (8%→10% conversion on messaging alone).
+5. **Distribution is the unsolved problem.** Every product/pricing metric trended correctly across 5 rounds, but retained volume plateaued at ~330/1,000 on Reddit alone. The product works; the channel is the ceiling.
+6. **Email capture is missing infrastructure.** No way to own the relationship with free users between draft season and next touchpoint. → PMF-05 (deferred, commercial-only) vs. T3 (built, personal-use email digest — architecturally distinct, see T3 section note above).
+7. **The $4.99 trial tier works.** 38% of trial users upgraded to annual. Framing matters: "$14 more for the full season" (net of trial paid) outperformed a cold $19 ask. → PMF-09 (deferred).
+
+### Pricing model (validated by simulation, not yet built — see PMF-03/09, both deferred)
+- **Free — Scout tier:** Draft board, Steps 1–2 recommendations, watermarked recap
+- **$4.99 — Draft trial:** Full GM tier through draft + 2 weeks of season
+- **$19/season — Single league GM:** Full engine, season management, one league
+- **$29/season — Multi-league GM:** Full engine, season management, up to 3 leagues
+- **Upgrade framing for trial users:** "$14 more for the full season" (net of $4.99 already paid)
+
+### Distribution channels (priority order, not yet actioned)
+1. Reddit — r/fantasybball, r/fantasysports (credibility-first: post analysis content, mention PocketBeane as context, not spam)
+2. Fantasy basketball podcasts — pitch as guest: "I built a Moneyball draft tool and used it in my own leagues"
+3. Fantasy sports YouTube — mid-tier channels (10–50k subs) are more accessible and highly engaged
+4. Leaguemate referral — shareable draft recap card (PMF-04, done) is the mechanic
+5. Twitter/X — fantasy basketball community is active during draft season
+
+**Distribution reality check:** One podcast appearance or one viral Reddit post during draft season is worth more than months of incremental funnel optimization.
+
+### Open questions from the original simulation doc
+1. Yahoo OAuth priority relative to season management — resolved: OAuth (Y-01/Y-02/Y-04) shipped alongside season management, both live.
+2. NHL expansion timing — tracked as NHL-01 above (blocked on August 2026 data).
+3. `players.json` update cadence — tracked as PMF-08 above (August 2026 refresh).
+4. Trade analyzer opponent roster data — Yahoo OAuth is live (Y-04 roster sync), so the trade analyzer (Y-05, 4th sub-feature) can use real opponent rosters instead of manual input when it's built.
+
+---
+
+## Data Pipeline Incident Log
+*Folded in from `bugreport.md` on 2026-07-06 (filed 2026-07-06, same day). Originally scoped as 2 schema-validation fixes to unblock the MLB current-season merge script; expanded once the real scraped data was run through the pipeline and the actual failures didn't match the assumed ones. All items below are fixed except the one open action item at the top.*
+
+**Open action item:**
+- [ ] If Hermes runs its own copy of `scripts/scrape_mlb.py` (rather than calling this file directly as part of its cron job), port fixes #3 and #4 below over there — otherwise the same `b_r` key bug and pitcher-misclassification bug will recur on Hermes's side next scrape.
+
+**Result after all fixes:** 293 players updated / 0 skipped / 0 invalid (`data-updates/mlb-current-season-2026-07-06.json` → `src/data/mlb_players.json`). Test suite: 36/36 passing (`calculateTrend.test.js` 17/17, `mergeCurrentSeasonData.test.js` 19/19).
+
+1. **`VALID_INJURY_STATUSES` didn't accept `null`** [PocketBeane, `scripts/mergeCurrentSeasonData.js`] — `null` (injury page unavailable during scraping) was rejected by `validatePlayerEntry`. Added `null` alongside `'healthy'`/`'day-to-day'`/`'out'`. Note: `'il'` was never actually in the array despite being assumed present in the original task description — not added since it wasn't part of the requested change.
+
+2. **`scrape_mlb.py` "runs" field — not actually an issue** — task description asked to rename an output field from `"runs"` to `"r"`; the scraper already output `"r"`. No `"runs"` key existed anywhere. The real bug was adjacent (#3).
+
+3. **[Hermes] `b_runs` vs `b_r` — wrong Baseball Reference data-stat key** [`scripts/scrape_mlb.py`, `build_hitter()`] — `e.get('b_runs')` always returned `None` since that data-stat key doesn't exist in the scraped HTML (the real key is `b_r`). Produced `r: null` for all 178 hitters in the batch, correctly rejected by the required-field validator. Fixed the lookup key.
+
+4. **[Hermes] Pitchers with few appearances misclassified as hitters** [`scripts/scrape_mlb.py`, position-detection loop] — classification required `gs > 5 or sv > 0` in the current scrape window; real pitchers returning from injury or with few appearances (Blake Snell: 1 start, Shane Bieber: 3 starts, Carlos Estévez: 1 relief appearance) fell below that and defaulted to `hitter`, producing fabricated hitter records with null rate stats. Fixed by anchoring on the authoritative `player_type` field already in `mlb_players.json`, falling back to the threshold only when `player_type` isn't already known. Recovered 10 real pitchers; each verified against real pitching lines before trusting the fix.
+
+5. **[PocketBeane] `injury_status` read from the wrong path** [`scripts/mergeCurrentSeasonData.js`] — merge step read `entry.injury_status` (top-level, doesn't exist) instead of `entry.current_season.injury_status` (where the real value lives). Every player's injury status silently fell back to `'healthy'` even after fix #1 made `null` a valid value — the validator was checking the right path; the write step wasn't. Fix distinguishes "explicitly `null`" from "key genuinely absent" via a `!== undefined` presence check (a naive `??` fix would still coalesce an explicit `null` away, since `??` treats `null`/`undefined` identically).
+
+6. **[PocketBeane] `calculateTrend` was NBA-only, silently wrong for MLB** [`scripts/calculateTrend.js`] — `TREND_SIGNAL_STATS` was hardcoded to `pts`/`reb`/`ast`, fields that don't exist in MLB's schema, so every MLB player's trend silently computed as `"stable"` regardless of real performance. Fixed in three parts: (a) added `TREND_PROFILES` for `nba`/`mlb_hitter`/`mlb_pitcher`; (b) normalized `hr`/`rbi`/`k` (season-to-date totals) to per-game rates before comparison, since comparing partial-season totals to a full prior season read as "declining" almost universally regardless of real form; (c) fixed a sign-flip bug where summing sign-flipped `era`/`whip` (lower-is-better) alongside "higher is better" `k` could push the total negative and invert the result for small samples (caught via Carlos Estévez: a disastrous 1-game outing initially read as `"improving"`) — fixed by averaging independent per-stat percentage deviations instead of one combined-total deviation, for any profile with `lowerIsBetter` stats.
+   - **Follow-up, same session:** extended from 3 buckets to 5 — added `TREND_MINOR_THRESHOLD = 0.05` alongside `TREND_THRESHOLD = 0.15`, so real-but-modest movement (5–15% deviation) reads as `"slightly-improving"`/`"slightly-declining"` instead of being folded into `"stable"`. See T1-3 follow-up entry above for full detail (UI, prompt, test changes). Real MLB distribution: 52 improving, 26 slightly-improving, 58 stable, 47 slightly-declining, 110 declining.
+
+7. **[PocketBeane] `mergeCurrentSeasonData.test.js` fixtures were stale** — fixtures built incoming entries with stat fields flat on the entry object; the real validator/merge logic (and real scraper output) expect stats nested under `entry.current_season.{field}`. Fixtures predated whatever change moved stats under `current_season`. Was 11/18 passing at baseline (confirmed before touching anything); fixed to 19/19.
+
+8. **[PocketBeane] `getRequiredFields()` broken for the `nba` sport** [`scripts/mergeCurrentSeasonData.js`] — found while fixing #7, unrelated to MLB/Hermes. `SPORT_SCHEMAS.nba` is a flat array, but the branch meant to catch that checked `typeof schema === 'string'` (never true for an array). Every NBA call fell through to the object-schema branch built for `mlb`/`nhl`/`nfl`, where `Object.keys(arrayValue)` returns numeric indices and `schema[keys[0]]` returned the bare string `'pts'` — iterating a string walks its characters, so every real NBA entry would fail validation on fields named `"p"`/`"t"`/`"s"`. **This was a currently-live break in the NBA merge path**, the sport PocketBeane originally shipped with. Fixed with `Array.isArray()`. Regression test added.
