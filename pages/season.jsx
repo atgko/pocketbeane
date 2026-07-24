@@ -491,13 +491,15 @@ export default function SeasonHub() {
     }
   }
 
+  const isArchived = league?.status === 'complete'
+
   useEffect(() => {
-    if (!mounted || !canSync || !yahoo.connected || autoSyncAttempted.current) return
+    if (!mounted || !canSync || !yahoo.connected || autoSyncAttempted.current || isArchived) return
     if (isSyncStale(rosters?.syncedAt)) {
       autoSyncAttempted.current = true
       handleSync()
     }
-  }, [mounted, yahoo.connected, canSync])
+  }, [mounted, yahoo.connected, canSync, isArchived])
 
   if (!mounted) return null
 
@@ -506,6 +508,40 @@ export default function SeasonHub() {
       <div className="min-h-screen bg-bg text-gray-200 flex items-center justify-center">
         <p className="text-gray-500 text-sm">No active league. <button onClick={() => router.push('/')} className="text-pick hover:underline">Go home →</button></p>
       </div>
+    )
+  }
+
+  if (isArchived) {
+    return (
+      <>
+        <Head>
+          <title>{league.config.name || 'Season Hub'} — PocketBeane</title>
+        </Head>
+        <main className="min-h-screen bg-bg text-gray-200">
+          <div className="max-w-3xl mx-auto px-8 py-12">
+            <div className="flex items-center justify-between mb-8">
+              <h1 className="text-2xl font-bold text-white tracking-tight">
+                {league.config.name || 'Season Hub'}
+              </h1>
+              <button
+                onClick={() => router.push('/')}
+                className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
+              >
+                ← Home
+              </button>
+            </div>
+            <div className="bg-surface border border-border rounded-lg px-5 py-6">
+              <p className="text-sm font-semibold text-gray-300 mb-1.5">Season complete</p>
+              <p className="text-xs text-gray-500 leading-relaxed">
+                This league is archived, so the season advisors (waiver wire, matchup, start/sit) aren't
+                shown here — they run against live rosters, and an archived league's roster snapshot is
+                frozen from whenever it was archived. To keep managing this league, unarchive it from the
+                home page first.
+              </p>
+            </div>
+          </div>
+        </main>
+      </>
     )
   }
 
