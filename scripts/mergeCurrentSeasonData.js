@@ -39,14 +39,14 @@ const path = require('path')
 const { calculateTrend, TREND_PROFILES } = require('./calculateTrend')
 
 const REQUIRED_STAT_FIELDS = ['pts', 'reb', 'ast', 'stl', 'blk', 'to', 'fg_pct', 'ft_pct', 'three_pm', 'gp'] // legacy default (nba)
-const VALID_INJURY_STATUSES = ['healthy', 'day-to-day', 'out', null]
+const VALID_INJURY_STATUSES = ['healthy', 'day-to-day', 'out', 'il', null]
 const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/
 const SOURCE = 'hermes_weekly_pull'
 
 const SPORT_SCHEMAS = {
   mlb: {
-    hitter: ['avg', 'obp', 'slg', 'ops', 'hr', 'rbi', 'r', 'sb', 'bb', 'so', 'pa', 'g'],
-    pitcher: ['w', 'l', 'sv', 'era', 'whip', 'so', 'ip', 'bb', 'g', 'gs'],
+    hitter: ['position_type', 'avg', 'obp', 'slg', 'ops', 'hr', 'rbi', 'r', 'sb', 'bb', 'so', 'pa', 'g'],
+    pitcher: ['position_type', 'w', 'l', 'sv', 'era', 'whip', 'so', 'ip', 'bb', 'g', 'gs'],
   },
   nba: ['pts', 'reb', 'ast', 'stl', 'blk', 'to', 'fg_pct', 'ft_pct', 'three_pm', 'gp'],
   nhl: {
@@ -151,7 +151,12 @@ function validatePlayerEntry(entry, sport, positionType) {
   }
   const requiredFields = getRequiredFields(sport, positionType)
   for (const field of requiredFields) {
-    if (typeof entry.current_season?.[field] !== 'number' || Number.isNaN(entry.current_season[field])) {
+    const val = entry.current_season?.[field]
+    if (field === 'position_type') {
+      if (typeof val !== 'string' || !val.trim()) {
+        errors.push(`missing or invalid "${field}"`)
+      }
+    } else if (typeof val !== 'number' || Number.isNaN(val)) {
       errors.push(`missing or non-numeric "${field}"`)
     }
   }

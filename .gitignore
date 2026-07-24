@@ -31,3 +31,7 @@ yarn-debug.log*
 yarn-error.log*
 .vercel
 .env*.local
+
+# Python cache
+__pycache__/
+*.pyc

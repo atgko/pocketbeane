@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""MLB scraper — reads pre-downloaded Baseball Reference HTML files and produces
-PocketBeane-compatible current-season JSON for the merge step.
+"""MLB scraper — reads pre-downloaded Baseball Reference HTML files and ESPN
+injury API, produces PocketBeane-compatible current-season JSON for the merge step.
 
 Usage:
   python scripts/scrape_mlb.py
@@ -13,6 +13,8 @@ import os
 import sys
 import unicodedata
 from datetime import date
+from urllib.error import URLError
+from urllib.request import Request, urlopen
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 DATA_DIR = os.path.join(REPO_ROOT, 'src', 'data')
@@ -20,6 +22,8 @@ UPDATES_DIR = os.path.join(REPO_ROOT, 'data-updates')
 BATTING_FILE = os.path.join(os.path.dirname(__file__), 'bbref-batting.html')
 PITCHING_FILE = os.path.join(os.path.dirname(__file__), 'bbref-pitching.html')
 PLAYERS_FILE = os.path.join(DATA_DIR, 'mlb_players.json')
+
+ESPN_INJURIES_API = 'https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/injuries'
 
 # ---------------------------------------------------------------------------
 # Name normalization — matches build-players/build-mlb-players convention
@@ -40,7 +44,68 @@ def normalize_name(raw: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# HTML table parser
+# ESPN injury fetch
+# ---------------------------------------------------------------------------
+def fetch_espn_injuries():
+    req = Request(ESPN_INJURIES_API, headers={
+        'User-Agent': 'Mozilla/5.0 (compatible; PocketBeane/1.0)',
+        'Accept': 'application/json',
+    })
+    try:
+        with urlopen(req, timeout=30) as resp:
+            return json.loads(resp.read().decode('utf-8'))
+    except Exception as exc:
+        print(f'WARNING: ESPN injuries API failed: {exc}')
+        return None
+
+
+def map_injury_status(status: str, type_name: str) -> str:
+    """Map ESPN raw status/type name to PocketBeane injury_status value."""
+    s = status.strip()
+    t = type_name.strip()
+
+    # Any IL designation
+    if 'IL' in s or 'IL' in t:
+        return 'il'
+    # Explicit day-to-day
+    if 'Day-To-Day' in s or 'DAYTODAY' in t:
+        return 'day-to-day'
+    # Out
+    if s == 'Out' or 'OUT' in t:
+        return 'out'
+    # Paternity, bereavement, suspension — player is unavailable
+    if any(k in (s, t) for k in ('Paternity', 'PATERNITY', 'Bereavement', 'BEREAVEMENT', 'Suspension', 'SUSPENSION')):
+        return 'out'
+    return 'out'
+
+
+def build_injury_map(espn_data) -> dict:
+    """Return {normalized_name: {'status': ..., 'note': ...}} from ESPN JSON."""
+    if not espn_data or 'injuries' not in espn_data:
+        return {}
+
+    injury_map = {}
+    for team in espn_data['injuries']:
+        for entry in team.get('injuries', []):
+            athlete = entry.get('athlete', {})
+            raw_name = athlete.get('displayName', '')
+            if not raw_name:
+                continue
+            norm = normalize_name(raw_name)
+            status = entry.get('status', 'Out')
+            type_info = entry.get('type', {})
+            type_name = type_info.get('name', '') if isinstance(type_info, dict) else str(type_info)
+            long_comment = entry.get('longComment', '') or ''
+
+            injury_map[norm] = {
+                'status': map_injury_status(status, type_name),
+                'note': long_comment[:100].strip(),
+            }
+    return injury_map
+
+
+# ---------------------------------------------------------------------------
+# HTML table parser (unchanged from prior T1-2)
 # ---------------------------------------------------------------------------
 def parse_table(html_path: str) -> list:
     with open(html_path, 'r', encoding='utf-8') as f:
@@ -157,6 +222,12 @@ def main():
     pitchers = parse_table(PITCHING_FILE)
     print(f'Parsed {len(batters)} batters, {len(pitchers)} pitchers')
 
+    # Fetch ESPN injuries
+    espn_data = fetch_espn_injuries()
+    injury_map = build_injury_map(espn_data)
+    injury_available = bool(injury_map)
+    print(f'Fetched ESPN injuries: {"OK" if injury_available else "FAILED — all players will have injury_status=null"} ({len(injury_map)} injured players found)')
+
     with open(PLAYERS_FILE, 'r', encoding='utf-8') as f:
         players = json.load(f)
 
@@ -188,10 +259,6 @@ def main():
         if norm in two_way_norms:
             position_type = 'pitcher'
         elif norm in pitcher_norms or pdata.get('player_type') == 'pitcher':
-            # Known pitchers (per mlb_players.json) stay classified as pitchers
-            # even if this week's pitching table doesn't have them (e.g. absent
-            # from the scrape window) — prevents a stray 0-PA batting cameo from
-            # producing a bogus hitter record with null rate stats.
             position_type = 'pitcher'
         else:
             position_type = 'hitter'
@@ -199,11 +266,33 @@ def main():
         if position_type == 'hitter' and norm in bat_by_name:
             stats = build_hitter(bat_by_name[norm])
             stats['as_of_date'] = as_of
+            if injury_available:
+                inj = injury_map.get(norm)
+                if inj:
+                    stats['injury_status'] = inj['status']
+                    stats['injury_note'] = inj['note']
+                else:
+                    stats['injury_status'] = 'healthy'
+                    stats['injury_note'] = None
+            else:
+                stats['injury_status'] = None
+                stats['injury_note'] = None
             record = {'id': pid, 'name': pdata['name'], 'current_season': stats}
             out_players.append(record)
         elif position_type == 'pitcher' and norm in pit_by_name:
             stats = build_pitcher(pit_by_name[norm])
             stats['as_of_date'] = as_of
+            if injury_available:
+                inj = injury_map.get(norm)
+                if inj:
+                    stats['injury_status'] = inj['status']
+                    stats['injury_note'] = inj['note']
+                else:
+                    stats['injury_status'] = 'healthy'
+                    stats['injury_note'] = None
+            else:
+                stats['injury_status'] = None
+                stats['injury_note'] = None
             record = {'id': pid, 'name': pdata['name'], 'current_season': stats}
             out_players.append(record)
         else:
