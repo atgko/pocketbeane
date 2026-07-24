@@ -14,7 +14,25 @@ const {
 } = require('../../src/utils/schedule')
 
 const nbaSchedule = require('../../src/data/nba_schedule.json')
-const mlbSchedule = require('../../src/data/mlb_schedule.json')
+
+// Inline fixture (not the live src/data/mlb_schedule.json) — that file now
+// holds the real full MLB season fetched via scripts/fetch_mlb_schedule.py,
+// so asserting specific values against it would break every time the real
+// schedule refreshes. Same fix should apply to the NBA block above once
+// nba_schedule.json is replaced with a real fetch instead of its manual seed.
+const mlbSchedule = {
+  season: '2026',
+  sport: 'mlb',
+  source: 'test_fixture',
+  games: [
+    { date: '2026-07-06', home: 'NYY', away: 'LAD' },
+    { date: '2026-07-07', home: 'NYY', away: 'LAD' },
+    { date: '2026-07-08', home: 'NYY', away: 'LAD' },
+    { date: '2026-07-10', home: 'LAD', away: 'BOS' },
+    { date: '2026-07-11', home: 'LAD', away: 'BOS' },
+    { date: '2026-07-12', home: 'LAD', away: 'BOS' },
+  ],
+}
 
 let passed = 0
 const failures = []

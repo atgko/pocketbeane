@@ -26,6 +26,9 @@ SCRAPERS = {
     'nfl': REPO_ROOT / 'scripts' / 'scrape_nfl.py',
 }
 MERGE_SCRIPT = REPO_ROOT / 'scripts' / 'mergeCurrentSeasonData.js'
+SCHEDULE_SCRAPERS = {
+    'mlb': REPO_ROOT / 'scripts' / 'fetch_mlb_schedule.py',
+}
 AUTH_PATH = Path(r'C:\Users\athav\AppData\Local\hermes\auth.json')
 NOTIFY_TO = 'athavan.elangko@gmail.com'
 THRESHOLDS = {'mlb': 20, 'nba': 50, 'nhl': 30, 'nfl': 30}
@@ -379,6 +382,30 @@ def main():
             'injury_data': output_data.get('injury_data', 'unknown'),
             'merge_output': merge_proc.stdout,
         }
+
+    # Schedule refresh (Start/Sit Advisor games-this-week/back-to-back data).
+    # Independent of the per-sport current-season loop above — never lets a
+    # schedule fetch failure fail the whole weekly run.
+    print(f'\n{"="*60}')
+    print('SCHEDULE REFRESH')
+    print(f'{"="*60}')
+    for sport, scraper in SCHEDULE_SCRAPERS.items():
+        if not sports.get(sport):
+            print(f'  [{sport}] Skipping schedule refresh (offseason)')
+            continue
+        try:
+            proc = subprocess.run(
+                [sys.executable, str(scraper)],
+                cwd=str(REPO_ROOT),
+                capture_output=True,
+                text=True,
+                timeout=60,
+            )
+            print(proc.stdout)
+            if proc.returncode != 0:
+                print(f'  [{sport}] Schedule refresh failed:\n{proc.stderr}')
+        except subprocess.TimeoutExpired:
+            print(f'  [{sport}] Schedule refresh timed out')
 
     # Build summary
     duration = (date.today() - run_start).total_seconds()

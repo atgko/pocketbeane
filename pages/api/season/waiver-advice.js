@@ -49,7 +49,8 @@ export async function getWaiverAdvice({ sport = 'nba', leagueRosters, gmProfile 
   const userRosterLines = userTeam.roster.map(r => {
     const p = (r.playerId && playerById[r.playerId]) || playerByName[normalizeName(r.name)]
     const injuryTag = p?.injury_risk ? ' ⚠️' : ''
-    return `${r.name}(${r.positions ?? '?'}${injuryTag}): ${p ? formatStats(p, sport) : 'no stats'}${p ? formatCurrentSeasonLine(p, sport) : ''}`
+    const adpTag = p?.adp != null ? `,ADP${p.adp.toFixed(1)}` : ''
+    return `${r.name}(${r.positions ?? '?'}${adpTag}${injuryTag}): ${p ? formatStats(p, sport) : 'no stats'}${p ? formatCurrentSeasonLine(p, sport) : ''}`
   })
 
   // Available FAs: unowned players from players.json, sorted by ADP (best first)
@@ -73,6 +74,8 @@ export async function getWaiverAdvice({ sport = 'nba', leagueRosters, gmProfile 
   const systemPrompt = `You are Billy Beane advising a ${sportLabel} GM on waiver wire moves.
 
 Analyze the GM's roster against available free agents. Identify the team's weakest categories and recommend exactly 3 add/drop moves that address real gaps. Be specific — name exact players to add and drop. Explain each move in 2-3 sentences using Beane's direct, data-focused voice. Free agents marked CURRENT improving or slightly-improving are trending up in-season — weigh them as legitimate adds even if their ADP/prior-season profile looks ordinary. Treat "slightly-improving"/"slightly-declining" as real but modest movement, not noise — don't overstate it the way you would a full improving/declining trend.
+
+Roster players are also tagged with their ADP — this is draft capital, not performance, and the two must not be conflated. A struggling former early-round pick is not automatically the correct drop: scan the FULL roster first for a lower-ADP or replacement-level player who contributes less and would free the same roster spot with less value lost. Only propose dropping a high-ADP asset (rough guide: ADP under 60) when no weaker droppable player exists at a similar position. When you do propose dropping a high-ADP struggler, say explicitly in the reason that the value would be better preserved by shopping him in a trade once that's an option, rather than releasing him to waivers for nothing — a rough patch is not the same as replacement level.
 
 ${CURRENT_SEASON_REASONING_INSTRUCTION}
 
