@@ -75,6 +75,7 @@ export default async function handler(req, res) {
 
   const gameCode = sport === 'mlb' ? 'mlb' : 'nba'
 
+  try {
   // Fetch draft results and user's teams in parallel
   const [draftRaw, userTeamsRaw] = await Promise.all([
     yahooFetch(token, `/league/${leagueKey}/draftresults`),
@@ -140,4 +141,9 @@ export default async function handler(req, res) {
   const matched = picks.filter((p) => p.playerId !== null).length
 
   res.json({ picks, userTeamKey, draftPosition, matched, total: picks.length })
+  } catch (err) {
+    const cause = err.cause?.message ?? err.cause ?? ''
+    console.error('[sync-draft] error:', err.message, cause ? `| cause: ${cause}` : '')
+    res.status(502).json({ error: cause ? `${err.message}: ${cause}` : err.message })
+  }
 }

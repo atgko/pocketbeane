@@ -38,6 +38,7 @@ export default async function handler(req, res) {
   const { leagueKey, sport = 'nba' } = req.query
   if (!leagueKey) return res.status(400).json({ error: 'leagueKey required' })
 
+  try {
   // Build name → PocketBeane id map from the right sport's player pool
   const playerFile = sport === 'mlb' ? 'mlb_players.json' : 'players.json'
   const playersPath = path.join(process.cwd(), 'src/data', playerFile)
@@ -136,4 +137,9 @@ export default async function handler(req, res) {
   const total = teams.reduce((sum, t) => sum + t.roster.length, 0)
 
   res.json({ teams, userTeamKey, matched, total, syncedAt: new Date().toISOString() })
+  } catch (err) {
+    const cause = err.cause?.message ?? err.cause ?? ''
+    console.error('[sync-rosters] error:', err.message, cause ? `| cause: ${cause}` : '')
+    res.status(502).json({ error: cause ? `${err.message}: ${cause}` : err.message })
+  }
 }

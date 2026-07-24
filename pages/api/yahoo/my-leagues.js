@@ -23,6 +23,7 @@ export default async function handler(req, res) {
   const sport = req.query.sport ?? 'nba'
   const gameCode = SPORT_GAME_CODES[sport] ?? 'nba'
 
+  try {
   const data = await yahooFetch(token, `/users;use_login=1/games;game_codes=${gameCode}/leagues`)
   const games = data?.fantasy_content?.users?.[0]?.user?.[1]?.games
   const gameCount = games?.count ?? 0
@@ -57,4 +58,9 @@ export default async function handler(req, res) {
   const filtered = latestSeason ? leagues.filter((l) => l.season === latestSeason) : leagues
 
   res.json({ leagues: filtered })
+  } catch (err) {
+    const cause = err.cause?.message ?? err.cause ?? ''
+    console.error('[my-leagues] error:', err.message, cause ? `| cause: ${cause}` : '')
+    res.status(502).json({ error: cause ? `${err.message}: ${cause}` : err.message })
+  }
 }

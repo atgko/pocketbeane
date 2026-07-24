@@ -36,6 +36,7 @@ function parseSettings(data) {
     leagueName: meta?.name ?? null,
     draftType: meta?.draft_type ?? null,
     auctionBudget: meta?.draft_type === 'auction' ? Number(meta.faar_budget ?? 200) : null,
+    scoringType: meta?.scoring_type ?? null,
   }
 }
 
@@ -48,9 +49,15 @@ export default async function handler(req, res) {
   const { league_key } = req.query
   if (!league_key) return res.status(400).json({ error: 'league_key required' })
 
-  const data = await yahooFetch(token, `/league/${league_key}/settings`)
-  const settings = parseSettings(data)
-  if (!settings) return res.status(500).json({ error: 'Failed to parse league settings' })
+  try {
+    const data = await yahooFetch(token, `/league/${league_key}/settings`)
+    const settings = parseSettings(data)
+    if (!settings) return res.status(500).json({ error: 'Failed to parse league settings' })
 
-  res.json(settings)
+    res.json(settings)
+  } catch (err) {
+    const cause = err.cause?.message ?? err.cause ?? ''
+    console.error('[yahoo/settings] error:', err.message, cause ? `| cause: ${cause}` : '')
+    res.status(502).json({ error: cause ? `${err.message}: ${cause}` : err.message })
+  }
 }

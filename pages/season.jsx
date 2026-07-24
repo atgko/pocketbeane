@@ -53,9 +53,7 @@ function TrendBadge({ player }) {
 }
 
 const COMING_SOON = [
-  { title: 'Trade Analyzer', description: 'Input a give/receive — Claude evaluates net category impact and positional balance.' },
-  { title: 'Trade Value Index', description: 'Running power ranking of roster trade value. Who to sell high, buy low, or hold.' },
-  { title: 'League Pulse', description: "Weekly league-wide summary — who's dominating, who's weak, who might trade." },
+  { title: 'Roster Health Score', description: 'Single-team weekly 1–10 score with a trend arrow and one-line Claude insight.' },
 ]
 
 const PRIORITY_STYLES = {
@@ -459,6 +457,361 @@ function StartSitPanel({ league, rosters }) {
   )
 }
 
+const VERDICT_STYLES = {
+  accept: { label: 'Accept', className: 'bg-green-900/40 text-green-400' },
+  'lean-accept': { label: 'Lean accept', className: 'bg-green-900/20 text-green-400/80' },
+  'lean-decline': { label: 'Lean decline', className: 'bg-red-900/20 text-red-400/80' },
+  decline: { label: 'Decline', className: 'bg-red-900/40 text-red-400' },
+}
+
+function parsePlayerList(text) {
+  return text.split(',').map(s => s.trim()).filter(Boolean)
+}
+
+function TradeAnalyzerPanel({ league, rosters }) {
+  const [giveInput, setGiveInput] = useState('')
+  const [receiveInput, setReceiveInput] = useState('')
+  const [advice, setAdvice] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const sport = league.config.sport ?? 'nba'
+
+  const gmProfile = {
+    injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
+    draftStrategy: league.config.philosophy?.strategy ?? 'beane',
+  }
+
+  async function handleGetAdvice() {
+    const give = parsePlayerList(giveInput)
+    const receive = parsePlayerList(receiveInput)
+    if (!give.length || !receive.length) {
+      setError('Enter at least one player on each side of the trade.')
+      return
+    }
+    setLoading(true)
+    setError(null)
+    try {
+      const res = await fetch('/api/season/trade-advice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sport, leagueRosters: rosters, give, receive, gmProfile }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Advice failed')
+      setAdvice(data)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const verdict = advice ? (VERDICT_STYLES[advice.verdict] ?? { label: advice.verdict, className: 'bg-gray-800 text-gray-400' }) : null
+
+  return (
+    <div className="bg-surface border border-border rounded-lg px-5 py-5">
+      <div className="mb-3">
+        <p className="text-sm font-semibold text-gray-200">Trade Analyzer</p>
+        <p className="text-xs text-gray-500 mt-0.5">
+          Enter a give/receive to see the net category impact, positional fit, and buy-low/sell-high signal.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+        <div>
+          <label className="text-[10px] font-mono text-gray-600 uppercase tracking-wider">You give</label>
+          <input
+            type="text"
+            value={giveInput}
+            onChange={(e) => setGiveInput(e.target.value)}
+            placeholder="Player Name, Player Name"
+            className="mt-1 w-full bg-background border border-border rounded px-3 py-2 text-xs text-gray-200 placeholder:text-gray-700 focus:outline-none focus:border-pick/50"
+          />
+        </div>
+        <div>
+          <label className="text-[10px] font-mono text-gray-600 uppercase tracking-wider">You receive</label>
+          <input
+            type="text"
+            value={receiveInput}
+            onChange={(e) => setReceiveInput(e.target.value)}
+            placeholder="Player Name, Player Name"
+            className="mt-1 w-full bg-background border border-border rounded px-3 py-2 text-xs text-gray-200 placeholder:text-gray-700 focus:outline-none focus:border-pick/50"
+          />
+        </div>
+      </div>
+
+      <button
+        onClick={handleGetAdvice}
+        disabled={loading}
+        className="text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+      >
+        {advice ? 'Refresh' : "Get Beane's Take"}
+      </button>
+
+      {loading && (
+        <p className="text-xs text-gray-500 font-mono mt-4 animate-pulse">Weighing the trade…</p>
+      )}
+
+      {error && !loading && (
+        <p className="text-xs text-red-400 font-mono mt-4">{error}</p>
+      )}
+
+      {advice && !loading && (
+        <div className="mt-4 space-y-4">
+          <div className="flex items-center gap-2">
+            <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${verdict.className}`}>
+              {verdict.label}
+            </span>
+            {advice.partnerTeamName && (
+              <span className="text-xs text-gray-500 font-mono">vs. {advice.partnerTeamName}</span>
+            )}
+          </div>
+          {advice.outlook && (
+            <p className="text-xs text-gray-400 leading-relaxed italic">{advice.outlook}</p>
+          )}
+          <div className="grid grid-cols-3 gap-3">
+            {advice.improveCategories?.length > 0 && (
+              <div>
+                <p className="text-[10px] font-mono text-green-500 uppercase tracking-wider mb-1.5">Improves</p>
+                <div className="flex flex-wrap gap-1">
+                  {advice.improveCategories.map(c => (
+                    <span key={c} className="text-xs font-mono bg-green-900/30 text-green-400 px-1.5 py-0.5 rounded">{c}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {advice.declineCategories?.length > 0 && (
+              <div>
+                <p className="text-[10px] font-mono text-red-500 uppercase tracking-wider mb-1.5">Declines</p>
+                <div className="flex flex-wrap gap-1">
+                  {advice.declineCategories.map(c => (
+                    <span key={c} className="text-xs font-mono bg-red-900/30 text-red-400 px-1.5 py-0.5 rounded">{c}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {advice.neutralCategories?.length > 0 && (
+              <div>
+                <p className="text-[10px] font-mono text-gray-500 uppercase tracking-wider mb-1.5">Neutral</p>
+                <div className="flex flex-wrap gap-1">
+                  {advice.neutralCategories.map(c => (
+                    <span key={c} className="text-xs font-mono bg-gray-800 text-gray-400 px-1.5 py-0.5 rounded">{c}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          {advice.positionalNote && (
+            <p className="text-xs text-gray-500 border-t border-border pt-3 leading-relaxed">
+              <span className="text-gray-400 font-medium">Positional fit:</span> {advice.positionalNote}
+            </p>
+          )}
+          {advice.buyLowSellHighNote && (
+            <p className="text-xs text-gray-500 leading-relaxed">
+              <span className="text-gray-400 font-medium">Buy-low/sell-high:</span> {advice.buyLowSellHighNote}
+            </p>
+          )}
+          {advice.reason && (
+            <p className="text-xs text-gray-400 leading-relaxed">{advice.reason}</p>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function TradeValueIndexPanel({ league, rosters }) {
+  const [index, setIndex] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const sport = league.config.sport ?? 'nba'
+
+  const gmProfile = {
+    injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
+    draftStrategy: league.config.philosophy?.strategy ?? 'beane',
+  }
+
+  async function handleGetIndex() {
+    setLoading(true)
+    setError(null)
+    try {
+      const res = await fetch('/api/season/trade-value-index', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sport, leagueRosters: rosters, gmProfile }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Index failed')
+      setIndex(data)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="bg-surface border border-border rounded-lg px-5 py-5">
+      <div className="flex items-start justify-between gap-4 mb-1">
+        <div>
+          <p className="text-sm font-semibold text-gray-200">Trade Value Index</p>
+          <p className="text-xs text-gray-500 mt-0.5">
+            Sell-high candidates on your roster and buy-low targets across the league.
+          </p>
+        </div>
+        <button
+          onClick={handleGetIndex}
+          disabled={loading}
+          className="shrink-0 text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          {index ? 'Refresh' : "Get Beane's Take"}
+        </button>
+      </div>
+
+      {loading && (
+        <p className="text-xs text-gray-500 font-mono mt-4 animate-pulse">Scanning trade value…</p>
+      )}
+
+      {error && !loading && (
+        <p className="text-xs text-red-400 font-mono mt-4">{error}</p>
+      )}
+
+      {index && !loading && (
+        <div className="mt-4 space-y-4">
+          {index.headline && (
+            <p className="text-xs text-gray-400 italic leading-relaxed">{index.headline}</p>
+          )}
+          {index.sellHigh?.length > 0 && (
+            <div className="space-y-2">
+              <p className="text-[10px] font-mono text-green-500 uppercase tracking-wider">Sell high (your roster)</p>
+              {index.sellHigh.map((entry, i) => (
+                <div key={i} className="border border-border rounded-md px-4 py-3">
+                  <p className="text-xs text-green-400 font-medium mb-1">{entry.player}</p>
+                  <p className="text-xs text-gray-400 leading-relaxed">{entry.reason}</p>
+                </div>
+              ))}
+            </div>
+          )}
+          {index.buyLowTargets?.length > 0 && (
+            <div className="space-y-2 pt-2 border-t border-border">
+              <p className="text-[10px] font-mono text-blue-400 uppercase tracking-wider pt-2">Buy low (league targets)</p>
+              {index.buyLowTargets.map((entry, i) => (
+                <div key={i} className="border border-border rounded-md px-4 py-3">
+                  <p className="text-xs text-blue-300 font-medium mb-1">
+                    {entry.player}
+                    {entry.currentTeam && <span className="text-gray-600 font-normal"> · {entry.currentTeam}</span>}
+                  </p>
+                  <p className="text-xs text-gray-400 leading-relaxed">{entry.reason}</p>
+                </div>
+              ))}
+            </div>
+          )}
+          {!index.sellHigh?.length && !index.buyLowTargets?.length && (
+            <p className="text-xs text-gray-500">No standout sell-high or buy-low signals this week.</p>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function LeaguePulsePanel({ league, rosters }) {
+  const [pulse, setPulse] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const sport = league.config.sport ?? 'nba'
+
+  const gmProfile = {
+    injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
+    draftStrategy: league.config.philosophy?.strategy ?? 'beane',
+  }
+
+  async function handleGetPulse() {
+    setLoading(true)
+    setError(null)
+    try {
+      const res = await fetch('/api/season/league-pulse', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sport, leagueRosters: rosters, gmProfile }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Pulse failed')
+      setPulse(data)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="bg-surface border border-border rounded-lg px-5 py-5">
+      <div className="flex items-start justify-between gap-4 mb-1">
+        <div>
+          <p className="text-sm font-semibold text-gray-200">League Pulse</p>
+          <p className="text-xs text-gray-500 mt-0.5">
+            Who's dominating, who's rebuilding, and who might be open to a trade.
+          </p>
+        </div>
+        <button
+          onClick={handleGetPulse}
+          disabled={loading}
+          className="shrink-0 text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          {pulse ? 'Refresh' : "Get Beane's Take"}
+        </button>
+      </div>
+
+      {loading && (
+        <p className="text-xs text-gray-500 font-mono mt-4 animate-pulse">Reading the league…</p>
+      )}
+
+      {error && !loading && (
+        <p className="text-xs text-red-400 font-mono mt-4">{error}</p>
+      )}
+
+      {pulse && !loading && (
+        <div className="mt-4 space-y-4">
+          {pulse.headline && (
+            <p className="text-xs text-gray-400 italic leading-relaxed">{pulse.headline}</p>
+          )}
+          {pulse.dominating?.length > 0 && (
+            <div className="space-y-1.5">
+              <p className="text-[10px] font-mono text-green-500 uppercase tracking-wider">Dominating</p>
+              {pulse.dominating.map((entry, i) => (
+                <p key={i} className="text-xs text-gray-400 leading-relaxed">
+                  <span className="text-gray-200 font-medium">{entry.team}:</span> {entry.note}
+                </p>
+              ))}
+            </div>
+          )}
+          {pulse.rebuilding?.length > 0 && (
+            <div className="space-y-1.5 pt-2 border-t border-border">
+              <p className="text-[10px] font-mono text-gray-500 uppercase tracking-wider pt-2">Rebuilding</p>
+              {pulse.rebuilding.map((entry, i) => (
+                <p key={i} className="text-xs text-gray-400 leading-relaxed">
+                  <span className="text-gray-200 font-medium">{entry.team}:</span> {entry.note}
+                </p>
+              ))}
+            </div>
+          )}
+          {pulse.tradeOpportunities?.length > 0 && (
+            <div className="space-y-1.5 pt-2 border-t border-border">
+              <p className="text-[10px] font-mono text-blue-400 uppercase tracking-wider pt-2">Trade opportunities</p>
+              {pulse.tradeOpportunities.map((entry, i) => (
+                <p key={i} className="text-xs text-gray-400 leading-relaxed">
+                  <span className="text-gray-200 font-medium">{entry.team}:</span> {entry.note}
+                </p>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function SeasonHub() {
   const router = useRouter()
   const league = useLeagueStore((s) => s.getActiveLeague())
@@ -620,6 +973,9 @@ export default function SeasonHub() {
               <WaiverPanel league={league} rosters={rosters} />
               <MatchupPanel league={league} rosters={rosters} yahooConnected={yahoo.connected} />
               <StartSitPanel league={league} rosters={rosters} />
+              <TradeAnalyzerPanel league={league} rosters={rosters} />
+              <TradeValueIndexPanel league={league} rosters={rosters} />
+              <LeaguePulsePanel league={league} rosters={rosters} />
             </div>
           ) : canSync ? (
             <div className="mb-8">

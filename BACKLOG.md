@@ -83,34 +83,86 @@ button for in-season updates.
 | Sub-feature | Status | Description |
 |---|---|---|
 | Waiver wire advisor | ✅ UAT complete | `/api/season/waiver-advice` — diffs all team rosters vs players.json, top 25 FAs by ADP, Claude add/drop recs |
-| Head-to-head matchup advisor | ✅ UAT complete | `/api/season/matchup-advice` — fetches scoreboard, finds opponent, Claude category-by-category breakdown |
-| Start/sit advisor | ✅ Built (2026-07-07) — needs browser UAT | `/api/season/startsit-advice` — schedule-aware (games-this-week, back-to-back), form, and injury-aware weekly lineup recommendation. NBA and MLB (MLB pitcher signal is an approximate schedule proxy, see Y-05c). NHL/NFL return a clean "not available yet" until their data lands — no code changes needed when it does, see docs/SCHEMA.md. |
-| Trade analyzer | 4th (own sprint) | Input give/receive — Claude evaluates net category impact, positional balance, buy-low/sell-high signal |
-| Trade value index | Later | Running power ranking of roster trade value — who to sell high, buy low, or hold |
-| League pulse | Later | Weekly league-wide summary — who's dominating, who's weak, who might be open to trading |
+| Head-to-head matchup advisor | ✅ UAT complete (NBA) — ⚠️ MLB blocked 2026-07-24 | `/api/season/matchup-advice` — fetches scoreboard, finds opponent, Claude category-by-category breakdown. See "Yahoo API throttle" note below the status table — the MLB league's `/scoreboard` and `/settings` calls are currently 403ing at the Yahoo API level (not a code bug); needs a retest once that clears. |
+| Start/sit advisor | ✅ UAT complete (2026-07-24) | `/api/season/startsit-advice` — schedule-aware (games-this-week, back-to-back), form, and injury-aware weekly lineup recommendation. NBA and MLB (MLB pitcher signal is an approximate schedule proxy, see Y-05c). NHL/NFL return a clean "not available yet" until their data lands — no code changes needed when it does, see docs/SCHEMA.md. |
+| Trade analyzer | ✅ Built (2026-07-24) — needs browser UAT | `/api/season/trade-advice` — `getTradeAdvice()`, pure POST like the waiver advisor (no live Yahoo call, unaffected by the scoreboard/settings throttle). Give/receive text input on Season Hub; validates give against the user's roster and receive against a single opposing team's roster, then Claude evaluates net category impact, positional fit, and buy-low/sell-high signal using the same current-season-aware reasoning as the waiver advisor. Smoke-tested end-to-end via synthetic roster payload — real output, correct JSON shape. Not yet exercised against a real synced league in the browser. |
+| Trade value index | ✅ Built (2026-07-24) — needs browser UAT | `/api/season/trade-value-index` — `getTradeValueIndex()`, pure POST (no live Yahoo call). Scans the user's own roster for sell-high candidates (current-season overperformance vs. baseline/ADP) and every other team's roster for buy-low targets (real pedigree, depressed current trend). Caught and fixed a real model-output bug in testing: Claude occasionally suggested "buying low" on the user's own player — added a server-side filter dropping any `buyLowTargets` entry matching the user's own roster, on top of tightening the prompt. Smoke-tested end-to-end, fix verified. |
+| League pulse | ✅ Built (2026-07-24) — needs browser UAT | `/api/season/league-pulse` — `getLeaguePulse()`, pure POST (no live Yahoo call). Uses cached standings (rank/wins/losses, already part of `leagueRosters`) plus every team's roster to identify dominating teams, rebuilding/weak teams, and specific trade-partner opportunities for the user. Smoke-tested end-to-end via synthetic 3-team payload — real, well-reasoned output. |
 | Roster health score | Later (PMF S5) | Single-team weekly 1–10 score — category win rate, injury exposure, upcoming schedule strength, waiver opportunity; trend arrow + one-line Claude insight. Requires user-logged weekly W/L per category (no Yahoo endpoint for this). |
 
 **Architecture:**
 - Waiver advice: pure POST (no Yahoo token needed) — uses `leagueRosters` state + players.json. Sport-agnostic (nba/mlb).
 - Matchup advice: POST with Yahoo token — fetches `/league/{key}/scoreboard` for current week opponent, then enriches both rosters with players.json stats.
-- Both return structured JSON rendered in Season Hub panels: headline/moves for waiver, outlook/win-lose-tossup/keyNote for matchup.
+- Trade advice: pure POST like waiver advice (no live Yahoo call) — validates give/receive against cached `leagueRosters`, enriches with players.json stats.
+- Trade value index: pure POST — scans own roster (sell-high) + every other team's roster (buy-low) using ADP/trend data already in players.json.
+- League pulse: pure POST — uses cached standings (rank/wins/losses) + every roster to summarize the league and surface trade partners.
+- All five return structured JSON rendered in Season Hub panels: headline/moves for waiver, outlook/win-lose-tossup/keyNote for matchup, verdict/category-impact/positional/buy-sell for trade, headline/sellHigh/buyLowTargets for trade value index, headline/dominating/rebuilding/tradeOpportunities for league pulse.
+
+**Yahoo API throttle (found 2026-07-24):** the MLB league (`469.l.209547`) started 403ing on `/league/{key}/settings` and `/league/{key}/scoreboard` with "This application is not authorized to perform this action" after a burst of OAuth reconnects + `/me` polling during same-session debugging. Basic account-level calls (`/users/games`) still work, and roster/standings calls were unconfirmed either way (`sync-rosters` also failed the same way once tested). Likely a transient app/account-level rate-limit, not a permissions or code bug — retest after a cooldown period. Separately (real bug, fixed): `pages/api/auth/yahoo/me.js` was collapsing "cookie valid but a live Yahoo call failed" into the same `connected: false` as "no cookie," causing the connection banner to flicker between connected/disconnected on transient network errors — fixed to trust the cookie and treat the profile-name lookup as best-effort. All six Yahoo API routes (`sync-rosters`, `settings`, `my-leagues`, `league`, `league-full`, `sync-draft`) also had no top-level error handling, so any Yahoo failure crashed into Next's HTML error page instead of clean JSON — fixed across all six.
 
 **Prerequisite:** Y-01 ✓, Y-02 ✓, Y-04 ✓
 
 ---
 
-### Start/Sit Advisor · UAT (pending — needs a browser pass)
+### Start/Sit Advisor · UAT — ✅ passed 2026-07-24
 
-Endpoint logic was verified end-to-end against real `players.json`/`mlb_players.json` data and live Claude calls (not just curl against synthetic fixtures) — including catching and fixing three real model-output bugs (duplicate player across two slots, position-ineligible placements, an eligibility violation that survived the first fix and needed a server-side validation pass). `npm run test:schedule` covers the pure date-math. What's *not* yet verified — the part that needs the actual UI and a synced league:
+Endpoint logic was verified end-to-end against real `players.json`/`mlb_players.json` data and live Claude calls (not just curl against synthetic fixtures) — including catching and fixing three real model-output bugs (duplicate player across two slots, position-ineligible placements, an eligibility violation that survived the first fix and needed a server-side validation pass). `npm run test:schedule` covers the pure date-math. The remaining browser/UI pass (NBA + MLB panels, empty states, repeat-refresh stability) was confirmed by the user 2026-07-24 — Y-05 status table updated accordingly.
 
-- [ ] Season Hub, NBA league with synced rosters — click "Get Beane's Take" on the Start/Sit panel, confirm loading/error states match the other two panels and a real lineup renders (slot badges, trend badges, games-this-week/B2B tags, bench notes)
-- [ ] Same for an MLB league — confirm the panel is NOT hidden (MLB is unblocked, not NBA-only) and the lineup covers hitters + SP/RP correctly
-- [ ] Confirm the panel is hidden/shows the "Not available for {sport} yet" note for any sport with no `scheduleFile` configured (currently none reachable in the UI since only nba/mlb are selectable today — revisit this check once NHL/NFL are added)
-- [ ] Since today's real date is NBA off-season, confirm the default (no explicit week) request against a real NBA league correctly returns the "no games scheduled" empty state rather than erroring
-- [ ] Confirm an MLB league's default (no explicit week) request returns a real lineup, since the seeded `mlb_schedule.json` window matches the current calendar week
-- [ ] Refresh the advice at least twice on the same roster — confirm no duplicate-player or wrong-slot output slips through in the browser the way it initially did in direct API testing (the fixes were verified via curl, not yet via repeated real UI use)
+---
 
-Once this passes, flip the Y-05 status table's Start/sit advisor row to "✅ UAT complete", matching the waiver and matchup advisor rows.
+### Trade Analyzer · UAT (pending — needs a browser pass)
+
+`getTradeAdvice()` was smoke-tested end-to-end via a synthetic roster payload (curl, not the browser) — real Claude call, correct JSON shape, sensible verdict/category/positional/buy-sell reasoning. What's *not* yet verified — the part that needs the actual UI and a real synced league:
+
+- [ ] Season Hub — enter a real give/receive from your own MLB league roster, confirm loading/error states match the other panels and a real verdict renders (badge color, category badges, positional/buy-sell notes)
+- [ ] Enter a player NOT on your roster as "give" — confirm the clean 400 error ("These aren't on your roster: ...") surfaces in the UI instead of a generic failure
+- [ ] Enter "receive" players split across two different opposing teams — confirm the clean error ("Couldn't find a single team rostering all of: ...") surfaces correctly
+- [ ] Confirm an NBA league works the same way once one is synced (endpoint is sport-agnostic via `getPlayerFile`/`getSportConfig`, but only tested against MLB data so far)
+- [ ] Refresh with a different give/receive combo on the same league — confirm no stale state bleeds from the previous query
+
+Once this passes, flip the Y-05 status table's Trade analyzer row to "✅ UAT complete".
+
+---
+
+### Y-05d · Yahoo API League-Scope Throttle (found 2026-07-24)
+
+**Symptom:** the MLB league (`469.l.209547`) started returning 403 "This application is not authorized to perform this action" on `/league/{key}/settings` and `/league/{key}/scoreboard` (via Matchup Advisor) and on the roster/standings calls behind Season Hub's "Refresh" button (`sync-rosters` — surfaced client-side as a confusing `Unexpected token '<'` JSON-parse error before the error-handling fix below). Basic account-level calls (`/users/games`, used by the connection-status check) kept working throughout.
+
+**Likely cause:** a burst of OAuth reconnects (5+ code exchanges) plus `/me` polling in quick succession during same-session debugging of an unrelated connection-status bug (see fix below) — this pattern is consistent with a transient app/account-level Yahoo rate-limit, not a real permissions or code bug. Not confirmed with certainty since Yahoo doesn't document this behavior.
+
+**Fixed in the same session (real bugs, unrelated to the throttle itself):**
+- `pages/api/auth/yahoo/me.js` was collapsing "cookie valid but a live Yahoo verification call failed" into the same `connected: false` as "no cookie at all" — this caused the home page's connection banner to flicker between connected/disconnected on ordinary transient network errors. Fixed to trust a valid cookie as connected regardless of whether the best-effort screen-name lookup succeeds.
+- All six Yahoo API routes (`sync-rosters`, `settings`, `my-leagues`, `league`, `league-full`, `sync-draft`) had no top-level error handling — any Yahoo failure crashed into Next's HTML error page instead of returning clean JSON, which is what produced the `Unexpected token '<'` symptom. Fixed across all six to return `502 { error }`.
+
+**Still open:**
+- [ ] Retest `/league/469.l.209547/settings`, `/scoreboard`, and Season Hub's roster "Refresh" after a cooldown period (try 30–60 min, longer if still failing) — confirm whether the 403s clear on their own
+- [ ] If still failing after a real cooldown, investigate further (wrong/stale `yahooLeagueKey`, league-level Yahoo privacy/API-access setting, or an app-level Yahoo Developer Console flag) rather than assuming rate-limit
+- [ ] Once resolved, re-run the Head-to-Head Matchup Advisor UAT pass specifically against this MLB league to confirm the status table's "✅ UAT complete (NBA) — ⚠️ MLB blocked" caveat can be cleared
+
+---
+
+### Trade Value Index · UAT (pending — needs a browser pass)
+
+`getTradeValueIndex()` was smoke-tested via a synthetic 3-team roster payload (curl) — real Claude call, correct JSON shape, and a real model-output bug (self-suggested buy-low target) was caught and fixed with a server-side filter. What's *not* yet verified — the part that needs the actual UI and a real synced league:
+
+- [ ] Season Hub — click "Get Beane's Take" on a real MLB league with 2+ synced opponent rosters, confirm sell-high and buy-low sections render correctly with real player data
+- [ ] Confirm the empty state ("No standout sell-high or buy-low signals this week") renders sanely rather than a blank panel when the model returns nothing notable
+- [ ] Confirm no buy-low target ever lists the user's own team — the server-side filter should make this structurally impossible, but worth a real-data check since the synthetic test only had 3 players per team
+- [ ] Confirm an NBA league works the same way once one has 2+ synced opponent rosters
+
+Once this passes, flip the Y-05 status table's Trade value index row to "✅ UAT complete".
+
+---
+
+### League Pulse · UAT (pending — needs a browser pass)
+
+`getLeaguePulse()` was smoke-tested via the same synthetic 3-team payload — real Claude call, correct JSON shape, sensible standings-aware reasoning. What's *not* yet verified:
+
+- [ ] Season Hub — click "Get Beane's Take" on a real MLB league, confirm dominating/rebuilding/trade-opportunities sections render correctly against real standings and rosters
+- [ ] Confirm behavior with a 2-team-only edge case isn't broken (the endpoint requires 2+ teams — verify the error message is legible if a league somehow syncs with fewer)
+- [ ] Confirm an NBA league works the same way once synced
+
+Once this passes, flip the Y-05 status table's League pulse row to "✅ UAT complete".
 
 ---
 
@@ -366,6 +418,24 @@ Everything below the Resend send call was verified with curl (validation errors,
 - [ ] Confirm `RESEND_API_KEY` never appears in any client-side network request (Network tab, POST to `/api/season/email-waiver-digest`) — should only ever see `to`/`leagueName`/`sport`/roster data in the request body
 
 Once this passes, flip T3-1/T3-2/T3-3's remaining unchecked acceptance criteria above and mark the trio UAT complete in the Y-05-style status table.
+
+---
+
+### T3-5 · Automated Weekly Waiver Digest via Hermes Cron
+
+**Goal:** The Monday waiver wire digest (T3-3) currently requires a manual click in Season Hub every week — not useful as a season-long retention feature if the user has to remember to open the app. Make it fire automatically as part of the existing Hermes weekly pipeline (`run_weekly.py`, cron: Monday 5am, next run 2026-07-27).
+
+**Why this isn't already wired up (found 2026-07-24):** `run_weekly.py` and `/api/season/email-waiver-digest` are two independent systems today. The cron job only refreshes `players.json`/`mlb_players.json` stats and emails *the developer* a pipeline status report via Gmail — it has never touched the digest endpoint. Two real gaps block wiring them together:
+1. `/api/season/email-waiver-digest` requires the caller to hand it `leagueRosters` in the POST body — it never fetches anything itself. Only the browser (Season Hub's manual "Refresh") builds that payload today.
+2. Recipient email (`getUserEmail()`) and which-leagues-to-notify live only in browser `localStorage`. There is no server-side or file-based persistence anywhere in the app for this — the whole app is currently a stateless API layer in front of a client-only store.
+
+**Decision (2026-07-24):** the app will write its own server-side notification config automatically, rather than the user hand-maintaining a JSON file. When the user saves an email in `/gm-profile` and/or syncs a league via Yahoo, the app also persists `{ leagueKey, sport, leagueName, email }` server-side (a small JSON file alongside `src/data/`, written by a new lightweight API route — exact shape TBD at implementation time) so a non-browser process can read "who gets a digest for which league" without the browser being open.
+
+**What still needs deciding at implementation time:**
+- Whether Hermes calls a running Next.js instance (`localhost:3000` in dev, or a deployed prod URL) to reuse the existing Node/Claude waiver-advice logic as-is, vs. porting roster-fetch + name-matching + Claude-prompt + email-format logic into Python so the digest send doesn't depend on any web server being up when the cron fires at 5am (the pattern `run_weekly.py` already uses for its own Yahoo calls and Gmail send — see `yahoo_fetch()`/`send_email()`). The second is more reliable for an unattended cron but duplicates non-trivial logic across two languages.
+- How multi-league / multi-sport users are handled (loop over all leagues in the config file, one digest email per league).
+
+**Prerequisite:** T3-1/T3-2/T3-3 UAT complete (send path proven end-to-end with a real Resend key — done 2026-07-24).
 
 ---
 

@@ -108,6 +108,7 @@ export default async function handler(req, res) {
   const token = await getValidToken(req, res)
   if (!token) return res.status(401).json({ error: 'Not connected to Yahoo' })
 
+  try {
   const [settingsRaw, standingsRaw, rostersRaw, draftRaw] = await Promise.all([
     yf(token, `/league/${LEAGUE_KEY}/settings`),
     yf(token, `/league/${LEAGUE_KEY}/standings`),
@@ -134,4 +135,9 @@ export default async function handler(req, res) {
   }))
 
   res.json({ leagueKey: LEAGUE_KEY, settings, standings, rosters, draft })
+  } catch (err) {
+    const cause = err.cause?.message ?? err.cause ?? ''
+    console.error('[yahoo/league-full] error:', err.message, cause ? `| cause: ${cause}` : '')
+    res.status(502).json({ error: cause ? `${err.message}: ${cause}` : err.message })
+  }
 }

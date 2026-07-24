@@ -21,6 +21,7 @@ export default async function handler(req, res) {
   const { league_id } = req.query
   if (!league_id) return res.status(400).json({ error: 'league_id required' })
 
+  try {
   // Discover the NBA game key from the user's game history
   const gamesData = await yahooFetch(token, '/users;use_login=1/games;game_codes=nba')
   const games = gamesData?.fantasy_content?.users?.[0]?.user?.[1]?.games
@@ -44,4 +45,9 @@ export default async function handler(req, res) {
   const league = leagueData?.fantasy_content?.league?.[0]
 
   res.json({ leagueKey, league })
+  } catch (err) {
+    const cause = err.cause?.message ?? err.cause ?? ''
+    console.error('[yahoo/league] error:', err.message, cause ? `| cause: ${cause}` : '')
+    res.status(502).json({ error: cause ? `${err.message}: ${cause}` : err.message })
+  }
 }
