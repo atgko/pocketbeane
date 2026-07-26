@@ -1,13 +1,21 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import useLeagueStore from '@/store/leagueStore'
 import { useYahooAuth } from '@/hooks/useYahooAuth'
 import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
 import { normalizeName } from '@/utils/playerName'
 import { STALENESS_DAYS } from '@/ai/seasonStats'
-import { hasScheduleSupport } from '@/config/sports'
+import { hasScheduleSupport, getStartSitMode, getSportConfig } from '@/config/sports'
+import {
+  getStandingTier,
+  getTrend,
+  aggregateCategoryTotals,
+  getCategoryWinRates,
+  getOverallWinRate,
+  getWinRateGrade,
+} from '@/utils/teamStanding'
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000
 
@@ -17,6 +25,21 @@ const TREND_STYLES = {
   stable:    { icon: '→', color: 'text-gray-400' },
   'slightly-declining': { icon: '↘', color: 'text-red-400/70' },
   declining: { icon: '↓', color: 'text-red-400' },
+}
+
+// Condensed Start/Sit rendering (NBA/NHL) shows injury status as its own
+// short tag rather than folding it into prose — see startSitMode in sports.js.
+const INJURY_LABELS = {
+  'day-to-day': 'DTD',
+  il: 'IL',
+  out: 'OUT',
+  ir: 'IR',
+}
+
+const PITCHING_REC_STYLES = {
+  start: 'bg-green-900/40 text-green-400',
+  stream: 'bg-blue-900/40 text-blue-400',
+  hold: 'bg-gray-800 text-gray-500',
 }
 
 function findPlayerByName(players, name) {
@@ -50,9 +73,9 @@ function TrendBadge({ player }) {
   )
 }
 
-const COMING_SOON = [
-  { title: 'Roster Health Score', description: 'Single-team weekly 1–10 score with a trend arrow and one-line Claude insight.' },
-]
+// Roster Health Score's 1-10 number was never built past this placeholder —
+// it's now the Contender/Bubble/Rebuilding tier inside Team Pulse instead.
+const COMING_SOON = []
 
 const PRIORITY_STYLES = {
   'must-add': 'bg-green-900/40 text-green-400',
@@ -288,13 +311,35 @@ const SLOT_CONFIG_KEYS = [
   'firstSlots', 'secondSlots', 'thirdSlots', 'ssSlots', 'ofSlots', 'spSlots', 'rpSlots',
 ]
 
+// PocketBeane Advisors panel entry point for start/sit decisions — sport-aware
+// per league.config.sport (see getStartSitMode in sports.js):
+//   'pitching-starts' (MLB) — replaced entirely by PitchingStartsPanel below,
+//     everyday hitters don't need a positional start/sit call.
+//   'condensed' (NBA/NHL) — 3-line-max per player, no matchup prose.
+//   'full' (NFL, default) — original detailed per-position treatment.
 function StartSitPanel({ league, rosters }) {
+  const sport = league.config.sport ?? 'nba'
+  const mode = getStartSitMode(sport)
+
+  if (mode === 'pitching-starts') {
+    return <PitchingStartsPanel rosters={rosters} />
+  }
+
+  return <LineupAdvisorPanel league={league} rosters={rosters} sport={sport} mode={mode} />
+}
+
+function LineupAdvisorPanel({ league, rosters, sport, mode }) {
   const [advice, setAdvice] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const sport = league.config.sport ?? 'nba'
-  const players = sport === 'mlb' ? mlbPlayers : nbaPlayers
+  // mlb routes to PitchingStartsPanel above and never reaches this component —
+  // the remaining sports (nba/nhl/nfl) don't have a players.json equivalent
+  // of their own yet, so nbaPlayers is the only real pool to look trend
+  // badges up against (nhl/nfl simply won't match, which findPlayerByName
+  // already handles gracefully by rendering no badge).
+  const players = nbaPlayers
   const supported = hasScheduleSupport(sport)
+  const condensed = mode === 'condensed'
 
   async function handleGetAdvice() {
     setLoading(true)
@@ -329,7 +374,9 @@ function StartSitPanel({ league, rosters }) {
         <div>
           <p className="text-sm font-semibold text-gray-200">Start / Sit Advisor</p>
           <p className="text-xs text-gray-500 mt-0.5">
-            Optimal weekly lineup given schedule, recent form, and injury status.
+            {condensed
+              ? 'Optimal lineup by games this week, injury status, and recent form.'
+              : 'Optimal weekly lineup given schedule, recent form, and injury status.'}
           </p>
         </div>
         {supported ? (
@@ -367,6 +414,7 @@ function StartSitPanel({ league, rosters }) {
             <div className="space-y-2">
               {advice.startingLineup.map((entry, i) => {
                 const player = findPlayerByName(players, entry.player)
+                const hurt = entry.injuryStatus && entry.injuryStatus !== 'healthy'
                 return (
                   <div key={i} className="border border-border rounded-md px-4 py-3">
                     <div className="flex flex-wrap items-center gap-2 mb-1">
@@ -377,13 +425,25 @@ function StartSitPanel({ league, rosters }) {
                         {entry.player}
                         <TrendBadge player={player} />
                       </span>
-                      {entry.gamesThisWeek != null && (
+                      {!condensed && entry.gamesThisWeek != null && (
                         <span className="text-[10px] font-mono text-gray-500">
                           {entry.gamesThisWeek}g{entry.backToBack ? ' · B2B' : ''}
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-gray-400 leading-relaxed">{entry.reason}</p>
+                    {condensed ? (
+                      <>
+                        <p className="text-[11px] text-gray-500 font-mono">
+                          {entry.gamesThisWeek != null ? `${entry.gamesThisWeek}g this week${entry.backToBack ? ' · B2B' : ''}` : ''}
+                          {hurt && (
+                            <span className="text-yellow-500/80"> · {INJURY_LABELS[entry.injuryStatus] ?? entry.injuryStatus}</span>
+                          )}
+                        </p>
+                        {entry.reason && <p className="text-xs text-gray-400">{entry.reason}</p>}
+                      </>
+                    ) : (
+                      <p className="text-xs text-gray-400 leading-relaxed">{entry.reason}</p>
+                    )}
                   </div>
                 )
               })}
@@ -392,12 +452,115 @@ function StartSitPanel({ league, rosters }) {
           {advice.benchNotes?.length > 0 && (
             <div className="pt-3 border-t border-border space-y-2">
               <p className="text-[10px] font-mono text-gray-600 uppercase tracking-wider">Bench notes</p>
-              {advice.benchNotes.map((note, i) => (
-                <p key={i} className="text-xs text-gray-500 leading-relaxed">
-                  <span className="text-gray-300">{note.player}:</span> {note.reason}
-                </p>
-              ))}
+              {advice.benchNotes.map((note, i) => {
+                const hurt = note.injuryStatus && note.injuryStatus !== 'healthy'
+                return (
+                  <p key={i} className="text-xs text-gray-500 leading-relaxed">
+                    <span className="text-gray-300">{note.player}</span>
+                    {hurt && <span className="text-yellow-500/80 font-mono"> [{INJURY_LABELS[note.injuryStatus] ?? note.injuryStatus}]</span>}
+                    : {note.reason}
+                  </p>
+                )
+              })}
             </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// MLB's Start/Sit replacement — everyday hitters don't need a positional
+// start/sit call, so this shows scheduled starts for rostered SPs with a
+// simple start/stream/hold recommendation instead of a full weekly lineup.
+function PitchingStartsPanel({ rosters }) {
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  async function handleCheckStarts() {
+    setLoading(true)
+    setError(null)
+    try {
+      const res = await fetch('/api/season/pitching-starts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ leagueRosters: rosters }),
+      })
+      const result = await res.json()
+      if (!res.ok) throw new Error(result.error || 'Pitching starts lookup failed')
+      setData(result)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="bg-surface border border-border rounded-lg px-5 py-5">
+      <div className="flex items-start justify-between gap-4 mb-1">
+        <div>
+          <p className="text-sm font-semibold text-gray-200">Pitching Starts</p>
+          <p className="text-xs text-gray-500 mt-0.5">
+            Scheduled starts this week for your rostered SPs, with a start / stream / hold call.
+          </p>
+        </div>
+        <button
+          onClick={handleCheckStarts}
+          disabled={loading}
+          className="shrink-0 text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          {data ? 'Refresh' : 'Check Starts'}
+        </button>
+      </div>
+
+      {loading && (
+        <p className="text-xs text-gray-500 font-mono mt-4 animate-pulse">Checking the rotation…</p>
+      )}
+
+      {error && !loading && (
+        <p className="text-xs text-red-400 font-mono mt-4">{error}</p>
+      )}
+
+      {data && !loading && (
+        <div className="mt-4 space-y-3">
+          {data.week && (
+            <p className="text-xs text-gray-500 font-mono">
+              Week of {data.week.start} – {data.week.end}
+            </p>
+          )}
+          {data.starts?.length > 0 ? (
+            <div className="space-y-2">
+              {data.starts.map((s, i) => {
+                const hurt = s.injuryStatus && s.injuryStatus !== 'healthy'
+                return (
+                  <div key={i} className="border border-border rounded-md px-4 py-3 flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-xs text-gray-200 font-medium">
+                        {s.player} <span className="text-gray-600 font-mono">{s.team}</span>
+                      </p>
+                      <p className="text-[11px] text-gray-500 font-mono mt-0.5">
+                        {s.startsThisWeek} start{s.startsThisWeek === 1 ? '' : 's'} this week
+                        {hurt && (
+                          <span className="text-yellow-500/80">
+                            {' '}· {INJURY_LABELS[s.injuryStatus] ?? s.injuryStatus}{s.injuryNote ? `: ${s.injuryNote}` : ''}
+                          </span>
+                        )}
+                      </p>
+                    </div>
+                    <span className={`shrink-0 text-[10px] font-mono px-2 py-0.5 rounded uppercase ${PITCHING_REC_STYLES[s.recommendation] ?? PITCHING_REC_STYLES.hold}`}>
+                      {s.recommendation}
+                    </span>
+                  </div>
+                )
+              })}
+            </div>
+          ) : (
+            <p className="text-xs text-gray-500">No rostered starting pitchers found.</p>
+          )}
+          {data.note && (
+            <p className="text-[10px] text-gray-600 italic pt-2 border-t border-border leading-relaxed">{data.note}</p>
           )}
         </div>
       )}
@@ -665,11 +828,61 @@ function TradeValueIndexPanel({ league, rosters }) {
   )
 }
 
-function LeaguePulsePanel({ league, rosters }) {
-  const [pulse, setPulse] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+const TIER_STYLES = {
+  contender:  { label: 'Contender',      color: 'text-green-400',  bg: 'bg-green-900/20 border-green-500/20' },
+  bubble:     { label: 'Playoff Bubble', color: 'text-yellow-400', bg: 'bg-yellow-900/20 border-yellow-500/20' },
+  rebuilding: { label: 'Rebuilding',     color: 'text-red-400',    bg: 'bg-red-900/20 border-red-500/20' },
+}
+
+const STANDING_TREND_ARROW = {
+  up:   { icon: '↑', color: 'text-green-400' },
+  down: { icon: '↓', color: 'text-red-400' },
+  flat: { icon: '→', color: 'text-gray-500' },
+}
+
+const WIN_RATE_GRADE_STYLES = {
+  strong: 'text-green-400 bg-green-500/10 border-green-500/20',
+  ok:     'text-yellow-400 bg-yellow-500/10 border-yellow-500/20',
+  weak:   'text-red-400 bg-red-500/10 border-red-500/20',
+}
+
+// Deterministic stand-in for the per-team Claude insight when the user's
+// team wasn't specifically called out in the league-pulse response (that
+// endpoint only covers teams that are "genuinely dominating" or "clearly
+// rebuilding" — a solid mid-pack team may not appear in either list).
+// Always available, since it's built entirely from the win-rate data above.
+function buildFallbackInsight(entry, sportConfig) {
+  const tierLabel = TIER_STYLES[entry.tier]?.label ?? 'standing unclear'
+  const ranked = sportConfig.categories
+    .map(c => ({ label: c.label, rate: entry.winRates[c.id]?.rate }))
+    .filter(c => c.rate != null)
+    .sort((a, b) => b.rate - a.rate)
+  if (ranked.length === 0) return `Sitting at #${entry.team.rank ?? '?'} (${tierLabel}).`
+  const strongest = ranked[0]
+  const weakest = ranked[ranked.length - 1]
+  return `Sitting at #${entry.team.rank ?? '?'} (${tierLabel}) — strongest in ${strongest.label}, thinnest in ${weakest.label}.`
+}
+
+// Team Pulse — combines the never-shipped Roster Health Score (now a
+// deterministic Contender/Bubble/Rebuilding tier + trend arrow, rather than
+// a fabricated 1-10 number) with League Pulse (unchanged endpoint/logic,
+// called from here instead of its own standalone panel). Tier, trend, and
+// category win rates are pure client-side math over data already on the
+// page — no fetch needed for those. The per-team Claude insight and the
+// trade-opportunity flags are still real LLM calls, gated behind a button
+// like every other advisor in this file.
+function TeamPulsePanel({ league, rosters }) {
   const sport = league.config.sport ?? 'nba'
+  const sportConfig = getSportConfig(sport)
+  const players = sport === 'mlb' ? mlbPlayers : nbaPlayers
+
+  const [pulse, setPulse] = useState(null)
+  const [pulseLoading, setPulseLoading] = useState(false)
+  const [pulseError, setPulseError] = useState(null)
+
+  const [tradeFlags, setTradeFlags] = useState(null)
+  const [tradeLoading, setTradeLoading] = useState(false)
+  const [tradeError, setTradeError] = useState(null)
 
   const gmProfile = {
     injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
@@ -677,9 +890,42 @@ function LeaguePulsePanel({ league, rosters }) {
   }
   const rosterConfig = { ilSlots: league.config.ilSlots, ilPlusSlots: league.config.ilPlusSlots }
 
-  async function handleGetPulse() {
-    setLoading(true)
-    setError(null)
+  const standing = useMemo(() => {
+    const playerById = Object.fromEntries(players.map(p => [p.id, p]))
+    const resolveRoster = (roster) => roster
+      .map(r => (r.playerId && playerById[r.playerId]) || findPlayerByName(players, r.name))
+      .filter(Boolean)
+
+    const allTeamTotals = {}
+    for (const team of rosters.teams) {
+      allTeamTotals[team.teamKey] = aggregateCategoryTotals(
+        resolveRoster(team.roster), sportConfig.categories, sportConfig.percentageCategories
+      )
+    }
+
+    const numTeams = rosters.teams.length
+    const teams = [...rosters.teams]
+      .sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99))
+      .map(team => {
+        const winRates = getCategoryWinRates({
+          teamKey: team.teamKey,
+          allTeamTotals,
+          categories: sportConfig.categories,
+          lowerIsBetter: sportConfig.lowerIsBetter,
+        })
+        return { team, tier: getStandingTier({ rank: team.rank, numTeams }), overallWinRate: getOverallWinRate(winRates), winRates }
+      })
+
+    const userEntry = teams.find(t => t.team.isUser) ?? null
+    const previousRank = userEntry ? league.previousStandings?.[userEntry.team.teamKey]?.rank ?? null : null
+    const trend = userEntry ? getTrend({ currentRank: userEntry.team.rank, previousRank }) : null
+
+    return { teams, userEntry, trend }
+  }, [rosters, sportConfig, players, league.previousStandings])
+
+  async function handleGetInsight() {
+    setPulseLoading(true)
+    setPulseError(null)
     try {
       const res = await fetch('/api/season/league-pulse', {
         method: 'POST',
@@ -690,75 +936,146 @@ function LeaguePulsePanel({ league, rosters }) {
       if (!res.ok) throw new Error(data.error || 'Pulse failed')
       setPulse(data)
     } catch (err) {
-      setError(err.message)
+      setPulseError(err.message)
     } finally {
-      setLoading(false)
+      setPulseLoading(false)
     }
   }
 
+  async function handleGetTradeFlags() {
+    setTradeLoading(true)
+    setTradeError(null)
+    try {
+      const res = await fetch('/api/season/trade-value-index', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sport, leagueRosters: rosters, gmProfile, rosterConfig }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Trade scan failed')
+      setTradeFlags(data.tradeOpportunityFlags ?? [])
+    } catch (err) {
+      setTradeError(err.message)
+    } finally {
+      setTradeLoading(false)
+    }
+  }
+
+  const { teams, userEntry, trend } = standing
+  if (!userEntry) return null
+
+  const userTeam = userEntry.team
+  const tierStyle = TIER_STYLES[userEntry.tier] ?? null
+  const trendArrow = trend ? STANDING_TREND_ARROW[trend] : null
+
+  const pulseNote = pulse
+    ? pulse.dominating?.find(e => e.team === userTeam.teamName)?.note
+        ?? pulse.rebuilding?.find(e => e.team === userTeam.teamName)?.note
+        ?? null
+    : null
+  const insight = pulse ? (pulseNote ?? buildFallbackInsight(userEntry, sportConfig)) : null
+
   return (
     <div className="bg-surface border border-border rounded-lg px-5 py-5">
-      <div className="flex items-start justify-between gap-4 mb-1">
-        <div>
-          <p className="text-sm font-semibold text-gray-200">League Pulse</p>
-          <p className="text-xs text-gray-500 mt-0.5">
-            Who's dominating, who's rebuilding, and who might be open to a trade.
-          </p>
+      <p className="text-sm font-semibold text-gray-200 mb-3">Team Pulse</p>
+
+      {/* 1. User's team position */}
+      <div className="border border-border rounded-md px-4 py-3 mb-4">
+        <div className="flex flex-wrap items-center gap-2 mb-2">
+          {tierStyle && (
+            <span className={`text-[10px] font-mono px-2 py-0.5 rounded border uppercase ${tierStyle.bg} ${tierStyle.color}`}>
+              {tierStyle.label}
+            </span>
+          )}
+          {trendArrow && <span className={`text-sm font-mono ${trendArrow.color}`}>{trendArrow.icon}</span>}
+          <span className="text-xs text-gray-200 font-medium">{userTeam.teamName} · #{userTeam.rank ?? '?'}</span>
+          <span className="text-[11px] font-mono text-gray-500">
+            {userTeam.wins}-{userTeam.losses}{userTeam.ties ? `-${userTeam.ties}` : ''}
+          </span>
         </div>
-        <button
-          onClick={handleGetPulse}
-          disabled={loading}
-          className="shrink-0 text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          {pulse ? 'Refresh' : "Get Beane's Take"}
-        </button>
+
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {sportConfig.categories.map(cat => {
+            const wr = userEntry.winRates[cat.id]
+            const grade = getWinRateGrade(wr?.rate ?? null)
+            return (
+              <span
+                key={cat.id}
+                title={wr ? `Beats ${wr.wins}/${wr.of} teams in ${cat.label}` : 'Not enough data yet'}
+                className={`text-[10px] font-mono px-1.5 py-0.5 rounded border ${grade ? WIN_RATE_GRADE_STYLES[grade] : 'text-gray-600 bg-gray-800 border-border'}`}
+              >
+                {cat.label} {wr?.rate != null ? `${Math.round(wr.rate * 100)}%` : '—'}
+              </span>
+            )
+          })}
+        </div>
+
+        {!pulse && !pulseLoading && (
+          <button
+            onClick={handleGetInsight}
+            className="text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors"
+          >
+            Get Beane's Take
+          </button>
+        )}
+        {pulseLoading && <p className="text-xs text-gray-500 font-mono animate-pulse">Reading the league…</p>}
+        {pulseError && !pulseLoading && <p className="text-xs text-red-400 font-mono">{pulseError}</p>}
+        {insight && !pulseLoading && <p className="text-xs text-gray-400 leading-relaxed">{insight}</p>}
       </div>
 
-      {loading && (
-        <p className="text-xs text-gray-500 font-mono mt-4 animate-pulse">Reading the league…</p>
-      )}
+      {/* 2. League landscape */}
+      <div className="mb-4">
+        <p className="text-[10px] font-mono text-gray-600 uppercase tracking-wider mb-2">League Landscape</p>
+        <div className="space-y-1">
+          {teams.map(({ team, tier, overallWinRate }) => {
+            const style = TIER_STYLES[tier] ?? null
+            return (
+              <div
+                key={team.teamKey}
+                className={`flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 text-xs px-2 py-1 rounded border ${style ? style.bg : 'border-transparent'}`}
+              >
+                <span className={`font-medium ${style ? style.color : 'text-gray-400'}`}>
+                  #{team.rank ?? '?'} {team.teamName}{team.isUser ? ' (ME)' : ''}
+                </span>
+                <span className="font-mono text-gray-500 text-[11px]">
+                  {team.wins}-{team.losses}{team.ties ? `-${team.ties}` : ''}
+                  {overallWinRate != null ? ` · ${Math.round(overallWinRate * 100)}% cat wins` : ''}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+      </div>
 
-      {error && !loading && (
-        <p className="text-xs text-red-400 font-mono mt-4">{error}</p>
-      )}
-
-      {pulse && !loading && (
-        <div className="mt-4 space-y-4">
-          {pulse.headline && (
-            <p className="text-xs text-gray-400 italic leading-relaxed">{pulse.headline}</p>
-          )}
-          {pulse.dominating?.length > 0 && (
-            <div className="space-y-1.5">
-              <p className="text-[10px] font-mono text-green-500 uppercase tracking-wider">Dominating</p>
-              {pulse.dominating.map((entry, i) => (
-                <p key={i} className="text-xs text-gray-400 leading-relaxed">
-                  <span className="text-gray-200 font-medium">{entry.team}:</span> {entry.note}
-                </p>
-              ))}
-            </div>
-          )}
-          {pulse.rebuilding?.length > 0 && (
-            <div className="space-y-1.5 pt-2 border-t border-border">
-              <p className="text-[10px] font-mono text-gray-500 uppercase tracking-wider pt-2">Rebuilding</p>
-              {pulse.rebuilding.map((entry, i) => (
-                <p key={i} className="text-xs text-gray-400 leading-relaxed">
-                  <span className="text-gray-200 font-medium">{entry.team}:</span> {entry.note}
-                </p>
-              ))}
-            </div>
-          )}
-          {pulse.tradeOpportunities?.length > 0 && (
-            <div className="space-y-1.5 pt-2 border-t border-border">
-              <p className="text-[10px] font-mono text-blue-400 uppercase tracking-wider pt-2">Trade opportunities</p>
-              {pulse.tradeOpportunities.map((entry, i) => (
-                <p key={i} className="text-xs text-gray-400 leading-relaxed">
-                  <span className="text-gray-200 font-medium">{entry.team}:</span> {entry.note}
-                </p>
-              ))}
-            </div>
+      {/* 3. Trade opportunity flags */}
+      <div className="pt-3 border-t border-border">
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <p className="text-[10px] font-mono text-gray-600 uppercase tracking-wider">Trade Opportunities</p>
+          {!tradeFlags && !tradeLoading && (
+            <button
+              onClick={handleGetTradeFlags}
+              className="shrink-0 text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors"
+            >
+              Scan for fits
+            </button>
           )}
         </div>
-      )}
+        {tradeLoading && <p className="text-xs text-gray-500 font-mono animate-pulse">Cross-referencing rosters…</p>}
+        {tradeError && !tradeLoading && <p className="text-xs text-red-400 font-mono">{tradeError}</p>}
+        {tradeFlags && !tradeLoading && (
+          tradeFlags.length > 0 ? (
+            <div className="space-y-1.5">
+              {tradeFlags.map((flag, i) => (
+                <p key={i} className="text-xs text-gray-400 leading-relaxed">
+                  <span className="text-gray-200 font-medium">{flag.player} ({flag.team}):</span> {flag.reason}
+                </p>
+              ))}
+            </div>
+          ) : (
+            <p className="text-xs text-gray-500">No standout trade fits right now.</p>
+          )
+        )}
+      </div>
     </div>
   )
 }
@@ -926,7 +1243,7 @@ export default function SeasonHub() {
               <StartSitPanel league={league} rosters={rosters} />
               <TradeAnalyzerPanel league={league} rosters={rosters} />
               <TradeValueIndexPanel league={league} rosters={rosters} />
-              <LeaguePulsePanel league={league} rosters={rosters} />
+              <TeamPulsePanel league={league} rosters={rosters} />
             </div>
           ) : canSync ? (
             <div className="mb-8">
@@ -940,21 +1257,23 @@ export default function SeasonHub() {
           ) : null}
 
           {/* Coming soon features */}
-          <div>
-            <p className="text-xs font-mono text-gray-600 uppercase tracking-wider mb-3">Coming Soon</p>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {COMING_SOON.map((f) => (
-                <div
-                  key={f.title}
-                  className="bg-surface border border-border rounded-lg px-5 py-4 opacity-50"
-                >
-                  <p className="text-sm font-semibold text-gray-300 mb-1">{f.title}</p>
-                  <p className="text-xs text-gray-500">{f.description}</p>
-                  <p className="text-xs text-gray-700 mt-3 font-mono">Coming soon</p>
-                </div>
-              ))}
+          {COMING_SOON.length > 0 && (
+            <div>
+              <p className="text-xs font-mono text-gray-600 uppercase tracking-wider mb-3">Coming Soon</p>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {COMING_SOON.map((f) => (
+                  <div
+                    key={f.title}
+                    className="bg-surface border border-border rounded-lg px-5 py-4 opacity-50"
+                  >
+                    <p className="text-sm font-semibold text-gray-300 mb-1">{f.title}</p>
+                    <p className="text-xs text-gray-500">{f.description}</p>
+                    <p className="text-xs text-gray-700 mt-3 font-mono">Coming soon</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
         </div>
       </main>

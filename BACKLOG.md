@@ -1,6 +1,12 @@
 # PocketBeane — Active Backlog
 
-Last updated: 2026-07-24 (MLB schedule UAT fix — `mlb_schedule.json` was a one-week manual sample from 2026-07-07, replaced with a real full-season fetch via new `scripts/fetch_mlb_schedule.py` (MLB Stats API), wired into `run_weekly.py`; waiver wire advisor now shows ADP for owned roster players, not just free agents, and weighs asset value before recommending a drop. See two new pipeline-freshness tickets in the Data Pipeline Incident Log, both deferred to after the first real Hermes cron run 2026-07-27. Previously: 2026-07-07, Y-05 Start/Sit Advisor built — NBA + MLB, schedule-aware via `nba_schedule.json`/`mlb_schedule.json` + `src/utils/schedule.js`; `sports.js` generalized with `playerFile`/`scheduleFile`/`getPlayerFile`/`getScheduleFile`/`hasScheduleSupport` so NHL/NFL start/sit needs zero code changes once their data lands, only a config entry + data files; new Y-05c ticket tracks MLB pitcher probable-starts as a future accuracy upgrade, not a blocker)
+Last updated: 2026-07-26 (Two features shipped, neither has a browser UAT pass yet — see new UAT sections below.
+
+(1) Start/Sit Advisor made sport-aware via a new `startSitMode` field per sport in `sports.js` (`full` / `condensed` / `pitching-starts`), with a matching `getStartSitMode()` helper: NBA/NHL condensed to 3-line-max per-player reasoning (games-this-week > injury status > recent form, no matchup prose — the model is now instructed to keep `reason` to a short recent-form-only clause, with `injuryStatus` attached deterministically server-side rather than asked of the model); MLB's positional lineup advisor removed entirely and replaced by a new **Pitching Starts** panel (`/api/season/pitching-starts`, `src/utils/pitchingStarts.js`) — deterministic (no LLM call) start/stream/hold recommendation per rostered SP from the same team-schedule-as-proxy signal `startsit-advice.js` already used for MLB; NFL kept the original full detailed treatment. NFL and NHL also got real `SPORT_CONFIGS` entries (slots/positions/categories/`startSitMode`) plus placeholder empty `{sport}_players.json`/`{sport}_schedule.json` files, so `hasScheduleSupport()` is true and the sport-aware rendering path is live, exercised code — but **`setup.jsx`'s sport picker still only offers NBA/MLB**, so no league can actually be created as NFL/NHL yet (deliberately left out of scope — see NHL-01/NFL-01, still blocked on real player data either way).
+
+(2) Roster Health Score (never built past a "Coming Soon" placeholder) and League Pulse combined into a single **Team Pulse** panel per Season Hub league: a deterministic Contender/Playoff Bubble/Rebuilding tier + trend arrow + per-category win-rate badges for the user's team (new `src/utils/teamStanding.js`, unit-tested, no LLM call), a full league-landscape list (every team, one line each, color-coded by tier), and trade-opportunity flags (added as a 3rd job to the existing `trade-value-index.js` prompt, cross-referencing its sell-high/buy-low signal against deterministic opponent category weaknesses). `league-pulse.js`'s own calculation/prompt is untouched — Team Pulse just calls it instead of mounting its own panel, with a deterministic fallback insight (strongest/thinnest category) when the user's team isn't specifically named in its dominating/rebuilding output. `leagueStore.js` now stashes a `previousStandings` snapshot on every roster sync so the trend arrow has a real prior rank to diff against — it stays blank until a league's *second* sync (no fabricated arrow on the first).
+
+Previously: 2026-07-24 (MLB schedule UAT fix + waiver wire ADP/asset-value awareness; Y-05 Start/Sit Advisor originally built 2026-07-07))
 
 Items are grouped by dependency tier. Within each tier, order reflects rough priority / logical sequencing.
 
@@ -26,7 +32,7 @@ the portfolio story without a fake paywall.
 Yahoo roadmap: Y-02 ✅ → Y-04 ✅ → Y-03 (August build / September validate) → **Y-05 (active next)**.
 Note: Y-03 requires a live Yahoo draft for end-to-end validation so infrastructure ships in August. Y-05 is fully unblocked — start with waiver wire advisor + head-to-head matchup advisor, then trade analyzer as a separate sprint.
 
-Multi-sport: MLB-01 ✅ → NHL-01 (August data) → NFL-01 (August data).
+Multi-sport: MLB-01 ✅ → NHL-01 (config scaffolded 2026-07-26, still blocked on real data + setup.jsx sport picker) → NFL-01 (same, plus an unresolved roto-vs-PPR scoring mismatch to sort out first — see NFL-01).
 
 ---
 
@@ -84,19 +90,22 @@ button for in-season updates.
 |---|---|---|
 | Waiver wire advisor | ✅ UAT complete | `/api/season/waiver-advice` — diffs all team rosters vs players.json, top 25 FAs by ADP, Claude add/drop recs |
 | Head-to-head matchup advisor | ✅ UAT complete (NBA + MLB, 2026-07-26) | `/api/season/matchup-advice` — fetches scoreboard, finds opponent, Claude category-by-category breakdown. MLB was blocked 2026-07-24 by the Yahoo API throttle (see Y-05d, resolved 2026-07-26) — retested clean after cooldown. |
-| Start/sit advisor | ✅ UAT complete (2026-07-24) | `/api/season/startsit-advice` — schedule-aware (games-this-week, back-to-back), form, and injury-aware weekly lineup recommendation. NBA and MLB (MLB pitcher signal is an approximate schedule proxy, see Y-05c). NHL/NFL return a clean "not available yet" until their data lands — no code changes needed when it does, see docs/SCHEMA.md. |
+| Start/sit advisor | ✅ UAT complete (2026-07-24); sport-aware split ✅ built 2026-07-26, needs browser UAT | `/api/season/startsit-advice` — schedule-aware (games-this-week, back-to-back), form, and injury-aware weekly lineup recommendation. Now sport-aware via `startSitMode` (`sports.js`): NFL gets the original full detailed treatment; NBA/NHL get a condensed 3-line-max version (games > injury > form, no matchup prose); MLB no longer uses this endpoint at all — see "Pitching starts panel" row below. NHL/NFL have real `SPORT_CONFIGS` entries + placeholder empty data files now (`hasScheduleSupport()` true, degrades to a clean "no games scheduled" empty state), but still can't actually be created as a league — `setup.jsx`'s sport picker is NBA/MLB only. |
+| Pitching starts panel (MLB) | ✅ Built 2026-07-26 — needs browser UAT | `/api/season/pitching-starts` (`src/utils/pitchingStarts.js`) — replaces the Start/Sit Advisor for MLB entirely (everyday hitters don't need a positional start/sit call). Deterministic, no LLM call: per rostered SP, games-this-week (same team-schedule proxy as before, see Y-05c) + injury status → start/stream/hold. Verified live against real `mlb_players.json`/`mlb_schedule.json` data (correctly held an IL pitcher despite a scheduled start). |
 | Trade analyzer | ✅ Built (2026-07-24) — needs browser UAT | `/api/season/trade-advice` — `getTradeAdvice()`, pure POST like the waiver advisor (no live Yahoo call, unaffected by the scoreboard/settings throttle). Give/receive text input on Season Hub; validates give against the user's roster and receive against a single opposing team's roster, then Claude evaluates net category impact, positional fit, and buy-low/sell-high signal using the same current-season-aware reasoning as the waiver advisor. Smoke-tested end-to-end via synthetic roster payload — real output, correct JSON shape. Not yet exercised against a real synced league in the browser. |
-| Trade value index | ✅ Built (2026-07-24) — needs browser UAT | `/api/season/trade-value-index` — `getTradeValueIndex()`, pure POST (no live Yahoo call). Scans the user's own roster for sell-high candidates (current-season overperformance vs. baseline/ADP) and every other team's roster for buy-low targets (real pedigree, depressed current trend). Caught and fixed a real model-output bug in testing: Claude occasionally suggested "buying low" on the user's own player — added a server-side filter dropping any `buyLowTargets` entry matching the user's own roster, on top of tightening the prompt. Smoke-tested end-to-end, fix verified. |
-| League pulse | ✅ Built (2026-07-24) — needs browser UAT | `/api/season/league-pulse` — `getLeaguePulse()`, pure POST (no live Yahoo call). Uses cached standings (rank/wins/losses, already part of `leagueRosters`) plus every team's roster to identify dominating teams, rebuilding/weak teams, and specific trade-partner opportunities for the user. Smoke-tested end-to-end via synthetic 3-team payload — real, well-reasoned output. |
-| Roster health score | Later (PMF S5) | Single-team weekly 1–10 score — category win rate, injury exposure, upcoming schedule strength, waiver opportunity; trend arrow + one-line Claude insight. Requires user-logged weekly W/L per category (no Yahoo endpoint for this). |
+| Trade value index | ✅ Built (2026-07-24); extended with trade-opportunity flags 2026-07-26, needs browser UAT | `/api/season/trade-value-index` — `getTradeValueIndex()`, pure POST (no live Yahoo call). Scans the user's own roster for sell-high candidates (current-season overperformance vs. baseline/ADP) and every other team's roster for buy-low targets (real pedigree, depressed current trend). Caught and fixed a real model-output bug in testing: Claude occasionally suggested "buying low" on the user's own player — added a server-side filter dropping any `buyLowTargets` entry matching the user's own roster, on top of tightening the prompt. Now also returns `tradeOpportunityFlags` (1-2 items) — a 3rd prompt job cross-referencing the sell-high/buy-low signal against deterministic per-opponent category weaknesses (`src/utils/teamStanding.js`), feeding Team Pulse's trade-opportunity section (see below). Live-verified against a real Claude call with a synthetic 3-team league — correctly named specific opponents' actual weak categories. |
+| Team Pulse (Roster Health Score + League Pulse, combined 2026-07-26) | ✅ Built — needs browser UAT | New combined Season Hub panel, replaces the standalone League Pulse panel and the "Roster Health Score" coming-soon placeholder (which had zero prior implementation beyond that placeholder). Section 1: user's team — deterministic Contender/Playoff Bubble/Rebuilding tier + trend arrow (rank vs. top-half-of-league cutoff; no per-league playoff-spot count exists yet, defaults to top half) + current record + per-category win-rate badges (`src/utils/teamStanding.js`, unit-tested, 23 cases) + a Claude insight (calls the **unchanged** `/api/season/league-pulse`, using its per-team dominating/rebuilding note when the user's team is named, else a deterministic strongest/thinnest-category fallback sentence — confirmed this fallback path fires for real mid-pack teams). Section 2: full league landscape, one line per team, color-coded by tier, no fetch needed (pure client-side math). Section 3: trade-opportunity flags from the extended `trade-value-index` endpoint above. Trend arrow requires a league's *second* roster sync to have a prior snapshot to diff against (`leagueStore.js` now stashes `previousStandings` on every sync) — blank, not fabricated, on the first sync. |
 
 **Architecture:**
 - Waiver advice: pure POST (no Yahoo token needed) — uses `leagueRosters` state + players.json. Sport-agnostic (nba/mlb).
 - Matchup advice: POST with Yahoo token — fetches `/league/{key}/scoreboard` for current week opponent, then enriches both rosters with players.json stats.
+- Start/sit advice: pure POST — sport-aware via `startSitMode` (`sports.js`); rejects `mlb` outright (400) since that sport uses the pitching-starts endpoint instead.
+- Pitching starts (MLB only): pure POST, no LLM call — deterministic games-this-week + injury status → start/stream/hold per rostered SP (`src/utils/pitchingStarts.js`).
 - Trade advice: pure POST like waiver advice (no live Yahoo call) — validates give/receive against cached `leagueRosters`, enriches with players.json stats.
-- Trade value index: pure POST — scans own roster (sell-high) + every other team's roster (buy-low) using ADP/trend data already in players.json.
-- League pulse: pure POST — uses cached standings (rank/wins/losses) + every roster to summarize the league and surface trade partners.
-- All five return structured JSON rendered in Season Hub panels: headline/moves for waiver, outlook/win-lose-tossup/keyNote for matchup, verdict/category-impact/positional/buy-sell for trade, headline/sellHigh/buyLowTargets for trade value index, headline/dominating/rebuilding/tradeOpportunities for league pulse.
+- Trade value index: pure POST — scans own roster (sell-high) + every other team's roster (buy-low) using ADP/trend data already in players.json, plus a 3rd job flagging trade opportunities against deterministic per-opponent category weaknesses (`src/utils/teamStanding.js`).
+- League pulse: pure POST — uses cached standings (rank/wins/losses) + every roster to summarize the league and surface trade partners. Calculation/prompt unchanged since 2026-07-24; now called from within Team Pulse instead of its own standalone panel.
+- Team Pulse: no dedicated endpoint — combines client-side deterministic math (`src/utils/teamStanding.js`, tier/trend/category win rates) with the existing league-pulse and trade-value-index endpoints above.
+- All season-advisor endpoints return structured JSON rendered in Season Hub panels: headline/moves for waiver, outlook/win-lose-tossup/keyNote for matchup, headline/startingLineup/benchNotes for start/sit, week/starts/note for pitching starts, verdict/category-impact/positional/buy-sell for trade, headline/sellHigh/buyLowTargets/tradeOpportunityFlags for trade value index, headline/dominating/rebuilding/tradeOpportunities for league pulse.
 
 **Yahoo API throttle (found 2026-07-24, resolved 2026-07-26):** the MLB league (`469.l.209547`) started 403ing on `/league/{key}/settings` and `/league/{key}/scoreboard` with "This application is not authorized to perform this action" after a burst of OAuth reconnects + `/me` polling during same-session debugging. Basic account-level calls (`/users/games`) still work, and roster/standings calls were unconfirmed either way (`sync-rosters` also failed the same way once tested). Confirmed transient — cleared on its own after a cooldown period, no code or permissions issue. Separately (real bug, fixed): `pages/api/auth/yahoo/me.js` was collapsing "cookie valid but a live Yahoo call failed" into the same `connected: false` as "no cookie," causing the connection banner to flicker between connected/disconnected on transient network errors — fixed to trust the cookie and treat the profile-name lookup as best-effort. All six Yahoo API routes (`sync-rosters`, `settings`, `my-leagues`, `league`, `league-full`, `sync-draft`) also had no top-level error handling, so any Yahoo failure crashed into Next's HTML error page instead of clean JSON — fixed across all six.
 
@@ -155,13 +164,48 @@ Once this passes, flip the Y-05 status table's Trade value index row to "✅ UAT
 
 ### League Pulse · UAT (pending — needs a browser pass)
 
-`getLeaguePulse()` was smoke-tested via the same synthetic 3-team payload — real Claude call, correct JSON shape, sensible standings-aware reasoning. What's *not* yet verified:
+`getLeaguePulse()` was smoke-tested via the same synthetic 3-team payload — real Claude call, correct JSON shape, sensible standings-aware reasoning. **As of 2026-07-26 this endpoint no longer has its own Season Hub panel** — it's called from within Team Pulse's section 1 (see the Team Pulse UAT section below, which supersedes the checklist that used to be here). What's *not* yet verified:
 
-- [ ] Season Hub — click "Get Beane's Take" on a real MLB league, confirm dominating/rebuilding/trade-opportunities sections render correctly against real standings and rosters
 - [ ] Confirm behavior with a 2-team-only edge case isn't broken (the endpoint requires 2+ teams — verify the error message is legible if a league somehow syncs with fewer)
 - [ ] Confirm an NBA league works the same way once synced
 
-Once this passes, flip the Y-05 status table's League pulse row to "✅ UAT complete".
+---
+
+### Start/Sit Advisor Sport-Aware Split · UAT (pending — needs a browser pass, 2026-07-26)
+
+Built and verified against the live dev server + real `players.json`/`mlb_players.json`/`nba_schedule.json` data (not just synthetic fixtures) — confirmed NBA condensed mode produces real, short, matchup-free Claude output with correctly-attached `injuryStatus`; confirmed MLB is cleanly rejected (400) from this endpoint; confirmed NHL/NFL degrade gracefully (200, empty lineup) against their placeholder empty data instead of crashing. `getStartSitMode()` itself isn't unit-tested — `sports.js` is an ES module, outside the plain-`node` test runner's reach (same limitation `schedule.js`/`calculateTrend.js` were deliberately kept CommonJS to avoid); a fixture-duplicate test was written and then deleted as misleading (it would've tested a copy of the logic, not the real code) rather than kept for false confidence. What's *not* yet verified:
+
+- [ ] Season Hub — confirm the condensed NBA/NHL rendering (3-line block: header, games+injury line, short reason) actually looks right in the browser, not just the JSON response
+- [ ] Confirm the "Not available for X yet" vs. active button states are correct for a real league per sport
+- [ ] NHL/NFL can't be exercised with a real roster yet — no data, and `setup.jsx`'s sport picker doesn't offer them (see NHL-01/NFL-01)
+
+Once this passes, flip the Y-05 status table's Start/sit advisor row to a single "✅ UAT complete" (currently split into two dates).
+
+---
+
+### Pitching Starts Panel (MLB) · UAT (pending — needs a browser pass, 2026-07-26)
+
+`/api/season/pitching-starts` was verified live against the running dev server with real MLB data — correctly returned `start` for healthy pitchers with scheduled starts and `hold` for an IL pitcher despite having scheduled starts. The recommendation heuristic itself (`getPitchingRecommendation`) is unit-tested (`scripts/test/pitchingStarts.test.js`, 8 cases). What's *not* yet verified:
+
+- [ ] Season Hub — click "Check Starts" on a real MLB league, confirm the panel renders correctly (team/starts-this-week/injury tag/start-stream-hold badge) against real rostered pitchers
+- [ ] Confirm the empty state ("No rostered starting pitchers found") renders sanely for a hitter-heavy roster
+- [ ] Confirm this panel — not the old lineup-advisor UI — is what actually shows for an MLB league (StartSitPanel's mode dispatch should route here automatically)
+
+Once this passes, flip the Y-05 status table's Pitching starts panel row to "✅ UAT complete".
+
+---
+
+### Team Pulse · UAT (pending — needs a browser pass, 2026-07-26)
+
+The deterministic math (`src/utils/teamStanding.js`) is unit-tested (23 cases) and was additionally verified against real NBA player data end-to-end (not just synthetic fixtures) via a throwaway script — tier/win-rate numbers came out sane for a realistic 3-team roster split. The two Claude-backed pieces (league-pulse insight, extended trade-value-index flags) were verified live against the dev server with a synthetic 3-team league — both returned well-reasoned, correctly cross-referenced output (e.g. `tradeOpportunityFlags` correctly named a specific opponent's actual weak categories). What's *not* yet verified:
+
+- [ ] Season Hub — confirm the full 3-section panel renders correctly against a real synced league (tier badge, trend arrow, category win-rate badges, league landscape list, trade flags)
+- [ ] Confirm the trend arrow is genuinely blank (not broken) on a league's first-ever sync, then shows up correctly on the second sync after `leagueStore.js`'s new `previousStandings` snapshot has something to diff against
+- [ ] Confirm the fallback insight (strongest/thinnest category sentence) renders correctly when the user's team isn't named in League Pulse's dominating/rebuilding output — this was confirmed via curl/API response shape but not in the actual rendered UI
+- [ ] Confirm an NBA league works the same way (only tested against a synthetic NBA payload + real MLB trade-value-index/league-pulse calls so far, not a real synced league of either sport)
+- [ ] Confirm "Both leagues show independent versions of this panel" holds in practice — switching the active league should show that league's own Team Pulse state, not stale data from the previously-viewed league
+
+Once this passes, flip the Y-05 status table's Team Pulse row to "✅ UAT complete".
 
 ---
 
@@ -458,7 +502,7 @@ This resolved both open implementation questions from 2026-07-24: it's a standal
 
 ## Multi-Sport Expansion
 
-All sport expansions require a `{sport}_players.json` file with ADP rankings and prior season stats before recommendation logic can be calibrated. The `sports.js` config already has stub entries for NHL, NFL, and MLB — the architecture is sport-config driven and ready. The Yahoo OAuth layer supports all three sports via `game_codes={sport}`.
+All sport expansions require a `{sport}_players.json` file with ADP rankings and prior season stats before recommendation logic can be calibrated. **Update 2026-07-26:** the `sports.js` NHL/NFL entries are no longer stubs — they're real, fleshed-out config (slots, positions, categories, `startSitMode`) landed as part of the Start/Sit sport-aware work, see below for what actually shipped vs. what's still a placeholder. The architecture is sport-config driven and ready. The Yahoo OAuth layer supports all three sports via `game_codes={sport}`.
 
 ---
 
@@ -470,21 +514,20 @@ Full MLB 5×5 draft experience shipped 2026-06-27. Multi-sport architecture gene
 ### NHL-01 · NHL League Support
 **Status: Blocked on data — nhl_players.json needed (August 2026)**
 
-**Goal:** Full NHL draft experience using the existing sports.js stub as the foundation.
+**Goal:** Full NHL draft experience using the existing sports.js config as the foundation.
 
 **Complexity note:** Goalies and skaters have completely separate stat profiles. The category grading engine will need to handle `sv_pct` as a percentage category and `gaa` as a lower-is-better category. The `G` position (goalie) has no overlap with skater positions — slot logic must treat them as distinct pools.
 
-**What's needed:**
-- `nhl_players.json` — skaters + goalies, 2026-27 projected ADP + 2025-26 prior season stats
+**Update 2026-07-26:** `sports.js` NHL entry is now real (landed as part of the Start/Sit sport-aware split, not a dedicated NHL sprint) — `filterPositions`, `slotOrder`, `slotEligibility`, `categories` (`g`/`a`/`plusMinus`/`ppp`/`sog`/`w`/`sv_pct`/`gaa` — ids, not the `+/-`/`SV%` display labels below), `percentageCategories: ['sv_pct']`, `lowerIsBetter: ['gaa']`, `startSitMode: 'condensed'`. `nhl_players.json`/`nhl_schedule.json` exist but are **empty placeholder files** (`[]` / `{games: []}`) — `hasScheduleSupport('nhl')` is true and the Start/Sit Advisor degrades gracefully to an empty state, but there's no real player pool, so the draft board and every other feature are still non-functional for NHL. `setup.jsx`'s sport picker also still only offers NBA/MLB, so an NHL league can't be created at all yet regardless of data. Skater vs. goalie category split (`SHP` shots-on-goal-adjacent category from the original plan) wasn't carried over 1:1 — worth reconciling against real ADP data once it lands rather than trusting the placeholder category list as final.
+
+**What's still needed:**
+- `nhl_players.json` — skaters + goalies, 2026-27 projected ADP + 2025-26 prior season stats (replacing the empty placeholder)
   - Source: FantasyPros NHL ADP (August), Hockey Reference (per-game stats)
-- `sports.js` NHL config entry (stub already commented in):
-  - `filterPositions: ['C', 'LW', 'RW', 'W', 'D', 'G']`
-  - Skater categories: `G`, `A`, `+/-`, `PIM`, `PPP`, `SHP`, `SOG`
-  - Goalie categories: `W`, `GAA`, `SV%`, `SO`
-  - `percentageCategories: ['sv_pct']`
-  - `lowerIsBetter: ['gaa']`
+- `nhl_schedule.json` — real season schedule (replacing the empty placeholder), same `{games: [{date, home, away}]}` shape as `nba_schedule.json`
+- Reconcile the placeholder `sports.js` category list above against real ADP/stat data
 - Claude prompt tuning for NHL context (goalie streaming, early-season regression, etc.)
 - `sync-rosters.js` game_codes=nhl variant
+- Add `nhl` to `setup.jsx`'s sport picker (currently hardcoded to `['nba', 'mlb']`)
 
 **Testing constraint:** No completed NHL league available. End-to-end validation requires a test draft or an active league. October 2026 season start = first real test window.
 
@@ -499,15 +542,16 @@ Full MLB 5×5 draft experience shipped 2026-06-27. Multi-sport architecture gene
 
 **Complexity note:** NFL has the most position heterogeneity of any sport. QB is a completely separate stat pool (passing yards, TDs, INTs, rushing). K and DST are streaming positions that change weekly. Bye weeks add lineup complexity that doesn't exist in NBA/NHL. Standard scoring vs. PPR vs. half-PPR creates divergent ADP curves — need to decide which format to target first (PPR is the most common).
 
-**What's needed:**
-- `nfl_players.json` — ~200 relevant skill-position players, PPR ADP + 2025 season stats
+**Update 2026-07-26:** `sports.js` NFL entry is now real (same Start/Sit sport-aware split as NHL above, not a dedicated NFL sprint) — `filterPositions`, `slotOrder` (QB/RB/WR/TE/FLEX/K/DEF/BN), `slotEligibility: { FLEX: ['RB','WR','TE'] }`, `startSitMode: 'full'` (NFL is the one sport that kept the detailed per-position matchup treatment, since it's a weekly not daily sport). **Categories were scaffolded as roto-style counting stats** (`pass_yd`/`pass_td`/`rush_yd`/`rush_td`/`rec`/`rec_yd`/`rec_td`/`int`) to fit this codebase's existing category-league shape (`categories`/`benchmarks`/`percentageCategories` — the same shape every other sport uses for the scarcity engine) — **not** the points-based PPR scoring this ticket originally called for. Reconcile that mismatch before building the real draft experience: either add points-based scoring as a genuinely new mode, or confirm roto-style categories are actually fine for the target NFL leagues. `nfl_players.json`/`nfl_schedule.json` exist but are **empty placeholder files** — same caveats as NHL above (Start/Sit degrades gracefully, everything else is non-functional, `setup.jsx` sport picker doesn't offer `nfl` yet either).
+
+**What's still needed:**
+- `nfl_players.json` — ~200 relevant skill-position players, PPR ADP + 2025 season stats (replacing the empty placeholder)
   - Source: FantasyPros NFL ADP (August), Pro Football Reference
-- `sports.js` NFL config entry (stub already commented in):
-  - `filterPositions: ['QB', 'RB', 'WR', 'TE', 'K', 'DEF', 'FLEX', 'BN']`
-  - Scoring format: PPR (first pass), with `scoringFormat` config supporting `ppr | half_ppr | standard`
-  - Point categories (NFL is typically points-based, not category): `pts`, `passYds`, `rushYds`, `recYds`, `passTDs`, `rushRecTDs`
+- `nfl_schedule.json` — real season schedule (replacing the empty placeholder)
+- Resolve the roto-categories-vs-PPR-points scoring mismatch noted above
 - Claude prompt tuning for NFL draft strategy (Zero RB, Hero RB, Robust RB, TE-premium)
 - `sync-rosters.js` game_codes=nfl variant
+- Add `nfl` to `setup.jsx`'s sport picker (currently hardcoded to `['nba', 'mlb']`)
 
 **Testing constraint:** No completed NFL league available. September 2026 draft window is the first test opportunity.
 

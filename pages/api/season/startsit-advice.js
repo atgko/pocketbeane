@@ -1,7 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk'
 import fs from 'fs'
 import path from 'path'
-import { getSportConfig, getPlayerFile, getScheduleFile, hasScheduleSupport } from '@/config/sports'
+import { getSportConfig, getPlayerFile, getScheduleFile, hasScheduleSupport, getStartSitMode } from '@/config/sports'
 import { formatStats, formatCurrentSeasonLine, CURRENT_SEASON_REASONING_INSTRUCTION } from '@/ai/seasonStats'
 import { normalizeName } from '@/utils/playerName'
 import { getTeamGamesInRange, hasBackToBack, getWeekRange } from '@/utils/schedule'
@@ -27,6 +27,10 @@ function extractJSON(text) {
 export async function getStartSitAdvice({ sport = 'nba', leagueRosters, rosterConfig, weekStart, weekEnd, gmProfile }) {
   if (!hasScheduleSupport(sport)) {
     throw new Error(`Start/Sit Advisor isn't available for ${sport} yet — no schedule data configured.`)
+  }
+  const startSitMode = getStartSitMode(sport)
+  if (startSitMode === 'pitching-starts') {
+    throw new Error(`${sport} uses the Pitching Starts panel instead of the Start/Sit Advisor — see /api/season/pitching-starts.`)
   }
   if (!leagueRosters?.teams) throw new Error('leagueRosters required')
 
@@ -59,7 +63,7 @@ export async function getStartSitAdvice({ sport = 'nba', leagueRosters, rosterCo
   let totalGamesThisWeek = 0
   const enrichedRoster = userTeam.roster.map(r => {
     const p = (r.playerId && playerById[r.playerId]) || playerByName[normalizeName(r.name)]
-    if (!p) return { name: r.name, positions: [], line: `${r.name}(${r.positions ?? '?'}): no player data` }
+    if (!p) return { name: r.name, positions: [], injuryStatus: null, line: `${r.name}(${r.positions ?? '?'}): no player data` }
 
     const gameDates = p.team ? getTeamGamesInRange(schedule, p.team, start, end) : []
     totalGamesThisWeek += gameDates.length
@@ -72,7 +76,7 @@ export async function getStartSitAdvice({ sport = 'nba', leagueRosters, rosterCo
       : ''
 
     const line = `${p.name}(${p.yahoo_positions?.join('/') ?? r.positions ?? '?'}) [${p.team ?? '?'}] games-this-week=${gameDates.length}${b2bTag}${injuryTag}: ${formatStats(p, sport)}${formatCurrentSeasonLine(p, sport)}`
-    return { name: p.name, positions: p.yahoo_positions ?? [], line }
+    return { name: p.name, positions: p.yahoo_positions ?? [], injuryStatus: injuryStatus ?? null, line }
   })
   const rosterLines = enrichedRoster.map(ep => ep.line)
 
@@ -115,13 +119,21 @@ export async function getStartSitAdvice({ sport = 'nba', leagueRosters, rosterCo
   })
   const eligibilityLegend = eligibilityLines.join('\n')
 
-  const sportLabel = sport === 'mlb' ? 'fantasy baseball' : 'fantasy basketball'
+  const sportLabel = `fantasy ${sportConfig.label.toLowerCase()}`
   const gmLine = gmProfile?.injuryTolerance
     ? `\nGM Profile: injury tolerance = ${gmProfile.injuryTolerance}.`
     : ''
-  const mlbCaveat = sport === 'mlb'
-    ? '\n\nNote: pitcher probable starts aren\'t tracked yet — "games-this-week" for pitchers is an approximate team-schedule proxy, not a confirmed start count. Treat pitcher recommendations as lower-confidence than hitter recommendations, and say so when it matters.'
-    : ''
+
+  // 'full' (e.g. NFL — a weekly sport where positional matchups matter) keeps
+  // the original detailed Beane-voice reasoning. 'condensed' (NBA/NHL — daily
+  // sports where a nightly lineup call has no real matchup signal) asks for a
+  // short recent-form-only clause instead; games-this-week and injury status
+  // are already surfaced structurally (gamesThisWeek field + the deterministic
+  // injuryStatus attached to each entry below), so the model doesn't need to
+  // restate them in prose.
+  const reasonInstruction = startSitMode === 'condensed'
+    ? 'Keep each "reason" to a single short clause (under 12 words) about recent statistical form only — do not mention matchups, opponents, or schedule context, and do not restate games-this-week or injury status (both are already shown separately).'
+    : 'Write each "reason" as 1-2 sentences in Beane voice, covering whatever combination of schedule, injury, and recent-form context is most relevant to that slot.'
 
   const systemPrompt = `You are Billy Beane setting a ${sportLabel} lineup for the week of ${start} to ${end}.
 
@@ -134,12 +146,14 @@ ${slotSummaryLine}
 ELIGIBLE PLAYERS BY SLOT:
 ${eligibilityLegend}
 
-${CURRENT_SEASON_REASONING_INSTRUCTION}${mlbCaveat}
+${CURRENT_SEASON_REASONING_INSTRUCTION}
 
 Return exactly one lineup entry per starting slot listed above (repeat slot types for multi-count slots, e.g. two UTIL entries), each filled by the single best eligible rostered player for that slot this week. Then list up to 3 notable bench calls — rostered players NOT in the starting lineup whose case is worth flagging (e.g. a hot bench player just missing the cut, or a would-be starter you're sitting for injury/schedule reasons).
 
+${reasonInstruction}
+
 Reply ONLY with raw JSON — no markdown, no extra text:
-{"headline":"1 sentence framing the week's biggest lineup lever","startingLineup":[{"slot":"PG","player":"Player Name","gamesThisWeek":4,"backToBack":false,"reason":"1-2 sentences Beane voice"}],"benchNotes":[{"player":"Player Name","reason":"1-2 sentences Beane voice"}]}`
+{"headline":"1 sentence framing the week's biggest lineup lever","startingLineup":[{"slot":"PG","player":"Player Name","gamesThisWeek":4,"backToBack":false,"reason":"..."}],"benchNotes":[{"player":"Player Name","reason":"..."}]}`
 
   const userPrompt = `Week of ${start} to ${end} · ${sportLabel}${gmLine}
 
@@ -167,25 +181,38 @@ Set my lineup for the week.`
   // that's a second ranking algorithm to get right; an honestly-short
   // lineup is preferable to a silently-wrong one.
   const seenPlayers = new Set()
-  const validatedLineup = (parsed.startingLineup ?? []).filter(entry => {
-    const rosterPlayer = enrichedRoster.find(ep => ep.name === entry.player)
-    if (!rosterPlayer) {
-      console.warn(`[startsit-advice] dropped lineup entry — "${entry.player}" not found on roster`)
-      return false
-    }
-    if (!isEligibleForSlot(rosterPlayer.positions, entry.slot)) {
-      console.warn(`[startsit-advice] dropped lineup entry — "${entry.player}" isn't eligible for ${entry.slot}`)
-      return false
-    }
-    if (seenPlayers.has(entry.player)) {
-      console.warn(`[startsit-advice] dropped duplicate lineup entry — "${entry.player}" already used`)
-      return false
-    }
-    seenPlayers.add(entry.player)
-    return true
-  })
+  const validatedLineup = (parsed.startingLineup ?? [])
+    .filter(entry => {
+      const rosterPlayer = enrichedRoster.find(ep => ep.name === entry.player)
+      if (!rosterPlayer) {
+        console.warn(`[startsit-advice] dropped lineup entry — "${entry.player}" not found on roster`)
+        return false
+      }
+      if (!isEligibleForSlot(rosterPlayer.positions, entry.slot)) {
+        console.warn(`[startsit-advice] dropped lineup entry — "${entry.player}" isn't eligible for ${entry.slot}`)
+        return false
+      }
+      if (seenPlayers.has(entry.player)) {
+        console.warn(`[startsit-advice] dropped duplicate lineup entry — "${entry.player}" already used`)
+        return false
+      }
+      seenPlayers.add(entry.player)
+      return true
+    })
+    // injuryStatus is computed deterministically from roster data (not asked
+    // of the model) so the condensed UI can render it as its own line rather
+    // than parsing it out of prose.
+    .map(entry => ({
+      ...entry,
+      injuryStatus: enrichedRoster.find(ep => ep.name === entry.player)?.injuryStatus ?? null,
+    }))
 
-  return { week: { start, end }, ...parsed, startingLineup: validatedLineup }
+  const benchNotesWithInjury = (parsed.benchNotes ?? []).map(note => ({
+    ...note,
+    injuryStatus: enrichedRoster.find(ep => ep.name === note.player)?.injuryStatus ?? null,
+  }))
+
+  return { week: { start, end }, ...parsed, startingLineup: validatedLineup, benchNotes: benchNotesWithInjury }
 }
 
 export default async function handler(req, res) {
@@ -200,7 +227,8 @@ export default async function handler(req, res) {
     console.error('[startsit-advice]', err)
     const isClientError =
       ['leagueRosters required', 'User team not found in rosters'].includes(err.message) ||
-      err.message.includes('no schedule data configured')
+      err.message.includes('no schedule data configured') ||
+      err.message.includes('uses the Pitching Starts panel')
     res.status(isClientError ? 400 : 500).json({ error: err.message })
   }
 }

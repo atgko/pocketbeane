@@ -14,6 +14,10 @@ export const SPORT_CONFIGS = {
     // Back-to-back is a meaningful fatigue signal for this sport's start/sit
     // advisor (dense schedule, teams sometimes play on consecutive days).
     backToBackRelevant: true,
+    // Start/Sit Advisor rendering mode — see getStartSitMode() below.
+    // NBA plays daily; positional matchup analysis isn't a meaningful signal
+    // for a nightly lineup call, so this sport gets the condensed treatment.
+    startSitMode: 'condensed',
 
     // Position buttons shown in the draft board filter bar
     filterPositions: ['PG', 'SG', 'G', 'SF', 'PF', 'F', 'C'],
@@ -83,6 +87,10 @@ export const SPORT_CONFIGS = {
     // used as an approximate proxy for pitcher start count until real
     // probable-starts data exists (see BACKLOG Y-05c).
     backToBackRelevant: false,
+    // Everyday hitters don't need a positional start/sit call — the only
+    // real weekly lineup lever for MLB is pitcher starts, so this sport gets
+    // its own Pitching Starts panel instead of the lineup advisor.
+    startSitMode: 'pitching-starts',
 
     filterPositions: ['C', '1B', '2B', '3B', 'SS', 'OF', 'SP', 'RP'],
 
@@ -135,31 +143,128 @@ export const SPORT_CONFIGS = {
     },
   },
 
-  // Future sports — add an entry here when ready:
-  //
-  // nhl: {
-  //   id: 'nhl', label: 'NHL',
-  //   playerFile: 'nhl_players.json', scheduleFile: 'nhl_schedule.json',
-  //   backToBackRelevant: true, // dense schedule like NBA
-  //   filterPositions: ['C', 'LW', 'RW', 'W', 'D', 'G'],
-  //   slotOrder: [...],
-  //   slotEligibility: { W: ['LW', 'RW'], UTIL: ['C', 'LW', 'RW', 'D'], ... },
-  //   categories: [...],
-  //   percentageCategories: ['sv_pct'],
-  //   ...
-  // },
-  //
-  // nfl: {
-  //   id: 'nfl', label: 'NFL',
-  //   playerFile: 'nfl_players.json', scheduleFile: 'nfl_schedule.json',
-  //   backToBackRelevant: false, // one game/week — bye weeks fall out of the same {date,home,away} schedule shape as zero entries for a team in range
-  //   filterPositions: ['QB', 'RB', 'WR', 'TE', 'K', 'DEF'],
-  //   slotOrder: [...],
-  //   slotEligibility: { FLEX: ['RB', 'WR', 'TE'], ... },
-  //   categories: [...],
-  //   percentageCategories: [],
-  //   ...
-  // },
+  // nhl and nfl below are scaffolded structurally (slots, positions,
+  // categories, startSitMode) but ship with empty placeholder player/schedule
+  // files — no real player pool exists yet. hasScheduleSupport() is true for
+  // both so the Start/Sit Advisor's conditional rendering is exercised, but
+  // an empty roster means it'll only ever show the "no games scheduled"
+  // empty state until real data files replace the placeholders.
+  nhl: {
+    id: 'nhl',
+    label: 'NHL',
+
+    playerFile: 'nhl_players.json',
+    scheduleFile: 'nhl_schedule.json',
+    // Dense schedule like NBA — back-to-backs are a real fatigue signal.
+    backToBackRelevant: true,
+    // Daily sport like NBA — condensed Start/Sit treatment, not full
+    // positional matchup analysis.
+    startSitMode: 'condensed',
+
+    filterPositions: ['C', 'LW', 'RW', 'W', 'D', 'G'],
+
+    slotOrder: [
+      { type: 'C',    configKey: 'cSlots',    default: 2, max: 4 },
+      { type: 'W',    configKey: 'wSlots',    default: 2, max: 4 },
+      { type: 'D',    configKey: 'dSlots',    default: 2, max: 4 },
+      { type: 'UTIL', configKey: 'utilSlots', default: 1, max: 3 },
+      { type: 'G',    configKey: 'gSlots',    default: 2, max: 3 },
+      { type: 'BN',   configKey: 'bnSlots',   default: 4, max: 6 },
+    ],
+
+    slotEligibility: {
+      W:    ['LW', 'RW'],
+      UTIL: ['C', 'LW', 'RW', 'W', 'D'],
+    },
+
+    categories: [
+      { id: 'g',      label: 'G',    description: 'Goals' },
+      { id: 'a',      label: 'A',    description: 'Assists' },
+      { id: 'plusMinus', label: '+/-', description: 'Plus/Minus' },
+      { id: 'ppp',    label: 'PPP',  description: 'Power Play Points' },
+      { id: 'sog',    label: 'SOG',  description: 'Shots on Goal' },
+      { id: 'w',      label: 'W',    description: 'Goalie Wins' },
+      { id: 'sv_pct', label: 'SV%',  description: 'Save Percentage' },
+      { id: 'gaa',    label: 'GAA',  description: 'Goals Against Average' },
+    ],
+
+    percentageCategories: ['sv_pct'],
+    lowerIsBetter: ['gaa'],
+
+    benchmarks: {
+      g: 25, a: 35, plusMinus: 8, ppp: 20, sog: 180,
+      w: 25, sv_pct: 0.910, gaa: 2.70,
+    },
+
+    defaultRosterConfig: {
+      cSlots: 2, wSlots: 2, dSlots: 2, utilSlots: 1, gSlots: 2, bnSlots: 4,
+    },
+  },
+
+  nfl: {
+    id: 'nfl',
+    label: 'NFL',
+
+    playerFile: 'nfl_players.json',
+    scheduleFile: 'nfl_schedule.json',
+    // One game/week — bye weeks fall out of the same {date,home,away}
+    // schedule shape as zero entries for a team in range, no B2B concept.
+    backToBackRelevant: false,
+    // Weekly (not daily) sport — detailed per-position matchup reasoning is
+    // meaningful here, so this sport keeps the full Start/Sit treatment.
+    startSitMode: 'full',
+
+    filterPositions: ['QB', 'RB', 'WR', 'TE', 'K', 'DEF'],
+
+    slotOrder: [
+      { type: 'QB',   configKey: 'qbSlots',   default: 1 },
+      { type: 'RB',   configKey: 'rbSlots',   default: 2, max: 4 },
+      { type: 'WR',   configKey: 'wrSlots',   default: 2, max: 4 },
+      { type: 'TE',   configKey: 'teSlots',   default: 1, max: 2 },
+      { type: 'FLEX', configKey: 'flexSlots', default: 1, max: 3 },
+      { type: 'K',    configKey: 'kSlots',    default: 1 },
+      { type: 'DEF',  configKey: 'defSlots',  default: 1 },
+      { type: 'BN',   configKey: 'bnSlots',   default: 6, max: 8 },
+    ],
+
+    slotEligibility: {
+      FLEX: ['RB', 'WR', 'TE'],
+    },
+
+    categories: [
+      { id: 'pass_yd', label: 'PaYD', description: 'Passing Yards' },
+      { id: 'pass_td', label: 'PaTD', description: 'Passing Touchdowns' },
+      { id: 'rush_yd', label: 'RuYD', description: 'Rushing Yards' },
+      { id: 'rush_td', label: 'RuTD', description: 'Rushing Touchdowns' },
+      { id: 'rec',     label: 'REC',  description: 'Receptions' },
+      { id: 'rec_yd',  label: 'ReYD', description: 'Receiving Yards' },
+      { id: 'rec_td',  label: 'ReTD', description: 'Receiving Touchdowns' },
+      { id: 'int',     label: 'INT',  description: 'Interceptions Thrown' },
+    ],
+
+    percentageCategories: [],
+    lowerIsBetter: ['int'],
+
+    benchmarks: {
+      pass_yd: 3800, pass_td: 26, rush_yd: 900, rush_td: 8,
+      rec: 75, rec_yd: 950, rec_td: 7, int: 10,
+    },
+
+    defaultRosterConfig: {
+      qbSlots: 1, rbSlots: 2, wrSlots: 2, teSlots: 1,
+      flexSlots: 1, kSlots: 1, defSlots: 1, bnSlots: 6,
+    },
+  },
+}
+
+// Start/Sit Advisor rendering mode for a sport:
+//   'full'            — detailed per-position matchup reasoning (NFL: weekly sport, matchups matter)
+//   'condensed'        — 3-line-max per player, games-played > injury > recent form, no matchup prose (NBA/NHL: daily sports)
+//   'pitching-starts'  — lineup advisor replaced entirely by the Pitching Starts panel (MLB: everyday hitters don't need this)
+// Falls back to 'full' for any sport without an explicit mode, matching the
+// advisor's original (pre-sport-aware) behavior.
+export function getStartSitMode(sport) {
+  return getSportConfig(sport).startSitMode ?? 'full'
 }
 
 export function getSportConfig(sport) {

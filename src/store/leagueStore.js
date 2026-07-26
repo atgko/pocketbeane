@@ -117,9 +117,25 @@ const useLeagueStore = create(
           leagues: state.leagues.map((l) => (l.id === id ? { ...l, draftDNA: dna } : l)),
         })),
 
+      // Stashes the outgoing snapshot's per-team standing (rank/wins/losses/
+      // ties, keyed by teamKey) as previousStandings before overwriting —
+      // Team Pulse's trend arrow diffs the new sync against this. A league's
+      // first-ever sync leaves previousStandings null (no prior data to
+      // compare against, so no fabricated arrow).
       setLeagueRosters: (id, rosters) =>
         set((state) => ({
-          leagues: state.leagues.map((l) => (l.id === id ? { ...l, leagueRosters: rosters } : l)),
+          leagues: state.leagues.map((l) => {
+            if (l.id !== id) return l
+            const previousStandings = l.leagueRosters?.teams
+              ? Object.fromEntries(
+                  l.leagueRosters.teams.map((t) => [
+                    t.teamKey,
+                    { rank: t.rank, wins: t.wins, losses: t.losses, ties: t.ties ?? null },
+                  ])
+                )
+              : l.previousStandings ?? null
+            return { ...l, leagueRosters: rosters, previousStandings }
+          }),
         })),
 
       setProfileOverride: (id, override) =>
