@@ -8,8 +8,6 @@ import mlbPlayers from '@/data/mlb_players.json'
 import { normalizeName } from '@/utils/playerName'
 import { STALENESS_DAYS } from '@/ai/seasonStats'
 import { hasScheduleSupport } from '@/config/sports'
-import { getUserEmail } from '@/utils/userSettings'
-import Link from 'next/link'
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000
 
@@ -58,7 +56,7 @@ const COMING_SOON = [
 
 const PRIORITY_STYLES = {
   'must-add': 'bg-green-900/40 text-green-400',
-  'stream':   'bg-blue-900/40 text-blue-400',
+  'consider': 'bg-blue-900/40 text-blue-400',
   'speculative': 'bg-gray-800 text-gray-500',
 }
 
@@ -77,9 +75,6 @@ function WaiverPanel({ league, rosters }) {
   const [advice, setAdvice] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [emailSending, setEmailSending] = useState(false)
-  const [emailError, setEmailError] = useState(null)
-  const [emailSentTo, setEmailSentTo] = useState(null)
   const sport = league.config.sport ?? 'nba'
   const players = sport === 'mlb' ? mlbPlayers : nbaPlayers
 
@@ -87,6 +82,7 @@ function WaiverPanel({ league, rosters }) {
     injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
     draftStrategy: league.config.philosophy?.strategy ?? 'beane',
   }
+  const rosterConfig = { ilSlots: league.config.ilSlots, ilPlusSlots: league.config.ilPlusSlots }
 
   async function handleGetAdvice() {
     setLoading(true)
@@ -95,7 +91,7 @@ function WaiverPanel({ league, rosters }) {
       const res = await fetch('/api/season/waiver-advice', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sport, leagueRosters: rosters, gmProfile }),
+        body: JSON.stringify({ sport, leagueRosters: rosters, gmProfile, rosterConfig }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Advice failed')
@@ -106,37 +102,6 @@ function WaiverPanel({ league, rosters }) {
       setLoading(false)
     }
   }
-
-  async function handleEmailDigest() {
-    const email = getUserEmail()
-    if (!email) return
-
-    setEmailSending(true)
-    setEmailError(null)
-    setEmailSentTo(null)
-    try {
-      const res = await fetch('/api/season/email-waiver-digest', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          to: email,
-          leagueName: league.config.name || 'Your League',
-          sport,
-          leagueRosters: rosters,
-          gmProfile,
-        }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Send failed')
-      setEmailSentTo(email)
-    } catch (err) {
-      setEmailError(err.message)
-    } finally {
-      setEmailSending(false)
-    }
-  }
-
-  const userEmail = typeof window !== 'undefined' ? getUserEmail() : null
 
   return (
     <div className="bg-surface border border-border rounded-lg px-5 py-5">
@@ -196,24 +161,6 @@ function WaiverPanel({ league, rosters }) {
               </div>
             )
           })}
-
-          <div className="pt-3 border-t border-border flex items-center gap-3">
-            {userEmail ? (
-              <button
-                onClick={handleEmailDigest}
-                disabled={emailSending}
-                className="text-xs font-mono text-gray-500 hover:text-gray-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-              >
-                {emailSending ? 'Sending…' : `Email me this week's picks`}
-              </button>
-            ) : (
-              <p className="text-xs text-gray-600">
-                <Link href="/gm-profile" className="text-pick hover:underline">Add your email</Link> to send this digest to your inbox.
-              </p>
-            )}
-            {emailSentTo && <span className="text-xs text-value">Sent to {emailSentTo}.</span>}
-            {emailError && <span className="text-xs text-injury">{emailError}</span>}
-          </div>
         </div>
       )}
     </div>
@@ -240,6 +187,7 @@ function MatchupPanel({ league, rosters, yahooConnected }) {
           gmProfile: {
             injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
           },
+          rosterConfig: { ilSlots: league.config.ilSlots, ilPlusSlots: league.config.ilPlusSlots },
         }),
       })
       const data = await res.json()
@@ -480,6 +428,7 @@ function TradeAnalyzerPanel({ league, rosters }) {
     injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
     draftStrategy: league.config.philosophy?.strategy ?? 'beane',
   }
+  const rosterConfig = { ilSlots: league.config.ilSlots, ilPlusSlots: league.config.ilPlusSlots }
 
   async function handleGetAdvice() {
     const give = parsePlayerList(giveInput)
@@ -494,7 +443,7 @@ function TradeAnalyzerPanel({ league, rosters }) {
       const res = await fetch('/api/season/trade-advice', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sport, leagueRosters: rosters, give, receive, gmProfile }),
+        body: JSON.stringify({ sport, leagueRosters: rosters, give, receive, gmProfile, rosterConfig }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Advice failed')
@@ -630,6 +579,7 @@ function TradeValueIndexPanel({ league, rosters }) {
     injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
     draftStrategy: league.config.philosophy?.strategy ?? 'beane',
   }
+  const rosterConfig = { ilSlots: league.config.ilSlots, ilPlusSlots: league.config.ilPlusSlots }
 
   async function handleGetIndex() {
     setLoading(true)
@@ -638,7 +588,7 @@ function TradeValueIndexPanel({ league, rosters }) {
       const res = await fetch('/api/season/trade-value-index', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sport, leagueRosters: rosters, gmProfile }),
+        body: JSON.stringify({ sport, leagueRosters: rosters, gmProfile, rosterConfig }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Index failed')
@@ -725,6 +675,7 @@ function LeaguePulsePanel({ league, rosters }) {
     injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
     draftStrategy: league.config.philosophy?.strategy ?? 'beane',
   }
+  const rosterConfig = { ilSlots: league.config.ilSlots, ilPlusSlots: league.config.ilPlusSlots }
 
   async function handleGetPulse() {
     setLoading(true)
@@ -733,7 +684,7 @@ function LeaguePulsePanel({ league, rosters }) {
       const res = await fetch('/api/season/league-pulse', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sport, leagueRosters: rosters, gmProfile }),
+        body: JSON.stringify({ sport, leagueRosters: rosters, gmProfile, rosterConfig }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Pulse failed')

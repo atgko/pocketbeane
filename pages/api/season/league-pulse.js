@@ -2,7 +2,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import fs from 'fs'
 import path from 'path'
 import { getSportConfig, getPlayerFile } from '@/config/sports'
-import { formatStats, formatCurrentSeasonLine } from '@/ai/seasonStats'
+import { formatRosterLine, formatRosterConfigLine } from '@/ai/seasonStats'
 import { normalizeName } from '@/utils/playerName'
 
 const client = new Anthropic()
@@ -20,7 +20,7 @@ function extractJSON(text) {
   throw new Error('Malformed JSON in model response')
 }
 
-export async function getLeaguePulse({ sport = 'nba', leagueRosters, gmProfile }) {
+export async function getLeaguePulse({ sport = 'nba', leagueRosters, gmProfile, rosterConfig }) {
   if (!leagueRosters?.teams) throw new Error('leagueRosters required')
   if (leagueRosters.teams.length < 2) throw new Error('Need at least 2 teams to summarize the league')
 
@@ -33,9 +33,7 @@ export async function getLeaguePulse({ sport = 'nba', leagueRosters, gmProfile }
 
   function lineFor(entry) {
     const p = playerByName[normalizeName(entry.name)]
-    const injuryTag = p?.injury_risk ? ' ⚠️' : ''
-    const adpTag = p?.adp != null ? `,ADP${p.adp.toFixed(1)}` : ''
-    return `${entry.name}(${entry.positions ?? '?'}${adpTag}${injuryTag}): ${p ? formatStats(p, sport) : 'no stats'}${p ? formatCurrentSeasonLine(p, sport) : ''}`
+    return formatRosterLine(entry, p, sport)
   }
 
   const teamsSorted = [...leagueRosters.teams].sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99))
@@ -64,7 +62,7 @@ Using the standings and every team's roster, identify: (1) which teams are genui
 Reply ONLY with raw JSON — no markdown, no extra text:
 {"headline":"1-2 sentence framing of the league's current state","dominating":[{"team":"Team Name","note":"1 sentence why"}],"rebuilding":[{"team":"Team Name","note":"1 sentence why"}],"tradeOpportunities":[{"team":"Team Name","note":"1-2 sentences on the specific fit for me"}]}`
 
-  const userPrompt = `${sportLabel} league · Categories: ${catLine}${gmLine}
+  const userPrompt = `${sportLabel} league · Categories: ${catLine}${gmLine}${formatRosterConfigLine(rosterConfig)}
 
 STANDINGS:
 ${standingsLines.join('\n')}
@@ -76,7 +74,7 @@ Give me this week's league pulse.`
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 900,
+    max_tokens: 2000,
     system: [{ type: 'text', text: systemPrompt }],
     messages: [{ role: 'user', content: userPrompt }],
   })
@@ -87,10 +85,10 @@ Give me this week's league pulse.`
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
 
-  const { sport = 'nba', leagueRosters, gmProfile } = req.body
+  const { sport = 'nba', leagueRosters, gmProfile, rosterConfig } = req.body
 
   try {
-    const pulse = await getLeaguePulse({ sport, leagueRosters, gmProfile })
+    const pulse = await getLeaguePulse({ sport, leagueRosters, gmProfile, rosterConfig })
     res.json(pulse)
   } catch (err) {
     console.error('[league-pulse]', err)

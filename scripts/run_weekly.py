@@ -186,6 +186,33 @@ def confirm_season_data_year(output_path, expected_year):
     return season == expected_year
 
 
+def send_user_digests(sports_ok):
+    """T3-5: after a successful stats refresh, fire the user-facing waiver
+    digest email for each sport that updated cleanly this run. Runs the
+    Node script directly (no Next.js server required) — failures here must
+    never fail the pipeline, since the dev-status email below is the more
+    important signal."""
+    if not sports_ok:
+        print('  No sports updated cleanly this run — skipping waiver digests.')
+        return
+    script = REPO_ROOT / 'scripts' / 'send-waiver-digest.mjs'
+    env = dict(os.environ, NODE_OPTIONS='--use-system-ca')
+    try:
+        proc = subprocess.run(
+            ['node', str(script), *sports_ok],
+            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=180, env=env,
+        )
+        print(proc.stdout)
+        if proc.stderr:
+            print(proc.stderr)
+        if proc.returncode != 0:
+            print(f'  [send_user_digests] script exited {proc.returncode}')
+    except subprocess.TimeoutExpired:
+        print('  [send_user_digests] timed out')
+    except Exception as exc:
+        print(f'  [send_user_digests] unexpected error: {exc}')
+
+
 def send_email(to_addr, subject, body):
     env = load_env(REPO_ROOT / '.env.local')
     gmail_user = env.get('GMAIL_USER') or os.environ.get('GMAIL_USER')
@@ -382,6 +409,17 @@ def main():
             'injury_data': output_data.get('injury_data', 'unknown'),
             'merge_output': merge_proc.stdout,
         }
+
+    # T3-5: automated waiver digest email, one per sport that updated cleanly
+    # this run. Independent of the checks below — never lets a digest
+    # failure fail the whole weekly run.
+    print(f'\n{"="*60}')
+    print('WAIVER DIGEST EMAIL')
+    print(f'{"="*60}')
+    try:
+        send_user_digests([s for s, r in results.items() if r['status'] == 'ok'])
+    except Exception as exc:
+        print(f'  [send_user_digests] unexpected error: {exc}')
 
     # Schedule refresh (Start/Sit Advisor games-this-week/back-to-back data).
     # Independent of the per-sport current-season loop above — never lets a

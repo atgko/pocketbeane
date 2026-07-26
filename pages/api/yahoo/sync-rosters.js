@@ -105,6 +105,7 @@ export default async function handler(req, res) {
     for (let j = 0; j < playerCount; j++) {
       const p = playersObj[j]?.player
       const pm = Array.isArray(p?.[0]) ? extractMeta(p[0]) : {}
+      const selMeta = Array.isArray(p?.[1]?.selected_position) ? extractMeta(p[1].selected_position) : {}
       const playerName = pm.name?.full ?? null
       const playerId = playerName ? (nameToId[normalizeName(playerName)] ?? null) : null
       roster.push({
@@ -114,6 +115,7 @@ export default async function handler(req, res) {
         positions: pm.display_position ?? null,
         yahooTeam: pm.editorial_team_abbr ?? null,
         status: pm.status ?? 'active',
+        selectedPosition: selMeta.position ?? null,
       })
     }
 

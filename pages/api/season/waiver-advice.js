@@ -2,7 +2,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import fs from 'fs'
 import path from 'path'
 import { getSportConfig, getPlayerFile } from '@/config/sports'
-import { formatStats, formatCurrentSeasonLine, CURRENT_SEASON_REASONING_INSTRUCTION } from '@/ai/seasonStats'
+import { formatStats, formatCurrentSeasonLine, formatRosterLine, formatRosterConfigLine, CURRENT_SEASON_REASONING_INSTRUCTION, IL_STASH_REASONING_INSTRUCTION } from '@/ai/seasonStats'
 import { normalizeName } from '@/utils/playerName'
 
 const client = new Anthropic()
@@ -20,7 +20,7 @@ function extractJSON(text) {
   throw new Error('Malformed JSON in model response')
 }
 
-export async function getWaiverAdvice({ sport = 'nba', leagueRosters, gmProfile }) {
+export async function getWaiverAdvice({ sport = 'nba', leagueRosters, gmProfile, rosterConfig }) {
   if (!leagueRosters?.teams) throw new Error('leagueRosters required')
 
   const players = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/data', getPlayerFile(sport)), 'utf8'))
@@ -48,20 +48,19 @@ export async function getWaiverAdvice({ sport = 'nba', leagueRosters, gmProfile 
   // Enrich user's roster with stats from players.json
   const userRosterLines = userTeam.roster.map(r => {
     const p = (r.playerId && playerById[r.playerId]) || playerByName[normalizeName(r.name)]
-    const injuryTag = p?.injury_risk ? ' ⚠️' : ''
-    const adpTag = p?.adp != null ? `,ADP${p.adp.toFixed(1)}` : ''
-    return `${r.name}(${r.positions ?? '?'}${adpTag}${injuryTag}): ${p ? formatStats(p, sport) : 'no stats'}${p ? formatCurrentSeasonLine(p, sport) : ''}`
+    return formatRosterLine(r, p, sport)
   })
 
   // Available FAs: unowned players from players.json, sorted by ADP (best first)
-  const availableFAs = players
+  const topFAs = players
     .filter(p => !ownedNames.has(normalizeName(p.name)))
     .sort((a, b) => a.adp - b.adp)
     .slice(0, 25)
-    .map(p => {
-      const injuryTag = p.injury_risk ? ' ⚠️' : ''
-      return `${p.name}(${p.yahoo_positions?.join('/') ?? '?'},ADP${p.adp?.toFixed(1)}${injuryTag}): ${formatStats(p, sport)}${formatCurrentSeasonLine(p, sport)}`
-    })
+  const availableFANames = new Set(topFAs.map(p => normalizeName(p.name)))
+  const availableFAs = topFAs.map(p => {
+    const injuryTag = p.injury_risk ? ' ⚠️' : ''
+    return `${p.name}(${p.yahoo_positions?.join('/') ?? '?'},ADP${p.adp?.toFixed(1)}${injuryTag}): ${formatStats(p, sport)}${formatCurrentSeasonLine(p, sport)}`
+  })
 
   const sportConfig = getSportConfig(sport)
   const catLine = sportConfig.categories.map(c => c.label).join(', ')
@@ -73,16 +72,18 @@ export async function getWaiverAdvice({ sport = 'nba', leagueRosters, gmProfile 
 
   const systemPrompt = `You are Billy Beane advising a ${sportLabel} GM on waiver wire moves.
 
-Analyze the GM's roster against available free agents. Identify the team's weakest categories and recommend exactly 3 add/drop moves that address real gaps. Be specific — name exact players to add and drop. Explain each move in 2-3 sentences using Beane's direct, data-focused voice. Free agents marked CURRENT improving or slightly-improving are trending up in-season — weigh them as legitimate adds even if their ADP/prior-season profile looks ordinary. Treat "slightly-improving"/"slightly-declining" as real but modest movement, not noise — don't overstate it the way you would a full improving/declining trend.
+Analyze the GM's roster against available free agents. Identify the team's weakest categories and recommend exactly 3 add/drop moves that address real gaps. Every "add" MUST be a player from the TOP AVAILABLE FREE AGENTS list below, copied exactly as spelled there — never recommend a player who isn't in that list, no matter how well-known they are, since a player not listed there is already rostered by someone in this league. Be specific — name exact players to add and drop. Explain each move in 2-3 sentences using Beane's direct, data-focused voice. Free agents marked CURRENT improving or slightly-improving are trending up in-season — weigh them as legitimate adds even if their ADP/prior-season profile looks ordinary. Treat "slightly-improving"/"slightly-declining" as real but modest movement, not noise — don't overstate it the way you would a full improving/declining trend.
 
 Roster players are also tagged with their ADP — this is draft capital, not performance, and the two must not be conflated. Before proposing any drop, rank the FULL roster by realistic trade value to other GMs, not just by current-season production or raw ADP number. Trade value comes from a mix of signals — draft capital, prospect pedigree, notable international/rookie signings, name recognition, role/opportunity — and a player can hold real trade value even with a middling ADP or a rough current-season line. Struggling, or a modest ADP, is not the same as "no trade value" — do not conflate the two. Always propose dropping the roster's actual lowest-trade-value asset (a true replacement-level or streaming piece nobody would trade for) ahead of a player a rival GM would still want, even if that lower-value player's stat line currently looks fine. When no truly replacement-level option exists and you must propose dropping a player who still carries real trade value, say explicitly in the reason that the value would be better preserved by shopping him in a trade once that's an option, rather than releasing him to waivers for nothing.
 
 ${CURRENT_SEASON_REASONING_INSTRUCTION}
 
-Reply ONLY with raw JSON — no markdown, no extra text:
-{"headline":"1 sentence framing what this team most needs","moves":[{"add":"Player Name","drop":"Player Name or null if roster spot open","priority":"must-add|stream|speculative","reason":"2-3 sentences Beane voice"}]}`
+${IL_STASH_REASONING_INSTRUCTION}
 
-  const userPrompt = `${sportLabel} league · Categories: ${catLine}${gmLine}
+Reply ONLY with raw JSON — no markdown, no extra text:
+{"headline":"1 sentence framing what this team most needs","moves":[{"add":"Player Name","drop":"Player Name or null if roster spot open","priority":"must-add|consider|speculative","reason":"2-3 sentences Beane voice"}]}`
+
+  const userPrompt = `${sportLabel} league · Categories: ${catLine}${gmLine}${formatRosterConfigLine(rosterConfig)}
 
 MY ROSTER (${userTeam.teamName}):
 ${userRosterLines.join('\n')}
@@ -99,16 +100,26 @@ Recommend 3 waiver wire moves.`
     messages: [{ role: 'user', content: userPrompt }],
   })
   const text = message.content[0]?.text ?? ''
-  return extractJSON(text)
+  const result = extractJSON(text)
+
+  // Server-side guardrail: the model occasionally names a well-known player
+  // who isn't actually in the free-agent list handed to it (usually because
+  // he's already rostered by someone in this league). Drop any move whose
+  // "add" doesn't match a name we actually offered as available.
+  if (Array.isArray(result.moves)) {
+    result.moves = result.moves.filter(m => availableFANames.has(normalizeName(m.add)))
+  }
+
+  return result
 }
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
 
-  const { sport = 'nba', leagueRosters, gmProfile } = req.body
+  const { sport = 'nba', leagueRosters, gmProfile, rosterConfig } = req.body
 
   try {
-    const advice = await getWaiverAdvice({ sport, leagueRosters, gmProfile })
+    const advice = await getWaiverAdvice({ sport, leagueRosters, gmProfile, rosterConfig })
     res.json(advice)
   } catch (err) {
     console.error('[waiver-advice]', err)

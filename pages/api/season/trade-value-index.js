@@ -2,7 +2,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import fs from 'fs'
 import path from 'path'
 import { getSportConfig, getPlayerFile } from '@/config/sports'
-import { formatStats, formatCurrentSeasonLine, CURRENT_SEASON_REASONING_INSTRUCTION } from '@/ai/seasonStats'
+import { formatRosterLine, formatRosterConfigLine, CURRENT_SEASON_REASONING_INSTRUCTION, IL_STASH_REASONING_INSTRUCTION } from '@/ai/seasonStats'
 import { normalizeName } from '@/utils/playerName'
 
 const client = new Anthropic()
@@ -20,7 +20,7 @@ function extractJSON(text) {
   throw new Error('Malformed JSON in model response')
 }
 
-export async function getTradeValueIndex({ sport = 'nba', leagueRosters, gmProfile }) {
+export async function getTradeValueIndex({ sport = 'nba', leagueRosters, gmProfile, rosterConfig }) {
   if (!leagueRosters?.teams) throw new Error('leagueRosters required')
 
   const userTeam = leagueRosters.teams.find(t => t.isUser)
@@ -32,9 +32,7 @@ export async function getTradeValueIndex({ sport = 'nba', leagueRosters, gmProfi
 
   function lineFor(entry) {
     const p = playerByName[normalizeName(entry.name)]
-    const injuryTag = p?.injury_risk ? ' ⚠️' : ''
-    const adpTag = p?.adp != null ? `,ADP${p.adp.toFixed(1)}` : ''
-    return `${entry.name}(${entry.positions ?? '?'}${adpTag}${injuryTag}): ${p ? formatStats(p, sport) : 'no stats'}${p ? formatCurrentSeasonLine(p, sport) : ''}`
+    return formatRosterLine(entry, p, sport)
   }
 
   const myRosterLines = userTeam.roster.map(lineFor)
@@ -64,10 +62,12 @@ Pick at most 3 sell-high candidates and at most 5 buy-low targets — only inclu
 
 ${CURRENT_SEASON_REASONING_INSTRUCTION}
 
+${IL_STASH_REASONING_INSTRUCTION}
+
 Reply ONLY with raw JSON — no markdown, no extra text:
 {"headline":"1 sentence framing the state of my roster's trade value","sellHigh":[{"player":"Player Name","reason":"1-2 sentences Beane voice"}],"buyLowTargets":[{"player":"Player Name","currentTeam":"Team Name","reason":"1-2 sentences Beane voice"}]}`
 
-  const userPrompt = `${sportLabel} league · Categories: ${catLine}${gmLine}
+  const userPrompt = `${sportLabel} league · Categories: ${catLine}${gmLine}${formatRosterConfigLine(rosterConfig)}
 
 MY ROSTER (${userTeam.teamName}):
 ${myRosterLines.join('\n')}
@@ -100,10 +100,10 @@ Run the trade-value scan.`
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
 
-  const { sport = 'nba', leagueRosters, gmProfile } = req.body
+  const { sport = 'nba', leagueRosters, gmProfile, rosterConfig } = req.body
 
   try {
-    const index = await getTradeValueIndex({ sport, leagueRosters, gmProfile })
+    const index = await getTradeValueIndex({ sport, leagueRosters, gmProfile, rosterConfig })
     res.json(index)
   } catch (err) {
     console.error('[trade-value-index]', err)

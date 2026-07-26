@@ -2,7 +2,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import fs from 'fs'
 import path from 'path'
 import { getSportConfig, getPlayerFile } from '@/config/sports'
-import { formatStats, formatCurrentSeasonLine, CURRENT_SEASON_REASONING_INSTRUCTION } from '@/ai/seasonStats'
+import { formatRosterLine, formatRosterConfigLine, CURRENT_SEASON_REASONING_INSTRUCTION, IL_STASH_REASONING_INSTRUCTION } from '@/ai/seasonStats'
 import { normalizeName } from '@/utils/playerName'
 
 const client = new Anthropic()
@@ -20,7 +20,7 @@ function extractJSON(text) {
   throw new Error('Malformed JSON in model response')
 }
 
-export async function getTradeAdvice({ sport = 'nba', leagueRosters, give, receive, gmProfile }) {
+export async function getTradeAdvice({ sport = 'nba', leagueRosters, give, receive, gmProfile, rosterConfig }) {
   if (!leagueRosters?.teams) throw new Error('leagueRosters required')
   if (!give?.length || !receive?.length) throw new Error('give and receive players required')
 
@@ -57,9 +57,7 @@ export async function getTradeAdvice({ sport = 'nba', leagueRosters, give, recei
 
   function lineFor(entry) {
     const p = playerByName[normalizeName(entry.name)]
-    const injuryTag = p?.injury_risk ? ' ⚠️' : ''
-    const adpTag = p?.adp != null ? `,ADP${p.adp.toFixed(1)}` : ''
-    return `${entry.name}(${entry.positions ?? '?'}${adpTag}${injuryTag}): ${p ? formatStats(p, sport) : 'no stats'}${p ? formatCurrentSeasonLine(p, sport) : ''}`
+    return formatRosterLine(entry, p, sport)
   }
 
   const giveEntries = give.map(n => userRosterByName.get(normalizeName(n)))
@@ -86,10 +84,12 @@ I am considering giving up certain players in exchange for others from one oppon
 
 ${CURRENT_SEASON_REASONING_INSTRUCTION}
 
+${IL_STASH_REASONING_INSTRUCTION}
+
 Reply ONLY with raw JSON — no markdown, no extra text:
 {"verdict":"accept|lean-accept|lean-decline|decline","outlook":"2-3 sentence narrative","improveCategories":["PTS","AST"],"declineCategories":["BLK"],"neutralCategories":["REB"],"positionalNote":"1-2 sentences on roster balance/need","buyLowSellHighNote":"1-2 sentences on which side of the trade (if either) has the buy-low/sell-high edge","reason":"2-3 sentence Beane-voice bottom line"}`
 
-  const userPrompt = `${sportLabel} league · Categories: ${catLine}${gmLine}
+  const userPrompt = `${sportLabel} league · Categories: ${catLine}${gmLine}${formatRosterConfigLine(rosterConfig)}
 
 PROPOSED TRADE
 I give: ${giveLines.join(' | ')}
@@ -116,10 +116,10 @@ Evaluate this trade.`
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
 
-  const { sport = 'nba', leagueRosters, give, receive, gmProfile } = req.body
+  const { sport = 'nba', leagueRosters, give, receive, gmProfile, rosterConfig } = req.body
 
   try {
-    const advice = await getTradeAdvice({ sport, leagueRosters, give, receive, gmProfile })
+    const advice = await getTradeAdvice({ sport, leagueRosters, give, receive, gmProfile, rosterConfig })
     res.json(advice)
   } catch (err) {
     console.error('[trade-advice]', err)

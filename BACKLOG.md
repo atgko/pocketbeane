@@ -83,7 +83,7 @@ button for in-season updates.
 | Sub-feature | Status | Description |
 |---|---|---|
 | Waiver wire advisor | ✅ UAT complete | `/api/season/waiver-advice` — diffs all team rosters vs players.json, top 25 FAs by ADP, Claude add/drop recs |
-| Head-to-head matchup advisor | ✅ UAT complete (NBA) — ⚠️ MLB blocked 2026-07-24 | `/api/season/matchup-advice` — fetches scoreboard, finds opponent, Claude category-by-category breakdown. See "Yahoo API throttle" note below the status table — the MLB league's `/scoreboard` and `/settings` calls are currently 403ing at the Yahoo API level (not a code bug); needs a retest once that clears. |
+| Head-to-head matchup advisor | ✅ UAT complete (NBA + MLB, 2026-07-26) | `/api/season/matchup-advice` — fetches scoreboard, finds opponent, Claude category-by-category breakdown. MLB was blocked 2026-07-24 by the Yahoo API throttle (see Y-05d, resolved 2026-07-26) — retested clean after cooldown. |
 | Start/sit advisor | ✅ UAT complete (2026-07-24) | `/api/season/startsit-advice` — schedule-aware (games-this-week, back-to-back), form, and injury-aware weekly lineup recommendation. NBA and MLB (MLB pitcher signal is an approximate schedule proxy, see Y-05c). NHL/NFL return a clean "not available yet" until their data lands — no code changes needed when it does, see docs/SCHEMA.md. |
 | Trade analyzer | ✅ Built (2026-07-24) — needs browser UAT | `/api/season/trade-advice` — `getTradeAdvice()`, pure POST like the waiver advisor (no live Yahoo call, unaffected by the scoreboard/settings throttle). Give/receive text input on Season Hub; validates give against the user's roster and receive against a single opposing team's roster, then Claude evaluates net category impact, positional fit, and buy-low/sell-high signal using the same current-season-aware reasoning as the waiver advisor. Smoke-tested end-to-end via synthetic roster payload — real output, correct JSON shape. Not yet exercised against a real synced league in the browser. |
 | Trade value index | ✅ Built (2026-07-24) — needs browser UAT | `/api/season/trade-value-index` — `getTradeValueIndex()`, pure POST (no live Yahoo call). Scans the user's own roster for sell-high candidates (current-season overperformance vs. baseline/ADP) and every other team's roster for buy-low targets (real pedigree, depressed current trend). Caught and fixed a real model-output bug in testing: Claude occasionally suggested "buying low" on the user's own player — added a server-side filter dropping any `buyLowTargets` entry matching the user's own roster, on top of tightening the prompt. Smoke-tested end-to-end, fix verified. |
@@ -98,7 +98,7 @@ button for in-season updates.
 - League pulse: pure POST — uses cached standings (rank/wins/losses) + every roster to summarize the league and surface trade partners.
 - All five return structured JSON rendered in Season Hub panels: headline/moves for waiver, outlook/win-lose-tossup/keyNote for matchup, verdict/category-impact/positional/buy-sell for trade, headline/sellHigh/buyLowTargets for trade value index, headline/dominating/rebuilding/tradeOpportunities for league pulse.
 
-**Yahoo API throttle (found 2026-07-24):** the MLB league (`469.l.209547`) started 403ing on `/league/{key}/settings` and `/league/{key}/scoreboard` with "This application is not authorized to perform this action" after a burst of OAuth reconnects + `/me` polling during same-session debugging. Basic account-level calls (`/users/games`) still work, and roster/standings calls were unconfirmed either way (`sync-rosters` also failed the same way once tested). Likely a transient app/account-level rate-limit, not a permissions or code bug — retest after a cooldown period. Separately (real bug, fixed): `pages/api/auth/yahoo/me.js` was collapsing "cookie valid but a live Yahoo call failed" into the same `connected: false` as "no cookie," causing the connection banner to flicker between connected/disconnected on transient network errors — fixed to trust the cookie and treat the profile-name lookup as best-effort. All six Yahoo API routes (`sync-rosters`, `settings`, `my-leagues`, `league`, `league-full`, `sync-draft`) also had no top-level error handling, so any Yahoo failure crashed into Next's HTML error page instead of clean JSON — fixed across all six.
+**Yahoo API throttle (found 2026-07-24, resolved 2026-07-26):** the MLB league (`469.l.209547`) started 403ing on `/league/{key}/settings` and `/league/{key}/scoreboard` with "This application is not authorized to perform this action" after a burst of OAuth reconnects + `/me` polling during same-session debugging. Basic account-level calls (`/users/games`) still work, and roster/standings calls were unconfirmed either way (`sync-rosters` also failed the same way once tested). Confirmed transient — cleared on its own after a cooldown period, no code or permissions issue. Separately (real bug, fixed): `pages/api/auth/yahoo/me.js` was collapsing "cookie valid but a live Yahoo call failed" into the same `connected: false` as "no cookie," causing the connection banner to flicker between connected/disconnected on transient network errors — fixed to trust the cookie and treat the profile-name lookup as best-effort. All six Yahoo API routes (`sync-rosters`, `settings`, `my-leagues`, `league`, `league-full`, `sync-draft`) also had no top-level error handling, so any Yahoo failure crashed into Next's HTML error page instead of clean JSON — fixed across all six.
 
 **Prerequisite:** Y-01 ✓, Y-02 ✓, Y-04 ✓
 
@@ -124,20 +124,19 @@ Once this passes, flip the Y-05 status table's Trade analyzer row to "✅ UAT co
 
 ---
 
-### Y-05d · Yahoo API League-Scope Throttle (found 2026-07-24)
+### Y-05d · Yahoo API League-Scope Throttle (found 2026-07-24, resolved 2026-07-26)
 
 **Symptom:** the MLB league (`469.l.209547`) started returning 403 "This application is not authorized to perform this action" on `/league/{key}/settings` and `/league/{key}/scoreboard` (via Matchup Advisor) and on the roster/standings calls behind Season Hub's "Refresh" button (`sync-rosters` — surfaced client-side as a confusing `Unexpected token '<'` JSON-parse error before the error-handling fix below). Basic account-level calls (`/users/games`, used by the connection-status check) kept working throughout.
 
-**Likely cause:** a burst of OAuth reconnects (5+ code exchanges) plus `/me` polling in quick succession during same-session debugging of an unrelated connection-status bug (see fix below) — this pattern is consistent with a transient app/account-level Yahoo rate-limit, not a real permissions or code bug. Not confirmed with certainty since Yahoo doesn't document this behavior.
+**Confirmed cause:** a burst of OAuth reconnects (5+ code exchanges) plus `/me` polling in quick succession during same-session debugging of an unrelated connection-status bug (see fix below) — a transient app/account-level Yahoo rate-limit, not a permissions or code bug. Confirmed by retest: 403s cleared on their own after a cooldown period, with no code changes to the affected routes.
 
 **Fixed in the same session (real bugs, unrelated to the throttle itself):**
 - `pages/api/auth/yahoo/me.js` was collapsing "cookie valid but a live Yahoo verification call failed" into the same `connected: false` as "no cookie at all" — this caused the home page's connection banner to flicker between connected/disconnected on ordinary transient network errors. Fixed to trust a valid cookie as connected regardless of whether the best-effort screen-name lookup succeeds.
 - All six Yahoo API routes (`sync-rosters`, `settings`, `my-leagues`, `league`, `league-full`, `sync-draft`) had no top-level error handling — any Yahoo failure crashed into Next's HTML error page instead of returning clean JSON, which is what produced the `Unexpected token '<'` symptom. Fixed across all six to return `502 { error }`.
 
-**Still open:**
-- [ ] Retest `/league/469.l.209547/settings`, `/scoreboard`, and Season Hub's roster "Refresh" after a cooldown period (try 30–60 min, longer if still failing) — confirm whether the 403s clear on their own
-- [ ] If still failing after a real cooldown, investigate further (wrong/stale `yahooLeagueKey`, league-level Yahoo privacy/API-access setting, or an app-level Yahoo Developer Console flag) rather than assuming rate-limit
-- [ ] Once resolved, re-run the Head-to-Head Matchup Advisor UAT pass specifically against this MLB league to confirm the status table's "✅ UAT complete (NBA) — ⚠️ MLB blocked" caveat can be cleared
+**Resolved 2026-07-26:**
+- [x] Retested `/league/469.l.209547/settings`, `/scoreboard`, and Season Hub's roster "Refresh" after a cooldown period — all clear, no more 403s
+- [x] Re-ran the Head-to-Head Matchup Advisor against this MLB league — status table's "MLB blocked" caveat cleared
 
 ---
 
@@ -382,58 +381,37 @@ Start/sit advisor and trade analyzer don't exist yet — apply the same `TrendBa
 
 ---
 
-### T3-3 · Monday Morning Waiver Wire Digest Email *(priority)*
+### T3-3 · Monday Morning Waiver Wire Digest Email — superseded by T3-5, manual button removed 2026-07-26
 
-**Goal:** Deliver waiver wire recommendations to the user's inbox — the highest-value email use case from PMF research.
+**Original goal:** Deliver waiver wire recommendations to the user's inbox via a manual "Email me this week's picks" button in Season Hub (`pages/api/season/email-waiver-digest.js`, reusing `getWaiverAdvice()`).
 
-**What to build:** Manual trigger button in Season Hub: "Email me this week's waiver wire recommendations". Button triggers existing waiver wire advisor logic, formats output as email body, calls `/api/send-email`.
-
-**Note on scheduling:** Do NOT build a serverless cron inside Vercel for this. Manual trigger is correct MVP scope. Automatic weekly scheduling is a future integration point (likely Hermes calling this endpoint on a schedule), not in scope here.
-
-**Email template:**
-- Subject: `"Your Week [X] Waiver Wire Picks — [League Name]"`
-- Content: top 3 recommendations with one-line rationale each, league name clearly shown
-- PocketBeane voice — scannable digest, not a report
-
-**Acceptance criteria:**
-- [x] Button in Season Hub triggers digest generation and send
-- [ ] Email arrives with correct, current waiver wire recommendations — logic verified end-to-end (real roster → Claude recs → formatted HTML), send call verified up to Resend; not confirmed against a real inbox pending a `RESEND_API_KEY` (see T3-1)
-- [x] Works correctly for both leagues independently (correct league data, clearly labeled)
-- [x] No email saved → button shows prompt to add email instead of failing silently
-- [x] In-app confirmation shown after successful send
-
-**Implemented:** `pages/api/season/email-waiver-digest.js` — reuses `getWaiverAdvice()` (extracted from `waiver-advice.js`'s handler so the Claude prompt/roster logic isn't duplicated), formats the top 3 moves into an inline-styled HTML email (dark theme, matches app palette), computes an ISO week number for the subject line (`Your Week [X] Waiver Wire Picks — [League Name]`), sends via `sendEmail()`. Season Hub's `WaiverPanel` gained an "Email me this week's picks" action next to the existing recs, plus inline sent/error state. Verified with real `players.json` data through to the Resend call boundary.
+**Why removed:** T3-5 made the manual button redundant — the digest now fires automatically every Monday via the Hermes cron (`scripts/send-waiver-digest.mjs`), with no click required. Keeping a manual trigger around alongside a working automated one was just a second, now-untested path to the same inbox. Removed 2026-07-26: `WaiverPanel`'s button/email state in `pages/season.jsx`, and the now-unused `pages/api/season/email-waiver-digest.js` route entirely. `/gm-profile`'s saved-email setting (`getUserEmail`/`saveUserEmail`) is untouched and still there, just no longer wired to anything in Season Hub — the cron sends to a hardcoded recipient (see T3-5), not the GM Profile email.
 
 ---
 
-### T3-1/T3-2/T3-3 · UAT (pending — needs a live Resend key + browser pass)
-
-Everything below the Resend send call was verified with curl (validation errors, malformed input, missing-config paths) and the waiver logic was verified end-to-end against real `players.json` data. What's *not* yet verified — the part a real user has to check in-browser and in a real inbox:
-
-- [ ] Create a real Resend account, add `RESEND_API_KEY` (and a verified sender / `RESEND_FROM_EMAIL`) to `.env.local`
-- [ ] `/gm-profile` — add, edit, and clear an email address through the actual UI; confirm it survives a page refresh (localStorage) and the invalid-email inline error shows correctly
-- [ ] Season Hub waiver panel — with no email saved, confirm the "Add your email" prompt shows and links to `/gm-profile`; with one saved, click "Email me this week's picks" and confirm the in-app "Sent to …" confirmation appears
-- [ ] Open the actual received email — confirm it renders sanely in at least one real client (Gmail web/app is the most likely one in practice). The template uses a dark background with inline styles; several clients (Gmail, Outlook) strip or override `<body>` background color and some apply their own dark-mode color inversion, so the as-sent look may not match the in-app dark theme — check for legibility, not just that it arrived
-- [ ] Repeat the send for a second league (NBA + MLB, if both are in use) — confirm subject/league name/week number are correct per-league and nothing bleeds across leagues
-- [ ] Confirm `RESEND_API_KEY` never appears in any client-side network request (Network tab, POST to `/api/season/email-waiver-digest`) — should only ever see `to`/`leagueName`/`sport`/roster data in the request body
-
-Once this passes, flip T3-1/T3-2/T3-3's remaining unchecked acceptance criteria above and mark the trio UAT complete in the Y-05-style status table.
-
----
-
-### T3-5 · Automated Weekly Waiver Digest via Hermes Cron
+### T3-5 · Automated Weekly Waiver Digest via Hermes Cron — ✅ done 2026-07-26
 
 **Goal:** The Monday waiver wire digest (T3-3) currently requires a manual click in Season Hub every week — not useful as a season-long retention feature if the user has to remember to open the app. Make it fire automatically as part of the existing Hermes weekly pipeline (`run_weekly.py`, cron: Monday 5am, next run 2026-07-27).
 
-**Why this isn't already wired up (found 2026-07-24):** `run_weekly.py` and `/api/season/email-waiver-digest` are two independent systems today. The cron job only refreshes `players.json`/`mlb_players.json` stats and emails *the developer* a pipeline status report via Gmail — it has never touched the digest endpoint. Two real gaps block wiring them together:
-1. `/api/season/email-waiver-digest` requires the caller to hand it `leagueRosters` in the POST body — it never fetches anything itself. Only the browser (Season Hub's manual "Refresh") builds that payload today.
-2. Recipient email (`getUserEmail()`) and which-leagues-to-notify live only in browser `localStorage`. There is no server-side or file-based persistence anywhere in the app for this — the whole app is currently a stateless API layer in front of a client-only store.
+**Why this wasn't already wired up (found 2026-07-24):** `run_weekly.py` and `/api/season/email-waiver-digest` were two independent systems. The cron job only refreshed `players.json`/`mlb_players.json` stats and emailed *the developer* a pipeline status report via Gmail — it never touched the digest endpoint. Two real gaps blocked wiring them together: (1) the digest endpoint requires the caller to hand it `leagueRosters` — it never fetched anything itself; only the browser built that payload; (2) recipient email and which-leagues-to-notify lived only in browser `localStorage` — no server-side persistence.
 
-**Decision (2026-07-24):** the app will write its own server-side notification config automatically, rather than the user hand-maintaining a JSON file. When the user saves an email in `/gm-profile` and/or syncs a league via Yahoo, the app also persists `{ leagueKey, sport, leagueName, email }` server-side (a small JSON file alongside `src/data/`, written by a new lightweight API route — exact shape TBD at implementation time) so a non-browser process can read "who gets a digest for which league" without the browser being open.
+**How it was actually resolved (2026-07-26) — different from the 2026-07-24 decision above:** rather than adding a server-side notification-config file the app writes to, the new `scripts/send-waiver-digest.mjs` discovers everything live from Yahoo on each run — no config file to keep in sync. It:
+- Reads/refreshes the Yahoo token from `~/.hermes/auth.json` (the same file `run_weekly.py` already reads for its playoff-status check — turns out something upstream already persists this app's OAuth token there under `source: "pocketbeane_oauth_via_callback"`, so the bridge from browser-cookie auth to a headless, file-based token already existed; this script just keeps it refreshed and reuses it).
+- Enumerates every league the user has for a sport via Yahoo directly, filtering to only currently-active leagues (`is_game_over` false) — so old, completed leagues from past seasons don't get emailed.
+- Sends one digest per active league to a single hardcoded recipient (matching the existing `NOTIFY_TO` pattern already used for the developer status email — this is a single-user app, so a persisted multi-user config wasn't worth building).
 
-**What still needs deciding at implementation time:**
-- Whether Hermes calls a running Next.js instance (`localhost:3000` in dev, or a deployed prod URL) to reuse the existing Node/Claude waiver-advice logic as-is, vs. porting roster-fetch + name-matching + Claude-prompt + email-format logic into Python so the digest send doesn't depend on any web server being up when the cron fires at 5am (the pattern `run_weekly.py` already uses for its own Yahoo calls and Gmail send — see `yahoo_fetch()`/`send_email()`). The second is more reliable for an unattended cron but duplicates non-trivial logic across two languages.
-- How multi-league / multi-sport users are handled (loop over all leagues in the config file, one digest email per league).
+This resolved both open implementation questions from 2026-07-24: it's a standalone Node script (`.mjs`, run via `subprocess` from Python exactly like `mergeCurrentSeasonData.js` already is) so it never depends on a web server being up when the 5am cron fires — no Python port needed, since the prompt/formatting logic could stay in JS. Multi-league handling is just "loop over every active league returned by Yahoo," no stored list required.
+
+**Known duplication (accepted tradeoff):** `buildWaiverAdvice()` in the new script is a near-duplicate of `getWaiverAdvice()` in `pages/api/season/waiver-advice.js` — the latter imports via the Next.js-only `@/` alias, which plain Node can't resolve outside webpack, so true reuse wasn't possible without adding a module-alias dependency. The two must be kept in sync if the prompt or guardrails change (both are commented accordingly).
+
+**Verified 2026-07-26:** ran `node scripts/send-waiver-digest.mjs mlb` directly — real Yahoo token refresh, real roster fetch, real Claude call, real email delivered via Resend for the active MLB league (`469.l.209547`). Wired into `run_weekly.py` as `send_user_digests()`, called after the per-sport stats-refresh loop, guarded so a digest failure can never fail the pipeline.
+
+**Follow-up fixes found via this rollout (2026-07-26):**
+- `src/utils/playerName.js`'s `normalizeName()` was silently matching real, rostered players as "available free agents": Yahoo splits two-way players like Shohei Ohtani into two roster entries ("Shohei Ohtani (Pitcher)" / "Shohei Ohtani (Batter)"), and separately returns accented names (Jeremy Peña, Cristopher Sánchez, Yandy Díaz, ...) while `players.json` stores plain ASCII — neither matched. Fixed to strip trailing parentheticals and Unicode diacritics before comparison. This affects every advisor and the cron script alike, not just the waiver digest.
+- `STALENESS_DAYS` (`src/ai/seasonStats.js`) dropped from 14 to 7 to match the weekly cron cadence — a missed Monday refresh now gets flagged in that same week's digest instead of silently waiting a second missed cycle.
+- League Pulse's `max_tokens: 900` was too tight for this ~9-10 team league, truncating the model's JSON mid-response ("Malformed JSON in model response"). Bumped to 2000 in both `pages/api/season/league-pulse.js` and the cron script's copy — fixes League Pulse in the browser UI too, since they share the limit.
+- Added a Trade Opportunities section (sourced from League Pulse) to the cron digest email, below the waiver picks — wrapped so a pulse failure never blocks the waiver picks from sending.
+- Removed the manual "Email me this week's picks" button entirely (see T3-3) now that the cron covers it.
 
 **Prerequisite:** T3-1/T3-2/T3-3 UAT complete (send path proven end-to-end with a real Resend key — done 2026-07-24).
 

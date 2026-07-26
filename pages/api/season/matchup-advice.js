@@ -3,7 +3,7 @@ import { getValidToken } from '@/utils/yahooAuth'
 import fs from 'fs'
 import path from 'path'
 import { getSportConfig, getPlayerFile } from '@/config/sports'
-import { formatStats, formatCurrentSeasonLine, CURRENT_SEASON_REASONING_INSTRUCTION } from '@/ai/seasonStats'
+import { formatRosterLine, formatRosterConfigLine, CURRENT_SEASON_REASONING_INSTRUCTION } from '@/ai/seasonStats'
 import { normalizeName } from '@/utils/playerName'
 
 const client = new Anthropic()
@@ -45,7 +45,7 @@ export default async function handler(req, res) {
   const token = await getValidToken(req, res)
   if (!token) return res.status(401).json({ error: 'Not connected to Yahoo' })
 
-  const { leagueKey, sport = 'nba', leagueRosters, gmProfile } = req.body
+  const { leagueKey, sport = 'nba', leagueRosters, gmProfile, rosterConfig } = req.body
   if (!leagueKey || !leagueRosters?.teams) {
     return res.status(400).json({ error: 'leagueKey and leagueRosters required' })
   }
@@ -146,8 +146,7 @@ export default async function handler(req, res) {
   function enrichRoster(roster) {
     return roster.map(r => {
       const p = (r.playerId && playerById[r.playerId]) || playerByName[normalizeName(r.name)]
-      const injuryTag = p?.injury_risk ? ' ⚠️' : ''
-      return `${r.name}(${r.positions ?? '?'}${injuryTag}): ${p ? formatStats(p, sport) : 'no stats'}${p ? formatCurrentSeasonLine(p, sport) : ''}`
+      return formatRosterLine(r, p, sport)
     })
   }
 
@@ -166,7 +165,7 @@ export default async function handler(req, res) {
 
   const systemPrompt = `You are Billy Beane previewing a ${sportLabel} fantasy matchup.
 
-Compare both rosters player-by-player. Determine which categories my team wins, loses, or is a tossup based on the stats. Weigh CURRENT season performance over prior-season baseline when both are available — a player trending down in-season may not deliver their prior-season numbers this week, and vice versa. Give an honest 2-3 sentence matchup narrative (Beane voice — direct, data-focused) and one specific lineup or roster note for the week.
+Compare both rosters player-by-player. Determine which categories my team wins, loses, or is a tossup based on the stats. Weigh CURRENT season performance over prior-season baseline when both are available — a player trending down in-season may not deliver their prior-season numbers this week, and vice versa. A player tagged [STASHED ON IL/IL+] is not in the active lineup and contributes nothing to this week's matchup regardless of his stat line — exclude him from category projections, but don't treat him as a drop candidate on that basis alone. Give an honest 2-3 sentence matchup narrative (Beane voice — direct, data-focused) and one specific lineup or roster note for the week.
 
 All categories in loseCategories and tossupCategories must also appear in winCategories+loseCategories+tossupCategories — don't omit any league categories.
 
@@ -176,7 +175,7 @@ Reply ONLY with raw JSON — no markdown, no extra text:
 {"opponent":"Team Name","outlook":"2-3 sentence narrative","winCategories":["R","HR"],"loseCategories":["ERA","WHIP"],"tossupCategories":["RBI","AVG"],"keyNote":"1 sentence action item"}`
 
   const userPrompt = `Week ${weekNum} matchup · ${sportLabel}
-Categories: ${catLine}${gmLine}
+Categories: ${catLine}${gmLine}${formatRosterConfigLine(rosterConfig)}
 
 MY TEAM (${userTeam.teamName} — W${userTeam.wins}/L${userTeam.losses}):
 ${myRosterLines.join('\n')}
