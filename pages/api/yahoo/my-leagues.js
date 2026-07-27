@@ -61,6 +61,18 @@ export default async function handler(req, res) {
   } catch (err) {
     const cause = err.cause?.message ?? err.cause ?? ''
     console.error('[my-leagues] error:', err.message, cause ? `| cause: ${cause}` : '')
+
+    // Same signal as sync-rosters.js/sync-draft.js: once the account's most
+    // recent season for this sport is fully concluded, Yahoo 403s the whole
+    // games;game_codes={sport}/leagues lookup, not just per-league calls —
+    // there's nothing "current" left to list until the next season opens.
+    // Surface that distinctly instead of silently returning an empty list
+    // the client can't tell apart from "you just have no leagues yet."
+    const is403 = /\b403\b/.test(err.message) || /\b403\b/.test(cause)
+    if (is403) {
+      return res.json({ leagues: [], seasonOver: true })
+    }
+
     res.status(502).json({ error: cause ? `${err.message}: ${cause}` : err.message })
   }
 }

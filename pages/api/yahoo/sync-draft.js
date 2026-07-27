@@ -144,6 +144,17 @@ export default async function handler(req, res) {
   } catch (err) {
     const cause = err.cause?.message ?? err.cause ?? ''
     console.error('[sync-draft] error:', err.message, cause ? `| cause: ${cause}` : '')
+
+    // Same season-over signal as sync-rosters.js: once a league's game/season
+    // is fully concluded, Yahoo 403s league-scoped calls like draftresults and
+    // the games;teams lookup for good (not the transient Y-05d throttle,
+    // which cleared on its own). Surface it as a 200 so the client can
+    // persist it instead of showing a raw Yahoo error on every click.
+    const is403 = /\b403\b/.test(err.message) || /\b403\b/.test(cause)
+    if (is403) {
+      return res.json({ isSeasonOver: true, seasonOverReason: '403' })
+    }
+
     res.status(502).json({ error: cause ? `${err.message}: ${cause}` : err.message })
   }
 }

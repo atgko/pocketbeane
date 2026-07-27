@@ -55,8 +55,12 @@ export default async function handler(req, res) {
     yahooFetch(token, `/users;use_login=1/games;game_codes=${sport}/teams`),
   ])
 
-  // Identify the user's team within this league
+  // Identify the user's team within this league, and whether Yahoo's game
+  // resource has this sport/season marked over (is_game_over, on gameArr[0]
+  // from this same call — same field send-waiver-digest.mjs already uses to
+  // skip finished leagues in the cron digest).
   let userTeamKey = null
+  let gameIsOver = false
   const userGames = userTeamsRaw?.fantasy_content?.users?.[0]?.user?.[1]?.games
   const userGameCount = userGames?.count ?? 0
   outer: for (let i = 0; i < userGameCount; i++) {
@@ -68,10 +72,22 @@ export default async function handler(req, res) {
       const meta = extractMeta(teamsObj[j]?.team?.[0])
       if (meta.team_key?.split('.t.')?.[0] === leagueKey) {
         userTeamKey = meta.team_key
+        gameIsOver = Boolean(gameArr[0]?.is_game_over)
         break outer
       }
     }
   }
+
+  // Cross-check against the league resource's own fields — the standings
+  // call above already returns the base league meta at league[0] alongside
+  // the standings subresource we parse below, so this costs nothing extra.
+  // is_finished is Yahoo's per-league "season concluded" flag; end_date lets
+  // us catch it independently in case is_finished/is_game_over lag behind
+  // the actual date (both are seen in the wild being slow to flip).
+  const leagueMeta = standingsRaw?.fantasy_content?.league?.[0] ?? {}
+  const leagueIsFinished = Boolean(leagueMeta.is_finished)
+  const leaguePastEndDate = Boolean(leagueMeta.end_date) && new Date(`${leagueMeta.end_date}T00:00:00Z`) < new Date()
+  const isSeasonOver = gameIsOver || leagueIsFinished || leaguePastEndDate
 
   // Parse standings into a lookup map
   const standingsTeams = standingsRaw?.fantasy_content?.league?.[1]?.standings?.[0]?.teams
@@ -138,10 +154,28 @@ export default async function handler(req, res) {
   const matched = teams.reduce((sum, t) => sum + t.roster.filter(p => p.playerId).length, 0)
   const total = teams.reduce((sum, t) => sum + t.roster.length, 0)
 
-  res.json({ teams, userTeamKey, matched, total, syncedAt: new Date().toISOString() })
+  res.json({ teams, userTeamKey, matched, total, isSeasonOver, syncedAt: new Date().toISOString() })
   } catch (err) {
     const cause = err.cause?.message ?? err.cause ?? ''
     console.error('[sync-rosters] error:', err.message, cause ? `| cause: ${cause}` : '')
+
+    // Yahoo returns "403 This application is not authorized to perform this
+    // action" on /teams/roster and /standings once a league's season has
+    // fully concluded and its live resources are no longer reachable — not
+    // just the mid-season /scoreboard 403 we originally saw. It's distinct
+    // from the transient throttle in Y-05d (which cleared on its own after a
+    // cooldown, no code involved): a league that's genuinely done stays 403
+    // forever, since it never gets a new game/season. There's no way to read
+    // is_finished/end_date to confirm normally, since the very call that
+    // would carry that meta is what's 403ing — so treat a 403 on either
+    // league-scoped call here as the season-over signal itself. Respond 200
+    // (not an error) so the client persists isSeasonOver instead of just
+    // surfacing a scary error and retrying forever.
+    const is403 = /\b403\b/.test(err.message) || /\b403\b/.test(cause)
+    if (is403) {
+      return res.json({ isSeasonOver: true, seasonOverReason: '403', syncedAt: new Date().toISOString() })
+    }
+
     res.status(502).json({ error: cause ? `${err.message}: ${cause}` : err.message })
   }
 }

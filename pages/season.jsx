@@ -1201,10 +1201,111 @@ function TeamPulsePanel({ league, rosters }) {
   )
 }
 
+const TROPHY_BY_RANK = { 1: '🥇', 2: '🥈', 3: '🥉' }
+
+// One-time end-of-season recap: fires exactly once per league (guarded by
+// `league.seasonRecap` already being set, and an in-flight ref so a fast
+// re-render can't double-fire), built from whatever roster/standings
+// snapshot was last cached before Yahoo locked the league down — there's no
+// live pull possible once a season's over, so this is as final as it gets.
+function SeasonRecapPanel({ league, rosters }) {
+  const { setSeasonRecap } = useLeagueStore()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const attempted = useRef(false)
+  const recap = league.seasonRecap
+  const hasFinalRoster = Boolean(rosters?.teams?.length)
+
+  useEffect(() => {
+    if (recap || !hasFinalRoster || attempted.current) return
+    attempted.current = true
+    setLoading(true)
+    setError(null)
+
+    async function run() {
+      try {
+        const sport = league.config.sport ?? 'nba'
+        const res = await fetch('/api/season/season-recap', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sport,
+            leagueRosters: rosters,
+            gmProfile: {
+              injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
+              draftStrategy: league.config.philosophy?.draftStrategy,
+            },
+          }),
+        })
+        const data = await res.json()
+        if (!res.ok) throw new Error(data.error || 'Recap failed')
+        setSeasonRecap(league.id, data)
+      } catch (err) {
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+    run()
+  }, [recap, hasFinalRoster])
+
+  if (!hasFinalRoster) return null
+
+  return (
+    <div className="bg-surface border border-border rounded-lg px-5 py-6 mb-6">
+      {loading && !recap && (
+        <p className="text-xs text-gray-500 font-mono animate-pulse">Putting together your season recap…</p>
+      )}
+      {error && !recap && !loading && (
+        <p className="text-xs text-red-400 font-mono">{error}</p>
+      )}
+      {recap && (
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            {TROPHY_BY_RANK[recap.rank] && (
+              <span className="text-4xl leading-none">{TROPHY_BY_RANK[recap.rank]}</span>
+            )}
+            <div>
+              <p className="text-sm font-semibold text-gray-200">
+                Finished #{recap.rank ?? '?'} of {recap.numTeams} — {recap.teamName}
+              </p>
+              <p className="text-xs text-gray-500 font-mono">
+                {recap.wins}-{recap.losses}{recap.ties ? `-${recap.ties}` : ''}
+              </p>
+            </div>
+          </div>
+
+          {recap.headline && <p className="text-sm text-gray-300 italic leading-relaxed">{recap.headline}</p>}
+          {recap.summary && <p className="text-xs text-gray-400 leading-relaxed">{recap.summary}</p>}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-border">
+            {recap.strengths && (
+              <p className="text-xs text-gray-400 leading-relaxed">
+                <span className="text-green-400 font-mono">What worked — </span>{recap.strengths}
+              </p>
+            )}
+            {recap.weaknesses && (
+              <p className="text-xs text-gray-400 leading-relaxed">
+                <span className="text-red-400 font-mono">What held you back — </span>{recap.weaknesses}
+              </p>
+            )}
+          </div>
+
+          {recap.lookAhead && (
+            <p className="text-xs text-gray-500 leading-relaxed border-t border-border pt-3">
+              <span className="text-blue-400 font-mono">Next season — </span>{recap.lookAhead}
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function SeasonHub() {
   const router = useRouter()
   const league = useLeagueStore((s) => s.getActiveLeague())
-  const { setLeagueRosters } = useLeagueStore()
+  const { setLeagueRosters, updateLeagueConfig } = useLeagueStore()
   const yahoo = useYahooAuth()
   const [mounted, setMounted] = useState(false)
   const [syncing, setSyncing] = useState(false)
@@ -1215,6 +1316,10 @@ export default function SeasonHub() {
 
   const canSync = Boolean(league?.config.yahooLeagueKey)
   const rosters = league?.leagueRosters ?? null
+  // Either surface can learn the season is over first (this page's own sync,
+  // or the home page's draft Re-sync hitting the same Yahoo 403) — trust
+  // whichever one has already found out.
+  const seasonOver = Boolean(league?.config.isSeasonOver) || Boolean(rosters?.isSeasonOver)
 
   async function handleSync() {
     if (!league?.config.yahooLeagueKey) return
@@ -1225,7 +1330,12 @@ export default function SeasonHub() {
       const res = await fetch(`/api/yahoo/sync-rosters?leagueKey=${encodeURIComponent(league.config.yahooLeagueKey)}&sport=${sport}`)
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Sync failed')
-      setLeagueRosters(league.id, data)
+      // On a season-over detection, the response has no `teams` (the call
+      // that would carry them is exactly what 403'd) — merge onto whatever
+      // was last cached instead of overwriting it, so the final roster/
+      // standings snapshot survives for the season recap below.
+      setLeagueRosters(league.id, data.isSeasonOver ? { ...(rosters ?? {}), ...data } : data)
+      if (data.isSeasonOver) updateLeagueConfig(league.id, { isSeasonOver: true })
     } catch (err) {
       setSyncError(err.message)
     } finally {
@@ -1236,12 +1346,12 @@ export default function SeasonHub() {
   const isArchived = league?.status === 'complete'
 
   useEffect(() => {
-    if (!mounted || !canSync || !yahoo.connected || autoSyncAttempted.current || isArchived) return
+    if (!mounted || !canSync || !yahoo.connected || autoSyncAttempted.current || isArchived || seasonOver) return
     if (isSyncStale(rosters?.syncedAt)) {
       autoSyncAttempted.current = true
       handleSync()
     }
-  }, [mounted, yahoo.connected, canSync, isArchived])
+  }, [mounted, yahoo.connected, canSync, isArchived, seasonOver])
 
   if (!mounted) return null
 
@@ -1272,14 +1382,22 @@ export default function SeasonHub() {
                 ← Home
               </button>
             </div>
+            {seasonOver && <SeasonRecapPanel league={league} rosters={rosters} />}
             <div className="bg-surface border border-border rounded-lg px-5 py-6">
               <p className="text-sm font-semibold text-gray-300 mb-1.5">Season complete</p>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                This league is archived, so the season advisors (waiver wire, matchup, start/sit) aren't
-                shown here — they run against live rosters, and an archived league's roster snapshot is
-                frozen from whenever it was archived. To keep managing this league, unarchive it from the
-                home page first.
-              </p>
+              {seasonOver ? (
+                <p className="text-xs text-gray-500 leading-relaxed">
+                  This league's season has ended, so the Season Hub tools aren't available for it anymore
+                  — Yahoo no longer serves any live data for it, archived or not.
+                </p>
+              ) : (
+                <p className="text-xs text-gray-500 leading-relaxed">
+                  This league is archived, so the season advisors (waiver wire, matchup, start/sit) aren't
+                  shown here — they run against live rosters, and an archived league's roster snapshot is
+                  frozen from whenever it was archived. To keep managing this league, unarchive it from the
+                  home page first.
+                </p>
+              )}
             </div>
           </div>
         </main>
@@ -1323,6 +1441,21 @@ export default function SeasonHub() {
             <div className="flex items-center gap-2 mb-10 text-xs font-mono">
               {syncing ? (
                 <span className="text-gray-500">Syncing rosters…</span>
+              ) : seasonOver ? (
+                <>
+                  <span className="text-gray-600">
+                    {rosters?.syncedAt ? `Checked ${formatSyncedAt(rosters.syncedAt)} · season complete` : 'Season complete'}
+                  </span>
+                  {yahoo.connected && (
+                    <button
+                      onClick={handleSync}
+                      className="text-gray-700 hover:text-gray-400 transition-colors ml-1"
+                      title="Force a re-check with Yahoo — the season won't have restarted, this is just a safety valve"
+                    >
+                      · Re-check
+                    </button>
+                  )}
+                </>
               ) : rosters ? (
                 <>
                   <span className="text-gray-600">
@@ -1356,7 +1489,19 @@ export default function SeasonHub() {
           )}
 
           {/* Active advisors — only when rosters are available */}
-          {rosters ? (
+          {seasonOver ? (
+            <div className="mb-8">
+              <SeasonRecapPanel league={league} rosters={rosters} />
+              <p className="text-xs font-mono text-gray-600 uppercase tracking-wider mb-3">Season Advisors</p>
+              <div className="bg-surface border border-border rounded-lg px-5 py-6">
+                <p className="text-sm font-semibold text-gray-300 mb-1.5">Season complete</p>
+                <p className="text-xs text-gray-500 leading-relaxed">
+                  The season has ended, so the Season Hub tools aren't available for this league anymore.
+                  Come back once a new season starts and this league is re-synced.
+                </p>
+              </div>
+            </div>
+          ) : rosters ? (
             <div className="space-y-4 mb-8">
               <p className="text-xs font-mono text-gray-600 uppercase tracking-wider mb-3">Season Advisors</p>
               <WaiverPanel league={league} rosters={rosters} />

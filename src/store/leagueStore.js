@@ -117,6 +117,13 @@ const useLeagueStore = create(
           leagues: state.leagues.map((l) => (l.id === id ? { ...l, draftDNA: dna } : l)),
         })),
 
+      // One-time end-of-season recap (see season-recap.js) — generated once
+      // from the last cached roster snapshot and never regenerated after.
+      setSeasonRecap: (id, recap) =>
+        set((state) => ({
+          leagues: state.leagues.map((l) => (l.id === id ? { ...l, seasonRecap: recap } : l)),
+        })),
+
       // Stashes the outgoing snapshot's per-team standing (rank/wins/losses/
       // ties, keyed by teamKey) as previousStandings before overwriting —
       // Team Pulse's trend arrow diffs the new sync against this. A league's

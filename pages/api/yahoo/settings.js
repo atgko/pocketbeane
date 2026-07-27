@@ -58,6 +58,18 @@ export default async function handler(req, res) {
   } catch (err) {
     const cause = err.cause?.message ?? err.cause ?? ''
     console.error('[yahoo/settings] error:', err.message, cause ? `| cause: ${cause}` : '')
+
+    // Same signal as sync-rosters.js/sync-draft.js/my-leagues.js: Yahoo 403s
+    // /league/{key}/settings once that league's season is fully concluded.
+    // Unlike those endpoints there's no cached snapshot to fall back on here
+    // — this is the entry point for adding a league PocketBeane has never
+    // seen before — so just tell the client plainly instead of forwarding
+    // the raw Yahoo error text.
+    const is403 = /\b403\b/.test(err.message) || /\b403\b/.test(cause)
+    if (is403) {
+      return res.json({ seasonOver: true, error: "This league's season has already ended, so Yahoo no longer allows syncing its settings." })
+    }
+
     res.status(502).json({ error: cause ? `${err.message}: ${cause}` : err.message })
   }
 }

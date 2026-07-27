@@ -68,7 +68,14 @@ export default function Home() {
 
   const handleEnterSeason = (id) => {
     setActiveLeague(id)
-    setLeagueStatus(id, 'season')
+    // Only auto-promote into 'season' status from an earlier stage (e.g.
+    // right after a draft syncs) — an already-archived ('complete') league
+    // must stay archived just from being viewed, or every visit to a
+    // concluded league's Season Hub would silently un-archive it.
+    const league = leagues.find(l => l.id === id)
+    if (league?.status !== 'complete') {
+      setLeagueStatus(id, 'season')
+    }
     router.push('/season')
   }
 
@@ -297,6 +304,11 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
       const res = await fetch(`/api/yahoo/sync-draft?leagueKey=${encodeURIComponent(config.yahooLeagueKey)}&sport=${sport}`)
       const data = await res.json()
       if (!res.ok) throw new Error(data.error ?? 'Sync failed')
+      if (data.isSeasonOver) {
+        updateLeagueConfig(league.id, { isSeasonOver: true })
+        setSyncState({ loading: false, error: null })
+        return
+      }
       importDraft(league.id, data.picks, data.draftPosition)
       setSyncState({ loading: false, error: null })
     } catch (err) {
@@ -367,7 +379,9 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
                   <span className="text-xs text-gray-400 font-mono">
                     Yahoo: <span className="text-gray-300">{config.yahooLeagueName ?? config.yahooLeagueKey}</span>
                   </span>
-                  {config.draftSynced ? (
+                  {config.isSeasonOver ? (
+                    <span className="text-xs text-gray-600 font-mono">· Season complete</span>
+                  ) : config.draftSynced ? (
                     <>
                       <span className="text-xs text-gray-600 font-mono">· Picks imported</span>
                       <button
