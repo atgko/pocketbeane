@@ -572,13 +572,35 @@ const VERDICT_STYLES = {
   decline: { label: 'Decline', className: 'bg-red-900/40 text-red-400' },
 }
 
-function parsePlayerList(text) {
-  return text.split(',').map(s => s.trim()).filter(Boolean)
+// Toggleable player button shared by both sides of the Trade Analyzer's
+// roster pickers — selected players get the same pick-accent treatment used
+// for primary actions elsewhere in this file.
+function TradePlayerToggle({ player, selected, onToggle }) {
+  const hurt = player.status && player.status !== 'active'
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      className={`w-full text-left text-xs px-2.5 py-1.5 rounded border transition-colors ${
+        selected
+          ? 'bg-pick/10 border-pick/40 text-pick'
+          : 'bg-background border-border text-gray-400 hover:border-gray-600'
+      }`}
+    >
+      {player.name}
+      {player.positions && <span className="ml-1.5 font-mono text-[10px] text-gray-600">{player.positions}</span>}
+      {hurt && <span className="ml-1.5 font-mono text-[10px] text-yellow-500/80">{player.status}</span>}
+    </button>
+  )
 }
 
 function TradeAnalyzerPanel({ league, rosters }) {
-  const [giveInput, setGiveInput] = useState('')
-  const [receiveInput, setReceiveInput] = useState('')
+  const userTeam = rosters.teams.find(t => t.isUser)
+  const otherTeams = rosters.teams.filter(t => !t.isUser)
+
+  const [give, setGive] = useState([])
+  const [receiveTeamKey, setReceiveTeamKey] = useState('')
+  const [receive, setReceive] = useState([])
   const [advice, setAdvice] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -590,11 +612,24 @@ function TradeAnalyzerPanel({ league, rosters }) {
   }
   const rosterConfig = { ilSlots: league.config.ilSlots, ilPlusSlots: league.config.ilPlusSlots }
 
+  const receiveTeam = otherTeams.find(t => t.teamKey === receiveTeamKey) ?? null
+
+  function toggleGive(name) {
+    setGive(prev => prev.includes(name) ? prev.filter(n => n !== name) : [...prev, name])
+  }
+
+  function toggleReceive(name) {
+    setReceive(prev => prev.includes(name) ? prev.filter(n => n !== name) : [...prev, name])
+  }
+
+  function handleReceiveTeamChange(teamKey) {
+    setReceiveTeamKey(teamKey)
+    setReceive([]) // a trade only involves one opposing team — switching resets the picks
+  }
+
   async function handleGetAdvice() {
-    const give = parsePlayerList(giveInput)
-    const receive = parsePlayerList(receiveInput)
     if (!give.length || !receive.length) {
-      setError('Enter at least one player on each side of the trade.')
+      setError('Pick at least one player on each side of the trade.')
       return
     }
     setLoading(true)
@@ -622,30 +657,54 @@ function TradeAnalyzerPanel({ league, rosters }) {
       <div className="mb-3">
         <p className="text-sm font-semibold text-gray-200">Trade Analyzer</p>
         <p className="text-xs text-gray-500 mt-0.5">
-          Enter a give/receive to see the net category impact, positional fit, and buy-low/sell-high signal.
+          Pick players from your roster and an opponent's to see the net category impact, positional fit, and buy-low/sell-high signal.
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
         <div>
-          <label className="text-[10px] font-mono text-gray-600 uppercase tracking-wider">You give</label>
-          <input
-            type="text"
-            value={giveInput}
-            onChange={(e) => setGiveInput(e.target.value)}
-            placeholder="Player Name, Player Name"
-            className="mt-1 w-full bg-background border border-border rounded px-3 py-2 text-xs text-gray-200 placeholder:text-gray-700 focus:outline-none focus:border-pick/50"
-          />
+          <label className="text-[10px] font-mono text-gray-600 uppercase tracking-wider">
+            You give {give.length > 0 && <span className="text-pick">({give.length})</span>}
+          </label>
+          <div className="mt-1 space-y-1 max-h-64 overflow-y-auto pr-1">
+            {userTeam?.roster.map(p => (
+              <TradePlayerToggle
+                key={p.playerId ?? p.name}
+                player={p}
+                selected={give.includes(p.name)}
+                onToggle={() => toggleGive(p.name)}
+              />
+            ))}
+          </div>
         </div>
         <div>
-          <label className="text-[10px] font-mono text-gray-600 uppercase tracking-wider">You receive</label>
-          <input
-            type="text"
-            value={receiveInput}
-            onChange={(e) => setReceiveInput(e.target.value)}
-            placeholder="Player Name, Player Name"
-            className="mt-1 w-full bg-background border border-border rounded px-3 py-2 text-xs text-gray-200 placeholder:text-gray-700 focus:outline-none focus:border-pick/50"
-          />
+          <label className="text-[10px] font-mono text-gray-600 uppercase tracking-wider">
+            You receive {receive.length > 0 && <span className="text-pick">({receive.length})</span>}
+          </label>
+          <select
+            value={receiveTeamKey}
+            onChange={(e) => handleReceiveTeamChange(e.target.value)}
+            className="mt-1 w-full bg-background border border-border rounded px-2.5 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-pick/50"
+          >
+            <option value="">Select opponent…</option>
+            {otherTeams.map(t => (
+              <option key={t.teamKey} value={t.teamKey}>{t.teamName}</option>
+            ))}
+          </select>
+          <div className="mt-1.5 space-y-1 max-h-56 overflow-y-auto pr-1">
+            {receiveTeam ? (
+              receiveTeam.roster.map(p => (
+                <TradePlayerToggle
+                  key={p.playerId ?? p.name}
+                  player={p}
+                  selected={receive.includes(p.name)}
+                  onToggle={() => toggleReceive(p.name)}
+                />
+              ))
+            ) : (
+              <p className="text-xs text-gray-600 px-1 py-1">Pick an opponent to see their roster.</p>
+            )}
+          </div>
         </div>
       </div>
 
