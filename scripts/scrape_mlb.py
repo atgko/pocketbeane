@@ -1,10 +1,23 @@
 #!/usr/bin/env python3
-"""MLB scraper — reads pre-downloaded Baseball Reference HTML files and ESPN
-injury API, produces PocketBeane-compatible current-season JSON for the merge step.
+"""MLB scraper — pulls live season stats from the public MLB Stats API
+(statsapi.mlb.com, no auth required) and ESPN injury data, produces
+PocketBeane-compatible current-season JSON for the merge step.
+
+Replaces the original Baseball Reference HTML scraper (P-02, BACKLOG.md):
+that version read pre-downloaded bbref-batting.html/bbref-pitching.html
+snapshots that nothing ever re-fetched, so every weekly run just re-stamped
+the same July 6 numbers with a fresh as_of_date — real data never moved,
+only the (formerly trustworthy) "how fresh is this" label did.
 
 Usage:
   python scripts/scrape_mlb.py
   python scripts/scrape_mlb.py --date 2026-07-07
+  python scripts/scrape_mlb.py --season 2026
+
+Requires `truststore` (pip install truststore) on machines where the
+bundled OpenSSL trust store rejects statsapi.mlb.com's chain with
+"Basic Constraints of CA cert not marked critical" — same fix already
+applied in fetch_mlb_schedule.py and run_weekly.py's Yahoo calls.
 """
 
 import json
@@ -14,16 +27,32 @@ import sys
 import unicodedata
 from datetime import date
 from urllib.error import URLError
+from urllib.parse import urlencode
 from urllib.request import Request, urlopen
+
+try:
+    import truststore
+    truststore.inject_into_ssl()
+except ImportError:
+    pass  # fall back to default verification; fine on machines without the quirk above
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 DATA_DIR = os.path.join(REPO_ROOT, 'src', 'data')
 UPDATES_DIR = os.path.join(REPO_ROOT, 'data-updates')
-BATTING_FILE = os.path.join(os.path.dirname(__file__), 'bbref-batting.html')
-PITCHING_FILE = os.path.join(os.path.dirname(__file__), 'bbref-pitching.html')
 PLAYERS_FILE = os.path.join(DATA_DIR, 'mlb_players.json')
 
+STATS_API = 'https://statsapi.mlb.com/api/v1/stats'
 ESPN_INJURIES_API = 'https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/injuries'
+MLB_SPORT_ID = 1
+PAGE_LIMIT = 1000
+
+# A real full-season player pool is ~650-750 per group. Anything far below
+# that means the API came back short/empty — don't silently feed a broken
+# response into the merge step (same defensive-threshold philosophy as
+# fetch_mlb_schedule.py's MIN_GAMES_THRESHOLD).
+MIN_HITTERS = 300
+MIN_PITCHERS = 300
+
 
 # ---------------------------------------------------------------------------
 # Name normalization — matches build-players/build-mlb-players convention
@@ -44,7 +73,7 @@ def normalize_name(raw: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# ESPN injury fetch
+# ESPN injury fetch (unchanged — already a live API, not part of P-02)
 # ---------------------------------------------------------------------------
 def fetch_espn_injuries():
     req = Request(ESPN_INJURIES_API, headers={
@@ -105,40 +134,57 @@ def build_injury_map(espn_data) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# HTML table parser (unchanged from prior T1-2)
+# MLB Stats API fetch
 # ---------------------------------------------------------------------------
-def parse_table(html_path: str) -> list:
-    with open(html_path, 'r', encoding='utf-8') as f:
-        html = f.read()
-    m = re.search(r'<table[^>]+id="players_standard_(batting|pitching)"[^>]*>(.*?)</table>', html, re.DOTALL)
-    if not m:
-        raise SystemExit(f'Could not find stats table in {html_path}')
-    rows = re.findall(r'<tr[^>]*>(.*?)</tr>', m.group(2), re.DOTALL)
-    headers = re.findall(r'data-stat="([^"]+)"', rows[0])
+def fetch_stats_group(group: str, season: int) -> list:
+    """Fetch every player's season stat line for `group` ('hitting' or
+    'pitching'), paginating if the league's full player pool exceeds one
+    page. `playerPool=all` is required — without it the API defaults to a
+    qualified-leaders-only subset (~150 players instead of the full ~700)."""
+    splits = []
+    offset = 0
+    while True:
+        params = {
+            'stats': 'season',
+            'group': group,
+            'season': season,
+            'sportId': MLB_SPORT_ID,
+            'limit': PAGE_LIMIT,
+            'offset': offset,
+            'playerPool': 'all',
+        }
+        req = Request(f'{STATS_API}?{urlencode(params)}', headers={
+            'User-Agent': 'Mozilla/5.0 (compatible; PocketBeane/1.0)',
+            'Accept': 'application/json',
+        })
+        with urlopen(req, timeout=30) as resp:
+            data = json.loads(resp.read().decode('utf-8'))
+
+        page = data.get('stats', [{}])[0]
+        page_splits = page.get('splits', [])
+        splits.extend(page_splits)
+
+        total = page.get('totalSplits', len(splits))
+        if len(splits) >= total or not page_splits:
+            break
+        offset += PAGE_LIMIT
+
     players = []
     seen = set()
-    for row in rows[1:]:
-        cells = re.findall(r'<(?:th|td)[^>]*>(.*?)</(?:th|td)>', row, re.DOTALL)
-        if len(cells) < len(headers):
-            continue
-        entry = {}
-        for i, h in enumerate(headers):
-            val = re.sub(r'<[^>]+>', '', cells[i]).strip()
-            if val == '':
-                val = None
-            entry[h] = val
-        raw_name = entry.get('name_display')
+    for split in splits:
+        player = split.get('player', {})
+        raw_name = player.get('fullName')
         if not raw_name:
             continue
         norm = normalize_name(raw_name)
         if norm in seen:
             continue
         seen.add(norm)
-        players.append({'raw_name': raw_name, 'norm_name': norm, 'data': entry})
+        players.append({'raw_name': raw_name, 'norm_name': norm, 'stat': split.get('stat', {})})
     return players
 
 
-def parse_float(val: str):
+def parse_float(val):
     if val is None:
         return None
     try:
@@ -147,33 +193,35 @@ def parse_float(val: str):
         return None
 
 
-def parse_int(val: str):
+def parse_int(val):
     if val is None:
         return None
     try:
         return int(val)
-    except ValueError:
+    except (ValueError, TypeError):
         return None
 
 
 # ---------------------------------------------------------------------------
-# Build hitter / pitcher records
+# Build hitter / pitcher records — output field names unchanged from the
+# Baseball Reference version, so mergeCurrentSeasonData.js/calculateTrend.js
+# need no changes downstream.
 # ---------------------------------------------------------------------------
-def build_hitter(e: dict) -> dict:
+def build_hitter(stat: dict) -> dict:
     return {
         'position_type': 'hitter',
-        'avg': parse_float(e.get('b_batting_avg')),
-        'obp': parse_float(e.get('b_onbase_perc')),
-        'slg': parse_float(e.get('b_slugging_perc')),
-        'ops': parse_float(e.get('b_onbase_plus_slugging')),
-        'hr': parse_int(e.get('b_hr')),
-        'rbi': parse_int(e.get('b_rbi')),
-        'r': parse_int(e.get('b_r')),
-        'sb': parse_int(e.get('b_sb')),
-        'bb': parse_int(e.get('b_bb')),
-        'so': parse_int(e.get('b_so')),
-        'pa': parse_int(e.get('b_pa')),
-        'g': parse_int(e.get('b_games')),
+        'avg': parse_float(stat.get('avg')),
+        'obp': parse_float(stat.get('obp')),
+        'slg': parse_float(stat.get('slg')),
+        'ops': parse_float(stat.get('ops')),
+        'hr': parse_int(stat.get('homeRuns')),
+        'rbi': parse_int(stat.get('rbi')),
+        'r': parse_int(stat.get('runs')),
+        'sb': parse_int(stat.get('stolenBases')),
+        'bb': parse_int(stat.get('baseOnBalls')),
+        'so': parse_int(stat.get('strikeOuts')),
+        'pa': parse_int(stat.get('plateAppearances')),
+        'g': parse_int(stat.get('gamesPlayed')),
         'trend': None,
         'injury_status': None,
         'injury_note': None,
@@ -182,19 +230,19 @@ def build_hitter(e: dict) -> dict:
     }
 
 
-def build_pitcher(e: dict) -> dict:
+def build_pitcher(stat: dict) -> dict:
     return {
         'position_type': 'pitcher',
-        'w': parse_int(e.get('p_w')),
-        'l': parse_int(e.get('p_l')),
-        'sv': parse_int(e.get('p_sv')),
-        'era': parse_float(e.get('p_earned_run_avg')),
-        'whip': parse_float(e.get('p_whip')),
-        'so': parse_int(e.get('p_so')),
-        'ip': parse_float(e.get('p_ip')),
-        'bb': parse_int(e.get('p_bb')),
-        'g': parse_int(e.get('p_g')),
-        'gs': parse_int(e.get('p_gs')),
+        'w': parse_int(stat.get('wins')),
+        'l': parse_int(stat.get('losses')),
+        'sv': parse_int(stat.get('saves')),
+        'era': parse_float(stat.get('era')),
+        'whip': parse_float(stat.get('whip')),
+        'so': parse_int(stat.get('strikeOuts')),
+        'ip': parse_float(stat.get('inningsPitched')),
+        'bb': parse_int(stat.get('baseOnBalls')),
+        'g': parse_int(stat.get('gamesPitched')),
+        'gs': parse_int(stat.get('gamesStarted')),
         'trend': None,
         'injury_status': None,
         'injury_note': None,
@@ -208,19 +256,27 @@ def build_pitcher(e: dict) -> dict:
 # ---------------------------------------------------------------------------
 def main():
     as_of = date.today().isoformat()
-    arg_date = None
+    season = date.today().year
     for a in sys.argv[1:]:
         if a.startswith('--date='):
-            arg_date = a.split('=', 1)[1]
-    if arg_date:
-        as_of = arg_date
+            as_of = a.split('=', 1)[1]
+        elif a.startswith('--season='):
+            season = int(a.split('=', 1)[1])
 
-    if not os.path.exists(BATTING_FILE) or not os.path.exists(PITCHING_FILE):
-        raise SystemExit('Missing bbref-batting.html or bbref-pitching.html. Download them from Baseball Reference first.')
+    print(f'Fetching MLB {season} season stats from {STATS_API} ...')
+    try:
+        batters = fetch_stats_group('hitting', season)
+        pitchers = fetch_stats_group('pitching', season)
+    except (URLError, TimeoutError) as exc:
+        print(f'ERROR: MLB Stats API request failed: {exc}')
+        return 1
 
-    batters = parse_table(BATTING_FILE)
-    pitchers = parse_table(PITCHING_FILE)
-    print(f'Parsed {len(batters)} batters, {len(pitchers)} pitchers')
+    print(f'Fetched {len(batters)} batters, {len(pitchers)} pitchers')
+    if len(batters) < MIN_HITTERS or len(pitchers) < MIN_PITCHERS:
+        print(f'ERROR: only {len(batters)} batters / {len(pitchers)} pitchers returned, '
+              f'below safety thresholds ({MIN_HITTERS}/{MIN_PITCHERS}). Not proceeding — '
+              'the API likely returned a partial/empty response.')
+        return 1
 
     # Fetch ESPN injuries
     espn_data = fetch_espn_injuries()
@@ -240,19 +296,19 @@ def main():
     # Position detection: pitcher if GS>5 or SV>0; else hitter
     pitcher_norms = set()
     for row in pitchers:
-        gs = parse_int(row['data'].get('p_gs')) or 0
-        sv = parse_int(row['data'].get('p_sv')) or 0
+        gs = parse_int(row['stat'].get('gamesStarted')) or 0
+        sv = parse_int(row['stat'].get('saves')) or 0
         if gs > 5 or sv > 0:
             pitcher_norms.add(row['norm_name'])
 
     two_way_norms = set()
     for row in batters:
-        pa = parse_int(row['data'].get('b_pa')) or 0
+        pa = parse_int(row['stat'].get('plateAppearances')) or 0
         if row['norm_name'] in pitcher_norms and pa > 20:
             two_way_norms.add(row['norm_name'])
 
-    bat_by_name = {r['norm_name']: r['data'] for r in batters}
-    pit_by_name = {r['norm_name']: r['data'] for r in pitchers}
+    bat_by_name = {r['norm_name']: r['stat'] for r in batters}
+    pit_by_name = {r['norm_name']: r['stat'] for r in pitchers}
 
     for pid, pdata in by_id.items():
         norm = pid
@@ -265,36 +321,8 @@ def main():
 
         if position_type == 'hitter' and norm in bat_by_name:
             stats = build_hitter(bat_by_name[norm])
-            stats['as_of_date'] = as_of
-            if injury_available:
-                inj = injury_map.get(norm)
-                if inj:
-                    stats['injury_status'] = inj['status']
-                    stats['injury_note'] = inj['note']
-                else:
-                    stats['injury_status'] = 'healthy'
-                    stats['injury_note'] = None
-            else:
-                stats['injury_status'] = None
-                stats['injury_note'] = None
-            record = {'id': pid, 'name': pdata['name'], 'current_season': stats}
-            out_players.append(record)
         elif position_type == 'pitcher' and norm in pit_by_name:
             stats = build_pitcher(pit_by_name[norm])
-            stats['as_of_date'] = as_of
-            if injury_available:
-                inj = injury_map.get(norm)
-                if inj:
-                    stats['injury_status'] = inj['status']
-                    stats['injury_note'] = inj['note']
-                else:
-                    stats['injury_status'] = 'healthy'
-                    stats['injury_note'] = None
-            else:
-                stats['injury_status'] = None
-                stats['injury_note'] = None
-            record = {'id': pid, 'name': pdata['name'], 'current_season': stats}
-            out_players.append(record)
         else:
             skipped.append({
                 'id': pid,
@@ -304,6 +332,21 @@ def main():
                 'matched_batter': norm in bat_by_name,
                 'matched_pitcher': norm in pit_by_name,
             })
+            continue
+
+        stats['as_of_date'] = as_of
+        if injury_available:
+            inj = injury_map.get(norm)
+            if inj:
+                stats['injury_status'] = inj['status']
+                stats['injury_note'] = inj['note']
+            else:
+                stats['injury_status'] = 'healthy'
+                stats['injury_note'] = None
+        else:
+            stats['injury_status'] = None
+            stats['injury_note'] = None
+        out_players.append({'id': pid, 'name': pdata['name'], 'current_season': stats})
 
     if len(out_players) < threshold:
         print(f'WARNING: Updated {len(out_players)} players, below threshold {threshold}')
@@ -311,7 +354,7 @@ def main():
     output = {
         'as_of_date': as_of,
         'sport': 'mlb',
-        'season': '2026',
+        'season': str(season),
         'source': 'hermes_weekly_pull',
         'players_updated': len(out_players),
         'players_skipped': len(skipped),
@@ -331,8 +374,8 @@ def main():
     if skipped:
         for s in skipped[:10]:
             print(f'    skipped {s["id"]} - {s["reason"]}')
-    return output, len(out_players) < threshold
+    return 0
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
