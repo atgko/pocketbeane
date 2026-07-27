@@ -565,39 +565,47 @@ function PitchingStartsPanel({ rosters }) {
   )
 }
 
-// Buckets the -100..100 favorScore into a plain-language lean, naming
+// Turns the -100..100 favorScore into a plain-language statement, naming
 // whichever side (the user or the trade partner) the score favors.
-function favorLabel(score, partnerTeamName) {
+function favorStatement(score, partnerTeamName) {
   const magnitude = Math.abs(score)
   const who = score >= 0 ? 'You' : partnerTeamName
-  if (magnitude <= 10) return 'Roughly even trade'
-  if (magnitude <= 35) return `Slight edge: ${who}`
-  if (magnitude <= 65) return `Favors ${who}`
-  return `Strongly favors ${who}`
+  if (magnitude <= 10) return 'This is a roughly even trade'
+  if (magnitude <= 35) return `This trade slightly favors ${who}`
+  if (magnitude <= 65) return `This trade favors ${who}`
+  return `This trade strongly favors ${who}`
 }
 
-// Center-anchored meter showing which side of the trade comes out ahead —
-// works the same whether the user proposed the trade or is evaluating one
-// they were offered, since it never frames either side as "the decision."
+// A full-width neutral scale with a single arrow marker landing at the point
+// corresponding to how lopsided the trade is — works the same whether the
+// user proposed the trade or is evaluating one they were offered, since
+// nothing is "filled in" toward either side as the implied right answer.
 function TradeFavorBar({ favorScore, partnerTeamName }) {
   const score = Math.max(-100, Math.min(100, favorScore ?? 0))
-  const favorsUser = score >= 0
-  const halfWidthPct = Math.abs(score) / 2 // full range spans both halves of the track
+  const markerPct = (score + 100) / 2 // 0 = fully favors partner, 100 = fully favors user
 
   return (
     <div>
+      <p className="text-sm text-gray-200 font-medium mb-3">{favorStatement(score, partnerTeamName)}</p>
       <div className="flex items-center justify-between text-[10px] font-mono text-gray-600 uppercase tracking-wider mb-1.5">
         <span>{partnerTeamName}</span>
         <span>You</span>
       </div>
-      <div className="relative w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
-        <div className="absolute inset-y-0 left-1/2 w-px bg-gray-700" />
+      <div className="relative w-full h-1.5">
+        <div className="absolute inset-0 bg-white/10 rounded-full" />
         <div
-          className={`absolute inset-y-0 rounded-full ${favorsUser ? 'bg-pick' : 'bg-blue-500'}`}
-          style={favorsUser ? { left: '50%', width: `${halfWidthPct}%` } : { right: '50%', width: `${halfWidthPct}%` }}
+          className="absolute -translate-x-1/2 text-pick"
+          style={{
+            left: `${markerPct}%`,
+            top: '100%',
+            width: 0,
+            height: 0,
+            borderLeft: '5px solid transparent',
+            borderRight: '5px solid transparent',
+            borderBottom: '6px solid currentColor',
+          }}
         />
       </div>
-      <p className="text-xs text-gray-400 font-mono mt-1.5 text-center">{favorLabel(score, partnerTeamName)}</p>
     </div>
   )
 }
