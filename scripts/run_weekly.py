@@ -9,6 +9,7 @@ import json
 import os
 import re
 import smtplib
+import ssl
 import sys
 import subprocess
 import urllib.request
@@ -17,7 +18,17 @@ from datetime import date, timedelta
 from email.mime.text import MIMEText
 from pathlib import Path
 
+import truststore
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
+
+# Plain urllib + OpenSSL rejects this machine's antivirus HTTPS-scanning root
+# cert ("Basic Constraints of CA cert not marked critical") even though it's
+# the actual root in the local trust chain. truststore delegates verification
+# to the OS (Schannel) instead of OpenSSL's stricter manual chain-building —
+# the same trust decision the browser and Node's --use-system-ca already make
+# successfully on this machine.
+YAHOO_SSL_CONTEXT = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
 UPDATES_DIR = REPO_ROOT / 'data-updates'
 SCRAPERS = {
     'mlb': REPO_ROOT / 'scripts' / 'scrape_mlb.py',
@@ -96,7 +107,7 @@ def yahoo_fetch(token, endpoint):
         'User-Agent': 'PocketBeane/1.0',
     })
     try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
+        with urllib.request.urlopen(req, timeout=15, context=YAHOO_SSL_CONTEXT) as resp:
             return json.loads(resp.read().decode('utf-8'))
     except urllib.error.HTTPError as exc:
         return {'_http_error': exc.code, '_body': exc.read().decode('utf-8', errors='replace')}
@@ -104,55 +115,61 @@ def yahoo_fetch(token, endpoint):
         return {'_exception': str(exc)}
 
 
+def _merge_meta(fragments):
+    """Yahoo's JSON represents an object's metadata as an array of single-key
+    dicts (plus stray empty-list padding entries) instead of one flat dict."""
+    merged = {}
+    if isinstance(fragments, list):
+        for entry in fragments:
+            if isinstance(entry, dict):
+                merged.update(entry)
+    return merged
+
+
 def get_league_keys(token, sport):
-    """Return list of league keys for the given sport from Yahoo."""
+    """Return the user's active (non-completed) league keys for this sport.
+
+    Mirrors scripts/send-waiver-digest.mjs's getUserLeaguesAndTeamKeys(), the
+    proven-working reference for this same endpoint/response shape.
+    """
     result = yahoo_fetch(token, f'users;use_login=1/games;game_codes={sport}/teams')
     if '_http_error' in result or '_exception' in result:
         return []
 
     league_keys = []
     try:
-        users = result.get('fantasy_content', {}).get('users', [{}])[0].get('user', [{}])
-        for u in users:
-            if 'games' not in u:
+        user = result['fantasy_content']['users']['0']['user']
+        games = user[1]['games']
+        for i in range(games.get('count', 0)):
+            game_arr = games.get(str(i), {}).get('game', [{}])
+            if len(game_arr) < 2:
                 continue
-            games = u['games']
-            game_count = games.get('count', 0)
-            for i in range(game_count):
-                game_arr = games.get(str(i), {}).get('game', [{}])
-                # Yahoo puts metadata at index 0, content at index 1
-                if len(game_arr) < 2:
+            if game_arr[0].get('is_game_over'):
+                continue  # skip completed/past-season leagues
+            teams = game_arr[1].get('teams', {})
+            for j in range(teams.get('count', 0)):
+                team_arr = teams.get(str(j), {}).get('team', [])
+                if not team_arr:
                     continue
-                game_content = game_arr[1].get('game', {})
-                league_count = game_content.get('leagues', {}).get('count', 0)
-                for j in range(league_count):
-                    league_arr = game_content.get('leagues', {}).get(str(j), {}).get('league', [{}])
-                    if league_arr:
-                        league_meta = league_arr[0] if isinstance(league_arr[0], dict) else {}
-                        key = league_meta.get('league_key')
-                        if key:
-                            league_keys.append(key)
+                team_key = _merge_meta(team_arr[0]).get('team_key')
+                if team_key and '.t.' in team_key:
+                    league_keys.append(team_key.split('.t.')[0])
     except Exception:
         pass
-    return league_keys
+    # Dedupe while preserving order (rare multi-team-per-league edge case).
+    return list(dict.fromkeys(league_keys))
 
 
 def check_playoff_status(token, league_key):
+    """Returns (current_week, playoff_start_week) for a league, or (None, None)."""
     result = yahoo_fetch(token, f'league/{league_key}/settings')
     if '_http_error' in result or '_exception' in result:
         return None, None
     try:
-        league = result.get('fantasy_content', {}).get('league', [{}])[0].get('league', {})
-        settings = league.get('settings', {})
-        current_week = settings.get('current_week')
-        playoff_start = settings.get('start_week')  # sometimes playoff_start_week is separate
-        # Try to find playoff start week from playoff settings
-        playoff_teams = settings.get('playoff_teams')
-        # Some leagues have playoff_start_week directly
-        for k, v in settings.items():
-            if 'playoff' in k.lower() and 'week' in k.lower():
-                playoff_start = v
-        return current_week, playoff_start
+        league_arr = result['fantasy_content']['league']
+        meta = league_arr[0]
+        settings = league_arr[1].get('settings', [{}])[0]
+        return meta.get('current_week'), settings.get('playoff_start_week')
     except Exception:
         return None, None
 
@@ -211,6 +228,52 @@ def send_user_digests(sports_ok):
         print('  [send_user_digests] timed out')
     except Exception as exc:
         print(f'  [send_user_digests] unexpected error: {exc}')
+
+
+def git_commit_changes(results):
+    """Commit the data files this run actually touched. Local commit only —
+    never pushes, and a git failure here must never fail the pipeline."""
+    updated_sports = [s for s, r in results.items() if r['status'] == 'ok']
+    if not updated_sports:
+        return {'committed': False, 'reason': 'no sports updated cleanly this run'}
+
+    paths = [REPO_ROOT / 'src' / 'data' / 'mlb_schedule.json']
+    for sport in updated_sports:
+        players_file = 'mlb_players.json' if sport == 'mlb' else 'players.json'
+        paths.append(REPO_ROOT / 'src' / 'data' / players_file)
+    today_str = date.today().isoformat()
+    paths.extend(p for p in UPDATES_DIR.glob('*-current-season-*.json') if today_str in p.name)
+
+    existing = [str(p) for p in paths if p.exists()]
+    if not existing:
+        return {'committed': False, 'reason': 'no changed files found to stage'}
+
+    try:
+        subprocess.run(['git', 'add', *existing], cwd=str(REPO_ROOT), check=True, capture_output=True, text=True)
+        staged = subprocess.run(['git', 'diff', '--cached', '--quiet'], cwd=str(REPO_ROOT))
+        if staged.returncode == 0:
+            return {'committed': False, 'reason': 'no changes to commit'}
+
+        summary = ', '.join(f'{s.upper()} {results[s]["players_updated"]}' for s in updated_sports)
+        message = f'chore: weekly data update {today_str} ({summary})'
+        commit = subprocess.run(
+            ['git', 'commit', '-m', message], cwd=str(REPO_ROOT), capture_output=True, text=True,
+        )
+        if commit.returncode != 0:
+            return {'committed': False, 'reason': f'commit failed: {commit.stderr.strip()}'}
+
+        sha = subprocess.run(
+            ['git', 'rev-parse', '--short', 'HEAD'], cwd=str(REPO_ROOT), capture_output=True, text=True,
+        ).stdout.strip()
+        return {'committed': True, 'sha': sha, 'message': message}
+    except subprocess.CalledProcessError as exc:
+        return {'committed': False, 'reason': f'git add failed: {exc.stderr.strip()}'}
+
+
+def next_weekly_run(from_date):
+    """Next Monday 5am after from_date, matching the Hermes cron expr 0 5 * * 1."""
+    days_ahead = (0 - from_date.weekday()) % 7 or 7  # Monday=0; today's own run doesn't count
+    return from_date + timedelta(days=days_ahead)
 
 
 def send_email(to_addr, subject, body):
@@ -445,10 +508,24 @@ def main():
         except subprocess.TimeoutExpired:
             print(f'  [{sport}] Schedule refresh timed out')
 
+    # Commit the data files this run touched. Independent of the checks
+    # above — never lets a git failure fail the whole weekly run.
+    print(f'\n{"="*60}')
+    print('GIT COMMIT')
+    print(f'{"="*60}')
+    try:
+        git_result = git_commit_changes(results)
+    except Exception as exc:
+        git_result = {'committed': False, 'reason': f'unexpected error: {exc}'}
+    if git_result.get('committed'):
+        print(f'  Committed {git_result["sha"]}: {git_result["message"]}')
+    else:
+        print(f'  Not committed — {git_result.get("reason")}')
+
     # Build summary
     duration = (date.today() - run_start).total_seconds()
 
-    email_body = build_email_body(as_of, duration, results, token)
+    email_body = build_email_body(as_of, duration, results, token, git_result)
     subject = build_subject(results)
 
     # Always attempt to send for visibility
@@ -460,8 +537,9 @@ def main():
     for sport, res in results.items():
         print(f'{sport.upper()}: {res["status"]} — {res.get("reason", "OK")}')
 
-    print('\nNOTE: Yahoo token missing from', AUTH_PATH)
-    print('      Email test attempted — check above for credential errors.')
+    if not token:
+        print('\nNOTE: Yahoo token missing from', AUTH_PATH)
+        print('      League playoff check and league season summary were skipped.')
 
     return 0 if not any_failed else 1
 
@@ -474,7 +552,8 @@ def build_subject(results):
     return f'✅ PocketBeane — Weekly Data Update {date.today().isoformat()}'
 
 
-def build_email_body(run_date, duration, results, token):
+def build_email_body(run_date, duration, results, token, git_result):
+    next_run = next_weekly_run(date.fromisoformat(run_date))
     lines = []
     lines.append(f'PocketBeane weekly data pipeline complete.')
     lines.append(f'Date: {run_date} | Run time: {duration}s')
@@ -524,9 +603,12 @@ def build_email_body(run_date, duration, results, token):
     lines.append('')
     lines.append('─' * 40)
     lines.append('GIT STATUS')
-    lines.append('  [Not auto-committing in this run]')
+    if git_result.get('committed'):
+        lines.append(f'  Committed {git_result["sha"]}: {git_result["message"]}')
+    else:
+        lines.append(f'  Not committed — {git_result.get("reason", "unknown")}')
     lines.append('')
-    lines.append(f'Next scheduled run: Monday 2026-07-13 at 7:00 AM ET')
+    lines.append(f'Next scheduled run: Monday {next_run.isoformat()} at 5:00 AM')
 
     if any(r.get('status') == 'failed' for r in results.values()):
         failed_sport = next(s for s, r in results.items() if r.get('status') == 'failed')
@@ -544,7 +626,7 @@ def build_email_body(run_date, duration, results, token):
         lines.append(f'')
         lines.append(f'No changes were made to players.json for {failed_sport.upper()}.')
         lines.append(f'Other sports processed this week are unaffected.')
-        lines.append(f'Next retry: Monday 2026-07-13 at 7:00 AM ET')
+        lines.append(f'Next retry: Monday {next_run.isoformat()} at 5:00 AM')
 
     return '\n'.join(lines)
 
