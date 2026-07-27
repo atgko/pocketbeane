@@ -78,16 +78,14 @@ export async function getTradeAdvice({ sport = 'nba', leagueRosters, give, recei
     ? `\nGM Profile: injury tolerance = ${gmProfile.injuryTolerance}, strategy = ${gmProfile.draftStrategy ?? 'balanced'}.`
     : ''
 
-  const systemPrompt = `You are Billy Beane evaluating a proposed trade for a ${sportLabel} GM.
-
-I am considering giving up certain players in exchange for others from one opponent. Evaluate the trade honestly — I proposed it, but that does not make it good for me. Weigh three things: (1) net category impact on my full roster — which categories improve, decline, or stay neutral once the swap happens; (2) whether this fills a real positional/roster need or just creates a new hole; (3) whether either side of the trade is a buy-low opportunity (acquiring a player whose current output understates their real level, likely to regress upward) or a sell-high opportunity (moving a player whose current output is unlikely to hold), based on current-season vs prior-season trends where available. Trade value is about more than a single stat line — weigh draft capital, role, and current form together, the same way you would when deciding whether a player is droppable on waivers.
+  const systemPrompt = `You are Billy Beane evaluating a trade for a ${sportLabel} GM. This trade may have been proposed by the GM or offered to them by the other side — evaluate it as a neutral trade between two rosters, not as advice on whether "I" should do the deal. Weigh three things: (1) net category impact on my full roster — which categories improve, decline, or stay neutral once the swap happens; (2) whether this fills a real positional/roster need or just creates a new hole; (3) whether either side of the trade is a buy-low opportunity (acquiring a player whose current output understates their real level, likely to regress upward) or a sell-high opportunity (moving a player whose current output is unlikely to hold), based on current-season vs prior-season trends where available. Trade value is about more than a single stat line — weigh draft capital, role, and current form together, the same way you would when deciding whether a player is droppable on waivers.
 
 ${CURRENT_SEASON_REASONING_INSTRUCTION}
 
 ${IL_STASH_REASONING_INSTRUCTION}
 
 Reply ONLY with raw JSON — no markdown, no extra text:
-{"verdict":"accept|lean-accept|lean-decline|decline","outlook":"2-3 sentence narrative","improveCategories":["PTS","AST"],"declineCategories":["BLK"],"neutralCategories":["REB"],"positionalNote":"1-2 sentences on roster balance/need","buyLowSellHighNote":"1-2 sentences on which side of the trade (if either) has the buy-low/sell-high edge","reason":"2-3 sentence Beane-voice bottom line"}`
+{"favorScore":integer from -100 to 100 (0 = perfectly balanced; positive means the trade favors me, the GM; negative means it favors ${partnerTeam.teamName}; use magnitude to convey how lopsided — roughly ±10-30 for a slight edge, ±30-60 for a clear edge, ±60-100 for lopsided),"outlook":"2-3 sentence narrative","improveCategories":["PTS","AST"],"declineCategories":["BLK"],"neutralCategories":["REB"],"positionalNote":"1-2 sentences on roster balance/need","buyLowSellHighNote":"1-2 sentences on which side of the trade (if either) has the buy-low/sell-high edge","reason":"2-3 sentence Beane-voice bottom line on who comes out ahead and why — describe the trade's balance, don't tell me to accept or reject it"}`
 
   const userPrompt = `${sportLabel} league · Categories: ${catLine}${gmLine}${formatRosterConfigLine(rosterConfig)}
 

@@ -565,11 +565,41 @@ function PitchingStartsPanel({ rosters }) {
   )
 }
 
-const VERDICT_STYLES = {
-  accept: { label: 'Accept', className: 'bg-green-900/40 text-green-400' },
-  'lean-accept': { label: 'Lean accept', className: 'bg-green-900/20 text-green-400/80' },
-  'lean-decline': { label: 'Lean decline', className: 'bg-red-900/20 text-red-400/80' },
-  decline: { label: 'Decline', className: 'bg-red-900/40 text-red-400' },
+// Buckets the -100..100 favorScore into a plain-language lean, naming
+// whichever side (the user or the trade partner) the score favors.
+function favorLabel(score, partnerTeamName) {
+  const magnitude = Math.abs(score)
+  const who = score >= 0 ? 'You' : partnerTeamName
+  if (magnitude <= 10) return 'Roughly even trade'
+  if (magnitude <= 35) return `Slight edge: ${who}`
+  if (magnitude <= 65) return `Favors ${who}`
+  return `Strongly favors ${who}`
+}
+
+// Center-anchored meter showing which side of the trade comes out ahead —
+// works the same whether the user proposed the trade or is evaluating one
+// they were offered, since it never frames either side as "the decision."
+function TradeFavorBar({ favorScore, partnerTeamName }) {
+  const score = Math.max(-100, Math.min(100, favorScore ?? 0))
+  const favorsUser = score >= 0
+  const halfWidthPct = Math.abs(score) / 2 // full range spans both halves of the track
+
+  return (
+    <div>
+      <div className="flex items-center justify-between text-[10px] font-mono text-gray-600 uppercase tracking-wider mb-1.5">
+        <span>{partnerTeamName}</span>
+        <span>You</span>
+      </div>
+      <div className="relative w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
+        <div className="absolute inset-y-0 left-1/2 w-px bg-gray-700" />
+        <div
+          className={`absolute inset-y-0 rounded-full ${favorsUser ? 'bg-pick' : 'bg-blue-500'}`}
+          style={favorsUser ? { left: '50%', width: `${halfWidthPct}%` } : { right: '50%', width: `${halfWidthPct}%` }}
+        />
+      </div>
+      <p className="text-xs text-gray-400 font-mono mt-1.5 text-center">{favorLabel(score, partnerTeamName)}</p>
+    </div>
+  )
 }
 
 // Toggleable player button shared by both sides of the Trade Analyzer's
@@ -650,8 +680,6 @@ function TradeAnalyzerPanel({ league, rosters }) {
     }
   }
 
-  const verdict = advice ? (VERDICT_STYLES[advice.verdict] ?? { label: advice.verdict, className: 'bg-gray-800 text-gray-400' }) : null
-
   return (
     <div className="bg-surface border border-border rounded-lg px-5 py-5">
       <div className="mb-3">
@@ -726,14 +754,7 @@ function TradeAnalyzerPanel({ league, rosters }) {
 
       {advice && !loading && (
         <div className="mt-4 space-y-4">
-          <div className="flex items-center gap-2">
-            <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${verdict.className}`}>
-              {verdict.label}
-            </span>
-            {advice.partnerTeamName && (
-              <span className="text-xs text-gray-500 font-mono">vs. {advice.partnerTeamName}</span>
-            )}
-          </div>
+          <TradeFavorBar favorScore={advice.favorScore} partnerTeamName={advice.partnerTeamName ?? 'Opponent'} />
           {advice.outlook && (
             <p className="text-xs text-gray-400 leading-relaxed italic">{advice.outlook}</p>
           )}
