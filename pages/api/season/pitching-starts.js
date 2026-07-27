@@ -11,8 +11,6 @@ import { getPitchingRecommendation } from '@/utils/pitchingStarts'
 // pitcher starts.
 const SPORT = 'mlb'
 
-const PROBABLE_STARTS_CAVEAT = 'Pitcher probable starts aren\'t tracked yet — "startsThisWeek" is an approximate team-schedule proxy, not a confirmed start count (see BACKLOG Y-05c).'
-
 export function getPitchingStarts({ leagueRosters, weekStart, weekEnd }) {
   if (!leagueRosters?.teams) throw new Error('leagueRosters required')
 
@@ -41,19 +39,19 @@ export function getPitchingStarts({ leagueRosters, weekStart, weekEnd }) {
       const gameDates = p.team ? getTeamGamesInRange(schedule, p.team, start, end) : []
       const injuryStatus = p.current_season?.injury_status ?? p.injury_status ?? null
       const injuryNote = p.current_season?.injury_note ?? p.injury_notes ?? null
-      const startsThisWeek = gameDates.length
+      const teamGamesThisWeek = gameDates.length
       return {
         player: p.name,
         team: p.team ?? null,
-        startsThisWeek,
+        teamGamesThisWeek,
         injuryStatus,
         injuryNote,
-        recommendation: getPitchingRecommendation({ startsThisWeek, injuryStatus }),
+        recommendation: getPitchingRecommendation({ teamGamesThisWeek, injuryStatus }),
       }
     })
-    .sort((a, b) => b.startsThisWeek - a.startsThisWeek)
+    .sort((a, b) => b.teamGamesThisWeek - a.teamGamesThisWeek)
 
-  return { week: { start, end }, starts, note: PROBABLE_STARTS_CAVEAT }
+  return { week: { start, end }, starts }
 }
 
 export default async function handler(req, res) {

@@ -20,42 +20,42 @@ function test(name, fn) {
 }
 
 test('healthy pitcher with a scheduled start this week -> start', () => {
-  const rec = getPitchingRecommendation({ startsThisWeek: 1, injuryStatus: 'healthy' })
+  const rec = getPitchingRecommendation({ teamGamesThisWeek: 1, injuryStatus: 'healthy' })
   assert.strictEqual(rec, 'start')
 })
 
 test('healthy pitcher with two scheduled starts this week -> start', () => {
-  const rec = getPitchingRecommendation({ startsThisWeek: 2, injuryStatus: 'healthy' })
+  const rec = getPitchingRecommendation({ teamGamesThisWeek: 2, injuryStatus: 'healthy' })
   assert.strictEqual(rec, 'start')
 })
 
 test('no scheduled starts this week -> hold, even if healthy', () => {
-  const rec = getPitchingRecommendation({ startsThisWeek: 0, injuryStatus: 'healthy' })
+  const rec = getPitchingRecommendation({ teamGamesThisWeek: 0, injuryStatus: 'healthy' })
   assert.strictEqual(rec, 'hold')
 })
 
 test('IL pitcher -> hold, even with scheduled starts', () => {
-  const rec = getPitchingRecommendation({ startsThisWeek: 2, injuryStatus: 'il' })
+  const rec = getPitchingRecommendation({ teamGamesThisWeek: 2, injuryStatus: 'il' })
   assert.strictEqual(rec, 'hold')
 })
 
 test('injury status is case-insensitive', () => {
-  const rec = getPitchingRecommendation({ startsThisWeek: 2, injuryStatus: 'IL' })
+  const rec = getPitchingRecommendation({ teamGamesThisWeek: 2, injuryStatus: 'IL' })
   assert.strictEqual(rec, 'hold')
 })
 
 test('day-to-day pitcher with a start this week -> stream', () => {
-  const rec = getPitchingRecommendation({ startsThisWeek: 1, injuryStatus: 'day-to-day' })
+  const rec = getPitchingRecommendation({ teamGamesThisWeek: 1, injuryStatus: 'day-to-day' })
   assert.strictEqual(rec, 'stream')
 })
 
 test('day-to-day pitcher with no starts this week -> hold (no starts wins over watch status)', () => {
-  const rec = getPitchingRecommendation({ startsThisWeek: 0, injuryStatus: 'day-to-day' })
+  const rec = getPitchingRecommendation({ teamGamesThisWeek: 0, injuryStatus: 'day-to-day' })
   assert.strictEqual(rec, 'hold')
 })
 
 test('missing injury status defaults to treating the pitcher as healthy', () => {
-  const rec = getPitchingRecommendation({ startsThisWeek: 1, injuryStatus: null })
+  const rec = getPitchingRecommendation({ teamGamesThisWeek: 1, injuryStatus: null })
   assert.strictEqual(rec, 'start')
 })
 

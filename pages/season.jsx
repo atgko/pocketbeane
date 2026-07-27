@@ -541,7 +541,7 @@ function PitchingStartsPanel({ rosters }) {
                         {s.player} <span className="text-gray-600 font-mono">{s.team}</span>
                       </p>
                       <p className="text-[11px] text-gray-500 font-mono mt-0.5">
-                        {s.startsThisWeek} start{s.startsThisWeek === 1 ? '' : 's'} this week
+                        Team plays {s.teamGamesThisWeek} time{s.teamGamesThisWeek === 1 ? '' : 's'} this week
                         {hurt && (
                           <span className="text-yellow-500/80">
                             {' '}· {INJURY_LABELS[s.injuryStatus] ?? s.injuryStatus}{s.injuryNote ? `: ${s.injuryNote}` : ''}
@@ -558,9 +558,6 @@ function PitchingStartsPanel({ rosters }) {
             </div>
           ) : (
             <p className="text-xs text-gray-500">No rostered starting pitchers found.</p>
-          )}
-          {data.note && (
-            <p className="text-[10px] text-gray-600 italic pt-2 border-t border-border leading-relaxed">{data.note}</p>
           )}
         </div>
       )}
@@ -968,12 +965,18 @@ function TeamPulsePanel({ league, rosters }) {
   const tierStyle = TIER_STYLES[userEntry.tier] ?? null
   const trendArrow = trend ? STANDING_TREND_ARROW[trend] : null
 
+  // myTeamTake is always present in a well-formed response (job 4 of the
+  // league-pulse prompt runs regardless of whether I show up in the
+  // dominating/rebuilding lists) — the dominating/rebuilding note and the
+  // deterministic fallback are only reached if the model omits it.
   const pulseNote = pulse
     ? pulse.dominating?.find(e => e.team === userTeam.teamName)?.note
         ?? pulse.rebuilding?.find(e => e.team === userTeam.teamName)?.note
         ?? null
     : null
-  const insight = pulse ? (pulseNote ?? buildFallbackInsight(userEntry, sportConfig)) : null
+  const insight = pulse
+    ? (pulse.myTeamTake ? null : (pulseNote ?? buildFallbackInsight(userEntry, sportConfig)))
+    : null
 
   return (
     <div className="bg-surface border border-border rounded-lg px-5 py-5">
@@ -1020,6 +1023,26 @@ function TeamPulsePanel({ league, rosters }) {
         )}
         {pulseLoading && <p className="text-xs text-gray-500 font-mono animate-pulse">Reading the league…</p>}
         {pulseError && !pulseLoading && <p className="text-xs text-red-400 font-mono">{pulseError}</p>}
+        {pulse?.myTeamTake && !pulseLoading && (
+          <div className="space-y-1.5">
+            <p className="text-xs text-gray-400 leading-relaxed">{pulse.myTeamTake.summary}</p>
+            {pulse.myTeamTake.strengths && (
+              <p className="text-xs text-gray-400 leading-relaxed">
+                <span className="text-green-400/80 font-medium">Strengths: </span>{pulse.myTeamTake.strengths}
+              </p>
+            )}
+            {pulse.myTeamTake.weaknesses && (
+              <p className="text-xs text-gray-400 leading-relaxed">
+                <span className="text-red-400/80 font-medium">Weaknesses: </span>{pulse.myTeamTake.weaknesses}
+              </p>
+            )}
+            {pulse.myTeamTake.recommendation && (
+              <p className="text-xs text-gray-400 leading-relaxed">
+                <span className="text-pick font-medium">Move or hold: </span>{pulse.myTeamTake.recommendation}
+              </p>
+            )}
+          </div>
+        )}
         {insight && !pulseLoading && <p className="text-xs text-gray-400 leading-relaxed">{insight}</p>}
       </div>
 

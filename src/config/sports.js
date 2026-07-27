@@ -11,6 +11,10 @@ export const SPORT_CONFIGS = {
     // pure data-file drop, no code changes.
     playerFile: 'players.json',
     scheduleFile: 'nba_schedule.json',
+    // Approximate fantasy regular-season end date — used only to give Team
+    // Pulse a rough "weeks remaining" figure for its playoff/buy-sell-hold
+    // read. Not tied to any specific league's actual settings.
+    seasonEndDate: '2027-04-12',
     // Back-to-back is a meaningful fatigue signal for this sport's start/sit
     // advisor (dense schedule, teams sometimes play on consecutive days).
     backToBackRelevant: true,
@@ -81,6 +85,10 @@ export const SPORT_CONFIGS = {
 
     playerFile: 'mlb_players.json',
     scheduleFile: 'mlb_schedule.json',
+    // Real 2026 regular-season end date (matches the last date in
+    // mlb_schedule.json) — used to give Team Pulse a "weeks remaining"
+    // figure for its playoff/buy-sell-hold read.
+    seasonEndDate: '2026-09-27',
     // Teams play near-daily — team-schedule density isn't a meaningful
     // fatigue signal here (unlike NBA/NHL), so the Start/Sit Advisor doesn't
     // surface back-to-back tags for this sport. Games-this-week is still

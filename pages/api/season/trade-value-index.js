@@ -109,7 +109,11 @@ Run the trade-value scan.`
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 1100,
+    // Bumped from 1100 (see league-pulse.js's T3-5 fix for the same root
+    // cause) — 3 jobs' worth of output (up to 3 sell-high + 5 buy-low + 2
+    // trade flags, each with a reason) was truncating mid-JSON on larger
+    // leagues, surfacing as "Malformed JSON in model response".
+    max_tokens: 2000,
     system: [{ type: 'text', text: systemPrompt }],
     messages: [{ role: 'user', content: userPrompt }],
   })

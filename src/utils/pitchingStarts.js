@@ -19,15 +19,16 @@ const OUT_STATUSES = new Set(['il', 'out', 'ir'])
 // automatic hold.
 const WATCH_STATUSES = new Set(['day-to-day', 'questionable', 'doubtful'])
 
-// getPitchingRecommendation({ startsThisWeek, injuryStatus }) -> 'start' | 'stream' | 'hold'
-//   startsThisWeek: number — team-schedule games-in-range, used as an
+// getPitchingRecommendation({ teamGamesThisWeek, injuryStatus }) -> 'start' | 'stream' | 'hold'
+//   teamGamesThisWeek: number — team-schedule games-in-range, used as an
 //     approximate proxy for probable starts (see BACKLOG Y-05c: real
-//     probable-starts data doesn't exist yet).
+//     probable-starts data doesn't exist yet). Named for what it actually
+//     measures — a pitcher never starts every one of their team's games.
 //   injuryStatus: string | null | undefined
-function getPitchingRecommendation({ startsThisWeek, injuryStatus }) {
+function getPitchingRecommendation({ teamGamesThisWeek, injuryStatus }) {
   const status = injuryStatus?.toLowerCase()
   if (status && OUT_STATUSES.has(status)) return 'hold'
-  if (startsThisWeek === 0) return 'hold'
+  if (teamGamesThisWeek === 0) return 'hold'
   if (status && WATCH_STATUSES.has(status)) return 'stream'
   return 'start'
 }
