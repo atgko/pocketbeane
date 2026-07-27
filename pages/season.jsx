@@ -576,25 +576,33 @@ function favorStatement(score, partnerTeamName) {
   return `This trade strongly favors ${who}`
 }
 
-// A full-width neutral scale with a single arrow marker landing at the point
+// Track background: green at dead-even, through yellow, to red at either
+// extreme — color reflects how lopsided the trade is, not which side it
+// favors, since favoring either team equally hard should read the same way.
+const FAVOR_TRACK_GRADIENT =
+  'linear-gradient(to right, #ef4444 0%, #eab308 25%, #22c55e 50%, #eab308 75%, #ef4444 100%)'
+
+// A full-width scale with a single arrow marker landing at the point
 // corresponding to how lopsided the trade is — works the same whether the
 // user proposed the trade or is evaluating one they were offered, since
 // nothing is "filled in" toward either side as the implied right answer.
 function TradeFavorBar({ favorScore, partnerTeamName }) {
   const score = Math.max(-100, Math.min(100, favorScore ?? 0))
-  const markerPct = (score + 100) / 2 // 0 = fully favors partner, 100 = fully favors user
+  const markerPct = (100 - score) / 2 // 0 = fully favors you (left), 100 = fully favors partner (right)
 
   return (
     <div>
       <p className="text-sm text-gray-200 font-medium mb-3">{favorStatement(score, partnerTeamName)}</p>
       <div className="flex items-center justify-between text-[10px] font-mono text-gray-600 uppercase tracking-wider mb-1.5">
-        <span>{partnerTeamName}</span>
         <span>You</span>
+        <span>{partnerTeamName}</span>
       </div>
       <div className="relative w-full h-1.5">
-        <div className="absolute inset-0 bg-white/10 rounded-full" />
+        <div className="absolute inset-0 rounded-full" style={{ background: FAVOR_TRACK_GRADIENT }} />
+        {/* 50/50 tick — a fixed reference point, independent of favorScore */}
+        <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-px h-2.5 bg-white/70" />
         <div
-          className="absolute -translate-x-1/2 text-pick"
+          className="absolute -translate-x-1/2 text-white"
           style={{
             left: `${markerPct}%`,
             top: '100%',
@@ -603,9 +611,11 @@ function TradeFavorBar({ favorScore, partnerTeamName }) {
             borderLeft: '5px solid transparent',
             borderRight: '5px solid transparent',
             borderBottom: '6px solid currentColor',
+            filter: 'drop-shadow(0 1px 1px rgba(0,0,0,0.6))',
           }}
         />
       </div>
+      <p className="text-center text-[9px] font-mono text-gray-600 mt-2.5">50 / 50</p>
     </div>
   )
 }
