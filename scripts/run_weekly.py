@@ -41,6 +41,9 @@ SCHEDULE_SCRAPERS = {
     'mlb': REPO_ROOT / 'scripts' / 'fetch_mlb_schedule.py',
 }
 AUTH_PATH = Path(r'C:\Users\athav\AppData\Local\hermes\auth.json')
+# Guards against double-running when both the Hermes cron job and the
+# wake-and-run Task Scheduler backstop fire for the same Monday.
+RUN_MARKER = REPO_ROOT / 'data-updates' / '.last_run'
 NOTIFY_TO = 'athavan.elangko@gmail.com'
 THRESHOLDS = {'mlb': 20, 'nba': 50, 'nhl': 30, 'nfl': 30}
 MLB_ACTIVE = (4, 10)
@@ -276,6 +279,17 @@ def next_weekly_run(from_date):
     return from_date + timedelta(days=days_ahead)
 
 
+def already_ran_today():
+    if not RUN_MARKER.exists():
+        return False
+    return RUN_MARKER.read_text(encoding='utf-8').strip() == date.today().isoformat()
+
+
+def mark_run_complete():
+    RUN_MARKER.parent.mkdir(parents=True, exist_ok=True)
+    RUN_MARKER.write_text(date.today().isoformat(), encoding='utf-8')
+
+
 def send_email(to_addr, subject, body):
     env = load_env(REPO_ROOT / '.env.local')
     gmail_user = env.get('GMAIL_USER') or os.environ.get('GMAIL_USER')
@@ -306,6 +320,14 @@ def main():
     today = date.today()
     as_of = today.isoformat()
     run_start = date.today()
+
+    # Both the Hermes cron job and the Task Scheduler wake-and-run backstop
+    # can trigger this script for the same Monday — only let the first one
+    # through.
+    if already_ran_today():
+        print(f'Pipeline already ran today ({as_of}) — skipping duplicate trigger.')
+        return 0
+    mark_run_complete()
 
     sports = active_sports(today)
     print(f'Date: {today}')

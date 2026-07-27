@@ -35,3 +35,6 @@ yarn-error.log*
 # Python cache
 __pycache__/
 *.pyc
+
+# weekly pipeline run-once-per-day guard (local machine state, not data)
+data-updates/.last_run
