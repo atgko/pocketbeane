@@ -5,6 +5,7 @@ Runs through guardrail checks, calls sport-specific scrapers, runs merges,
 and sends confirmation emails.
 """
 
+import base64
 import json
 import os
 import re
@@ -12,9 +13,11 @@ import smtplib
 import ssl
 import sys
 import subprocess
+import time
+import urllib.parse
 import urllib.request
 import urllib.error
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from email.mime.text import MIMEText
 from pathlib import Path
 
@@ -101,6 +104,89 @@ def load_yahoo_tokens(path):
                     if isinstance(e, dict) and 'access_token' in e:
                         return e
     return None
+
+
+# Matches the 5-minute-before-expiry margin used by
+# src/utils/yahooAuth.js's getValidToken() and
+# scripts/send-waiver-digest.mjs's getValidHermesToken() — the two other
+# places this exact refresh dance already lives.
+YAHOO_TOKEN_REFRESH_MARGIN_MS = 5 * 60 * 1000
+
+
+def refresh_yahoo_token(refresh_token, env):
+    """POST a refresh_token grant to Yahoo, mirroring refreshYahooToken() in
+    src/utils/yahooAuth.js / scripts/send-waiver-digest.mjs."""
+    client_id = env.get('YAHOO_CLIENT_ID') or os.environ.get('YAHOO_CLIENT_ID')
+    client_secret = env.get('YAHOO_CLIENT_SECRET') or os.environ.get('YAHOO_CLIENT_SECRET')
+    if not client_id or not client_secret:
+        raise RuntimeError('YAHOO_CLIENT_ID/YAHOO_CLIENT_SECRET not set (checked .env.local and environment)')
+
+    credentials = base64.b64encode(f'{client_id}:{client_secret}'.encode('utf-8')).decode('ascii')
+    body = urllib.parse.urlencode({
+        'grant_type': 'refresh_token',
+        'refresh_token': refresh_token,
+    }).encode('ascii')
+    req = urllib.request.Request(
+        'https://api.login.yahoo.com/oauth2/get_token',
+        data=body,
+        headers={
+            'Authorization': f'Basic {credentials}',
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        method='POST',
+    )
+    with urllib.request.urlopen(req, timeout=15, context=YAHOO_SSL_CONTEXT) as resp:
+        data = json.loads(resp.read().decode('utf-8'))
+    return {
+        'access_token': data['access_token'],
+        # Yahoo sometimes omits a new refresh token — keep the existing one.
+        'refresh_token': data.get('refresh_token', refresh_token),
+        'expires_at': int(time.time() * 1000) + data['expires_in'] * 1000,
+        'expires_in': data.get('expires_in'),
+    }
+
+
+def get_valid_yahoo_token(path):
+    """Load the Hermes-persisted Yahoo token, refreshing and persisting it
+    back to auth.json if it's within 5 minutes of expiry (or already
+    expired). Without this, a run against a stale token would 403 on every
+    Yahoo call the moment the access token (short-lived, ~1hr) expires
+    between weekly runs — see P-03."""
+    if not path.exists():
+        return None
+    with open(path, 'r', encoding='utf-8') as f:
+        auth = json.load(f)
+
+    stored = auth.get('credential_pool', {}).get('yahoo')
+    if not isinstance(stored, dict) or 'access_token' not in stored:
+        # Unexpected shape — fall back to the permissive search rather than
+        # fail outright. Refresh isn't possible without knowing where to
+        # write the result back, so this path can't self-heal an expired
+        # token, but it's no worse than the prior behavior.
+        return load_yahoo_tokens(path)
+
+    expires_at = stored.get('expires_at')
+    if expires_at is None or expires_at - int(time.time() * 1000) >= YAHOO_TOKEN_REFRESH_MARGIN_MS:
+        return stored
+
+    refresh_token = stored.get('refresh_token')
+    if not refresh_token:
+        print('  WARNING: Yahoo token expired/expiring with no refresh_token in auth.json — using stale token as-is.')
+        return stored
+
+    env = load_env(REPO_ROOT / '.env.local')
+    try:
+        refreshed = refresh_yahoo_token(refresh_token, env)
+    except Exception as exc:
+        print(f'  WARNING: Yahoo token refresh failed ({exc}) — using stale token as-is.')
+        return stored
+
+    auth['credential_pool']['yahoo'] = {**stored, **refreshed}
+    auth['updated_at'] = datetime.now(timezone.utc).isoformat()
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(auth, f, indent=2)
+    print('  Yahoo token refreshed and persisted to auth.json.')
+    return auth['credential_pool']['yahoo']
 
 
 def yahoo_fetch(token, endpoint):
@@ -335,7 +421,7 @@ def main():
     any_skipped = False
     any_failed = False
 
-    token = load_yahoo_tokens(AUTH_PATH)
+    token = get_valid_yahoo_token(AUTH_PATH)
     if not token:
         print('WARNING: No Yahoo token found — league playoff check will be skipped.')
         print('  Expected location:', AUTH_PATH)
