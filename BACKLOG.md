@@ -621,7 +621,7 @@ Full MLB 5×5 draft experience shipped 2026-06-27. Multi-sport architecture gene
 ---
 
 ### D-01 · Full App UI Revamp
-**Status: In progress — Checkpoint 1 of 9 (Steps 1-3) complete as of 2026-07-29; research component done**
+**Status: In progress — Steps 1-4 of 9 complete as of 2026-07-29 (Checkpoint 1 + Draft DNA rebuild); research component done**
 
 **Goal:** Overhaul the visual identity of PocketBeane from the current monochrome Tailwind default into a polished, premium sports analytics product.
 
@@ -642,21 +642,23 @@ Full MLB 5×5 draft experience shipped 2026-06-27. Multi-sport architecture gene
 | 1 | Token foundation — Tailwind theme, CSS var color tokens, `next/font` (Fraunces/Inter/JetBrains Mono) | ✅ Done 2026-07-29 |
 | 2 | Global color/font sweep — all 19 files off old raw-Tailwind/legacy tokens (`bg-bg`, `text-pick`, `text-injury`, raw `green-500` etc.) onto the new semantic tokens; emoji-as-UI-chrome → inline SVGs | ✅ Done 2026-07-29 |
 | 3 | Shared component system — `src/components/ui/`: `Card` (data/advisor/identity variants), `Button`, `Badge` (with a `size="sm"` variant added for dense rows, discovered needed mid-sweep), `AdvisorCard`, `TabBar`; migrated into existing files alongside the color sweep | ✅ Done 2026-07-29 |
-| 4 | Draft DNA card rebuild — `src/components/DraftDNACard.jsx` full recomposition onto the `identity` Card variant + 9 monoline archetype SVGs, mobile-first (highest mobile priority) | ⏳ Not started |
+| 4 | Draft DNA card rebuild — `src/components/DraftDNACard.jsx` full recomposition onto the `identity` Card variant + 9 monoline archetype SVGs, mobile-first (highest mobile priority) | ✅ Done 2026-07-29 |
 | 5 | Season Hub restructure — extract `pages/season.jsx`'s 8 inline panels into `src/components/season/` per-tab files, wire up `TabBar` (This Week / Waivers / Trades / League / My Team), mobile-first sticky tab strip | ⏳ Not started |
 | 6 | Homepage command center — `pages/index.jsx` calendar-aware hero + `AdvisorCard` "Beane's Note" + league grid, replacing the current vertical stack | ⏳ Not started |
 | 7 | Draft board refinement — promote `RecommendationPanel` to `AdvisorCard` (explicitly deferred out of Checkpoint 1 on purpose), tabular mono numerals + semantic value-deltas on `PlayerPool`'s table, on-the-clock pulse | ⏳ Not started |
 | 8 | A11y pass — full contrast audit, focus-state audit, keyboard nav verification on the draft board | ⏳ Not started |
 | 9 | Mobile pass — cross-cutting check now that mobile was built alongside each page rather than deferred; catch anything missed | ⏳ Not started |
 
-**Resuming this work:** re-read `ui-redesign/D01_UI_REVAMP_DESIGN_BRIEF.md` Part 6 for the step spec, then plan Step 4 (or whichever step is next) the same way Checkpoint 1 was planned — explore the current state of the target files first, design the approach, confirm scope boundaries with the user, then execute and verify (`npm run dev` + route-by-route visual pass + grep for leftover raw color classes) before moving to the next step.
+**Step 4 detail (done 2026-07-29):** New `src/components/ui/ArchetypeGlyph.jsx` — 9 abstract monoline SVGs (diamond/scope/blueprint-triangle/ascending-steps/dice/rising-arrow/sparkle-anchor/pillars/diverging-zigzag), brass stroke, single weight, no fills except a couple of small discovery-marker dots. `DraftDNACard.jsx` fully recomposed onto `Card variant="identity"` + `Badge tone="brass"` + `Button`: eyebrow row, glyph, Fraunces `text-display` archetype name, italic tagline, brass category pills, hairline-ruled Bold Prediction block, `pocketbeane.app` footer, barely-there radial brass glow top-center. Verified in-browser against all 9 archetypes (Chrome headless screenshots) — no clipping, correct wrapping on long names ("The Underdog Whisperer", "The Riverboat Gambler"). Card width made responsive (`w-[340px] max-w-[calc(100vw-2rem)]`, verified via isolated CSS test) and the action-button row given `flex-wrap` so both survive phones narrower than ~372px. Dropped an initial `aspect-[4/5]` constraint — it hard-clipped long-tagline archetypes (Zero-to-Hero) since a definite aspect-ratio height doesn't grow for overflow content; replaced with `min-h-[425px]` so the card grows naturally instead.
+
+**Resuming this work:** re-read `ui-redesign/D01_UI_REVAMP_DESIGN_BRIEF.md` Part 6 for the step spec, then plan Step 5 (Season Hub restructure — the largest layout change) the same way Checkpoint 1 and Step 4 were planned — explore the current state of the target files first, design the approach, confirm scope boundaries with the user, then execute and verify (`npm run dev` + route-by-route visual pass + grep for leftover raw color classes) before moving to the next step.
 
 **Acceptance criteria (unchanged, still the bar for calling D-01 fully done):**
 - New color token system defined and applied globally — ✅ done (Steps 1-2)
-- At least one imagery element on the home/draft screen — pending (Step 4, the archetype glyph system)
-- Draft DNA card looks polished enough to share publicly — pending (Step 4)
-- Typography hierarchy is clear across all major screens — partial (fonts loaded, Fraunces not yet applied to headings — that's page-level work in Steps 4-6)
-- Passes a11y contrast check on all primary text — spot-checked and passing for the token system itself (Checkpoint 1); full page-by-page audit is Step 8
+- At least one imagery element on the home/draft screen — ✅ done (Step 4, the 9-glyph archetype system)
+- Draft DNA card looks polished enough to share publicly — ✅ done (Step 4)
+- Typography hierarchy is clear across all major screens — partial (fonts loaded, Fraunces now applied to the Draft DNA card; other page headings still pending Steps 5-6)
+- Passes a11y contrast check on all primary text — spot-checked and passing for the token system itself (Checkpoint 1) and the new Draft DNA card; full page-by-page audit is Step 8
 
 **Note:** This should happen before any public-facing launch or sharing push. The Draft DNA share card in particular will represent the app to anyone outside who receives it.
 
