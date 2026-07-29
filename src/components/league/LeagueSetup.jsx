@@ -1,4 +1,5 @@
 import { getSportConfig } from '@/config/sports'
+import { Card } from '@/components/ui'
 
 const DRAFT_TYPE_OPTIONS = [
   { value: 'snake',   label: 'Snake' },
@@ -68,9 +69,9 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
     <div className="space-y-4">
 
       {/* Draft Strategy — always editable */}
-      <div className="bg-surface rounded-lg border border-border p-5 space-y-4">
+      <Card variant="data" className="space-y-4">
         <div>
-          <label className="block text-xs text-gray-400 mb-1.5">Draft Strategy</label>
+          <label className="block text-xs text-ink-secondary mb-1.5">Draft Strategy</label>
           <ToggleGroup
             options={config.draftType === 'auction' ? AUCTION_STRATEGY_OPTIONS : STRATEGY_OPTIONS}
             value={config.philosophy?.strategy ?? 'beane'}
@@ -80,12 +81,12 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
               puntCategories: v !== 'punt' ? [] : (config.philosophy?.puntCategories ?? []),
             })}
           />
-          <p className="text-xs text-gray-600 mt-1.5 font-mono">
+          <p className="text-xs text-ink-muted mt-1.5 font-mono">
             {STRATEGY_DESCRIPTIONS[config.philosophy?.strategy ?? 'beane']}
           </p>
           {config.philosophy?.strategy === 'punt' && (
             <div className="mt-3">
-              <p className="text-xs text-gray-500 mb-2 font-mono">Categories to punt:</p>
+              <p className="text-xs text-ink-secondary mb-2 font-mono">Categories to punt:</p>
               <div className="flex flex-wrap gap-2">
                 {sportConfig.categories.map(cat => {
                   const punted = (config.philosophy?.puntCategories ?? []).includes(cat.id)
@@ -100,8 +101,8 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
                       }}
                       className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
                         punted
-                          ? 'bg-red-500/20 text-red-400 border border-red-500/30'
-                          : 'bg-bg border border-border text-gray-400 hover:border-red-500/40 hover:text-red-300'
+                          ? 'bg-signal-down/20 text-signal-down border border-signal-down/30'
+                          : 'bg-surface-base border border-surface-line text-ink-secondary hover:border-signal-down/40 hover:text-signal-down'
                       }`}
                     >
                       {cat.label}
@@ -114,22 +115,22 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
         </div>
 
         <div>
-          <label className="block text-xs text-gray-400 mb-1.5">Injury Tolerance</label>
+          <label className="block text-xs text-ink-secondary mb-1.5">Injury Tolerance</label>
           <ToggleGroup
             options={INJURY_TOLERANCE_OPTIONS}
             value={config.philosophy?.injuryTolerance ?? 'moderate'}
             onChange={v => onUpdate('philosophy', { ...config.philosophy, injuryTolerance: v })}
           />
-          <p className="text-xs text-gray-600 mt-1.5 font-mono">
+          <p className="text-xs text-ink-muted mt-1.5 font-mono">
             {INJURY_TOLERANCE_DESCRIPTIONS[config.philosophy?.injuryTolerance ?? 'moderate']}
           </p>
         </div>
-      </div>
+      </Card>
 
       {/* League Composition — locked when Yahoo-synced */}
-      <div className="bg-surface rounded-lg border border-border p-5 space-y-5">
+      <Card variant="data" className="space-y-5">
         {isYahooSynced && (
-          <p className="text-xs text-gray-600 font-mono">
+          <p className="text-xs text-ink-muted font-mono">
             League structure synced from Yahoo.
           </p>
         )}
@@ -137,12 +138,12 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
         {/* Teams + Draft Position */}
         <div className={`grid grid-cols-2 gap-4 ${isYahooSynced ? lockedClass : ''}`}>
           <div>
-            <label className="block text-xs text-gray-400 mb-1.5">Teams</label>
+            <label className="block text-xs text-ink-secondary mb-1.5">Teams</label>
             <select
               value={config.numTeams}
               onChange={e => onUpdate('numTeams', Number(e.target.value))}
               disabled={isYahooSynced}
-              className="w-full bg-bg border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-pick disabled:cursor-not-allowed"
+              className="w-full bg-surface-base border border-surface-line rounded px-3 py-2 text-sm text-ink-primary focus:outline-none focus:border-beane-green disabled:cursor-not-allowed"
             >
               {[8, 10, 12, 14, 16].map(n => (
                 <option key={n} value={n}>{n} teams</option>
@@ -151,12 +152,12 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
           </div>
 
           <div>
-            <label className="block text-xs text-gray-400 mb-1.5">Draft Position</label>
+            <label className="block text-xs text-ink-secondary mb-1.5">Draft Position</label>
             <select
               value={config.draftPosition}
               onChange={e => onUpdate('draftPosition', Number(e.target.value))}
               disabled={isYahooSynced}
-              className="w-full bg-bg border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-pick disabled:cursor-not-allowed"
+              className="w-full bg-surface-base border border-surface-line rounded px-3 py-2 text-sm text-ink-primary focus:outline-none focus:border-beane-green disabled:cursor-not-allowed"
             >
               {Array.from({ length: config.numTeams }, (_, i) => i + 1).map(n => (
                 <option key={n} value={n}>Pick {n}</option>
@@ -168,7 +169,7 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
         {/* Draft Type + Scoring */}
         <div className={`grid grid-cols-2 gap-4 ${isYahooSynced ? lockedClass : ''}`}>
           <div>
-            <label className="block text-xs text-gray-400 mb-1.5">Draft Type</label>
+            <label className="block text-xs text-ink-secondary mb-1.5">Draft Type</label>
             <ToggleGroup
               options={DRAFT_TYPE_OPTIONS}
               value={config.draftType}
@@ -185,22 +186,22 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
             />
             {config.draftType === 'auction' && (
               <div className="mt-2 flex items-center gap-2">
-                <span className="text-xs font-mono text-gray-500">$</span>
+                <span className="text-xs font-mono text-ink-secondary">$</span>
                 <input
                   type="number"
                   min={1}
                   max={9999}
                   value={config.auctionBudget ?? 200}
                   onChange={e => onUpdate('auctionBudget', Math.max(1, Number(e.target.value)))}
-                  className="w-20 bg-bg border border-border rounded px-2 py-1 text-xs text-white font-mono focus:outline-none focus:border-pick [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="w-20 bg-surface-base border border-surface-line rounded px-2 py-1 text-xs text-ink-primary font-mono focus:outline-none focus:border-beane-green [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
-                <span className="text-xs font-mono text-gray-600">budget per team</span>
+                <span className="text-xs font-mono text-ink-muted">budget per team</span>
               </div>
             )}
           </div>
 
           <div>
-            <label className="block text-xs text-gray-400 mb-1.5">Scoring Format</label>
+            <label className="block text-xs text-ink-secondary mb-1.5">Scoring Format</label>
             <ToggleGroup
               options={scoringOptions}
               value={config.scoringFormat}
@@ -208,7 +209,7 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
               onChange={v => onUpdate('scoringFormat', v)}
             />
             {isNonDefaultFormat && (
-              <p className="text-xs text-value mt-1.5 font-mono">
+              <p className="text-xs text-signal-watch mt-1.5 font-mono">
                 {config.scoringFormat === 'points' ? 'Points' : scoringOptions.find(o => o.value === config.scoringFormat)?.label ?? config.scoringFormat} coming in a future phase — {defaultScoringFormat === '9cat' ? '9-cat' : '5×5 Roto'} only for now.
               </p>
             )}
@@ -217,7 +218,7 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
 
         {/* Roster Slots */}
         <div className={isYahooSynced ? lockedClass : ''}>
-          <label className="block text-xs text-gray-400 mb-1.5">Roster Slots</label>
+          <label className="block text-xs text-ink-secondary mb-1.5">Roster Slots</label>
           <div className="grid grid-cols-2 gap-x-8 gap-y-2">
             {rosterSlots.map(slot => (
               <SlotCountRow
@@ -247,7 +248,7 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
 
         {/* Scoring Categories */}
         <div className={isYahooSynced ? lockedClass : ''}>
-          <label className="block text-xs text-gray-400 mb-1.5">Scoring Categories</label>
+          <label className="block text-xs text-ink-secondary mb-1.5">Scoring Categories</label>
           <div className="flex flex-wrap gap-2">
             {sportConfig.categories.map(cat => (
               <button
@@ -257,17 +258,17 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
                 disabled={isYahooSynced}
                 className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
                   config.categories.includes(cat.id)
-                    ? 'bg-pick text-white'
-                    : 'bg-bg border border-border text-gray-400 hover:border-pick hover:text-gray-200'
+                    ? 'bg-beane-green text-ink-primary'
+                    : 'bg-surface-base border border-surface-line text-ink-secondary hover:border-beane-green hover:text-ink-primary'
                 }`}
               >
                 {cat.label}
               </button>
             ))}
           </div>
-          <p className="text-xs text-gray-600 mt-1.5 font-mono">{config.categories.length} categories selected</p>
+          <p className="text-xs text-ink-muted mt-1.5 font-mono">{config.categories.length} categories selected</p>
         </div>
-      </div>
+      </Card>
 
 
     </div>
@@ -277,7 +278,7 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
 function SlotCountRow({ label, value, onChange, max = 3, disabled = false }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="text-xs text-gray-400 font-mono w-8">{label}</span>
+      <span className="text-xs text-ink-secondary font-mono w-8">{label}</span>
       {Array.from({ length: max + 1 }, (_, n) => (
         <button
           key={n}
@@ -286,8 +287,8 @@ function SlotCountRow({ label, value, onChange, max = 3, disabled = false }) {
           disabled={disabled}
           className={`w-7 h-7 rounded text-xs font-mono transition-colors ${
             value === n
-              ? 'bg-pick text-white'
-              : 'bg-bg border border-border text-gray-400 hover:border-pick'
+              ? 'bg-beane-green text-ink-primary'
+              : 'bg-surface-base border border-surface-line text-ink-secondary hover:border-beane-green'
           }`}
         >
           {n}
@@ -308,8 +309,8 @@ function ToggleGroup({ options, value, onChange, disabled = false }) {
           disabled={disabled}
           className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
             value === opt.value
-              ? 'bg-pick text-white'
-              : 'bg-bg border border-border text-gray-400 hover:border-pick hover:text-gray-200'
+              ? 'bg-beane-green text-ink-primary'
+              : 'bg-surface-base border border-surface-line text-ink-secondary hover:border-beane-green hover:text-ink-primary'
           }`}
         >
           {opt.label}

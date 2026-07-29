@@ -322,16 +322,18 @@ export default function PlayerPool() {
       )}
 
       {blockMessage && (
-        <div className="flex items-center justify-between px-4 py-2 rounded-lg text-xs font-mono border bg-red-500/10 border-red-500/30 text-red-400">
+        <div className="flex items-center justify-between px-4 py-2 rounded-lg text-xs font-mono border bg-signal-down/10 border-signal-down/30 text-signal-down">
           <span>{blockMessage}</span>
-          <button onClick={() => setBlockMessage(null)} className="hover:text-white transition-colors ml-4">✕</button>
+          <button onClick={() => setBlockMessage(null)} className="hover:text-ink-primary transition-colors ml-4">
+            <IconClose className="w-3 h-3" />
+          </button>
         </div>
       )}
 
-      <div className="bg-surface rounded-lg border border-border overflow-hidden">
+      <div className="bg-surface-raised rounded-lg border border-surface-line overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border text-gray-500 text-xs uppercase tracking-wider">
+            <tr className="border-b border-surface-line text-ink-secondary text-xs uppercase tracking-wider">
               <th className="text-right px-4 py-3 w-12">#</th>
               <th className="text-left px-4 py-3">Player</th>
               <th className="text-left px-4 py-3 w-28">Pos</th>
@@ -364,13 +366,13 @@ export default function PlayerPool() {
         </table>
 
         {filtered.length === 0 && (
-          <div className="px-4 py-10 text-center text-gray-600 text-sm font-mono">
+          <div className="px-4 py-10 text-center text-ink-muted text-sm font-mono">
             No players match your filters.
           </div>
         )}
       </div>
 
-      <p className="text-xs text-gray-600 font-mono px-1">
+      <p className="text-xs text-ink-muted font-mono px-1">
         {filtered.length} of {players.length} players
       </p>
 
@@ -395,15 +397,15 @@ function PendingBanner({ pendingPick, players, onCancel, isAuction, pendingPrice
   return (
     <div className={`flex items-center justify-between px-4 py-2 rounded-lg text-xs font-mono border ${
       isUser
-        ? 'bg-pick/10 border-pick/40 text-pick'
-        : 'bg-gray-500/10 border-gray-500/40 text-gray-400'
+        ? 'bg-beane-green/10 border-beane-green/40 text-beane-green-text'
+        : 'bg-surface-overlay border-surface-line text-ink-secondary'
     }`}>
       <span className="flex items-center gap-1.5 flex-wrap">
         {isUser ? 'Your pick:' : 'Opponent:'}{' '}
-        <span className="font-semibold text-white">{player?.name}</span>
+        <span className="font-semibold text-ink-primary">{player?.name}</span>
         {needsPrice ? (
           <>
-            <span className="text-gray-400">·</span>
+            <span className="text-ink-secondary">·</span>
             <span>$</span>
             <input
               ref={priceInputRef}
@@ -422,15 +424,17 @@ function PendingBanner({ pendingPick, players, onCancel, isAuction, pendingPrice
               }}
               autoFocus
               placeholder="0"
-              className="w-12 bg-white/10 border border-pick/30 rounded px-1.5 py-0.5 text-white text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              className="w-12 bg-surface-overlay border border-beane-green/30 rounded px-1.5 py-0.5 text-ink-primary text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
-            <span className="text-gray-400">— Enter to confirm</span>
+            <span className="text-ink-secondary">— Enter to confirm</span>
           </>
         ) : (
-          <span>— press <kbd className="px-1 py-0.5 rounded bg-white/10">Enter</kbd> to confirm</span>
+          <span>— press <kbd className="px-1 py-0.5 rounded bg-surface-overlay">Enter</kbd> to confirm</span>
         )}
       </span>
-      <button onClick={onCancel} className="hover:text-white transition-colors">✕</button>
+      <button onClick={onCancel} className="hover:text-ink-primary transition-colors">
+        <IconClose className="w-3 h-3" />
+      </button>
     </div>
   )
 }
@@ -442,56 +446,56 @@ function PlayerRow({
   const isDrafted = !!pick
   const draftedBy = pick?.draftedBy ?? null
 
-  let rowClass = 'border-b border-border last:border-0 cursor-pointer transition-colors'
+  let rowClass = 'border-b border-surface-line last:border-0 cursor-pointer transition-colors'
 
   if (isPending) {
-    rowClass += pendingDraftedBy === 'user' ? ' bg-pick/20' : ' bg-gray-500/15'
+    rowClass += pendingDraftedBy === 'user' ? ' bg-beane-green/20' : ' bg-surface-overlay/60'
   } else if (isSelected) {
-    rowClass += ' bg-white/10'
+    rowClass += ' bg-surface-overlay'
   } else if (isDrafted) {
     rowClass += draftedBy === 'user' ? ' opacity-50' : ' opacity-30'
   } else {
-    rowClass += ' hover:bg-white/5'
+    rowClass += ' hover:bg-surface-overlay'
   }
 
   return (
     <tr ref={rowRef} onClick={onClick} className={rowClass}>
-      <td className="text-right px-4 py-2.5 text-gray-600 font-mono text-xs">{rank}</td>
+      <td className="text-right px-4 py-2.5 text-ink-muted font-mono text-xs">{rank}</td>
       <td className="px-4 py-2.5">
-        <span className={`font-medium ${draftedBy === 'opponent' ? 'line-through text-gray-500' : 'text-white'}`}>
+        <span className={`font-medium ${draftedBy === 'opponent' ? 'line-through text-ink-secondary' : 'text-ink-primary'}`}>
           {player.name}
         </span>
         {player.injury_status !== 'healthy' && (
-          <span className="ml-2 text-xs text-injury font-mono">
+          <span className="ml-2 text-xs text-signal-down font-mono">
             {player.injury_status.toUpperCase()}
           </span>
         )}
         {player.injury_risk && (
-          <span className="ml-1.5 text-xs text-injury/60 font-mono" title={player.injury_notes || 'Injury risk'}>
-            ⚠
+          <span className="ml-1.5 inline-flex align-middle text-signal-down/60" title={player.injury_notes || 'Injury risk'}>
+            <IconWarning className="w-3 h-3" />
           </span>
         )}
         {player.contract_year && (
-          <span className="ml-2 text-xs text-value font-mono" title="Contract year — final season of deal">CY</span>
+          <span className="ml-2 text-xs text-signal-watch font-mono" title="Contract year — final season of deal">CY</span>
         )}
       </td>
-      <td className="px-4 py-2.5 font-mono text-xs text-gray-300">
+      <td className="px-4 py-2.5 font-mono text-xs text-ink-primary">
         {player.yahoo_positions.join('/')}
       </td>
-      <td className="px-4 py-2.5 font-mono text-xs text-gray-500">{player.team}</td>
-      <td className="text-right px-4 py-2.5 font-mono text-xs text-gray-400">
+      <td className="px-4 py-2.5 font-mono text-xs text-ink-secondary">{player.team}</td>
+      <td className="text-right px-4 py-2.5 font-mono tabular-nums text-xs text-ink-secondary">
         {player.adp.toFixed(1)}
       </td>
       <td className="px-2 py-2.5 text-center" onClick={e => isDrafted && e.stopPropagation()}>
         {isYahooLinked ? null : isDrafted ? (
           <button
             onClick={e => { e.stopPropagation(); onEdit() }}
-            className={`text-xs font-mono px-1.5 py-0.5 rounded transition-colors ${
-              isSelected ? 'bg-white/10 text-gray-300 hover:text-white' : 'text-gray-600 hover:text-gray-400'
+            className={`inline-flex items-center justify-center p-1 rounded transition-colors ${
+              isSelected ? 'bg-surface-overlay text-ink-primary hover:text-ink-primary' : 'text-ink-muted hover:text-ink-secondary'
             }`}
             title="Edit this pick"
           >
-            ↩
+            <IconUndo className="w-3.5 h-3.5" />
           </button>
         ) : isSelected ? (
           <div className="flex items-center gap-1 justify-center">
@@ -499,8 +503,8 @@ function PlayerRow({
               onClick={e => { e.stopPropagation(); onDraftAsUser() }}
               className={`text-xs px-1.5 py-0.5 rounded font-mono transition-colors ${
                 isMyTurn || isAuction
-                  ? 'bg-pick/20 text-pick hover:bg-pick/40'
-                  : 'bg-gray-700/40 text-gray-600 cursor-not-allowed'
+                  ? 'bg-beane-green/20 text-beane-green-text hover:bg-beane-green/40'
+                  : 'bg-surface-overlay/40 text-ink-muted cursor-not-allowed'
               }`}
               title={isMyTurn || isAuction ? 'Draft for my team' : "Not your turn"}
             >
@@ -510,8 +514,8 @@ function PlayerRow({
               onClick={e => { e.stopPropagation(); onDraftAsOpponent() }}
               className={`text-xs px-1.5 py-0.5 rounded font-mono transition-colors ${
                 !isMyTurn || isAuction
-                  ? 'bg-gray-500/20 text-gray-400 hover:bg-gray-500/40'
-                  : 'bg-gray-700/40 text-gray-600 cursor-not-allowed'
+                  ? 'bg-surface-overlay/60 text-ink-secondary hover:bg-surface-overlay'
+                  : 'bg-surface-overlay/40 text-ink-muted cursor-not-allowed'
               }`}
               title="Log as opponent pick"
             >
@@ -519,11 +523,36 @@ function PlayerRow({
             </button>
           </div>
         ) : isPending ? (
-          <span className={`text-xs font-mono ${pendingDraftedBy === 'user' ? 'text-pick' : 'text-gray-400'}`}>
+          <span className={`text-xs font-mono ${pendingDraftedBy === 'user' ? 'text-beane-green-text' : 'text-ink-secondary'}`}>
             {pendingDraftedBy === 'user' ? 'U' : 'O'}
           </span>
         ) : null}
       </td>
     </tr>
+  )
+}
+
+function IconClose({ className = '' }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className={className} aria-hidden="true">
+      <path d="M18 6 6 18M6 6l12 12" />
+    </svg>
+  )
+}
+
+function IconWarning({ className = '' }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
+    </svg>
+  )
+}
+
+function IconUndo({ className = '' }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M9 14 4 9l5-5" />
+      <path d="M4 9h10a5 5 0 0 1 0 10h-1" />
+    </svg>
   )
 }

@@ -7,6 +7,7 @@ import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
 import useLeagueStore from '@/store/leagueStore'
 import { getSessionId } from '@/utils/session'
 import { resolveProfile } from '@/utils/gmProfile'
+import { Card, Badge } from '@/components/ui'
 
 const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers }
 
@@ -105,20 +106,20 @@ export default function DraftComplete({ league }) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-white">Draft Complete</h1>
-          <p className="text-sm font-mono text-gray-500 mt-0.5">{league.config.name}</p>
+          <h1 className="text-xl font-bold text-ink-primary">Draft Complete</h1>
+          <p className="text-sm font-mono text-ink-secondary mt-0.5">{league.config.name}</p>
         </div>
         <div className="text-right">
-          <p className="text-xs font-mono text-gray-600">{userPicks.length} players · {league.config.scoringFormat}</p>
+          <p className="text-xs font-mono text-ink-muted">{userPicks.length} players · {league.config.scoringFormat}</p>
           {league.config.draftType === 'auction' && (() => {
             const budget = league.config.auctionBudget ?? 200
             const spent = userPicks.reduce((sum, p) => sum + (p.price ?? 0), 0)
             const remaining = budget - spent
             return (
-              <p className="text-xs font-mono text-gray-500 mt-0.5">
-                <span className="text-white font-semibold">${spent}</span>
-                <span className="text-gray-600"> / ${budget} spent · </span>
-                <span className={remaining >= 0 ? 'text-green-400' : 'text-red-400'}>${Math.abs(remaining)} {remaining >= 0 ? 'left' : 'over'}</span>
+              <p className="text-xs font-mono text-ink-secondary mt-0.5">
+                <span className="text-ink-primary font-semibold">${spent}</span>
+                <span className="text-ink-muted"> / ${budget} spent · </span>
+                <span className={remaining >= 0 ? 'text-signal-up' : 'text-signal-down'}>${Math.abs(remaining)} {remaining >= 0 ? 'left' : 'over'}</span>
               </p>
             )
           })()}
@@ -127,10 +128,10 @@ export default function DraftComplete({ league }) {
 
       {/* Empty state */}
       {userPicks.length === 0 && (
-        <div className="bg-surface border border-border rounded-lg px-6 py-10 text-center">
-          <p className="text-gray-400 text-sm mb-1">No draft data synced yet.</p>
-          <p className="text-gray-600 text-xs font-mono">
-            Go back to the home page and use <span className="text-gray-400">Import Picks</span> on this league to pull your draft from Yahoo.
+        <div className="bg-surface-raised border border-surface-line rounded-lg px-6 py-10 text-center">
+          <p className="text-ink-secondary text-sm mb-1">No draft data synced yet.</p>
+          <p className="text-ink-muted text-xs font-mono">
+            Go back to the home page and use <span className="text-ink-secondary">Import Picks</span> on this league to pull your draft from Yahoo.
           </p>
         </div>
       )}
@@ -138,13 +139,13 @@ export default function DraftComplete({ league }) {
       {/* Main grid: roster + categories */}
       {userPicks.length > 0 && <div className="grid grid-cols-[1fr_300px] gap-5 items-start">
         {/* Roster table */}
-        <div className="bg-surface rounded-lg border border-border overflow-hidden">
-          <div className="px-4 py-3 border-b border-border">
-            <h3 className="text-xs font-mono text-gray-500 uppercase tracking-wider">Your Roster</h3>
+        <div className="bg-surface-raised rounded-lg border border-surface-line overflow-hidden">
+          <div className="px-4 py-3 border-b border-surface-line">
+            <h3 className="text-xs font-mono text-ink-secondary uppercase tracking-wider">Your Roster</h3>
           </div>
           <table className="w-full text-xs">
             <thead>
-              <tr className="border-b border-border text-gray-600 uppercase tracking-wider">
+              <tr className="border-b border-surface-line text-ink-muted uppercase tracking-wider">
                 <th className="text-left px-4 py-2 w-12">Slot</th>
                 <th className="text-left px-4 py-2">Player</th>
                 <th className="text-left px-4 py-2 w-16">Pos</th>
@@ -158,18 +159,18 @@ export default function DraftComplete({ league }) {
                 const player = playerMap[slot.playerId]
                 const isBench = slot.type === 'BN'
                 return (
-                  <tr key={i} className={`border-b border-border last:border-0 ${isBench ? 'opacity-60' : ''}`}>
-                    <td className={`px-4 py-2 font-mono ${isBench ? 'text-gray-600' : 'text-gray-500'}`}>
+                  <tr key={i} className={`border-b border-surface-line last:border-0 ${isBench ? 'opacity-60' : ''}`}>
+                    <td className={`px-4 py-2 font-mono ${isBench ? 'text-ink-muted' : 'text-ink-secondary'}`}>
                       {slot.type}
                     </td>
-                    <td className="px-4 py-2 text-white font-medium">
-                      {player?.name ?? <span className="text-gray-700">—</span>}
+                    <td className="px-4 py-2 text-ink-primary font-medium">
+                      {player?.name ?? <span className="text-ink-muted">—</span>}
                     </td>
-                    <td className="px-4 py-2 font-mono text-gray-400">
+                    <td className="px-4 py-2 font-mono text-ink-secondary">
                       {player?.yahoo_positions?.join('/') ?? ''}
                     </td>
                     {statCols.map(col => (
-                      <td key={col.label} className="text-right px-3 py-2 font-mono text-gray-300">
+                      <td key={col.label} className="text-right px-3 py-2 font-mono text-ink-primary">
                         {col.cell(player)}
                       </td>
                     ))}
@@ -181,8 +182,8 @@ export default function DraftComplete({ league }) {
         </div>
 
         {/* Category grades */}
-        <div className="bg-surface rounded-lg border border-border p-4">
-          <h3 className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-4">Category Report</h3>
+        <div className="bg-surface-raised rounded-lg border border-surface-line p-4">
+          <h3 className="text-xs font-mono text-ink-secondary uppercase tracking-wider mb-4">Category Report</h3>
           <div className="space-y-2">
             {categoryGaps.map(gap => (
               <CategoryRow key={gap.id} gap={gap} />
@@ -192,16 +193,16 @@ export default function DraftComplete({ league }) {
       </div>}
 
       {/* Beane's Season Outlook — only when picks are loaded */}
-      {userPicks.length > 0 && <div className="bg-surface rounded-lg border border-pick/25 p-5">
+      {userPicks.length > 0 && <Card variant="advisor">
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-1.5 h-1.5 rounded-full bg-pick" />
-          <h3 className="text-xs font-mono text-pick/80 uppercase tracking-wider">Beane's Season Outlook</h3>
+          <div className="w-1.5 h-1.5 rounded-full bg-beane-green" />
+          <h3 className="text-xs font-mono text-beane-green-text/80 uppercase tracking-wider">Beane's Season Outlook</h3>
         </div>
 
         {loading && (
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 border border-pick/40 border-t-pick rounded-full animate-spin" />
-            <span className="text-xs font-mono text-gray-500">Beane is reviewing the tape…</span>
+            <div className="w-3 h-3 border border-beane-green/40 border-t-beane-green rounded-full animate-spin" />
+            <span className="text-xs font-mono text-ink-secondary">Beane is reviewing the tape…</span>
           </div>
         )}
 
@@ -212,24 +213,20 @@ export default function DraftComplete({ league }) {
               <div className="flex gap-4 flex-wrap">
                 {recap.strengths?.length > 0 && (
                   <div>
-                    <p className="text-xs font-mono text-gray-600 mb-1.5">Strengths</p>
+                    <p className="text-xs font-mono text-ink-muted mb-1.5">Strengths</p>
                     <div className="flex flex-wrap gap-1.5">
                       {recap.strengths.map(cat => (
-                        <span key={cat} className="text-xs font-mono px-2 py-0.5 rounded bg-green-500/15 text-green-400 border border-green-500/20">
-                          {cat}
-                        </span>
+                        <Badge key={cat} tone="up">{cat}</Badge>
                       ))}
                     </div>
                   </div>
                 )}
                 {recap.vulnerabilities?.length > 0 && (
                   <div>
-                    <p className="text-xs font-mono text-gray-600 mb-1.5">Vulnerabilities</p>
+                    <p className="text-xs font-mono text-ink-muted mb-1.5">Vulnerabilities</p>
                     <div className="flex flex-wrap gap-1.5">
                       {recap.vulnerabilities.map(cat => (
-                        <span key={cat} className="text-xs font-mono px-2 py-0.5 rounded bg-red-500/15 text-red-400 border border-red-500/20">
-                          {cat}
-                        </span>
+                        <Badge key={cat} tone="down">{cat}</Badge>
                       ))}
                     </div>
                   </div>
@@ -239,14 +236,16 @@ export default function DraftComplete({ league }) {
 
             {/* Narrative */}
             {recap.outlook && (
-              <p className="text-sm text-gray-200 leading-relaxed">{recap.outlook}</p>
+              <p className="text-sm text-ink-primary leading-relaxed">{recap.outlook}</p>
             )}
 
             {/* Injury risk note */}
             {recap.riskNote && (
               <div className="flex items-start gap-2 pt-1">
-                <span className="text-yellow-500/70 text-xs mt-0.5 shrink-0">⚠</span>
-                <p className="text-xs font-mono text-yellow-400/70 leading-relaxed">{recap.riskNote}</p>
+                <svg className="w-3 h-3 mt-0.5 shrink-0 text-signal-watch/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v4m0 4h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
+                </svg>
+                <p className="text-xs font-mono text-signal-watch/70 leading-relaxed">{recap.riskNote}</p>
               </div>
             )}
           </div>
@@ -254,16 +253,16 @@ export default function DraftComplete({ league }) {
 
         {error && (
           <div className="space-y-2">
-            <p className="text-xs text-red-400 font-mono">{error}</p>
+            <p className="text-xs text-signal-down font-mono">{error}</p>
             <button
               onClick={generateOutlook}
-              className="text-xs font-mono px-3 py-1.5 rounded bg-white/5 border border-border text-gray-400 hover:text-white hover:border-pick transition-colors"
+              className="text-xs font-mono px-3 py-1.5 rounded bg-surface-overlay border border-surface-line text-ink-secondary hover:text-ink-primary hover:border-beane-green transition-colors"
             >
               Try again
             </button>
           </div>
         )}
-      </div>}
+      </Card>}
     </div>
   )
 }
@@ -274,24 +273,24 @@ function CategoryRow({ gap }) {
   const barPct = isMissing ? 0 : Math.min(gap.progress * 100, 130)
 
   const gradeColor =
-    gap.grade === 'strong' ? 'text-green-400 bg-green-500/10 border-green-500/20' :
-    gap.grade === 'ok'     ? 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20' :
-    gap.grade === 'weak'   ? 'text-red-400 bg-red-500/10 border-red-500/20' :
-    'text-gray-600 bg-white/5 border-border'
+    gap.grade === 'strong' ? 'text-signal-up bg-signal-up/10 border-signal-up/20' :
+    gap.grade === 'ok'     ? 'text-signal-watch bg-signal-watch/10 border-signal-watch/20' :
+    gap.grade === 'weak'   ? 'text-signal-down bg-signal-down/10 border-signal-down/20' :
+    'text-ink-muted bg-surface-overlay border-surface-line'
 
   const barColor =
-    gap.grade === 'strong' ? 'bg-green-500/60' :
-    gap.grade === 'ok'     ? 'bg-yellow-500/50' :
-    gap.grade === 'weak'   ? 'bg-red-500/60' :
-    'bg-gray-700/40'
+    gap.grade === 'strong' ? 'bg-signal-up/60' :
+    gap.grade === 'ok'     ? 'bg-signal-watch/50' :
+    gap.grade === 'weak'   ? 'bg-signal-down/60' :
+    'bg-ink-muted/40'
 
   return (
     <div className="flex items-center gap-2">
-      <span className="text-xs font-mono text-gray-500 w-8 shrink-0">{gap.label}</span>
-      <div className="flex-1 bg-white/5 rounded-full h-1.5 overflow-hidden">
+      <span className="text-xs font-mono text-ink-secondary w-8 shrink-0">{gap.label}</span>
+      <div className="flex-1 bg-surface-overlay rounded-full h-1.5 overflow-hidden">
         <div className={`h-full rounded-full ${barColor}`} style={{ width: `${barPct}%` }} />
       </div>
-      <span className="text-xs font-mono text-gray-500 w-10 text-right tabular-nums">
+      <span className="text-xs font-mono text-ink-secondary w-10 text-right tabular-nums">
         {isMissing ? '—' : isPct ? gap.current?.toFixed(3) : gap.current?.toFixed(1)}
       </span>
       <span className={`text-xs font-mono px-1.5 py-0.5 rounded border w-14 text-center shrink-0 ${gradeColor}`}>

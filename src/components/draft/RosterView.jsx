@@ -73,9 +73,9 @@ export default function RosterView({ league }) {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="flex-1 min-h-0 bg-surface rounded-lg border border-border p-4 flex flex-col">
+      <div className="flex-1 min-h-0 bg-surface-raised rounded-lg border border-surface-line p-4 flex flex-col">
         {/* Header */}
-        <h3 className="text-xs text-gray-500 uppercase tracking-wider font-mono mb-3 shrink-0">
+        <h3 className="text-xs text-ink-secondary uppercase tracking-wider font-mono mb-3 shrink-0">
           {showHistory ? 'Pick History' : 'Your Roster'}
         </h3>
 
@@ -116,7 +116,7 @@ export default function RosterView({ league }) {
         {/* Flip toggle — pinned to bottom of card */}
         <button
           onClick={handleFlip}
-          className="mt-3 shrink-0 w-full pt-3 border-t border-border text-xs font-mono text-gray-600 hover:text-gray-300 transition-colors text-center"
+          className="mt-3 shrink-0 w-full pt-3 border-t border-surface-line text-xs font-mono text-ink-muted hover:text-ink-primary transition-colors text-center"
         >
           {showHistory ? '← Your Roster' : 'Pick History →'}
         </button>
@@ -139,25 +139,25 @@ export default function RosterView({ league }) {
 function SlotRow({ slot, player, pick, isBench, onEdit, isAuction }) {
   return (
     <div className="flex-1 flex items-center gap-2 min-h-0 group">
-      <span className={`text-xs font-mono w-8 shrink-0 ${isBench ? 'text-gray-600' : 'text-gray-500'}`}>
+      <span className={`text-xs font-mono w-8 shrink-0 ${isBench ? 'text-ink-muted' : 'text-ink-secondary'}`}>
         {slot.type}
       </span>
       {player ? (
         <>
-          <span className="text-xs text-white truncate flex-1">{player.name}</span>
+          <span className="text-xs text-ink-primary truncate flex-1">{player.name}</span>
           {isAuction && pick?.price != null && (
-            <span className="text-xs font-mono text-gray-500 shrink-0">${pick.price}</span>
+            <span className="text-xs font-mono text-ink-secondary shrink-0">${pick.price}</span>
           )}
           <button
             onClick={() => onEdit(pick)}
-            className="text-xs text-gray-700 hover:text-gray-300 opacity-0 group-hover:opacity-100 transition-all shrink-0 ml-auto px-1"
+            className="text-xs text-ink-muted hover:text-ink-primary opacity-0 group-hover:opacity-100 transition-all shrink-0 ml-auto px-1"
             title="Edit pick"
           >
             ↩
           </button>
         </>
       ) : (
-        <span className="text-xs text-gray-700 font-mono">—</span>
+        <span className="text-xs text-ink-muted font-mono">—</span>
       )}
     </div>
   )
@@ -167,7 +167,7 @@ function PickHistory({ picks, playerMap, onEdit, isAuction }) {
   if (picks.length === 0) {
     return (
       <div className="h-full flex items-center justify-center">
-        <p className="text-xs text-gray-700 font-mono">No picks yet.</p>
+        <p className="text-xs text-ink-muted font-mono">No picks yet.</p>
       </div>
     )
   }
@@ -181,21 +181,21 @@ function PickHistory({ picks, playerMap, onEdit, isAuction }) {
         const isUser = pick.draftedBy === 'user'
         return (
           <div key={pick.pickNumber} className="flex-1 flex items-center gap-2 min-h-0 group">
-            <span className="text-xs font-mono text-gray-600 w-6 shrink-0 text-right">
+            <span className="text-xs font-mono text-ink-muted w-6 shrink-0 text-right">
               {pick.pickNumber}
             </span>
-            <span className={`text-xs font-mono w-7 shrink-0 ${isUser ? 'text-pick' : 'text-gray-600'}`}>
+            <span className={`text-xs font-mono w-7 shrink-0 ${isUser ? 'text-beane-green-text' : 'text-ink-muted'}`}>
               {isUser ? 'You' : 'OPP'}
             </span>
-            <span className={`text-xs truncate flex-1 ${isUser ? 'text-white' : 'text-gray-500'}`}>
+            <span className={`text-xs truncate flex-1 ${isUser ? 'text-ink-primary' : 'text-ink-secondary'}`}>
               {player?.name ?? '—'}
             </span>
             {isAuction && isUser && pick.price != null && (
-              <span className="text-xs font-mono text-gray-500 shrink-0">${pick.price}</span>
+              <span className="text-xs font-mono text-ink-secondary shrink-0">${pick.price}</span>
             )}
             <button
               onClick={() => onEdit(pick)}
-              className="text-xs text-gray-700 hover:text-gray-300 opacity-0 group-hover:opacity-100 transition-all shrink-0 ml-auto px-1"
+              className="text-xs text-ink-muted hover:text-ink-primary opacity-0 group-hover:opacity-100 transition-all shrink-0 ml-auto px-1"
               title="Edit pick"
             >
               ↩

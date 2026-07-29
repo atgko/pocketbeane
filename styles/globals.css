@@ -2,16 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  background-color: #0f1117;
-  color: #e5e7eb;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+:root {
+  /* RGB triplets (not hex) so Tailwind's /opacity modifiers work through
+     rgb(var(--x) / <alpha-value>) in tailwind.config.js. A future light
+     theme is a pure swap of these values — no component changes needed. */
+  --color-surface-base:      14 22 19;    /* #0E1613 */
+  --color-surface-raised:    23 35 29;    /* #17231D */
+  --color-surface-overlay:   32 48 39;    /* #203027 */
+  --color-surface-line:      44 62 52;    /* #2C3E34 */
+
+  --color-beane-green:       29 176 104;  /* #1DB068 */
+  --color-beane-green-dim:   20 114 74;   /* #14724A */
+  --color-beane-green-text:  52 199 127;  /* #34C77F */
+  --color-brass:             201 162 39;  /* #C9A227 */
+
+  --color-ink-primary:       232 236 234; /* #E8ECEA */
+  --color-ink-secondary:     147 166 155; /* #93A69B */
+  --color-ink-muted:         100 115 107; /* #64736B */
+
+  --color-signal-up:         47 191 113;  /* #2FBF71 */
+  --color-signal-down:       224 82 82;   /* #E05252 */
+  --color-signal-watch:      224 168 61;  /* #E0A83D */
+  --color-signal-info:       78 156 211;  /* #4E9CD3 */
 }
 
-/* Stat numbers use monospace for alignment */
-.stat-num {
-  font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+html,
+body {
+  background-color: rgb(var(--color-surface-base));
+  color: rgb(var(--color-ink-primary));
 }
 
 /* Scrollbar styling for dark theme */
@@ -19,12 +37,12 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f1117;
+  background: rgb(var(--color-surface-base));
 }
 ::-webkit-scrollbar-thumb {
-  background: #2a3142;
+  background: rgb(var(--color-surface-line));
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #374151;
+  background: rgb(var(--color-surface-overlay));
 }

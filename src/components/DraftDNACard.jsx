@@ -42,7 +42,7 @@ export default function DraftDNACard({ archetype, topCategories = [], boldPredic
             <p className="text-xs font-mono uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.35)' }}>
               Your Draft DNA
             </p>
-            <h2 className="text-2xl font-bold text-white leading-tight">{archetype.name}</h2>
+            <h2 className="text-2xl font-bold text-ink-primary leading-tight">{archetype.name}</h2>
             <p className="text-sm italic" style={{ color: 'rgba(255,255,255,0.55)' }}>
               "{archetype.tagline}"
             </p>
@@ -70,7 +70,7 @@ export default function DraftDNACard({ archetype, topCategories = [], boldPredic
           <div className="pl-3" style={{ borderLeft: '2px solid rgba(34,197,94,0.5)' }}>
             {loadingPrediction ? (
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full border border-green-500/40 border-t-green-400 animate-spin" />
+                <div className="w-3 h-3 rounded-full border border-signal-up/40 border-t-signal-up animate-spin" />
                 <span className="text-xs font-mono" style={{ color: 'rgba(255,255,255,0.3)' }}>Generating prediction…</span>
               </div>
             ) : (
@@ -90,20 +90,20 @@ export default function DraftDNACard({ archetype, topCategories = [], boldPredic
           {canShare && (
             <button
               onClick={handleShare}
-              className="px-4 py-2 rounded-lg text-xs font-mono bg-pick/10 border border-pick/30 text-pick hover:bg-pick/20 transition-colors"
+              className="px-4 py-2 rounded-lg text-xs font-mono bg-beane-green/10 border border-beane-green/30 text-beane-green-text hover:bg-beane-green/20 transition-colors"
             >
               Share your Draft DNA
             </button>
           )}
           <button
             onClick={handleCopy}
-            className="px-4 py-2 rounded-lg text-xs font-mono border border-white/10 text-gray-300 hover:border-white/25 hover:text-white transition-colors"
+            className="px-4 py-2 rounded-lg text-xs font-mono border border-surface-line text-ink-secondary hover:border-surface-overlay hover:text-ink-primary transition-colors"
           >
             {copied ? 'Copied!' : 'Copy'}
           </button>
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg text-xs font-mono border border-white/10 text-gray-500 hover:text-gray-300 transition-colors"
+            className="px-4 py-2 rounded-lg text-xs font-mono border border-surface-line text-ink-muted hover:text-ink-secondary transition-colors"
           >
             Close
           </button>

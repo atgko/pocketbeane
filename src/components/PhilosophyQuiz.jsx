@@ -29,10 +29,10 @@ export default function PhilosophyQuiz({ onComplete, onSkip, initialAnswers = {}
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-bg/80 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-surface-base/80 backdrop-blur-sm" />
 
       <div className="relative z-10 w-full max-w-md mx-4">
-        <div className="bg-surface border border-border rounded-xl p-8 shadow-2xl">
+        <div className="bg-surface-raised border border-surface-line rounded-xl p-8 shadow-2xl">
           {success ? (
             <SuccessState />
           ) : (
@@ -42,7 +42,7 @@ export default function PhilosophyQuiz({ onComplete, onSkip, initialAnswers = {}
             >
               <Progress step={step} total={QUIZ_QUESTIONS.length} />
 
-              <h2 className="text-lg font-semibold text-white mb-5 mt-6">
+              <h2 className="text-lg font-semibold text-ink-primary mb-5 mt-6">
                 {question.question}
               </h2>
 
@@ -55,14 +55,14 @@ export default function PhilosophyQuiz({ onComplete, onSkip, initialAnswers = {}
                       onClick={() => selectAnswer(opt.value)}
                       className={`w-full text-left px-4 py-3.5 rounded-lg border transition-all group ${
                         selected
-                          ? 'border-pick bg-pick/10'
-                          : 'border-border bg-bg hover:border-pick/60 hover:bg-pick/5'
+                          ? 'border-beane-green bg-beane-green/10'
+                          : 'border-surface-line bg-surface-base hover:border-beane-green/60 hover:bg-beane-green/5'
                       }`}
                     >
-                      <div className={`font-medium text-sm transition-colors ${selected ? 'text-pick' : 'text-gray-200 group-hover:text-white'}`}>
+                      <div className={`font-medium text-sm transition-colors ${selected ? 'text-beane-green-text' : 'text-ink-primary group-hover:text-ink-primary'}`}>
                         {opt.label}
                       </div>
-                      <div className="text-xs text-gray-500 mt-0.5">{opt.desc}</div>
+                      <div className="text-xs text-ink-secondary mt-0.5">{opt.desc}</div>
                     </button>
                   )
                 })}
@@ -70,7 +70,7 @@ export default function PhilosophyQuiz({ onComplete, onSkip, initialAnswers = {}
 
               <button
                 onClick={onSkip}
-                className="mt-5 w-full text-center text-xs text-gray-600 hover:text-gray-400 transition-colors py-2"
+                className="mt-5 w-full text-center text-xs text-ink-muted hover:text-ink-secondary transition-colors py-2"
               >
                 Skip for now — use generic recommendations
               </button>
@@ -88,10 +88,10 @@ function Progress({ step, total }) {
       {Array.from({ length: total }, (_, i) => (
         <div
           key={i}
-          className={`h-1 flex-1 rounded-full transition-colors duration-300 ${i <= step ? 'bg-pick' : 'bg-border'}`}
+          className={`h-1 flex-1 rounded-full transition-colors duration-300 ${i <= step ? 'bg-beane-green' : 'bg-surface-line'}`}
         />
       ))}
-      <span className="text-xs text-gray-500 font-mono ml-1 shrink-0">
+      <span className="text-xs text-ink-secondary font-mono ml-1 shrink-0">
         {step + 1} of {total}
       </span>
     </div>
@@ -101,11 +101,22 @@ function Progress({ step, total }) {
 function SuccessState() {
   return (
     <div className="text-center py-6">
-      <div className="w-12 h-12 rounded-full bg-pick/20 flex items-center justify-center mx-auto mb-4">
-        <span className="text-pick text-xl font-bold">✓</span>
+      <div className="w-12 h-12 rounded-full bg-beane-green/20 flex items-center justify-center mx-auto mb-4">
+        <svg
+          className="w-5 h-5 text-beane-green"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M5 13l4 4L19 7" />
+        </svg>
       </div>
-      <h3 className="text-white font-semibold text-lg">GM Profile set.</h3>
-      <p className="text-gray-500 text-sm mt-1">
+      <h3 className="text-ink-primary font-semibold text-lg">GM Profile set.</h3>
+      <p className="text-ink-secondary text-sm mt-1">
         PocketBeane will now tailor picks to your style.
       </p>
     </div>

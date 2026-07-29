@@ -10,6 +10,7 @@ import { computeScarcity, getSmartScarcityAlerts, computePositionalDepth } from 
 import { rankByFit, computeSleepers } from '@/ai/valueCalculator'
 import { getSessionId } from '@/utils/session'
 import { resolveProfile } from '@/utils/gmProfile'
+import { Card, Badge } from '@/components/ui'
 
 const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers }
 
@@ -177,12 +178,12 @@ export default function RecommendationPanel({ league }) {
     <div className="h-full flex flex-col gap-3">
 
       {/* Zone 1 — header, always visible, pinned to top */}
-      <div className="shrink-0 bg-surface rounded-lg border border-border px-4 pt-4 pb-3">
+      <div className="shrink-0 bg-surface-raised rounded-lg border border-surface-line px-4 pt-4 pb-3">
         <div className="flex items-center justify-between mb-1">
-          <h2 className="text-sm font-semibold text-white tracking-tight">Beane's Corner</h2>
-          {loading && <span className="text-xs font-mono text-gray-500 animate-pulse">thinking…</span>}
+          <h2 className="text-sm font-semibold text-ink-primary tracking-tight">Beane's Corner</h2>
+          {loading && <span className="text-xs font-mono text-ink-secondary animate-pulse">thinking…</span>}
         </div>
-        <p className="text-xs font-mono text-gray-600">
+        <p className="text-xs font-mono text-ink-muted">
           {isRosterFull
             ? 'Draft complete — see full analysis below'
             : isMyTurn
@@ -191,8 +192,8 @@ export default function RecommendationPanel({ league }) {
         </p>
         {!isSnake && !isRosterFull && (
           <div className="mt-2 flex items-baseline justify-between">
-            <span className="text-xs font-mono text-white font-semibold">${budgetRemaining} left</span>
-            <span className="text-xs font-mono text-gray-600">
+            <span className="text-xs font-mono text-ink-primary font-semibold">${budgetRemaining} left</span>
+            <span className="text-xs font-mono text-ink-muted">
               {slotsLeft} spots · ~${Math.round(avgPerSlot)}/slot
             </span>
           </div>
@@ -205,20 +206,20 @@ export default function RecommendationPanel({ league }) {
                 disabled={!canRefresh}
                 className={`w-full py-1.5 px-3 rounded text-xs font-mono font-semibold transition-colors ${
                   canRefresh
-                    ? 'bg-white/5 text-gray-300 hover:bg-white/10 border border-border'
-                    : 'bg-white/3 text-gray-600 cursor-not-allowed border border-transparent'
+                    ? 'text-ink-primary hover:bg-surface-overlay border border-surface-line'
+                    : 'text-ink-muted cursor-not-allowed border border-transparent'
                 }`}
               >
                 {loading ? 'Thinking…' : refreshesLeft === 0 ? "No refreshes remaining" : isSnake ? "Get Beane's Insights" : "Get Market Read"}
               </button>
-              <p className="text-xs font-mono text-gray-700 text-center mt-1.5">
+              <p className="text-xs font-mono text-ink-muted text-center mt-1.5">
                 {refreshesLeft} of {REFRESH_BUDGET} refreshes left this draft
               </p>
             </div>
 
             {!isSnake && (
-              <div className="pt-3 border-t border-border/50">
-                <p className="text-xs font-mono text-gray-600 mb-1.5">On the block</p>
+              <div className="pt-3 border-t border-surface-line/50">
+                <p className="text-xs font-mono text-ink-muted mb-1.5">On the block</p>
                 <div className="relative">
                   <input
                     ref={bidSearchRef}
@@ -226,17 +227,17 @@ export default function RecommendationPanel({ league }) {
                     value={bidPlayer ? bidPlayer.name : bidSearch}
                     onChange={e => { setBidSearch(e.target.value); setBidPlayer(null) }}
                     placeholder="Search player…"
-                    className="w-full bg-white/5 border border-border rounded px-2.5 py-1.5 text-xs text-white placeholder-gray-600 font-mono focus:outline-none focus:border-pick/50"
+                    className="w-full bg-surface-overlay border border-surface-line rounded px-2.5 py-1.5 text-xs text-ink-primary placeholder-ink-muted font-mono focus:outline-none focus:border-beane-green/50"
                   />
                   {bidMatches.length > 0 && (
-                    <div className="absolute top-full left-0 right-0 z-10 mt-0.5 bg-[#1a1a1a] border border-border rounded overflow-hidden">
+                    <div className="absolute top-full left-0 right-0 z-10 mt-0.5 bg-surface-overlay border border-surface-line rounded overflow-hidden">
                       {bidMatches.map(p => (
                         <button
                           key={p.id}
                           onClick={() => { setBidPlayer(p); setBidSearch(''); bidSearchRef.current?.blur() }}
-                          className="w-full text-left px-2.5 py-1.5 text-xs font-mono text-gray-300 hover:bg-white/10 transition-colors"
+                          className="w-full text-left px-2.5 py-1.5 text-xs font-mono text-ink-primary hover:bg-surface-line/30 transition-colors"
                         >
-                          {p.name} <span className="text-gray-600">{p.yahoo_positions.join('/')}</span>
+                          {p.name} <span className="text-ink-muted">{p.yahoo_positions.join('/')}</span>
                         </button>
                       ))}
                     </div>
@@ -244,7 +245,7 @@ export default function RecommendationPanel({ league }) {
                 </div>
                 {bidPlayer && (
                   <div className="flex gap-1.5 mt-1.5">
-                    <span className="text-gray-500 text-xs font-mono self-center">$</span>
+                    <span className="text-ink-secondary text-xs font-mono self-center">$</span>
                     <input
                       type="number"
                       min={1}
@@ -252,15 +253,15 @@ export default function RecommendationPanel({ league }) {
                       onChange={e => setBidAmount(e.target.value)}
                       onKeyDown={e => { if (e.key === 'Enter') handleBidAdvice() }}
                       placeholder="bid"
-                      className="w-14 bg-white/5 border border-border rounded px-2 py-1 text-xs text-white font-mono text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:outline-none focus:border-pick/50"
+                      className="w-14 bg-surface-overlay border border-surface-line rounded px-2 py-1 text-xs text-ink-primary font-mono text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:outline-none focus:border-beane-green/50"
                     />
                     <button
                       onClick={handleBidAdvice}
                       disabled={Number(bidAmount) < 1 || loading}
                       className={`flex-1 py-1 px-2 rounded text-xs font-mono font-semibold transition-colors ${
                         Number(bidAmount) >= 1 && !loading
-                          ? 'bg-white/5 text-gray-300 hover:bg-white/10 border border-border'
-                          : 'bg-white/3 text-gray-600 cursor-not-allowed border border-transparent'
+                          ? 'text-ink-primary hover:bg-surface-overlay border border-surface-line'
+                          : 'text-ink-muted cursor-not-allowed border border-transparent'
                       }`}
                     >
                       {loading ? 'Thinking…' : 'Get ceiling'}
@@ -277,36 +278,35 @@ export default function RecommendationPanel({ league }) {
       <div className="flex-1 min-h-0 overflow-y-auto flex flex-col gap-3">
         {!error && !result && !loading && (
           <div className="flex-1 flex items-center justify-center">
-            <p className="text-xs font-mono text-gray-800">Analysis appears on your pick</p>
+            <p className="text-xs font-mono text-ink-muted">Analysis appears on your pick</p>
           </div>
         )}
 
         {error && (
-          <div className="bg-surface rounded-lg border border-red-500/20 p-4">
-            <p className="text-xs text-red-400 font-mono">{error}</p>
+          <div className="bg-surface-raised rounded-lg border border-signal-down/20 p-4">
+            <p className="text-xs text-signal-down font-mono">{error}</p>
           </div>
         )}
 
         {result?.verdict && (
-          <div className="bg-surface rounded-lg border border-border p-4">
+          <Card variant="data">
             <div className="flex items-baseline justify-between mb-2">
-              <p className="text-xs font-mono text-gray-500 uppercase tracking-wider">Bid ceiling</p>
-              <span className={`text-xs font-mono font-semibold px-1.5 py-0.5 rounded ${
-                result.verdict === 'buy'     ? 'text-green-400 bg-green-500/10' :
-                result.verdict === 'stretch' ? 'text-yellow-400 bg-yellow-500/10' :
-                                               'text-red-400 bg-red-500/10'
-              }`}>
+              <p className="text-xs font-mono text-ink-secondary uppercase tracking-wider">Bid ceiling</p>
+              <Badge
+                tone={result.verdict === 'buy' ? 'up' : result.verdict === 'stretch' ? 'watch' : 'down'}
+                className="font-mono"
+              >
                 {result.verdict === 'buy' ? 'BUY' : result.verdict === 'stretch' ? 'STRETCH' : 'PASS'}
-              </span>
+              </Badge>
             </div>
-            <p className="text-2xl font-bold text-white font-mono mb-2">${result.ceiling}</p>
-            <p className="text-xs text-gray-400 leading-relaxed">{result.reason}</p>
-          </div>
+            <p className="text-2xl font-bold text-ink-primary font-mono mb-2">${result.ceiling}</p>
+            <p className="text-xs text-ink-secondary leading-relaxed">{result.reason}</p>
+          </Card>
         )}
 
         {result?.picks?.length > 0 && (
-          <div className="bg-surface rounded-lg border border-border p-4">
-            <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">
+          <Card variant="data">
+            <p className="text-xs font-mono text-ink-secondary uppercase tracking-wider mb-3">
               {result.mode === 'post-pick' ? 'On my radar'
                 : result.mode === 'nomination' ? 'Nomination targets'
                 : 'My board'}
@@ -316,12 +316,12 @@ export default function RecommendationPanel({ league }) {
                 const player = playerMap[pick.id]
                 return (
                   <div key={pick.id} className="flex gap-3">
-                    <span className="text-xs font-mono text-pick mt-0.5 w-3 shrink-0 font-bold">{i + 1}</span>
+                    <span className="text-xs font-mono text-beane-green-text mt-0.5 w-3 shrink-0 font-bold">{i + 1}</span>
                     <div className="min-w-0">
                       <div className="flex items-baseline gap-1.5 flex-wrap">
-                        <span className="text-xs font-semibold text-white">{pick.name}</span>
+                        <span className="text-xs font-semibold text-ink-primary">{pick.name}</span>
                         {player && (
-                          <span className="text-xs font-mono text-gray-600">
+                          <span className="text-xs font-mono text-ink-muted">
                             {player.yahoo_positions.join('/')} · {player.adp.toFixed(1)}
                           </span>
                         )}
@@ -332,31 +332,31 @@ export default function RecommendationPanel({ league }) {
                 )
               })}
             </div>
-          </div>
+          </Card>
         )}
 
         {result?.briefing && (
-          <div className="bg-surface rounded-lg border border-border p-4">
-            <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">Market read</p>
-            <p className="text-xs text-gray-400 leading-relaxed">{result.briefing}</p>
-          </div>
+          <Card variant="data">
+            <p className="text-xs font-mono text-ink-secondary uppercase tracking-wider mb-3">Market read</p>
+            <p className="text-xs text-ink-secondary leading-relaxed">{result.briefing}</p>
+          </Card>
         )}
 
         {/* Sleeper Radar — always visible when there are sleepers and draft is active */}
         {sleepers.length > 0 && !isRosterFull && (
-          <div className="bg-surface rounded-lg border border-blue-500/15 p-4">
-            <p className="text-xs font-mono text-blue-400/60 uppercase tracking-wider mb-3">Sleeper Radar</p>
+          <div className="bg-surface-raised rounded-lg border border-signal-info/15 p-4">
+            <p className="text-xs font-mono text-signal-info/60 uppercase tracking-wider mb-3">Sleeper Radar</p>
             <div className="space-y-2.5">
               {sleepers.map(({ player, signals }) => (
                 <div key={player.id} className="flex gap-3 items-start">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-baseline gap-1.5 flex-wrap">
-                      <span className="text-xs font-semibold text-gray-300">{player.name}</span>
-                      <span className="text-xs font-mono text-gray-600">
+                      <span className="text-xs font-semibold text-ink-primary">{player.name}</span>
+                      <span className="text-xs font-mono text-ink-muted">
                         {player.yahoo_positions.join('/')}
                       </span>
                     </div>
-                    <p className="text-xs font-mono text-blue-400/50 mt-0.5">{signals.join(' · ')}</p>
+                    <p className="text-xs font-mono text-signal-info/50 mt-0.5">{signals.join(' · ')}</p>
                   </div>
                 </div>
               ))}
@@ -366,14 +366,14 @@ export default function RecommendationPanel({ league }) {
       </div>
 
       {/* Zone 3 — categories, always visible, pinned to bottom */}
-      <div className="shrink-0 bg-surface rounded-lg border border-border p-4">
-        <p className="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">Categories</p>
+      <Card variant="data" className="shrink-0">
+        <p className="text-xs font-mono text-ink-secondary uppercase tracking-wider mb-3">Categories</p>
         <div className="space-y-1.5">
           {categoryGaps.map(gap => (
             <CategoryBar key={gap.id} gap={gap} />
           ))}
         </div>
-      </div>
+      </Card>
 
     </div>
   )
@@ -383,13 +383,13 @@ function PickReason({ reason }) {
   const urgencyPrefix = 'URGENCY: '
   if (reason?.startsWith(urgencyPrefix)) {
     return (
-      <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
-        <span className="text-yellow-400 font-semibold font-mono">URGENCY: </span>
+      <p className="text-xs text-ink-secondary mt-0.5 leading-relaxed">
+        <span className="text-signal-watch font-semibold font-mono">URGENCY: </span>
         {reason.slice(urgencyPrefix.length)}
       </p>
     )
   }
-  return <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">{reason}</p>
+  return <p className="text-xs text-ink-secondary mt-0.5 leading-relaxed">{reason}</p>
 }
 
 function CategoryBar({ gap }) {
@@ -397,21 +397,21 @@ function CategoryBar({ gap }) {
   const barPct = isMissing ? 0 : Math.min(gap.progress * 100, 130)
 
   const barColor =
-    gap.grade === 'strong' ? 'bg-green-500/60' :
-    gap.grade === 'ok'     ? 'bg-yellow-500/50' :
-    gap.grade === 'weak'   ? 'bg-red-500/60' :
-    'bg-gray-700/40'
+    gap.grade === 'strong' ? 'bg-signal-up/60' :
+    gap.grade === 'ok'     ? 'bg-signal-watch/50' :
+    gap.grade === 'weak'   ? 'bg-signal-down/60' :
+    'bg-ink-muted/40'
 
   const labelColor =
-    gap.grade === 'strong' ? 'text-green-400/80' :
-    gap.grade === 'ok'     ? 'text-gray-400' :
-    gap.grade === 'weak'   ? 'text-red-400/80' :
-    'text-gray-600'
+    gap.grade === 'strong' ? 'text-signal-up/80' :
+    gap.grade === 'ok'     ? 'text-signal-watch' :
+    gap.grade === 'weak'   ? 'text-signal-down/80' :
+    'text-ink-muted'
 
   return (
     <div className="flex items-center gap-2">
       <span className={`text-xs font-mono w-7 shrink-0 ${labelColor}`}>{gap.label}</span>
-      <div className="flex-1 bg-white/5 rounded-full h-1.5 overflow-hidden">
+      <div className="flex-1 bg-surface-overlay rounded-full h-1.5 overflow-hidden">
         <div
           className={`h-full rounded-full transition-all duration-300 ${barColor}`}
           style={{ width: `${barPct}%` }}

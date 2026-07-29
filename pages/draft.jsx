@@ -61,7 +61,7 @@ export default function Draft() {
         <title>{`${activeLeague.config.name} — PocketBeane`}</title>
       </Head>
 
-      <div className="h-screen bg-bg text-gray-200 flex flex-col overflow-hidden">
+      <div className="h-screen bg-surface-base text-ink-primary flex flex-col overflow-hidden">
         <LeagueSwitcher />
 
         {showNudge && !quizOpen && (

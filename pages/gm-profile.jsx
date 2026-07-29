@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import useLeagueStore from '@/store/leagueStore'
 import PhilosophyQuiz from '@/components/PhilosophyQuiz'
 import ProfileOverrideScreen from '@/components/ProfileOverrideScreen'
+import { Card, Button } from '@/components/ui'
 import {
   getGMProfile, saveGMProfile, clearGMProfile, resolveProfile,
   QUIZ_QUESTIONS,
@@ -49,26 +50,26 @@ function EmailDigestSettings() {
   }
 
   return (
-    <div className="bg-surface border border-border rounded-lg p-5 mb-4">
-      <p className="text-xs text-gray-400 mb-1 font-mono">Email Digests</p>
-      <p className="text-xs text-gray-600 mb-3">
+    <Card variant="data" className="mb-4">
+      <p className="text-xs text-ink-secondary mb-1 font-mono">Email Digests</p>
+      <p className="text-xs text-ink-muted mb-3">
         Optional — used for waiver wire digests and draft recap emails. Season Hub works fully without one.
       </p>
 
       {!editing ? (
         <div className="flex items-center justify-between gap-4">
-          <p className="text-sm text-white">{savedEmail ?? 'No email set'}</p>
+          <p className="text-sm text-ink-primary">{savedEmail ?? 'No email set'}</p>
           <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={() => setEditing(true)}
-              className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
+              className="text-xs text-ink-secondary hover:text-ink-primary transition-colors"
             >
               {savedEmail ? 'Edit' : 'Add email'}
             </button>
             {savedEmail && (
               <button
                 onClick={handleClear}
-                className="text-xs text-gray-600 hover:text-injury transition-colors"
+                className="text-xs text-ink-muted hover:text-signal-down transition-colors"
               >
                 Clear
               </button>
@@ -82,25 +83,23 @@ function EmailDigestSettings() {
             value={draft}
             onChange={(e) => { setDraft(e.target.value); setError(null) }}
             placeholder="you@example.com"
-            className="flex-1 bg-bg border border-border rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-pick"
+            className="flex-1 bg-surface-base border border-surface-line rounded px-3 py-2 text-sm text-ink-primary focus:outline-none focus:border-beane-green"
           />
-          <button
-            onClick={handleSave}
-            className="px-4 py-2 bg-pick text-white rounded text-xs font-semibold hover:bg-green-500 transition-colors"
-          >
+          <Button variant="primary" onClick={handleSave} className="text-xs">
             Save
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="secondary"
             onClick={() => { setEditing(false); setDraft(savedEmail ?? ''); setError(null) }}
-            className="px-3 py-2 border border-border text-gray-500 rounded text-xs hover:text-gray-300 transition-colors"
+            className="text-xs"
           >
             Cancel
-          </button>
+          </Button>
         </div>
       )}
-      {error && <p className="text-xs text-injury mt-2">{error}</p>}
-      {saved && <p className="text-xs text-value mt-2">Saved.</p>}
-    </div>
+      {error && <p className="text-xs text-signal-down mt-2">{error}</p>}
+      {saved && <p className="text-xs text-signal-watch mt-2">Saved.</p>}
+    </Card>
   )
 }
 
@@ -153,16 +152,16 @@ export default function GMProfilePage() {
         <title>GM Profile — PocketBeane</title>
       </Head>
 
-      <main className="min-h-screen bg-bg text-gray-200 p-8">
+      <main className="min-h-screen bg-surface-base text-ink-primary p-8">
         <div className="max-w-xl mx-auto">
 
           <div className="mb-6">
-            <Link href="/" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">
+            <Link href="/" className="text-ink-secondary hover:text-ink-primary text-sm transition-colors">
               ← My Leagues
             </Link>
             <div className="mt-4 text-center">
-              <h1 className="text-xl font-bold text-white">GM Profile</h1>
-              <p className="text-gray-500 text-sm mt-0.5">
+              <h1 className="text-xl font-bold text-brass">GM Profile</h1>
+              <p className="text-ink-secondary text-sm mt-0.5">
                 Your draft philosophy — applied to all leagues by default.
               </p>
             </div>
@@ -171,21 +170,18 @@ export default function GMProfilePage() {
           <EmailDigestSettings />
 
           {!hasProfile ? (
-            <div className="bg-surface border border-border rounded-lg px-6 py-8 text-center">
-              <p className="text-gray-400 mb-1">No GM Profile set yet.</p>
-              <p className="text-gray-600 text-sm mb-5">
+            <Card variant="identity">
+              <p className="text-ink-secondary mb-1">No GM Profile set yet.</p>
+              <p className="text-ink-muted text-sm mb-5">
                 Complete the 3-question quiz to personalize your recommendations.
               </p>
-              <button
-                onClick={() => setRequizOpen(true)}
-                className="px-5 py-2.5 bg-pick text-white rounded-lg text-sm font-semibold hover:bg-green-500 transition-colors"
-              >
+              <Button variant="primary" onClick={() => setRequizOpen(true)} className="text-sm">
                 Set Up Profile
-              </button>
-            </div>
+              </Button>
+            </Card>
           ) : (
             <>
-              <div className="bg-surface border border-border rounded-lg p-5 space-y-4 mb-4">
+              <Card variant="data" className="space-y-4 mb-4">
                 {QUIZ_QUESTIONS.map(q => {
                   const displayMap = DISPLAY_MAPS[q.id]
                   const value = profile[q.id]
@@ -193,37 +189,31 @@ export default function GMProfilePage() {
                   return (
                     <div key={q.id} className="flex items-start justify-between gap-4">
                       <div>
-                        <p className="text-xs text-gray-500 font-mono">{q.question}</p>
-                        <p className="text-sm text-white font-medium mt-0.5">
+                        <p className="text-xs text-ink-secondary font-mono">{q.question}</p>
+                        <p className="text-sm text-brass font-medium mt-0.5">
                           {displayMap[value] ?? value ?? '—'}
                         </p>
                         {option && (
-                          <p className="text-xs text-gray-600 mt-0.5">{option.desc}</p>
+                          <p className="text-xs text-ink-muted mt-0.5">{option.desc}</p>
                         )}
                       </div>
                     </div>
                   )
                 })}
 
-                <div className="pt-3 border-t border-border flex items-center gap-3">
-                  <button
-                    onClick={() => setRequizOpen(true)}
-                    className="px-4 py-2 bg-pick text-white rounded text-xs font-semibold hover:bg-green-500 transition-colors"
-                  >
+                <div className="pt-3 border-t border-surface-line flex items-center gap-3">
+                  <Button variant="primary" onClick={() => setRequizOpen(true)} className="text-xs">
                     Edit Profile
-                  </button>
-                  <button
-                    onClick={handleReset}
-                    className="px-4 py-2 border border-border text-gray-500 rounded text-xs hover:text-injury hover:border-injury transition-colors"
-                  >
+                  </Button>
+                  <Button variant="destructive" onClick={handleReset} className="text-xs">
                     Reset to defaults
-                  </button>
+                  </Button>
                 </div>
-              </div>
+              </Card>
 
               {leagues.length > 0 && (
-                <div className="bg-surface border border-border rounded-lg p-5">
-                  <p className="text-xs text-gray-400 mb-3 font-mono">League customizations</p>
+                <Card variant="data">
+                  <p className="text-xs text-ink-secondary mb-3 font-mono">League customizations</p>
                   <div className="space-y-3">
                     {leagues.map(league => {
                       const override = league.profileOverride
@@ -234,26 +224,26 @@ export default function GMProfilePage() {
                         <div key={league.id}>
                           <div className="flex items-center justify-between gap-4">
                             <div>
-                              <p className="text-sm text-white">{league.config.name || 'Unnamed League'}</p>
+                              <p className="text-sm text-ink-primary">{league.config.name || 'Unnamed League'}</p>
                               {override?.hasOverride ? (
-                                <p className="text-xs text-value font-mono mt-0.5">
+                                <p className="text-xs text-signal-watch font-mono mt-0.5">
                                   Customized · {INJURY_DISPLAY[resolved?.injuryTolerance]} · {CATEGORY_DISPLAY[resolved?.categoryStrategy]} · {STRATEGY_DISPLAY[resolved?.draftStrategy]}
                                 </p>
                               ) : (
-                                <p className="text-xs text-gray-600 font-mono mt-0.5">Using global profile</p>
+                                <p className="text-xs text-ink-muted font-mono mt-0.5">Using global profile</p>
                               )}
                             </div>
                             <div className="flex items-center gap-2 shrink-0">
                               <button
                                 onClick={() => setOverrideLeagueId(isOverrideLeague ? null : league.id)}
-                                className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
+                                className="text-xs text-ink-secondary hover:text-ink-primary transition-colors"
                               >
                                 {isOverrideLeague ? 'Cancel' : 'Customize'}
                               </button>
                               {override?.hasOverride && !isOverrideLeague && (
                                 <button
                                   onClick={() => handleClearOverride(league.id)}
-                                  className="text-xs text-gray-600 hover:text-injury transition-colors"
+                                  className="text-xs text-ink-muted hover:text-signal-down transition-colors"
                                 >
                                   Clear
                                 </button>
@@ -272,7 +262,7 @@ export default function GMProfilePage() {
                       )
                     })}
                   </div>
-                </div>
+                </Card>
               )}
             </>
           )}

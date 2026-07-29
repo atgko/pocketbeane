@@ -16,15 +16,16 @@ import {
   getOverallWinRate,
   getWinRateGrade,
 } from '@/utils/teamStanding'
+import { Card } from '@/components/ui'
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000
 
 const TREND_STYLES = {
-  improving: { icon: '↑', color: 'text-green-400' },
-  'slightly-improving': { icon: '↗', color: 'text-green-400/70' },
-  stable:    { icon: '→', color: 'text-gray-400' },
-  'slightly-declining': { icon: '↘', color: 'text-red-400/70' },
-  declining: { icon: '↓', color: 'text-red-400' },
+  improving: { icon: '↑', color: 'text-signal-up' },
+  'slightly-improving': { icon: '↗', color: 'text-signal-up/70' },
+  stable:    { icon: '→', color: 'text-ink-secondary' },
+  'slightly-declining': { icon: '↘', color: 'text-signal-down/70' },
+  declining: { icon: '↓', color: 'text-signal-down' },
 }
 
 // Condensed Start/Sit rendering (NBA/NHL) shows injury status as its own
@@ -36,10 +37,13 @@ const INJURY_LABELS = {
   ir: 'IR',
 }
 
+// Mirrors Badge's up/info/neutral tones, but kept as raw classes: these are
+// 10px micro-tags in dense rows, and Badge's fixed text-label sizing wins over
+// a className override, so using <Badge> here would visibly grow them.
 const PITCHING_REC_STYLES = {
-  start: 'bg-green-900/40 text-green-400',
-  stream: 'bg-blue-900/40 text-blue-400',
-  hold: 'bg-gray-800 text-gray-500',
+  start: 'bg-signal-up/15 text-signal-up',
+  stream: 'bg-signal-info/15 text-signal-info',
+  hold: 'bg-surface-overlay text-ink-secondary',
 }
 
 function findPlayerByName(players, name) {
@@ -65,7 +69,7 @@ function TrendBadge({ player }) {
   const dateLabel = new Date(cs.as_of_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })
   return (
     <span
-      className={`ml-1 text-[10px] font-mono whitespace-nowrap ${stale ? 'text-gray-600' : style.color}`}
+      className={`ml-1 text-[10px] font-mono tabular-nums whitespace-nowrap ${stale ? 'text-ink-muted' : style.color}`}
       title={`Current season stats as of ${cs.as_of_date} (${cs.gp} GP)${stale ? ' — stale, treat as prior-season-only' : ''}`}
     >
       {style.icon} {stale ? `stale·${dateLabel}` : dateLabel}
@@ -78,9 +82,9 @@ function TrendBadge({ player }) {
 const COMING_SOON = []
 
 const PRIORITY_STYLES = {
-  'must-add': 'bg-green-900/40 text-green-400',
-  'consider': 'bg-blue-900/40 text-blue-400',
-  'speculative': 'bg-gray-800 text-gray-500',
+  'must-add': 'bg-signal-up/15 text-signal-up',
+  'consider': 'bg-signal-info/15 text-signal-info',
+  'speculative': 'bg-surface-overlay text-ink-secondary',
 }
 
 function isSyncStale(syncedAt) {
@@ -127,66 +131,66 @@ function WaiverPanel({ league, rosters }) {
   }
 
   return (
-    <div className="bg-surface border border-border rounded-lg px-5 py-5">
+    <Card>
       <div className="flex items-start justify-between gap-4 mb-1">
         <div>
-          <p className="text-sm font-semibold text-gray-200">Waiver Wire Advisor</p>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <p className="text-sm font-semibold text-ink-primary">Waiver Wire Advisor</p>
+          <p className="text-xs text-ink-secondary mt-0.5">
             Recommended adds and drops based on your roster gaps and available free agents.
           </p>
         </div>
         <button
           onClick={handleGetAdvice}
           disabled={loading}
-          className="shrink-0 text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="shrink-0 text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {advice ? 'Refresh' : "Get Beane's Take"}
         </button>
       </div>
 
       {loading && (
-        <p className="text-xs text-gray-500 font-mono mt-4 animate-pulse">Analyzing your roster…</p>
+        <p className="text-xs text-ink-secondary font-mono mt-4 animate-pulse">Analyzing your roster…</p>
       )}
 
       {error && !loading && (
-        <p className="text-xs text-red-400 font-mono mt-4">{error}</p>
+        <p className="text-xs text-signal-down font-mono mt-4">{error}</p>
       )}
 
       {advice && !loading && (
         <div className="mt-4 space-y-3">
           {advice.headline && (
-            <p className="text-xs text-gray-400 italic leading-relaxed">{advice.headline}</p>
+            <p className="text-xs text-ink-secondary italic leading-relaxed">{advice.headline}</p>
           )}
           {advice.moves?.map((move, i) => {
             const addPlayer = findPlayerByName(players, move.add)
             const dropPlayer = move.drop ? findPlayerByName(players, move.drop) : null
             return (
-              <div key={i} className="border border-border rounded-md px-4 py-3">
+              <div key={i} className="border border-surface-line rounded-md px-4 py-3">
                 <div className="flex flex-wrap items-center gap-2 mb-2">
-                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${PRIORITY_STYLES[move.priority] ?? 'bg-gray-800 text-gray-500'}`}>
+                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${PRIORITY_STYLES[move.priority] ?? 'bg-surface-overlay text-ink-secondary'}`}>
                     {move.priority ?? 'add'}
                   </span>
-                  <span className="text-xs text-green-400 font-medium flex items-center">
+                  <span className="text-xs text-signal-up font-medium flex items-center">
                     + {move.add}
                     <TrendBadge player={addPlayer} />
                   </span>
                   {move.drop && (
                     <>
-                      <span className="text-gray-700 text-xs">·</span>
-                      <span className="text-xs text-red-400 flex items-center">
+                      <span className="text-ink-muted text-xs">·</span>
+                      <span className="text-xs text-signal-down flex items-center">
                         − {move.drop}
                         <TrendBadge player={dropPlayer} />
                       </span>
                     </>
                   )}
                 </div>
-                <p className="text-xs text-gray-400 leading-relaxed">{move.reason}</p>
+                <p className="text-xs text-ink-secondary leading-relaxed">{move.reason}</p>
               </div>
             )
           })}
         </div>
       )}
-    </div>
+    </Card>
   )
 }
 
@@ -226,11 +230,11 @@ function MatchupPanel({ league, rosters, yahooConnected }) {
   const canRun = yahooConnected && Boolean(league.config.yahooLeagueKey)
 
   return (
-    <div className="bg-surface border border-border rounded-lg px-5 py-5">
+    <Card>
       <div className="flex items-start justify-between gap-4 mb-1">
         <div>
-          <p className="text-sm font-semibold text-gray-200">Head-to-Head Matchup Advisor</p>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <p className="text-sm font-semibold text-ink-primary">Head-to-Head Matchup Advisor</p>
+          <p className="text-xs text-ink-secondary mt-0.5">
             Weekly category projections vs. your current opponent with lineup suggestions.
           </p>
         </div>
@@ -238,71 +242,71 @@ function MatchupPanel({ league, rosters, yahooConnected }) {
           <button
             onClick={handleGetAdvice}
             disabled={loading}
-            className="shrink-0 text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="shrink-0 text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {advice ? 'Refresh' : "Get Beane's Take"}
           </button>
         ) : (
-          <span className="shrink-0 text-xs text-yellow-500/60 font-mono">Needs Yahoo</span>
+          <span className="shrink-0 text-xs text-signal-watch/60 font-mono">Needs Yahoo</span>
         )}
       </div>
 
       {loading && (
-        <p className="text-xs text-gray-500 font-mono mt-4 animate-pulse">Pulling this week's matchup…</p>
+        <p className="text-xs text-ink-secondary font-mono mt-4 animate-pulse">Pulling this week's matchup…</p>
       )}
 
       {error && !loading && (
-        <p className="text-xs text-red-400 font-mono mt-4">{error}</p>
+        <p className="text-xs text-signal-down font-mono mt-4">{error}</p>
       )}
 
       {advice && !loading && (
         <div className="mt-4 space-y-4">
-          <p className="text-xs text-gray-500 font-mono">
+          <p className="text-xs text-ink-secondary font-mono tabular-nums">
             Week {advice.week} vs. {advice.opponent}
           </p>
           {advice.outlook && (
-            <p className="text-xs text-gray-400 leading-relaxed italic">{advice.outlook}</p>
+            <p className="text-xs text-ink-secondary leading-relaxed italic">{advice.outlook}</p>
           )}
           <div className="grid grid-cols-3 gap-3">
             {advice.winCategories?.length > 0 && (
               <div>
-                <p className="text-[10px] font-mono text-green-500 uppercase tracking-wider mb-1.5">Win</p>
+                <p className="text-[10px] font-mono text-signal-up uppercase tracking-wider mb-1.5">Win</p>
                 <div className="flex flex-wrap gap-1">
                   {advice.winCategories.map(c => (
-                    <span key={c} className="text-xs font-mono bg-green-900/30 text-green-400 px-1.5 py-0.5 rounded">{c}</span>
+                    <span key={c} className="text-xs font-mono bg-signal-up/15 text-signal-up px-1.5 py-0.5 rounded">{c}</span>
                   ))}
                 </div>
               </div>
             )}
             {advice.loseCategories?.length > 0 && (
               <div>
-                <p className="text-[10px] font-mono text-red-500 uppercase tracking-wider mb-1.5">Lose</p>
+                <p className="text-[10px] font-mono text-signal-down uppercase tracking-wider mb-1.5">Lose</p>
                 <div className="flex flex-wrap gap-1">
                   {advice.loseCategories.map(c => (
-                    <span key={c} className="text-xs font-mono bg-red-900/30 text-red-400 px-1.5 py-0.5 rounded">{c}</span>
+                    <span key={c} className="text-xs font-mono bg-signal-down/15 text-signal-down px-1.5 py-0.5 rounded">{c}</span>
                   ))}
                 </div>
               </div>
             )}
             {advice.tossupCategories?.length > 0 && (
               <div>
-                <p className="text-[10px] font-mono text-yellow-500 uppercase tracking-wider mb-1.5">Tossup</p>
+                <p className="text-[10px] font-mono text-signal-watch uppercase tracking-wider mb-1.5">Tossup</p>
                 <div className="flex flex-wrap gap-1">
                   {advice.tossupCategories.map(c => (
-                    <span key={c} className="text-xs font-mono bg-yellow-900/30 text-yellow-400 px-1.5 py-0.5 rounded">{c}</span>
+                    <span key={c} className="text-xs font-mono bg-signal-watch/15 text-signal-watch px-1.5 py-0.5 rounded">{c}</span>
                   ))}
                 </div>
               </div>
             )}
           </div>
           {advice.keyNote && (
-            <p className="text-xs text-gray-500 border-t border-border pt-3 leading-relaxed">
+            <p className="text-xs text-ink-secondary border-t border-surface-line pt-3 leading-relaxed">
               {advice.keyNote}
             </p>
           )}
         </div>
       )}
-    </div>
+    </Card>
   )
 }
 
@@ -369,11 +373,11 @@ function LineupAdvisorPanel({ league, rosters, sport, mode }) {
   }
 
   return (
-    <div className="bg-surface border border-border rounded-lg px-5 py-5">
+    <Card>
       <div className="flex items-start justify-between gap-4 mb-1">
         <div>
-          <p className="text-sm font-semibold text-gray-200">Start / Sit Advisor</p>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <p className="text-sm font-semibold text-ink-primary">Start / Sit Advisor</p>
+          <p className="text-xs text-ink-secondary mt-0.5">
             {condensed
               ? 'Optimal lineup by games this week, injury status, and recent form.'
               : 'Optimal weekly lineup given schedule, recent form, and injury status.'}
@@ -383,32 +387,32 @@ function LineupAdvisorPanel({ league, rosters, sport, mode }) {
           <button
             onClick={handleGetAdvice}
             disabled={loading}
-            className="shrink-0 text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="shrink-0 text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {advice ? 'Refresh' : "Get Beane's Take"}
           </button>
         ) : (
-          <span className="shrink-0 text-xs text-yellow-500/60 font-mono">Not available for {sport.toUpperCase()} yet</span>
+          <span className="shrink-0 text-xs text-signal-watch/60 font-mono">Not available for {sport.toUpperCase()} yet</span>
         )}
       </div>
 
       {loading && (
-        <p className="text-xs text-gray-500 font-mono mt-4 animate-pulse">Setting your lineup…</p>
+        <p className="text-xs text-ink-secondary font-mono mt-4 animate-pulse">Setting your lineup…</p>
       )}
 
       {error && !loading && (
-        <p className="text-xs text-red-400 font-mono mt-4">{error}</p>
+        <p className="text-xs text-signal-down font-mono mt-4">{error}</p>
       )}
 
       {advice && !loading && (
         <div className="mt-4 space-y-3">
           {advice.week && (
-            <p className="text-xs text-gray-500 font-mono">
+            <p className="text-xs text-ink-secondary font-mono tabular-nums">
               Week of {advice.week.start} – {advice.week.end}
             </p>
           )}
           {advice.headline && (
-            <p className="text-xs text-gray-400 italic leading-relaxed">{advice.headline}</p>
+            <p className="text-xs text-ink-secondary italic leading-relaxed">{advice.headline}</p>
           )}
           {advice.startingLineup?.length > 0 && (
             <div className="space-y-2">
@@ -416,33 +420,33 @@ function LineupAdvisorPanel({ league, rosters, sport, mode }) {
                 const player = findPlayerByName(players, entry.player)
                 const hurt = entry.injuryStatus && entry.injuryStatus !== 'healthy'
                 return (
-                  <div key={i} className="border border-border rounded-md px-4 py-3">
+                  <div key={i} className="border border-surface-line rounded-md px-4 py-3">
                     <div className="flex flex-wrap items-center gap-2 mb-1">
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-gray-800 text-gray-400">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-surface-overlay text-ink-secondary">
                         {entry.slot}
                       </span>
-                      <span className="text-xs text-gray-200 font-medium flex items-center">
+                      <span className="text-xs text-ink-primary font-medium flex items-center">
                         {entry.player}
                         <TrendBadge player={player} />
                       </span>
                       {!condensed && entry.gamesThisWeek != null && (
-                        <span className="text-[10px] font-mono text-gray-500">
+                        <span className="text-[10px] font-mono tabular-nums text-ink-secondary">
                           {entry.gamesThisWeek}g{entry.backToBack ? ' · B2B' : ''}
                         </span>
                       )}
                     </div>
                     {condensed ? (
                       <>
-                        <p className="text-[11px] text-gray-500 font-mono">
+                        <p className="text-[11px] text-ink-secondary font-mono tabular-nums">
                           {entry.gamesThisWeek != null ? `${entry.gamesThisWeek}g this week${entry.backToBack ? ' · B2B' : ''}` : ''}
                           {hurt && (
-                            <span className="text-yellow-500/80"> · {INJURY_LABELS[entry.injuryStatus] ?? entry.injuryStatus}</span>
+                            <span className="text-signal-watch/80"> · {INJURY_LABELS[entry.injuryStatus] ?? entry.injuryStatus}</span>
                           )}
                         </p>
-                        {entry.reason && <p className="text-xs text-gray-400">{entry.reason}</p>}
+                        {entry.reason && <p className="text-xs text-ink-secondary">{entry.reason}</p>}
                       </>
                     ) : (
-                      <p className="text-xs text-gray-400 leading-relaxed">{entry.reason}</p>
+                      <p className="text-xs text-ink-secondary leading-relaxed">{entry.reason}</p>
                     )}
                   </div>
                 )
@@ -450,14 +454,14 @@ function LineupAdvisorPanel({ league, rosters, sport, mode }) {
             </div>
           )}
           {advice.benchNotes?.length > 0 && (
-            <div className="pt-3 border-t border-border space-y-2">
-              <p className="text-[10px] font-mono text-gray-600 uppercase tracking-wider">Bench notes</p>
+            <div className="pt-3 border-t border-surface-line space-y-2">
+              <p className="text-[10px] font-mono text-ink-muted uppercase tracking-wider">Bench notes</p>
               {advice.benchNotes.map((note, i) => {
                 const hurt = note.injuryStatus && note.injuryStatus !== 'healthy'
                 return (
-                  <p key={i} className="text-xs text-gray-500 leading-relaxed">
-                    <span className="text-gray-300">{note.player}</span>
-                    {hurt && <span className="text-yellow-500/80 font-mono"> [{INJURY_LABELS[note.injuryStatus] ?? note.injuryStatus}]</span>}
+                  <p key={i} className="text-xs text-ink-secondary leading-relaxed">
+                    <span className="text-ink-primary">{note.player}</span>
+                    {hurt && <span className="text-signal-watch/80 font-mono"> [{INJURY_LABELS[note.injuryStatus] ?? note.injuryStatus}]</span>}
                     : {note.reason}
                   </p>
                 )
@@ -466,7 +470,7 @@ function LineupAdvisorPanel({ league, rosters, sport, mode }) {
           )}
         </div>
       )}
-    </div>
+    </Card>
   )
 }
 
@@ -498,35 +502,35 @@ function PitchingStartsPanel({ rosters }) {
   }
 
   return (
-    <div className="bg-surface border border-border rounded-lg px-5 py-5">
+    <Card>
       <div className="flex items-start justify-between gap-4 mb-1">
         <div>
-          <p className="text-sm font-semibold text-gray-200">Pitching Starts</p>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <p className="text-sm font-semibold text-ink-primary">Pitching Starts</p>
+          <p className="text-xs text-ink-secondary mt-0.5">
             Scheduled starts this week for your rostered SPs, with a start / stream / hold call.
           </p>
         </div>
         <button
           onClick={handleCheckStarts}
           disabled={loading}
-          className="shrink-0 text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="shrink-0 text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {data ? 'Refresh' : 'Check Starts'}
         </button>
       </div>
 
       {loading && (
-        <p className="text-xs text-gray-500 font-mono mt-4 animate-pulse">Checking the rotation…</p>
+        <p className="text-xs text-ink-secondary font-mono mt-4 animate-pulse">Checking the rotation…</p>
       )}
 
       {error && !loading && (
-        <p className="text-xs text-red-400 font-mono mt-4">{error}</p>
+        <p className="text-xs text-signal-down font-mono mt-4">{error}</p>
       )}
 
       {data && !loading && (
         <div className="mt-4 space-y-3">
           {data.week && (
-            <p className="text-xs text-gray-500 font-mono">
+            <p className="text-xs text-ink-secondary font-mono tabular-nums">
               Week of {data.week.start} – {data.week.end}
             </p>
           )}
@@ -535,15 +539,15 @@ function PitchingStartsPanel({ rosters }) {
               {data.starts.map((s, i) => {
                 const hurt = s.injuryStatus && s.injuryStatus !== 'healthy'
                 return (
-                  <div key={i} className="border border-border rounded-md px-4 py-3 flex items-center justify-between gap-3">
+                  <div key={i} className="border border-surface-line rounded-md px-4 py-3 flex items-center justify-between gap-3">
                     <div>
-                      <p className="text-xs text-gray-200 font-medium">
-                        {s.player} <span className="text-gray-600 font-mono">{s.team}</span>
+                      <p className="text-xs text-ink-primary font-medium">
+                        {s.player} <span className="text-ink-muted font-mono">{s.team}</span>
                       </p>
-                      <p className="text-[11px] text-gray-500 font-mono mt-0.5">
+                      <p className="text-[11px] text-ink-secondary font-mono tabular-nums mt-0.5">
                         Team plays {s.teamGamesThisWeek} time{s.teamGamesThisWeek === 1 ? '' : 's'} this week
                         {hurt && (
-                          <span className="text-yellow-500/80">
+                          <span className="text-signal-watch/80">
                             {' '}· {INJURY_LABELS[s.injuryStatus] ?? s.injuryStatus}{s.injuryNote ? `: ${s.injuryNote}` : ''}
                           </span>
                         )}
@@ -557,11 +561,11 @@ function PitchingStartsPanel({ rosters }) {
               })}
             </div>
           ) : (
-            <p className="text-xs text-gray-500">No rostered starting pitchers found.</p>
+            <p className="text-xs text-ink-secondary">No rostered starting pitchers found.</p>
           )}
         </div>
       )}
-    </div>
+    </Card>
   )
 }
 
@@ -580,7 +584,7 @@ function favorStatement(score, partnerTeamName) {
 // extreme — color reflects how lopsided the trade is, not which side it
 // favors, since favoring either team equally hard should read the same way.
 const FAVOR_TRACK_GRADIENT =
-  'linear-gradient(to right, #ef4444 0%, #eab308 25%, #22c55e 50%, #eab308 75%, #ef4444 100%)'
+  'linear-gradient(to right, rgb(var(--color-signal-down)) 0%, rgb(var(--color-signal-watch)) 25%, rgb(var(--color-signal-up)) 50%, rgb(var(--color-signal-watch)) 75%, rgb(var(--color-signal-down)) 100%)'
 
 // A full-width scale with a single arrow marker landing at the point
 // corresponding to how lopsided the trade is — works the same whether the
@@ -592,17 +596,17 @@ function TradeFavorBar({ favorScore, partnerTeamName }) {
 
   return (
     <div>
-      <p className="text-sm text-gray-200 font-medium mb-3">{favorStatement(score, partnerTeamName)}</p>
-      <div className="flex items-center justify-between text-[10px] font-mono text-gray-600 uppercase tracking-wider mb-1.5">
+      <p className="text-sm text-ink-primary font-medium mb-3">{favorStatement(score, partnerTeamName)}</p>
+      <div className="flex items-center justify-between text-[10px] font-mono text-ink-muted uppercase tracking-wider mb-1.5">
         <span>You</span>
         <span>{partnerTeamName}</span>
       </div>
       <div className="relative w-full h-1.5">
         <div className="absolute inset-0 rounded-full" style={{ background: FAVOR_TRACK_GRADIENT }} />
         {/* 50/50 tick — a fixed reference point, independent of favorScore */}
-        <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-px h-2.5 bg-white/70" />
+        <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-px h-2.5 bg-ink-primary/70" />
         <div
-          className="absolute -translate-x-1/2 text-white"
+          className="absolute -translate-x-1/2 text-ink-primary"
           style={{
             left: `${markerPct}%`,
             top: '100%',
@@ -615,7 +619,7 @@ function TradeFavorBar({ favorScore, partnerTeamName }) {
           }}
         />
       </div>
-      <p className="text-center text-[9px] font-mono text-gray-600 mt-2.5">50 / 50</p>
+      <p className="text-center text-[9px] font-mono tabular-nums text-ink-muted mt-2.5">50 / 50</p>
     </div>
   )
 }
@@ -631,13 +635,13 @@ function TradePlayerToggle({ player, selected, onToggle }) {
       onClick={onToggle}
       className={`w-full text-left text-xs px-2.5 py-1.5 rounded border transition-colors ${
         selected
-          ? 'bg-pick/10 border-pick/40 text-pick'
-          : 'bg-background border-border text-gray-400 hover:border-gray-600'
+          ? 'bg-beane-green/10 border-beane-green/40 text-beane-green-text'
+          : 'bg-surface-base border-surface-line text-ink-secondary hover:border-ink-muted'
       }`}
     >
       {player.name}
-      {player.positions && <span className="ml-1.5 font-mono text-[10px] text-gray-600">{player.positions}</span>}
-      {hurt && <span className="ml-1.5 font-mono text-[10px] text-yellow-500/80">{player.status}</span>}
+      {player.positions && <span className="ml-1.5 font-mono text-[10px] text-ink-muted">{player.positions}</span>}
+      {hurt && <span className="ml-1.5 font-mono text-[10px] text-signal-watch/80">{player.status}</span>}
     </button>
   )
 }
@@ -699,18 +703,18 @@ function TradeAnalyzerPanel({ league, rosters }) {
   }
 
   return (
-    <div className="bg-surface border border-border rounded-lg px-5 py-5">
+    <Card>
       <div className="mb-3">
-        <p className="text-sm font-semibold text-gray-200">Trade Analyzer</p>
-        <p className="text-xs text-gray-500 mt-0.5">
+        <p className="text-sm font-semibold text-ink-primary">Trade Analyzer</p>
+        <p className="text-xs text-ink-secondary mt-0.5">
           Pick players from your roster and an opponent's to see the net category impact, positional fit, and buy-low/sell-high signal.
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
         <div>
-          <label className="text-[10px] font-mono text-gray-600 uppercase tracking-wider">
-            You give {give.length > 0 && <span className="text-pick">({give.length})</span>}
+          <label className="text-[10px] font-mono text-ink-muted uppercase tracking-wider">
+            You give {give.length > 0 && <span className="text-beane-green-text tabular-nums">({give.length})</span>}
           </label>
           <div className="mt-1 space-y-1 max-h-64 overflow-y-auto pr-1">
             {userTeam?.roster.map(p => (
@@ -724,13 +728,13 @@ function TradeAnalyzerPanel({ league, rosters }) {
           </div>
         </div>
         <div>
-          <label className="text-[10px] font-mono text-gray-600 uppercase tracking-wider">
-            You receive {receive.length > 0 && <span className="text-pick">({receive.length})</span>}
+          <label className="text-[10px] font-mono text-ink-muted uppercase tracking-wider">
+            You receive {receive.length > 0 && <span className="text-beane-green-text tabular-nums">({receive.length})</span>}
           </label>
           <select
             value={receiveTeamKey}
             onChange={(e) => handleReceiveTeamChange(e.target.value)}
-            className="mt-1 w-full bg-background border border-border rounded px-2.5 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-pick/50"
+            className="mt-1 w-full bg-surface-base border border-surface-line rounded px-2.5 py-1.5 text-xs text-ink-primary focus:outline-none focus:border-beane-green/50"
           >
             <option value="">Select opponent…</option>
             {otherTeams.map(t => (
@@ -748,7 +752,7 @@ function TradeAnalyzerPanel({ league, rosters }) {
                 />
               ))
             ) : (
-              <p className="text-xs text-gray-600 px-1 py-1">Pick an opponent to see their roster.</p>
+              <p className="text-xs text-ink-muted px-1 py-1">Pick an opponent to see their roster.</p>
             )}
           </div>
         </div>
@@ -757,73 +761,73 @@ function TradeAnalyzerPanel({ league, rosters }) {
       <button
         onClick={handleGetAdvice}
         disabled={loading}
-        className="text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+        className="text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
       >
         {advice ? 'Refresh' : "Get Beane's Take"}
       </button>
 
       {loading && (
-        <p className="text-xs text-gray-500 font-mono mt-4 animate-pulse">Weighing the trade…</p>
+        <p className="text-xs text-ink-secondary font-mono mt-4 animate-pulse">Weighing the trade…</p>
       )}
 
       {error && !loading && (
-        <p className="text-xs text-red-400 font-mono mt-4">{error}</p>
+        <p className="text-xs text-signal-down font-mono mt-4">{error}</p>
       )}
 
       {advice && !loading && (
         <div className="mt-4 space-y-4">
           <TradeFavorBar favorScore={advice.favorScore} partnerTeamName={advice.partnerTeamName ?? 'Opponent'} />
           {advice.outlook && (
-            <p className="text-xs text-gray-400 leading-relaxed italic">{advice.outlook}</p>
+            <p className="text-xs text-ink-secondary leading-relaxed italic">{advice.outlook}</p>
           )}
           <div className="grid grid-cols-3 gap-3">
             {advice.improveCategories?.length > 0 && (
               <div>
-                <p className="text-[10px] font-mono text-green-500 uppercase tracking-wider mb-1.5">Improves</p>
+                <p className="text-[10px] font-mono text-signal-up uppercase tracking-wider mb-1.5">Improves</p>
                 <div className="flex flex-wrap gap-1">
                   {advice.improveCategories.map(c => (
-                    <span key={c} className="text-xs font-mono bg-green-900/30 text-green-400 px-1.5 py-0.5 rounded">{c}</span>
+                    <span key={c} className="text-xs font-mono bg-signal-up/15 text-signal-up px-1.5 py-0.5 rounded">{c}</span>
                   ))}
                 </div>
               </div>
             )}
             {advice.declineCategories?.length > 0 && (
               <div>
-                <p className="text-[10px] font-mono text-red-500 uppercase tracking-wider mb-1.5">Declines</p>
+                <p className="text-[10px] font-mono text-signal-down uppercase tracking-wider mb-1.5">Declines</p>
                 <div className="flex flex-wrap gap-1">
                   {advice.declineCategories.map(c => (
-                    <span key={c} className="text-xs font-mono bg-red-900/30 text-red-400 px-1.5 py-0.5 rounded">{c}</span>
+                    <span key={c} className="text-xs font-mono bg-signal-down/15 text-signal-down px-1.5 py-0.5 rounded">{c}</span>
                   ))}
                 </div>
               </div>
             )}
             {advice.neutralCategories?.length > 0 && (
               <div>
-                <p className="text-[10px] font-mono text-gray-500 uppercase tracking-wider mb-1.5">Neutral</p>
+                <p className="text-[10px] font-mono text-ink-secondary uppercase tracking-wider mb-1.5">Neutral</p>
                 <div className="flex flex-wrap gap-1">
                   {advice.neutralCategories.map(c => (
-                    <span key={c} className="text-xs font-mono bg-gray-800 text-gray-400 px-1.5 py-0.5 rounded">{c}</span>
+                    <span key={c} className="text-xs font-mono bg-surface-overlay text-ink-secondary px-1.5 py-0.5 rounded">{c}</span>
                   ))}
                 </div>
               </div>
             )}
           </div>
           {advice.positionalNote && (
-            <p className="text-xs text-gray-500 border-t border-border pt-3 leading-relaxed">
-              <span className="text-gray-400 font-medium">Positional fit:</span> {advice.positionalNote}
+            <p className="text-xs text-ink-secondary border-t border-surface-line pt-3 leading-relaxed">
+              <span className="text-ink-primary font-medium">Positional fit:</span> {advice.positionalNote}
             </p>
           )}
           {advice.buyLowSellHighNote && (
-            <p className="text-xs text-gray-500 leading-relaxed">
-              <span className="text-gray-400 font-medium">Buy-low/sell-high:</span> {advice.buyLowSellHighNote}
+            <p className="text-xs text-ink-secondary leading-relaxed">
+              <span className="text-ink-primary font-medium">Buy-low/sell-high:</span> {advice.buyLowSellHighNote}
             </p>
           )}
           {advice.reason && (
-            <p className="text-xs text-gray-400 leading-relaxed">{advice.reason}</p>
+            <p className="text-xs text-ink-secondary leading-relaxed">{advice.reason}</p>
           )}
         </div>
       )}
-    </div>
+    </Card>
   )
 }
 
@@ -859,86 +863,86 @@ function TradeValueIndexPanel({ league, rosters }) {
   }
 
   return (
-    <div className="bg-surface border border-border rounded-lg px-5 py-5">
+    <Card>
       <div className="flex items-start justify-between gap-4 mb-1">
         <div>
-          <p className="text-sm font-semibold text-gray-200">Trade Value Index</p>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <p className="text-sm font-semibold text-ink-primary">Trade Value Index</p>
+          <p className="text-xs text-ink-secondary mt-0.5">
             Sell-high candidates on your roster and buy-low targets across the league.
           </p>
         </div>
         <button
           onClick={handleGetIndex}
           disabled={loading}
-          className="shrink-0 text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="shrink-0 text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {index ? 'Refresh' : "Get Beane's Take"}
         </button>
       </div>
 
       {loading && (
-        <p className="text-xs text-gray-500 font-mono mt-4 animate-pulse">Scanning trade value…</p>
+        <p className="text-xs text-ink-secondary font-mono mt-4 animate-pulse">Scanning trade value…</p>
       )}
 
       {error && !loading && (
-        <p className="text-xs text-red-400 font-mono mt-4">{error}</p>
+        <p className="text-xs text-signal-down font-mono mt-4">{error}</p>
       )}
 
       {index && !loading && (
         <div className="mt-4 space-y-4">
           {index.headline && (
-            <p className="text-xs text-gray-400 italic leading-relaxed">{index.headline}</p>
+            <p className="text-xs text-ink-secondary italic leading-relaxed">{index.headline}</p>
           )}
           {index.sellHigh?.length > 0 && (
             <div className="space-y-2">
-              <p className="text-[10px] font-mono text-green-500 uppercase tracking-wider">Sell high (your roster)</p>
+              <p className="text-[10px] font-mono text-signal-up uppercase tracking-wider">Sell high (your roster)</p>
               {index.sellHigh.map((entry, i) => (
-                <div key={i} className="border border-border rounded-md px-4 py-3">
-                  <p className="text-xs text-green-400 font-medium mb-1">{entry.player}</p>
-                  <p className="text-xs text-gray-400 leading-relaxed">{entry.reason}</p>
+                <div key={i} className="border border-surface-line rounded-md px-4 py-3">
+                  <p className="text-xs text-signal-up font-medium mb-1">{entry.player}</p>
+                  <p className="text-xs text-ink-secondary leading-relaxed">{entry.reason}</p>
                 </div>
               ))}
             </div>
           )}
           {index.buyLowTargets?.length > 0 && (
-            <div className="space-y-2 pt-2 border-t border-border">
-              <p className="text-[10px] font-mono text-blue-400 uppercase tracking-wider pt-2">Buy low (league targets)</p>
+            <div className="space-y-2 pt-2 border-t border-surface-line">
+              <p className="text-[10px] font-mono text-signal-info uppercase tracking-wider pt-2">Buy low (league targets)</p>
               {index.buyLowTargets.map((entry, i) => (
-                <div key={i} className="border border-border rounded-md px-4 py-3">
-                  <p className="text-xs text-blue-300 font-medium mb-1">
+                <div key={i} className="border border-surface-line rounded-md px-4 py-3">
+                  <p className="text-xs text-signal-info font-medium mb-1">
                     {entry.player}
-                    {entry.currentTeam && <span className="text-gray-600 font-normal"> · {entry.currentTeam}</span>}
+                    {entry.currentTeam && <span className="text-ink-muted font-normal"> · {entry.currentTeam}</span>}
                   </p>
-                  <p className="text-xs text-gray-400 leading-relaxed">{entry.reason}</p>
+                  <p className="text-xs text-ink-secondary leading-relaxed">{entry.reason}</p>
                 </div>
               ))}
             </div>
           )}
           {!index.sellHigh?.length && !index.buyLowTargets?.length && (
-            <p className="text-xs text-gray-500">No standout sell-high or buy-low signals this week.</p>
+            <p className="text-xs text-ink-secondary">No standout sell-high or buy-low signals this week.</p>
           )}
         </div>
       )}
-    </div>
+    </Card>
   )
 }
 
 const TIER_STYLES = {
-  contender:  { label: 'Contender',      color: 'text-green-400',  bg: 'bg-green-900/20 border-green-500/20' },
-  bubble:     { label: 'Playoff Bubble', color: 'text-yellow-400', bg: 'bg-yellow-900/20 border-yellow-500/20' },
-  rebuilding: { label: 'Rebuilding',     color: 'text-red-400',    bg: 'bg-red-900/20 border-red-500/20' },
+  contender:  { label: 'Contender',      color: 'text-signal-up',    bg: 'bg-signal-up/10 border-signal-up/20' },
+  bubble:     { label: 'Playoff Bubble', color: 'text-signal-watch', bg: 'bg-signal-watch/10 border-signal-watch/20' },
+  rebuilding: { label: 'Rebuilding',     color: 'text-signal-down',  bg: 'bg-signal-down/10 border-signal-down/20' },
 }
 
 const STANDING_TREND_ARROW = {
-  up:   { icon: '↑', color: 'text-green-400' },
-  down: { icon: '↓', color: 'text-red-400' },
-  flat: { icon: '→', color: 'text-gray-500' },
+  up:   { icon: '↑', color: 'text-signal-up' },
+  down: { icon: '↓', color: 'text-signal-down' },
+  flat: { icon: '→', color: 'text-ink-secondary' },
 }
 
 const WIN_RATE_GRADE_STYLES = {
-  strong: 'text-green-400 bg-green-500/10 border-green-500/20',
-  ok:     'text-yellow-400 bg-yellow-500/10 border-yellow-500/20',
-  weak:   'text-red-400 bg-red-500/10 border-red-500/20',
+  strong: 'text-signal-up bg-signal-up/10 border-signal-up/20',
+  ok:     'text-signal-watch bg-signal-watch/10 border-signal-watch/20',
+  weak:   'text-signal-down bg-signal-down/10 border-signal-down/20',
 }
 
 // Deterministic stand-in for the per-team Claude insight when the user's
@@ -1077,11 +1081,11 @@ function TeamPulsePanel({ league, rosters }) {
     : null
 
   return (
-    <div className="bg-surface border border-border rounded-lg px-5 py-5">
-      <p className="text-sm font-semibold text-gray-200 mb-3">Team Pulse</p>
+    <Card>
+      <p className="text-sm font-semibold text-ink-primary mb-3">Team Pulse</p>
 
       {/* 1. User's team position */}
-      <div className="border border-border rounded-md px-4 py-3 mb-4">
+      <div className="border border-surface-line rounded-md px-4 py-3 mb-4">
         <div className="flex flex-wrap items-center gap-2 mb-2">
           {tierStyle && (
             <span className={`text-[10px] font-mono px-2 py-0.5 rounded border uppercase ${tierStyle.bg} ${tierStyle.color}`}>
@@ -1089,8 +1093,8 @@ function TeamPulsePanel({ league, rosters }) {
             </span>
           )}
           {trendArrow && <span className={`text-sm font-mono ${trendArrow.color}`}>{trendArrow.icon}</span>}
-          <span className="text-xs text-gray-200 font-medium">{userTeam.teamName} · #{userTeam.rank ?? '?'}</span>
-          <span className="text-[11px] font-mono text-gray-500">
+          <span className="text-xs text-ink-primary font-medium">{userTeam.teamName} · #{userTeam.rank ?? '?'}</span>
+          <span className="text-[11px] font-mono tabular-nums text-ink-secondary">
             {userTeam.wins}-{userTeam.losses}{userTeam.ties ? `-${userTeam.ties}` : ''}
           </span>
         </div>
@@ -1103,7 +1107,7 @@ function TeamPulsePanel({ league, rosters }) {
               <span
                 key={cat.id}
                 title={wr ? `Beats ${wr.wins}/${wr.of} teams in ${cat.label}` : 'Not enough data yet'}
-                className={`text-[10px] font-mono px-1.5 py-0.5 rounded border ${grade ? WIN_RATE_GRADE_STYLES[grade] : 'text-gray-600 bg-gray-800 border-border'}`}
+                className={`text-[10px] font-mono tabular-nums px-1.5 py-0.5 rounded border ${grade ? WIN_RATE_GRADE_STYLES[grade] : 'text-ink-muted bg-surface-overlay border-surface-line'}`}
               >
                 {cat.label} {wr?.rate != null ? `${Math.round(wr.rate * 100)}%` : '—'}
               </span>
@@ -1114,39 +1118,39 @@ function TeamPulsePanel({ league, rosters }) {
         {!pulse && !pulseLoading && (
           <button
             onClick={handleGetInsight}
-            className="text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors"
+            className="text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors"
           >
             Get Beane's Take
           </button>
         )}
-        {pulseLoading && <p className="text-xs text-gray-500 font-mono animate-pulse">Reading the league…</p>}
-        {pulseError && !pulseLoading && <p className="text-xs text-red-400 font-mono">{pulseError}</p>}
+        {pulseLoading && <p className="text-xs text-ink-secondary font-mono animate-pulse">Reading the league…</p>}
+        {pulseError && !pulseLoading && <p className="text-xs text-signal-down font-mono">{pulseError}</p>}
         {pulse?.myTeamTake && !pulseLoading && (
           <div className="space-y-1.5">
-            <p className="text-xs text-gray-400 leading-relaxed">{pulse.myTeamTake.summary}</p>
+            <p className="text-xs text-ink-secondary leading-relaxed">{pulse.myTeamTake.summary}</p>
             {pulse.myTeamTake.strengths && (
-              <p className="text-xs text-gray-400 leading-relaxed">
-                <span className="text-green-400/80 font-medium">Strengths: </span>{pulse.myTeamTake.strengths}
+              <p className="text-xs text-ink-secondary leading-relaxed">
+                <span className="text-signal-up/80 font-medium">Strengths: </span>{pulse.myTeamTake.strengths}
               </p>
             )}
             {pulse.myTeamTake.weaknesses && (
-              <p className="text-xs text-gray-400 leading-relaxed">
-                <span className="text-red-400/80 font-medium">Weaknesses: </span>{pulse.myTeamTake.weaknesses}
+              <p className="text-xs text-ink-secondary leading-relaxed">
+                <span className="text-signal-down/80 font-medium">Weaknesses: </span>{pulse.myTeamTake.weaknesses}
               </p>
             )}
             {pulse.myTeamTake.recommendation && (
-              <p className="text-xs text-gray-400 leading-relaxed">
-                <span className="text-pick font-medium">Move or hold: </span>{pulse.myTeamTake.recommendation}
+              <p className="text-xs text-ink-secondary leading-relaxed">
+                <span className="text-beane-green-text font-medium">Move or hold: </span>{pulse.myTeamTake.recommendation}
               </p>
             )}
           </div>
         )}
-        {insight && !pulseLoading && <p className="text-xs text-gray-400 leading-relaxed">{insight}</p>}
+        {insight && !pulseLoading && <p className="text-xs text-ink-secondary leading-relaxed">{insight}</p>}
       </div>
 
       {/* 2. League landscape */}
       <div className="mb-4">
-        <p className="text-[10px] font-mono text-gray-600 uppercase tracking-wider mb-2">League Landscape</p>
+        <p className="text-[10px] font-mono text-ink-muted uppercase tracking-wider mb-2">League Landscape</p>
         <div className="space-y-1">
           {teams.map(({ team, tier, overallWinRate }) => {
             const style = TIER_STYLES[tier] ?? null
@@ -1155,10 +1159,10 @@ function TeamPulsePanel({ league, rosters }) {
                 key={team.teamKey}
                 className={`flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 text-xs px-2 py-1 rounded border ${style ? style.bg : 'border-transparent'}`}
               >
-                <span className={`font-medium ${style ? style.color : 'text-gray-400'}`}>
+                <span className={`font-medium ${style ? style.color : 'text-ink-secondary'}`}>
                   #{team.rank ?? '?'} {team.teamName}{team.isUser ? ' (ME)' : ''}
                 </span>
-                <span className="font-mono text-gray-500 text-[11px]">
+                <span className="font-mono tabular-nums text-ink-secondary text-[11px]">
                   {team.wins}-{team.losses}{team.ties ? `-${team.ties}` : ''}
                   {overallWinRate != null ? ` · ${Math.round(overallWinRate * 100)}% cat wins` : ''}
                 </span>
@@ -1169,35 +1173,35 @@ function TeamPulsePanel({ league, rosters }) {
       </div>
 
       {/* 3. Trade opportunity flags */}
-      <div className="pt-3 border-t border-border">
+      <div className="pt-3 border-t border-surface-line">
         <div className="flex items-center justify-between gap-2 mb-2">
-          <p className="text-[10px] font-mono text-gray-600 uppercase tracking-wider">Trade Opportunities</p>
+          <p className="text-[10px] font-mono text-ink-muted uppercase tracking-wider">Trade Opportunities</p>
           {!tradeFlags && !tradeLoading && (
             <button
               onClick={handleGetTradeFlags}
-              className="shrink-0 text-xs font-mono px-3 py-1.5 bg-pick/10 border border-pick/30 text-pick rounded hover:bg-pick/20 transition-colors"
+              className="shrink-0 text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors"
             >
               Scan for fits
             </button>
           )}
         </div>
-        {tradeLoading && <p className="text-xs text-gray-500 font-mono animate-pulse">Cross-referencing rosters…</p>}
-        {tradeError && !tradeLoading && <p className="text-xs text-red-400 font-mono">{tradeError}</p>}
+        {tradeLoading && <p className="text-xs text-ink-secondary font-mono animate-pulse">Cross-referencing rosters…</p>}
+        {tradeError && !tradeLoading && <p className="text-xs text-signal-down font-mono">{tradeError}</p>}
         {tradeFlags && !tradeLoading && (
           tradeFlags.length > 0 ? (
             <div className="space-y-1.5">
               {tradeFlags.map((flag, i) => (
-                <p key={i} className="text-xs text-gray-400 leading-relaxed">
-                  <span className="text-gray-200 font-medium">{flag.player} ({flag.team}):</span> {flag.reason}
+                <p key={i} className="text-xs text-ink-secondary leading-relaxed">
+                  <span className="text-ink-primary font-medium">{flag.player} ({flag.team}):</span> {flag.reason}
                 </p>
               ))}
             </div>
           ) : (
-            <p className="text-xs text-gray-500">No standout trade fits right now.</p>
+            <p className="text-xs text-ink-secondary">No standout trade fits right now.</p>
           )
         )}
       </div>
-    </div>
+    </Card>
   )
 }
 
@@ -1252,12 +1256,12 @@ function SeasonRecapPanel({ league, rosters }) {
   if (!hasFinalRoster) return null
 
   return (
-    <div className="bg-surface border border-border rounded-lg px-5 py-6 mb-6">
+    <div className="bg-surface-raised border border-surface-line rounded-lg px-5 py-6 mb-6">
       {loading && !recap && (
-        <p className="text-xs text-gray-500 font-mono animate-pulse">Putting together your season recap…</p>
+        <p className="text-xs text-ink-secondary font-mono animate-pulse">Putting together your season recap…</p>
       )}
       {error && !recap && !loading && (
-        <p className="text-xs text-red-400 font-mono">{error}</p>
+        <p className="text-xs text-signal-down font-mono">{error}</p>
       )}
       {recap && (
         <div className="space-y-4">
@@ -1266,34 +1270,34 @@ function SeasonRecapPanel({ league, rosters }) {
               <span className="text-4xl leading-none">{TROPHY_BY_RANK[recap.rank]}</span>
             )}
             <div>
-              <p className="text-sm font-semibold text-gray-200">
+              <p className="text-sm font-semibold text-ink-primary">
                 Finished #{recap.rank ?? '?'} of {recap.numTeams} — {recap.teamName}
               </p>
-              <p className="text-xs text-gray-500 font-mono">
+              <p className="text-xs text-ink-secondary font-mono tabular-nums">
                 {recap.wins}-{recap.losses}{recap.ties ? `-${recap.ties}` : ''}
               </p>
             </div>
           </div>
 
-          {recap.headline && <p className="text-sm text-gray-300 italic leading-relaxed">{recap.headline}</p>}
-          {recap.summary && <p className="text-xs text-gray-400 leading-relaxed">{recap.summary}</p>}
+          {recap.headline && <p className="text-sm text-ink-primary italic leading-relaxed">{recap.headline}</p>}
+          {recap.summary && <p className="text-xs text-ink-secondary leading-relaxed">{recap.summary}</p>}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-border">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-surface-line">
             {recap.strengths && (
-              <p className="text-xs text-gray-400 leading-relaxed">
-                <span className="text-green-400 font-mono">What worked — </span>{recap.strengths}
+              <p className="text-xs text-ink-secondary leading-relaxed">
+                <span className="text-signal-up font-mono">What worked — </span>{recap.strengths}
               </p>
             )}
             {recap.weaknesses && (
-              <p className="text-xs text-gray-400 leading-relaxed">
-                <span className="text-red-400 font-mono">What held you back — </span>{recap.weaknesses}
+              <p className="text-xs text-ink-secondary leading-relaxed">
+                <span className="text-signal-down font-mono">What held you back — </span>{recap.weaknesses}
               </p>
             )}
           </div>
 
           {recap.lookAhead && (
-            <p className="text-xs text-gray-500 leading-relaxed border-t border-border pt-3">
-              <span className="text-blue-400 font-mono">Next season — </span>{recap.lookAhead}
+            <p className="text-xs text-ink-secondary leading-relaxed border-t border-surface-line pt-3">
+              <span className="text-signal-info font-mono">Next season — </span>{recap.lookAhead}
             </p>
           )}
         </div>
@@ -1357,8 +1361,8 @@ export default function SeasonHub() {
 
   if (!league) {
     return (
-      <div className="min-h-screen bg-bg text-gray-200 flex items-center justify-center">
-        <p className="text-gray-500 text-sm">No active league. <button onClick={() => router.push('/')} className="text-pick hover:underline">Go home →</button></p>
+      <div className="min-h-screen bg-surface-base text-ink-primary flex items-center justify-center">
+        <p className="text-ink-secondary text-sm">No active league. <button onClick={() => router.push('/')} className="text-beane-green-text hover:underline">Go home →</button></p>
       </div>
     )
   }
@@ -1369,29 +1373,29 @@ export default function SeasonHub() {
         <Head>
           <title>{league.config.name || 'Season Hub'} — PocketBeane</title>
         </Head>
-        <main className="min-h-screen bg-bg text-gray-200">
+        <main className="min-h-screen bg-surface-base text-ink-primary">
           <div className="max-w-3xl mx-auto px-8 py-12">
             <div className="flex items-center justify-between mb-8">
-              <h1 className="text-2xl font-bold text-white tracking-tight">
+              <h1 className="text-2xl font-bold text-ink-primary tracking-tight">
                 {league.config.name || 'Season Hub'}
               </h1>
               <button
                 onClick={() => router.push('/')}
-                className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
+                className="text-xs text-ink-secondary hover:text-ink-primary transition-colors"
               >
                 ← Home
               </button>
             </div>
             {seasonOver && <SeasonRecapPanel league={league} rosters={rosters} />}
-            <div className="bg-surface border border-border rounded-lg px-5 py-6">
-              <p className="text-sm font-semibold text-gray-300 mb-1.5">Season complete</p>
+            <div className="bg-surface-raised border border-surface-line rounded-lg px-5 py-6">
+              <p className="text-sm font-semibold text-ink-primary mb-1.5">Season complete</p>
               {seasonOver ? (
-                <p className="text-xs text-gray-500 leading-relaxed">
+                <p className="text-xs text-ink-secondary leading-relaxed">
                   This league's season has ended, so the Season Hub tools aren't available for it anymore
                   — Yahoo no longer serves any live data for it, archived or not.
                 </p>
               ) : (
-                <p className="text-xs text-gray-500 leading-relaxed">
+                <p className="text-xs text-ink-secondary leading-relaxed">
                   This league is archived, so the season advisors (waiver wire, matchup, start/sit) aren't
                   shown here — they run against live rosters, and an archived league's roster snapshot is
                   frozen from whenever it was archived. To keep managing this league, unarchive it from the
@@ -1410,46 +1414,46 @@ export default function SeasonHub() {
       <Head>
         <title>{league.config.name || 'Season Hub'} — PocketBeane</title>
       </Head>
-      <main className="min-h-screen bg-bg text-gray-200">
+      <main className="min-h-screen bg-surface-base text-ink-primary">
         <div className="max-w-3xl mx-auto px-8 py-12">
 
           {/* Header */}
           <div className="flex items-center justify-between mb-1">
             <div>
-              <h1 className="text-2xl font-bold text-white tracking-tight">
+              <h1 className="text-2xl font-bold text-ink-primary tracking-tight">
                 {league.config.name || 'Season Hub'}
               </h1>
-              <p className="text-gray-500 text-sm mt-0.5">
+              <p className="text-ink-secondary text-sm mt-0.5">
                 {league.config.numTeams} teams · {league.config.scoringFormat?.toUpperCase() ?? '9CAT'}
                 {league.config.yahooLeagueName && (
-                  <span className="ml-2 text-gray-600">· {league.config.yahooLeagueName}</span>
+                  <span className="ml-2 text-ink-muted">· {league.config.yahooLeagueName}</span>
                 )}
               </p>
             </div>
             <button
               onClick={() => router.push('/')}
-              className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
+              className="text-xs text-ink-secondary hover:text-ink-primary transition-colors"
             >
               ← Home
             </button>
           </div>
 
-          <p className="text-xs text-blue-400 font-mono mb-8">Season Mode</p>
+          <p className="text-xs text-signal-info font-mono mb-8">Season Mode</p>
 
           {/* Sync status */}
           {canSync ? (
             <div className="flex items-center gap-2 mb-10 text-xs font-mono">
               {syncing ? (
-                <span className="text-gray-500">Syncing rosters…</span>
+                <span className="text-ink-secondary">Syncing rosters…</span>
               ) : seasonOver ? (
                 <>
-                  <span className="text-gray-600">
+                  <span className="text-ink-muted tabular-nums">
                     {rosters?.syncedAt ? `Checked ${formatSyncedAt(rosters.syncedAt)} · season complete` : 'Season complete'}
                   </span>
                   {yahoo.connected && (
                     <button
                       onClick={handleSync}
-                      className="text-gray-700 hover:text-gray-400 transition-colors ml-1"
+                      className="text-ink-muted hover:text-ink-secondary transition-colors ml-1"
                       title="Force a re-check with Yahoo — the season won't have restarted, this is just a safety valve"
                     >
                       · Re-check
@@ -1458,44 +1462,44 @@ export default function SeasonHub() {
                 </>
               ) : rosters ? (
                 <>
-                  <span className="text-gray-600">
+                  <span className="text-ink-muted tabular-nums">
                     Synced {formatSyncedAt(rosters.syncedAt)} · {rosters.matched}/{rosters.total} matched
                   </span>
                   {yahoo.connected && (
                     <button
                       onClick={handleSync}
-                      className="text-gray-600 hover:text-gray-300 transition-colors ml-1"
+                      className="text-ink-muted hover:text-ink-primary transition-colors ml-1"
                     >
                       · Refresh
                     </button>
                   )}
                 </>
               ) : yahoo.connected ? (
-                <span className="text-gray-500">Syncing rosters…</span>
+                <span className="text-ink-secondary">Syncing rosters…</span>
               ) : (
-                <span className="text-yellow-500/70">Connect Yahoo to sync rosters</span>
+                <span className="text-signal-watch/70">Connect Yahoo to sync rosters</span>
               )}
-              {syncError && <span className="text-red-400 ml-2">{syncError}</span>}
+              {syncError && <span className="text-signal-down ml-2">{syncError}</span>}
             </div>
           ) : (
-            <div className="bg-surface border border-border rounded-lg p-5 mb-10">
-              <p className="text-sm text-gray-400">
+            <Card className="mb-10">
+              <p className="text-sm text-ink-secondary">
                 This league isn't linked to Yahoo.{' '}
-                <button onClick={() => router.push(`/setup?id=${league.id}`)} className="text-pick hover:underline">
+                <button onClick={() => router.push(`/setup?id=${league.id}`)} className="text-beane-green-text hover:underline">
                   Edit league settings →
                 </button>
               </p>
-            </div>
+            </Card>
           )}
 
           {/* Active advisors — only when rosters are available */}
           {seasonOver ? (
             <div className="mb-8">
               <SeasonRecapPanel league={league} rosters={rosters} />
-              <p className="text-xs font-mono text-gray-600 uppercase tracking-wider mb-3">Season Advisors</p>
-              <div className="bg-surface border border-border rounded-lg px-5 py-6">
-                <p className="text-sm font-semibold text-gray-300 mb-1.5">Season complete</p>
-                <p className="text-xs text-gray-500 leading-relaxed">
+              <p className="text-xs font-mono text-ink-muted uppercase tracking-wider mb-3">Season Advisors</p>
+              <div className="bg-surface-raised border border-surface-line rounded-lg px-5 py-6">
+                <p className="text-sm font-semibold text-ink-primary mb-1.5">Season complete</p>
+                <p className="text-xs text-ink-secondary leading-relaxed">
                   The season has ended, so the Season Hub tools aren't available for this league anymore.
                   Come back once a new season starts and this league is re-synced.
                 </p>
@@ -1503,7 +1507,7 @@ export default function SeasonHub() {
             </div>
           ) : rosters ? (
             <div className="space-y-4 mb-8">
-              <p className="text-xs font-mono text-gray-600 uppercase tracking-wider mb-3">Season Advisors</p>
+              <p className="text-xs font-mono text-ink-muted uppercase tracking-wider mb-3">Season Advisors</p>
               <WaiverPanel league={league} rosters={rosters} />
               <MatchupPanel league={league} rosters={rosters} yahooConnected={yahoo.connected} />
               <StartSitPanel league={league} rosters={rosters} />
@@ -1513,28 +1517,28 @@ export default function SeasonHub() {
             </div>
           ) : canSync ? (
             <div className="mb-8">
-              <p className="text-xs font-mono text-gray-600 uppercase tracking-wider mb-3">Season Advisors</p>
-              <div className="bg-surface border border-border rounded-lg px-5 py-5 text-xs text-gray-500">
+              <p className="text-xs font-mono text-ink-muted uppercase tracking-wider mb-3">Season Advisors</p>
+              <Card className="text-xs text-ink-secondary">
                 {yahoo.connected
                   ? 'Sync your rosters above to unlock the season advisors.'
                   : 'Connect Yahoo and sync your rosters to unlock the season advisors.'}
-              </div>
+              </Card>
             </div>
           ) : null}
 
           {/* Coming soon features */}
           {COMING_SOON.length > 0 && (
             <div>
-              <p className="text-xs font-mono text-gray-600 uppercase tracking-wider mb-3">Coming Soon</p>
+              <p className="text-xs font-mono text-ink-muted uppercase tracking-wider mb-3">Coming Soon</p>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {COMING_SOON.map((f) => (
                   <div
                     key={f.title}
-                    className="bg-surface border border-border rounded-lg px-5 py-4 opacity-50"
+                    className="bg-surface-raised border border-surface-line rounded-lg px-5 py-4 opacity-50"
                   >
-                    <p className="text-sm font-semibold text-gray-300 mb-1">{f.title}</p>
-                    <p className="text-xs text-gray-500">{f.description}</p>
-                    <p className="text-xs text-gray-700 mt-3 font-mono">Coming soon</p>
+                    <p className="text-sm font-semibold text-ink-primary mb-1">{f.title}</p>
+                    <p className="text-xs text-ink-secondary">{f.description}</p>
+                    <p className="text-xs text-ink-muted mt-3 font-mono">Coming soon</p>
                   </div>
                 ))}
               </div>

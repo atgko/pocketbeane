@@ -4,9 +4,10 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import useLeagueStore from '@/store/leagueStore'
 import { useYahooAuth } from '@/hooks/useYahooAuth'
+import { Card } from '@/components/ui'
 
 const STATUS_LABEL = { drafting: 'In Draft', complete: 'Archived', season: 'Season' }
-const STATUS_COLOR = { drafting: 'text-pick', complete: 'text-gray-600', season: 'text-blue-400' }
+const STATUS_COLOR = { drafting: 'text-beane-green-text', complete: 'text-ink-muted', season: 'text-signal-info' }
 
 const SPORT_ORDER = ['nba', 'mlb']
 const SPORT_LABELS = { nba: 'NBA', mlb: 'MLB' }
@@ -125,19 +126,19 @@ export default function Home() {
         <title>PocketBeane</title>
         <meta name="description" content="AI-powered Assistant GM for fantasy basketball" />
       </Head>
-      <main className="min-h-screen bg-bg text-gray-200">
+      <main className="min-h-screen bg-surface-base text-ink-primary">
         <div className="max-w-3xl mx-auto px-8 py-12">
 
           {/* Header */}
           <div className="flex items-baseline justify-between mb-6">
             <div>
-              <h1 className="text-3xl font-bold text-white tracking-tight">PocketBeane</h1>
-              <p className="text-gray-500 mt-1 text-sm">AI-powered Assistant GM</p>
+              <h1 className="text-3xl font-bold text-ink-primary tracking-tight">PocketBeane</h1>
+              <p className="text-ink-secondary mt-1 text-sm">AI-powered Assistant GM</p>
             </div>
             <div className="flex items-center gap-3">
               <Link
                 href="/gm-profile"
-                className="text-xs text-gray-500 hover:text-gray-300 transition-colors font-mono"
+                className="text-xs text-ink-secondary hover:text-ink-primary transition-colors font-mono"
                 title="GM Profile"
               >
                 GM Profile
@@ -145,7 +146,7 @@ export default function Home() {
               {leagues.length > 0 && (
                 <Link
                   href="/setup"
-                  className="px-4 py-2 bg-pick text-white rounded-lg text-sm font-semibold hover:bg-green-500 transition-colors"
+                  className="px-4 py-2 bg-beane-green text-[#06120C] rounded-lg text-sm font-semibold hover:brightness-110 transition-colors"
                 >
                   + New League
                 </Link>
@@ -158,9 +159,9 @@ export default function Home() {
 
           {/* Toast */}
           {yahooToast && (
-            <div className={`mb-6 px-4 py-3 rounded-lg text-sm flex items-center justify-between ${yahooToast.type === 'success' ? 'bg-green-900/40 border border-green-700 text-green-300' : 'bg-red-900/40 border border-red-700 text-red-300'}`}>
+            <div className={`mb-6 px-4 py-3 rounded-lg text-sm flex items-center justify-between ${yahooToast.type === 'success' ? 'bg-signal-up/15 border border-signal-up/40 text-signal-up' : 'bg-signal-down/15 border border-signal-down/40 text-signal-down'}`}>
               <span>{yahooToast.message}</span>
-              <button onClick={() => setYahooToast(null)} className="ml-4 text-gray-400 hover:text-gray-200">✕</button>
+              <button onClick={() => setYahooToast(null)} className="ml-4 text-ink-secondary hover:text-ink-primary">✕</button>
             </div>
           )}
 
@@ -173,10 +174,10 @@ export default function Home() {
                 <div key={sport}>
                   {hasMultipleSports && (
                     <div className="flex items-center gap-3 mb-3">
-                      <h2 className="text-xs font-mono text-gray-500 uppercase tracking-wider">
+                      <h2 className="text-xs font-mono text-ink-secondary uppercase tracking-wider">
                         {SPORT_LABELS[sport] ?? sport.toUpperCase()}
                       </h2>
-                      <div className="flex-1 border-t border-border" />
+                      <div className="flex-1 border-t border-surface-line" />
                     </div>
                   )}
 
@@ -229,7 +230,7 @@ function ArchivedSection({ leagues, sport, confirmDelete, ...cardProps }) {
     <div className="mt-3">
       <button
         onClick={() => setExpanded(p => !p)}
-        className="text-xs font-mono text-gray-600 hover:text-gray-400 transition-colors"
+        className="text-xs font-mono text-ink-muted hover:text-ink-secondary transition-colors"
       >
         {expanded ? '↑' : '↓'} Archived ({leagues.length})
       </button>
@@ -238,10 +239,10 @@ function ArchivedSection({ leagues, sport, confirmDelete, ...cardProps }) {
           {years.map(year => (
             <div key={year}>
               <div className="flex items-center gap-3 mb-2">
-                <span className="text-xs font-mono text-gray-700">
+                <span className="text-xs font-mono text-ink-muted">
                   {year === 'Other' ? 'Other' : formatSeasonYear(Number(year), sport)}
                 </span>
-                <div className="flex-1 border-t border-border/40" />
+                <div className="flex-1 border-t border-surface-line/40" />
               </div>
               <div className="space-y-3">
                 {byYear[year].map((league) => (
@@ -317,18 +318,18 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
   }
 
   return (
-    <div className="bg-surface border border-border rounded-lg px-5 py-4">
+    <Card variant="data">
 
       {/* Main row: info + primary actions */}
       <div className="flex items-center gap-5">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3">
-            <span className="font-semibold text-white truncate">{config.name || 'Unnamed League'}</span>
-            <span className={`text-xs font-mono ${STATUS_COLOR[status] ?? 'text-gray-500'}`}>
+            <span className="font-semibold text-ink-primary truncate">{config.name || 'Unnamed League'}</span>
+            <span className={`text-xs font-mono ${STATUS_COLOR[status] ?? 'text-ink-secondary'}`}>
               {STATUS_LABEL[status] ?? status}
             </span>
           </div>
-          <div className="text-xs text-gray-500 mt-0.5 font-mono">
+          <div className="text-xs text-ink-secondary mt-0.5 font-mono">
             {config.numTeams} teams · Pick {config.draftPosition} · {config.scoringFormat?.toUpperCase() ?? '9CAT'}
             {isDrafting && pickCount > 0 && ` · R${round} P${pickCount + 1}`}
           </div>
@@ -338,28 +339,28 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
           {showSeasonHub ? (
             <button
               onClick={() => onEnterSeason(league.id)}
-              className="px-4 py-1.5 bg-blue-600 text-white rounded text-xs font-semibold hover:bg-blue-500 transition-colors"
+              className="px-4 py-1.5 bg-signal-info text-ink-primary rounded text-xs font-semibold hover:brightness-110 transition-colors"
             >
               Season Hub
             </button>
           ) : (
             <button
               onClick={() => onEnterDraft(league.id)}
-              className="px-4 py-1.5 bg-pick text-white rounded text-xs font-semibold hover:bg-green-500 transition-colors"
+              className="px-4 py-1.5 bg-beane-green text-[#06120C] rounded text-xs font-semibold hover:brightness-110 transition-colors"
             >
               Draft Board
             </button>
           )}
           <button
             onClick={() => onEdit(league.id)}
-            className="px-3 py-1.5 border border-border text-gray-400 rounded text-xs hover:text-gray-200 hover:border-gray-400 transition-colors"
+            className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded text-xs hover:text-ink-primary hover:border-ink-secondary transition-colors"
           >
             Edit
           </button>
           {showSeasonHub && (
             <button
               onClick={() => onEnterDraft(league.id)}
-              className="px-3 py-1.5 border border-border text-gray-600 rounded text-xs hover:text-gray-400 hover:border-gray-400 transition-colors"
+              className="px-3 py-1.5 border border-surface-line text-ink-muted rounded text-xs hover:text-ink-secondary hover:border-ink-secondary transition-colors"
             >
               ← Draft
             </button>
@@ -368,7 +369,7 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
       </div>
 
       {/* Bottom row: Yahoo (left) + archive/delete (right) */}
-      <div className="mt-3 pt-3 border-t border-border flex items-start justify-between gap-4">
+      <div className="mt-3 pt-3 border-t border-surface-line flex items-start justify-between gap-4">
 
         {/* Yahoo side */}
         <div className="flex-1 min-w-0">
@@ -376,18 +377,18 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
             config.yahooLeagueKey ? (
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-xs text-gray-400 font-mono">
-                    Yahoo: <span className="text-gray-300">{config.yahooLeagueName ?? config.yahooLeagueKey}</span>
+                  <span className="text-xs text-ink-secondary font-mono">
+                    Yahoo: <span className="text-ink-primary">{config.yahooLeagueName ?? config.yahooLeagueKey}</span>
                   </span>
                   {config.isSeasonOver ? (
-                    <span className="text-xs text-gray-600 font-mono">· Season complete</span>
+                    <span className="text-xs text-ink-muted font-mono">· Season complete</span>
                   ) : config.draftSynced ? (
                     <>
-                      <span className="text-xs text-gray-600 font-mono">· Picks imported</span>
+                      <span className="text-xs text-ink-muted font-mono">· Picks imported</span>
                       <button
                         onClick={syncDraft}
                         disabled={syncState.loading}
-                        className="text-xs text-gray-500 hover:text-gray-200 underline underline-offset-2 transition-colors disabled:opacity-40"
+                        className="text-xs text-ink-secondary hover:text-ink-primary underline underline-offset-2 transition-colors disabled:opacity-40"
                       >
                         {syncState.loading ? 'Syncing…' : 'Re-sync'}
                       </button>
@@ -396,30 +397,30 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
                     <button
                       onClick={syncDraft}
                       disabled={syncState.loading}
-                      className="text-xs text-gray-500 hover:text-gray-300 transition-colors disabled:opacity-40"
+                      className="text-xs text-ink-secondary hover:text-ink-primary transition-colors disabled:opacity-40"
                     >
                       {syncState.loading ? '· Importing…' : '· Import Picks'}
                     </button>
                   )}
                 </div>
                 {syncState.error && (
-                  <p className="text-xs text-red-400 mt-1">{syncState.error}</p>
+                  <p className="text-xs text-signal-down mt-1">{syncState.error}</p>
                 )}
               </div>
             ) : (
               <div>
                 <button
                   onClick={openPicker}
-                  className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
+                  className="text-xs text-ink-secondary hover:text-ink-primary transition-colors"
                 >
                   + Link Yahoo league
                 </button>
                 {picker.open && (
                   <div className="mt-2">
-                    {picker.loading && <p className="text-xs text-gray-500 font-mono">Loading leagues…</p>}
-                    {picker.error && <p className="text-xs text-red-400">{picker.error}</p>}
+                    {picker.loading && <p className="text-xs text-ink-secondary font-mono">Loading leagues…</p>}
+                    {picker.error && <p className="text-xs text-signal-down">{picker.error}</p>}
                     {!picker.loading && !picker.error && picker.leagues.length === 0 && (
-                      <p className="text-xs text-gray-500">No active leagues found.</p>
+                      <p className="text-xs text-ink-secondary">No active leagues found.</p>
                     )}
                     {!picker.loading && picker.leagues.length > 0 && (
                       <div className="flex flex-col gap-1 mt-1">
@@ -427,10 +428,10 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
                           <button
                             key={yl.leagueKey}
                             onClick={() => selectLeague(yl)}
-                            className="text-left text-xs px-3 py-2 rounded bg-bg border border-border hover:border-gray-500 hover:text-white text-gray-300 transition-colors"
+                            className="text-left text-xs px-3 py-2 rounded bg-surface-base border border-surface-line hover:border-ink-secondary hover:text-ink-primary text-ink-primary transition-colors"
                           >
                             <span className="font-medium">{yl.name}</span>
-                            <span className="text-gray-500 ml-2">{yl.numTeams} teams · {yl.season}</span>
+                            <span className="text-ink-secondary ml-2">{yl.numTeams} teams · {yl.season}</span>
                           </button>
                         ))}
                       </div>
@@ -447,7 +448,7 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
           {isSeason && (
             <button
               onClick={() => archiveLeague(league.id)}
-              className="text-xs text-gray-600 hover:text-gray-400 transition-colors"
+              className="text-xs text-ink-muted hover:text-ink-secondary transition-colors"
             >
               Archive
             </button>
@@ -455,7 +456,7 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
           {isArchived && (
             <button
               onClick={() => onUnarchive(league.id)}
-              className="text-xs text-gray-600 hover:text-gray-400 transition-colors"
+              className="text-xs text-ink-muted hover:text-ink-secondary transition-colors"
             >
               Restore
             </button>
@@ -464,13 +465,13 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
             <div className="flex items-center gap-2">
               <button
                 onClick={() => onDelete(league.id)}
-                className="px-3 py-1 bg-injury text-white rounded text-xs font-semibold hover:bg-red-700 transition-colors"
+                className="px-3 py-1 bg-signal-down text-ink-primary rounded text-xs font-semibold hover:brightness-110 transition-colors"
               >
                 Confirm
               </button>
               <button
                 onClick={onCancelDelete}
-                className="px-3 py-1 border border-border text-gray-400 rounded text-xs hover:text-gray-200 transition-colors"
+                className="px-3 py-1 border border-surface-line text-ink-secondary rounded text-xs hover:text-ink-primary transition-colors"
               >
                 Cancel
               </button>
@@ -478,7 +479,7 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
           ) : (
             <button
               onClick={() => onDelete(league.id)}
-              className="text-xs text-gray-600 hover:text-injury transition-colors"
+              className="text-xs text-ink-muted hover:text-signal-down transition-colors"
             >
               Delete
             </button>
@@ -486,67 +487,67 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
         </div>
 
       </div>
-    </div>
+    </Card>
   )
 }
 
 function YahooConnect({ yahoo }) {
   if (yahoo.loading) {
     return (
-      <div className="mb-6 bg-surface border border-border rounded-lg px-5 py-3 flex items-center gap-3">
-        <div className="w-2 h-2 rounded-full bg-gray-600 animate-pulse" />
-        <span className="text-xs text-gray-500 font-mono">Checking Yahoo connection…</span>
-      </div>
+      <Card variant="data" className="mb-6 flex items-center gap-3">
+        <div className="w-2 h-2 rounded-full bg-ink-muted animate-pulse" />
+        <span className="text-xs text-ink-secondary font-mono">Checking Yahoo connection…</span>
+      </Card>
     )
   }
 
   if (yahoo.connected) {
     return (
-      <div className="mb-6 bg-surface border border-border rounded-lg px-5 py-3 flex items-center justify-between">
+      <Card variant="data" className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-2 h-2 rounded-full bg-pick" />
-          <span className="text-sm text-gray-300">
+          <div className="w-2 h-2 rounded-full bg-beane-green" />
+          <span className="text-sm text-ink-primary">
             Yahoo connected
-            {yahoo.screenName && <span className="text-gray-500 ml-1">· {yahoo.screenName}</span>}
+            {yahoo.screenName && <span className="text-ink-secondary ml-1">· {yahoo.screenName}</span>}
           </span>
         </div>
         <button
           onClick={yahoo.disconnect}
-          className="text-xs text-gray-500 hover:text-injury transition-colors"
+          className="text-xs text-ink-secondary hover:text-signal-down transition-colors"
         >
           Disconnect
         </button>
-      </div>
+      </Card>
     )
   }
 
   return (
-    <div className="mb-6 bg-surface border border-border rounded-lg px-5 py-4 flex items-center justify-between">
+    <Card variant="data" className="mb-6 flex items-center justify-between">
       <div>
-        <p className="text-sm text-gray-300 font-medium">Connect Yahoo Fantasy</p>
-        <p className="text-xs text-gray-500 mt-0.5">Required for live draft sync and season management</p>
+        <p className="text-sm text-ink-primary font-medium">Connect Yahoo Fantasy</p>
+        <p className="text-xs text-ink-secondary mt-0.5">Required for live draft sync and season management</p>
       </div>
       <a
         href="/api/auth/yahoo/login"
-        className="px-4 py-2 bg-pick text-white rounded-lg text-xs font-semibold hover:bg-green-500 transition-colors shrink-0"
+        className="px-4 py-2 bg-beane-green text-[#06120C] rounded-lg text-xs font-semibold hover:brightness-110 transition-colors shrink-0"
       >
         Connect Yahoo →
       </a>
-    </div>
+    </Card>
   )
 }
 
 function EmptyState() {
   return (
-    <div className="border border-dashed border-border rounded-lg px-8 py-14 text-center">
-      <p className="text-gray-400 mb-1">No leagues set up yet.</p>
-      <p className="text-gray-600 text-sm mb-6">
+    <div className="border border-dashed border-surface-line rounded-lg px-8 py-14 text-center">
+      <p className="text-ink-secondary mb-1">No leagues set up yet.</p>
+      <p className="text-ink-muted text-sm mb-6">
         Add one for each Yahoo draft you're running. ESPN and other platforms are coming soon.
         PocketBeane runs alongside your live draft and tells you who to pick.
       </p>
       <Link
         href="/setup"
-        className="px-5 py-2.5 bg-pick text-white rounded-lg text-sm font-semibold hover:bg-green-500 transition-colors"
+        className="px-5 py-2.5 bg-beane-green text-[#06120C] rounded-lg text-sm font-semibold hover:brightness-110 transition-colors"
       >
         Set Up a League
       </Link>

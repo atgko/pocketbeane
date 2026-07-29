@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PocketBeane — D-01 Visual Reference Mockups</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     POCKETBEANE DESIGN TOKENS — lift these directly into
+     tailwind.config.js per D01_UI_REVAMP_DESIGN_BRIEF.md Part 3
+     ============================================================ */
+  :root {
+    /* Surfaces — revised Jul 2026: perceptible green, doubled elevation steps */
+    --surface-base:    #0E1613;
+    --surface-raised:  #17231D;
+    --surface-overlay: #203027;
+    --surface-line:    #2C3E34;
+    /* Brand */
+    --beane-green:     #1DB068;
+    --beane-green-dim: #14724A;
+    --beane-green-text:#34C77F;
+    --brass:           #C9A227;
+    /* Text — ink-secondary/muted carry a green cast (mid-register on brand) */
+    --ink-primary:   #E8ECEA;
+    --ink-secondary: #93A69B;
+    --ink-muted:     #64736B;
+    /* Semantics */
+    --signal-up:    #2FBF71;
+    --signal-down:  #E05252;
+    --signal-watch: #E0A83D;
+    --signal-info:  #4E9CD3;
+    /* Type */
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-ui:      'Inter', -apple-system, sans-serif;
+    --font-data:    'JetBrains Mono', 'SF Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #060908;
+    color: var(--ink-primary);
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding: 48px 24px 96px;
+  }
+
+  /* ---- mockup framing chrome (not part of the app design) ---- */
+  .mock-wrap { max-width: 1120px; margin: 0 auto; }
+  .mock-intro { max-width: 720px; margin: 0 auto 64px; text-align: center; }
+  .mock-intro h1 { font-family: var(--font-display); font-weight: 600; font-size: 34px; letter-spacing: -0.01em; margin-bottom: 12px; }
+  .mock-intro p { color: var(--ink-secondary); font-size: 15px; }
+  .mock-section { margin-bottom: 96px; }
+  .mock-label {
+    display: flex; align-items: baseline; gap: 14px;
+    margin-bottom: 8px;
+  }
+  .mock-label .num { font-family: var(--font-data); font-size: 13px; color: var(--brass); }
+  .mock-label h2 { font-family: var(--font-display); font-weight: 500; font-size: 22px; }
+  .mock-note { color: var(--ink-muted); font-size: 13.5px; margin-bottom: 24px; max-width: 680px; }
+  .screen {
+    background: var(--surface-base);
+    border: 1px solid var(--surface-line);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  /* ============================================================
+     SHARED APP COMPONENTS
+     ============================================================ */
+  .topbar {
+    display: flex; align-items: center; gap: 20px;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--surface-line);
+  }
+  .wordmark { font-family: var(--font-display); font-weight: 600; font-size: 17px; letter-spacing: -0.01em; }
+  .wordmark .p { color: var(--beane-green-text); }
+  .league-switch {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface-raised);
+    border: 1px solid var(--surface-line);
+    border-radius: 8px; padding: 6px 12px;
+    font-size: 13px; font-weight: 500; cursor: pointer;
+  }
+  .league-switch .caret { color: var(--ink-muted); font-size: 10px; }
+  .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+  .sync-ok { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--ink-secondary); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--beane-green); }
+
+  .eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-muted);
+  }
+  .eyebrow.brass { color: var(--brass); }
+
+  /* Card tiers */
+  .card-data {
+    background: var(--surface-raised);
+    border: 1px solid var(--surface-line);
+    border-radius: 12px;
+  }
+  .card-advisor {
+    background: var(--surface-raised);
+    border: 1px solid var(--surface-line);
+    border-left: 3px solid var(--beane-green);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .card-advisor h3 { font-family: var(--font-display); font-weight: 500; font-size: 18px; margin: 8px 0 6px; }
+  .card-advisor p { color: var(--ink-secondary); font-size: 14px; }
+  .card-advisor p strong { color: var(--ink-primary); font-weight: 500; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    border-radius: 999px; padding: 3px 10px;
+    font-size: 11.5px; font-weight: 600; letter-spacing: 0.02em;
+  }
+  .pill.up    { background: rgba(47,191,113,.15); color: var(--signal-up); }
+  .pill.down  { background: rgba(224,82,82,.15);  color: var(--signal-down); }
+  .pill.watch { background: rgba(224,168,61,.15); color: var(--signal-watch); }
+  .pill.brass { background: rgba(201,162,39,.12); color: var(--brass); border: 1px solid rgba(201,162,39,.35); }
+  .pill.pos   { background: var(--surface-overlay); color: var(--ink-secondary); }
+
+  .btn-primary {
+    background: var(--beane-green); color: #06120C;
+    font-weight: 600; font-size: 13.5px;
+    border: none; border-radius: 8px; padding: 9px 18px; cursor: pointer;
+  }
+  .btn-secondary {
+    background: transparent; color: var(--ink-primary);
+    font-weight: 500; font-size: 13.5px;
+    border: 1px solid var(--surface-line); border-radius: 8px;
+    padding: 9px 18px; cursor: pointer;
+  }
+
+  .data { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+
+  /* ============================================================
+     SCREEN 1 — HOMEPAGE COMMAND CENTER
+     ============================================================ */
+  .home-grid {
+    display: grid; grid-template-columns: 2fr 1fr; gap: 16px;
+    padding: 24px;
+  }
+  .hero-card {
+    background: var(--surface-raised);
+    border: 1px solid var(--surface-line);
+    border-radius: 12px; padding: 24px;
+  }
+  .hero-card .matchup {
+    display: flex; align-items: baseline; gap: 10px; margin: 10px 0 4px;
+  }
+  .hero-card .matchup h2 { font-family: var(--font-display); font-weight: 600; font-size: 26px; letter-spacing: -0.01em; }
+  .hero-card .vs { color: var(--ink-muted); font-size: 14px; }
+  .hero-sub { color: var(--ink-secondary); font-size: 13.5px; margin-bottom: 18px; }
+  .cat-bar { display: flex; gap: 4px; margin-bottom: 10px; }
+  .cat-seg {
+    flex: 1; height: 34px; border-radius: 6px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: var(--font-data); font-size: 10px; font-weight: 600;
+  }
+  .cat-seg span { font-size: 9px; font-weight: 500; opacity: .75; }
+  .cat-seg.w { background: rgba(47,191,113,.16); color: var(--signal-up); }
+  .cat-seg.l { background: rgba(224,82,82,.13); color: var(--signal-down); }
+  .cat-seg.t { background: var(--surface-overlay); color: var(--ink-secondary); }
+  .hero-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
+  .hero-meta .proj { font-size: 13px; color: var(--ink-secondary); }
+  .hero-meta .proj b { font-family: var(--font-data); color: var(--ink-primary); font-weight: 600; }
+
+  .league-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; padding: 0 24px 24px; }
+  .league-card { padding: 18px; }
+  .league-card .row1 { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .league-card .sport { font-size: 11px; font-weight: 600; letter-spacing: .06em; color: var(--ink-muted); }
+  .league-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+  .league-card .rec { font-family: var(--font-data); font-size: 13px; color: var(--ink-secondary); }
+  .tier { font-size: 11px; font-weight: 600; letter-spacing: .04em; }
+  .tier.contender { color: var(--brass); }
+  .tier.bubble { color: var(--signal-watch); }
+  .trend-up { color: var(--signal-up); font-size: 13px; }
+  .trend-down { color: var(--signal-down); font-size: 13px; }
+
+  /* ============================================================
+     SCREEN 2 — SEASON HUB (TABBED)
+     ============================================================ */
+  .hub-header { padding: 20px 24px 0; }
+  .hub-header .line1 { display: flex; align-items: baseline; gap: 14px; }
+  .hub-header h2 { font-family: var(--font-display); font-weight: 600; font-size: 22px; }
+  .hub-header .week { font-family: var(--font-data); font-size: 13px; color: var(--ink-secondary); }
+  .hub-header .asof { margin-left: auto; font-size: 12px; color: var(--ink-muted); }
+  .tabbar {
+    display: flex; gap: 4px; margin-top: 16px;
+    border-bottom: 1px solid var(--surface-line);
+    padding: 0 24px;
+  }
+  .tab {
+    padding: 10px 16px; font-size: 13.5px; font-weight: 500;
+    color: var(--ink-secondary); cursor: pointer;
+    border-bottom: 2px solid transparent;
+  }
+  .tab.active { color: var(--ink-primary); border-bottom-color: var(--beane-green); }
+  .hub-body { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; padding: 24px; }
+  .startsit { margin-top: 16px; }
+  .startsit-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 16px; border-top: 1px solid var(--surface-line);
+    font-size: 13.5px;
+  }
+  .startsit-row:first-child { border-top: none; }
+  .startsit-row .pos-slot { font-family: var(--font-data); font-size: 11px; color: var(--ink-muted); width: 34px; }
+  .startsit-row .name { font-weight: 500; flex: 1; }
+  .startsit-row .why { color: var(--ink-muted); font-size: 12.5px; }
+  .startsit-row .gp { font-family: var(--font-data); font-size: 12px; color: var(--ink-secondary); }
+  .collapse-hint {
+    padding: 12px 16px; font-size: 12.5px; color: var(--ink-muted);
+    border-top: 1px solid var(--surface-line); cursor: pointer;
+  }
+
+  /* ============================================================
+     SCREEN 3 — DRAFT BOARD
+     ============================================================ */
+  .draft-wrap { display: grid; grid-template-columns: 1.5fr 1fr; gap: 0; }
+  .board-side { border-right: 1px solid var(--surface-line); }
+  .clockbar {
+    display: flex; align-items: center; gap: 18px;
+    padding: 12px 20px; border-bottom: 1px solid var(--surface-line);
+    font-family: var(--font-data); font-size: 12.5px; color: var(--ink-secondary);
+  }
+  .clockbar .onclock {
+    display: flex; align-items: center; gap: 8px;
+    color: var(--beane-green-text); font-weight: 600;
+  }
+  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--beane-green); animation: pulse 2s ease infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+  table.pool { width: 100%; border-collapse: collapse; }
+  table.pool th {
+    text-align: left; font-size: 10.5px; font-weight: 600; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--ink-muted);
+    padding: 10px 12px; border-bottom: 1px solid var(--surface-line);
+  }
+  table.pool th.num, table.pool td.num { text-align: right; }
+  table.pool td {
+    padding: 10px 12px; font-size: 13.5px;
+    border-bottom: 1px solid var(--surface-line);
+  }
+  table.pool td.num { font-family: var(--font-data); font-variant-numeric: tabular-nums; font-size: 13px; }
+  .delta-up { color: var(--signal-up); }
+  .delta-flat { color: var(--ink-muted); }
+  tr.drafted td { opacity: .38; text-decoration: line-through; }
+  .rec-side { padding: 20px; }
+
+  /* ============================================================
+     SCREEN 4 — DRAFT DNA CARD
+     ============================================================ */
+  .dna-stage {
+    display: flex; justify-content: center; padding: 48px 24px;
+    background:
+      radial-gradient(ellipse 480px 300px at 50% 0%, rgba(201,162,39,.07), transparent 70%),
+      var(--surface-base);
+  }
+  .dna-card {
+    width: 360px;
+    background: linear-gradient(180deg, var(--surface-overlay) 0%, var(--surface-base) 100%);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 20px;
+    padding: 36px 30px 28px;
+    text-align: center;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.02);
+  }
+  .dna-glyph { margin: 0 auto 20px; width: 56px; height: 56px; }
+  .dna-card .eyebrow { margin-bottom: 14px; }
+  .dna-card h2 {
+    font-family: var(--font-display); font-weight: 600; font-size: 30px;
+    letter-spacing: -0.015em; line-height: 1.12; margin-bottom: 8px;
+  }
+  .dna-tag { font-style: italic; color: var(--ink-secondary); font-size: 14px; margin-bottom: 22px; }
+  .dna-edges { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .dna-predict {
+    border-top: 1px solid var(--surface-line);
+    border-bottom: 1px solid var(--surface-line);
+    padding: 16px 4px; margin-bottom: 22px;
+  }
+  .dna-predict .plabel { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 8px; }
+  .dna-predict p { font-family: var(--font-display); font-size: 15.5px; font-weight: 500; line-height: 1.45; }
+  .dna-footer { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 11.5px; color: var(--ink-muted); }
+  .dna-footer .wm { font-family: var(--font-display); font-weight: 600; color: var(--ink-secondary); }
+
+  @media (max-width: 860px) {
+    .home-grid, .hub-body, .draft-wrap { grid-template-columns: 1fr; }
+    .board-side { border-right: none; border-bottom: 1px solid var(--surface-line); }
+    .league-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="mock-wrap">
+
+  <div class="mock-intro">
+    <h1>PocketBeane — The Front Office</h1>
+    <p>D-01 visual reference mockups. Four screens rendering the token system from the design brief: surfaces, Beane green + brass, Fraunces / Inter / JetBrains Mono. CSS variables in this file match the brief's token names exactly — lift them into tailwind.config.js.</p>
+  </div>
+
+  <!-- ================= SCREEN 1 ================= -->
+  <div class="mock-section">
+    <div class="mock-label"><span class="num">01</span><h2>Homepage — Command Center</h2></div>
+    <p class="mock-note">Calendar-aware hero answers "what needs my attention" first. Beane's Note is the personality anchor. League cards carry standing tiers, not raw stat walls.</p>
+    <div class="screen">
+      <div class="topbar">
+        <div class="wordmark"><span class="p">Pocket</span>Beane</div>
+        <div class="league-switch">Thunder Buddies (NBA) <span class="caret">▾</span></div>
+        <div class="topbar-right">
+          <div class="sync-ok"><span class="dot"></span>Yahoo synced</div>
+          <button class="btn-secondary">Settings</button>
+        </div>
+      </div>
+      <div class="home-grid">
+        <div class="hero-card">
+          <div class="eyebrow">Week 3 Matchup · Thunder Buddies</div>
+          <div class="matchup"><h2>You vs. Ball Hogs United</h2><span class="vs">Mon–Sun</span></div>
+          <div class="hero-sub">Projected category split based on both rosters and this week's schedule</div>
+          <div class="cat-bar">
+            <div class="cat-seg w">PTS<span>W</span></div>
+            <div class="cat-seg w">REB<span>W</span></div>
+            <div class="cat-seg w">AST<span>W</span></div>
+            <div class="cat-seg w">STL<span>W</span></div>
+            <div class="cat-seg w">BLK<span>W</span></div>
+            <div class="cat-seg l">TO<span>L</span></div>
+            <div class="cat-seg t">FG%<span>—</span></div>
+            <div class="cat-seg l">FT%<span>L</span></div>
+            <div class="cat-seg w">3PM<span>W</span></div>
+          </div>
+          <div class="hero-meta">
+            <div class="proj">Projected <b>6–2–1</b> · your side of the percentages is live until Thursday</div>
+            <button class="btn-primary">Open This Week</button>
+          </div>
+        </div>
+        <div class="card-advisor">
+          <div class="eyebrow brass">Beane's Note</div>
+          <h3>Punt the turnovers. Win the week.</h3>
+          <p>TO was lost the moment you drafted Curry and Randle — that was the plan. Your FT% is the real swing category: <strong>two of Ball Hogs' bigs shoot under 65%</strong>. Stream a guard for Thursday and this is a 7-cat week.</p>
+        </div>
+      </div>
+      <div class="league-grid">
+        <div class="card-data league-card">
+          <div class="row1"><span class="sport">NBA · H2H 9-CAT</span><span class="trend-up">▲</span></div>
+          <h4>Thunder Buddies</h4>
+          <div class="rec">9–5–1 · 3rd of 10</div>
+          <div style="margin-top:8px"><span class="tier contender">CONTENDER</span></div>
+        </div>
+        <div class="card-data league-card">
+          <div class="row1"><span class="sport">NBA · H2H 9-CAT</span><span class="trend-down">▼</span></div>
+          <h4>Midrange Merchants</h4>
+          <div class="rec">7–8 · 6th of 10</div>
+          <div style="margin-top:8px"><span class="tier bubble">PLAYOFF BUBBLE</span></div>
+        </div>
+        <div class="card-data league-card">
+          <div class="row1"><span class="sport">MLB · H2H CATEGORIES</span><span class="trend-up">▲</span></div>
+          <h4>Salt Lake Sluggers</h4>
+          <div class="rec">11–7 · 4th of 12</div>
+          <div style="margin-top:8px"><span class="tier contender">CONTENDER</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 2 ================= -->
+  <div class="mock-section">
+    <div class="mock-label"><span class="num">02</span><h2>Season Hub — Tabbed Workspace</h2></div>
+    <p class="mock-note">Tabs replace the vertical scroll. Every tab leads with Beane's call in an Advisor card; raw data collapses beneath it. Staleness stamp always visible in the header.</p>
+    <div class="screen">
+      <div class="hub-header">
+        <div class="line1">
+          <h2>Thunder Buddies</h2>
+          <span class="week">WK 3 · 9–5–1</span>
+          <span class="pill brass" style="font-size:10.5px">CONTENDER</span>
+          <span class="asof">Stats as of Oct 26 · <u style="cursor:pointer">Refresh</u></span>
+        </div>
+        <div class="tabbar">
+          <div class="tab active">This Week</div>
+          <div class="tab">Waivers</div>
+          <div class="tab">Trades</div>
+          <div class="tab">League</div>
+          <div class="tab">My Team</div>
+        </div>
+      </div>
+      <div class="hub-body">
+        <div>
+          <div class="card-advisor">
+            <div class="eyebrow brass">Beane's Take · Start/Sit</div>
+            <h3>Four-game weeks decide this one.</h3>
+            <p>Sit Reaves despite the hot streak — <strong>two games</strong> against your opponent's best defensive week. Suggs gets the nod on volume alone.</p>
+          </div>
+          <div class="card-data startsit">
+            <div class="startsit-row">
+              <span class="pos-slot">PG</span><span class="name">Jalen Suggs</span>
+              <span class="why">4-game week · streak-neutral</span>
+              <span class="gp">4 GP</span><span class="pill up">START</span>
+            </div>
+            <div class="startsit-row">
+              <span class="pos-slot">SG</span><span class="name">Austin Reaves</span>
+              <span class="why">2-game week vs top defense</span>
+              <span class="gp">2 GP</span><span class="pill watch">SIT</span>
+            </div>
+            <div class="startsit-row">
+              <span class="pos-slot">C</span><span class="name">Nic Claxton</span>
+              <span class="why">healthy · back-to-back Tue/Wed</span>
+              <span class="gp">4 GP</span><span class="pill up">START</span>
+            </div>
+            <div class="collapse-hint">Show full roster (10 more) ▾</div>
+          </div>
+        </div>
+        <div>
+          <div class="card-data" style="padding:18px">
+            <div class="eyebrow" style="margin-bottom:12px">Category Watch</div>
+            <div style="display:flex; flex-direction:column; gap:10px; font-size:13.5px">
+              <div style="display:flex; justify-content:space-between"><span>Edges</span><span><span class="pill up">STL</span> <span class="pill up">BLK</span> <span class="pill up">3PM</span></span></div>
+              <div style="display:flex; justify-content:space-between"><span>To watch</span><span><span class="pill watch">FT%</span> <span class="pill watch">TO</span></span></div>
+            </div>
+          </div>
+          <div class="card-data" style="padding:18px; margin-top:16px">
+            <div class="eyebrow" style="margin-bottom:10px">Injury Desk</div>
+            <div style="font-size:13.5px; display:flex; flex-direction:column; gap:9px">
+              <div style="display:flex; justify-content:space-between; align-items:center"><span>Michael Porter Jr.</span><span class="pill watch">DAY-TO-DAY</span></div>
+              <div style="display:flex; justify-content:space-between; align-items:center"><span>Jordan Lawlar</span><span class="pill down">IL</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 3 ================= -->
+  <div class="mock-section">
+    <div class="mock-label"><span class="num">03</span><h2>Draft Board — War Room Mode</h2></div>
+    <p class="mock-note">Density stays — refined through tabular mono numerals and semantic deltas. Beane's recommendation is the only Advisor card on screen: the eye finds the call in under a second.</p>
+    <div class="screen">
+      <div class="draft-wrap">
+        <div class="board-side">
+          <div class="clockbar">
+            <span>RD 3 · PICK 27</span>
+            <span class="onclock"><span class="pulse"></span>YOU'RE ON THE CLOCK · 0:54</span>
+            <span style="margin-left:auto">SNAKE · 10 TEAMS</span>
+          </div>
+          <table class="pool">
+            <thead>
+              <tr><th>Player</th><th>Pos</th><th class="num">ADP</th><th class="num">Δ</th><th class="num">STL</th><th class="num">BLK</th></tr>
+            </thead>
+            <tbody>
+              <tr class="drafted"><td>Nikola Jokic</td><td>C</td><td class="num">1.2</td><td class="num">—</td><td class="num">1.4</td><td class="num">0.9</td></tr>
+              <tr><td>Amen Thompson</td><td>PG·SF</td><td class="num">19.4</td><td class="num delta-up">+7.6</td><td class="num">2.1</td><td class="num">1.3</td></tr>
+              <tr><td>Jaren Jackson Jr.</td><td>PF·C</td><td class="num">24.1</td><td class="num delta-up">+2.9</td><td class="num">1.2</td><td class="num">2.4</td></tr>
+              <tr><td>Lauri Markkanen</td><td>PF</td><td class="num">28.6</td><td class="num delta-flat">−1.6</td><td class="num">0.8</td><td class="num">0.6</td></tr>
+              <tr><td>Jalen Suggs</td><td>PG·SG</td><td class="num">31.0</td><td class="num delta-flat">−4.0</td><td class="num">1.6</td><td class="num">0.7</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="rec-side">
+          <div class="card-advisor">
+            <div class="eyebrow brass">Beane's Take · Pick 27</div>
+            <h3>Amen Thompson</h3>
+            <p><strong>7.6 picks below ADP</strong> and the last elite-steals wing on the board. He locks your defensive-category plan before the position run starts — Ball Hogs and two other teams need wings next.</p>
+            <div style="display:flex; gap:8px; margin-top:14px; flex-wrap:wrap">
+              <span class="pill up">VALUE +7.6</span>
+              <span class="pill pos">FILLS SF</span>
+              <span class="pill up">STL EDGE</span>
+            </div>
+            <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--surface-line); font-size:12.5px; color:var(--ink-muted)">
+              Alternative: Jaren Jackson Jr. if you'd rather anchor blocks — but expect a C run within five picks.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SCREEN 4 ================= -->
+  <div class="mock-section">
+    <div class="mock-label"><span class="num">04</span><h2>Draft DNA — The Flagship Artifact</h2></div>
+    <p class="mock-note">The only surface with real visual budget: dark glass, brass identity accents, a monoline glyph instead of an emoji. Built to be screenshotted into a league chat.</p>
+    <div class="screen">
+      <div class="dna-stage">
+        <div class="dna-card">
+          <svg class="dna-glyph" viewBox="0 0 56 56" fill="none">
+            <rect x="18" y="18" width="20" height="20" transform="rotate(45 28 28)" stroke="#C9A227" stroke-width="1.5"/>
+            <rect x="23.5" y="23.5" width="9" height="9" transform="rotate(45 28 28)" stroke="#C9A227" stroke-width="1.5" opacity=".55"/>
+          </svg>
+          <div class="eyebrow brass">Draft DNA · Thunder Buddies</div>
+          <h2>The Moneyball GM</h2>
+          <div class="dna-tag">"You don't follow the board. You exploit it."</div>
+          <div class="dna-edges">
+            <span class="pill brass">STEALS</span>
+            <span class="pill brass">BLOCKS</span>
+            <span class="pill brass">3-POINTERS</span>
+          </div>
+          <div class="dna-predict">
+            <div class="plabel">Bold Prediction</div>
+            <p>If Claxton stays healthy, this roster owns a top-3 blocks total by February.</p>
+          </div>
+          <div class="dna-footer"><span class="wm">PocketBeane</span><span>·</span><span>Draft smarter at pocketbeane.app</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

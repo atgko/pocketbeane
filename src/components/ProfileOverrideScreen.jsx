@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { QUIZ_QUESTIONS, getGMProfile, INJURY_DISPLAY, CATEGORY_DISPLAY, STRATEGY_DISPLAY } from '@/utils/gmProfile'
+import { Card, Button } from '@/components/ui'
 
 export default function ProfileOverrideScreen({ leagueName, currentOverride, onSave, onCancel }) {
   const global = getGMProfile()
@@ -32,12 +33,12 @@ export default function ProfileOverrideScreen({ leagueName, currentOverride, onS
   }
 
   return (
-    <div className="bg-surface border border-border rounded-xl p-6 mt-4">
+    <Card variant="data" className="mt-4">
       <div className="mb-5">
-        <p className="text-sm font-semibold text-white">
+        <p className="text-sm font-semibold text-ink-primary">
           Customize GM Profile for {leagueName || 'this league'}
         </p>
-        <p className="text-xs text-gray-500 mt-0.5 font-mono">
+        <p className="text-xs text-ink-secondary mt-0.5 font-mono">
           Tap an answer to override it for this league only. Tap the selected answer to revert to global.
         </p>
       </div>
@@ -52,7 +53,7 @@ export default function ProfileOverrideScreen({ leagueName, currentOverride, onS
 
           return (
             <div key={q.id}>
-              <p className="text-xs text-gray-400 mb-2 font-mono">{q.question}</p>
+              <p className="text-xs text-ink-secondary mb-2 font-mono">{q.question}</p>
               <div className="flex flex-wrap gap-2">
                 {q.options.map(opt => {
                   const isSelected = currentValue === opt.value
@@ -65,15 +66,15 @@ export default function ProfileOverrideScreen({ leagueName, currentOverride, onS
                       onClick={() => toggle(q.id, opt.value)}
                       className={`px-3 py-1.5 rounded text-xs font-mono transition-colors border ${
                         isOverride
-                          ? 'bg-value/20 border-value text-value'
+                          ? 'bg-signal-watch/20 border-signal-watch text-signal-watch'
                           : isSelected
-                          ? 'bg-pick/10 border-pick text-pick'
-                          : 'bg-bg border-border text-gray-400 hover:border-pick/40 hover:text-gray-200'
+                          ? 'bg-beane-green/10 border-beane-green text-beane-green-text'
+                          : 'bg-surface-base border-surface-line text-ink-secondary hover:border-beane-green/40 hover:text-ink-primary'
                       }`}
                     >
                       {displayMap[opt.value]}
                       {isGlobal && !isOverride && (
-                        <span className="ml-1 text-gray-600">(global)</span>
+                        <span className="ml-1 text-ink-muted">(global)</span>
                       )}
                     </button>
                   )
@@ -85,19 +86,13 @@ export default function ProfileOverrideScreen({ leagueName, currentOverride, onS
       </div>
 
       <div className="flex gap-3 mt-6">
-        <button
-          onClick={handleSave}
-          className="px-5 py-2 bg-pick text-white rounded-lg text-sm font-semibold hover:bg-green-500 transition-colors"
-        >
+        <Button variant="primary" onClick={handleSave} className="text-sm">
           Save
-        </button>
-        <button
-          onClick={onCancel}
-          className="px-4 py-2 border border-border text-gray-400 rounded-lg text-sm hover:text-gray-200 transition-colors"
-        >
+        </Button>
+        <Button variant="secondary" onClick={onCancel} className="text-sm">
           Cancel
-        </button>
+        </Button>
       </div>
-    </div>
+    </Card>
   )
 }
