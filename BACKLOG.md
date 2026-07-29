@@ -1,6 +1,8 @@
 # PocketBeane — Active Backlog
 
-Last updated: 2026-07-28 — Two items closed out: the two pending Y-05 re-tests (Trade Value Index trade-opportunity flags, Team Pulse's reworked `myTeamTake`) both confirmed passing in the browser — see Y-05 status table and the Trade Value Index / Team Pulse UAT sections, both now flip to a single "✅ UAT complete" line. Also fixed **P-03 · `run_weekly.py` had no Yahoo token refresh** — added `get_valid_yahoo_token()`, mirroring the refresh dance already proven in `src/utils/yahooAuth.js`/`send-waiver-digest.mjs` (refresh within 5 min of `expires_at`, persist back to `auth.json`, fall back to the stale token on any refresh failure rather than crashing the pipeline). See the Data Pipeline Incident Log section for full detail. Verified via a standalone scratch script exercising all four code paths (fresh/expiring/refresh-failure/no-refresh-token) — no pytest infra exists for this script to add a permanent test to.
+Last updated: 2026-07-29 — D-01 (Full App UI Revamp) kicked off with a research brief + static mockup already written (`ui-redesign/D01_UI_REVAMP_DESIGN_BRIEF.md`, `ui-redesign/D01_MOCKUPS.html` — direction: "The Front Office," dark editorial analytics, Fraunces/Inter/JetBrains Mono, Moneyball green + brass palette). Execution is split into 9 checkpointed steps (see updated D-01 entry below for the full phase list and resume instructions); **Checkpoint 1 (Steps 1-3) is done**: token foundation (`tailwind.config.js`/`styles/globals.css` rebuilt around CSS-custom-property color tokens + `next/font`-loaded type system in `pages/_app.jsx`), a global color/font sweep across all 19 files still on the old raw-Tailwind/legacy tokens (including the 1548-line `season.jsx`, done last), and a new shared component library at `src/components/ui/` (`Card`, `Button`, `Badge`, `AdvisorCard`, `TabBar`) migrated into call sites wherever a clean fit existed. All 5 routes verified compiling; full-codebase grep confirms zero leftover raw color classes; contrast spot-checked against the brief's Part 3.1 pairs (all clear AA, `signal-down` tightest at ~4.8:1). Nothing pushed yet. Steps 4-9 (Draft DNA rebuild, Season Hub tab extraction, homepage command center, draft board refinement, a11y/mobile passes) remain, each planned separately before execution.
+
+Previously: 2026-07-28 — Two items closed out: the two pending Y-05 re-tests (Trade Value Index trade-opportunity flags, Team Pulse's reworked `myTeamTake`) both confirmed passing in the browser — see Y-05 status table and the Trade Value Index / Team Pulse UAT sections, both now flip to a single "✅ UAT complete" line. Also fixed **P-03 · `run_weekly.py` had no Yahoo token refresh** — added `get_valid_yahoo_token()`, mirroring the refresh dance already proven in `src/utils/yahooAuth.js`/`send-waiver-digest.mjs` (refresh within 5 min of `expires_at`, persist back to `auth.json`, fall back to the stale token on any refresh failure rather than crashing the pipeline). See the Data Pipeline Incident Log section for full detail. Verified via a standalone scratch script exercising all four code paths (fresh/expiring/refresh-failure/no-refresh-token) — no pytest infra exists for this script to add a permanent test to.
 
 Previously: 2026-07-27 (end of day) — Two separate threads of work this session, both closed out. **Full detail archived in git history / prior conversation if needed; this entry is the consolidated summary.**
 
@@ -619,35 +621,42 @@ Full MLB 5×5 draft experience shipped 2026-06-27. Multi-sport architecture gene
 ---
 
 ### D-01 · Full App UI Revamp
-**Status: No external dependency — can start any time; research component required**
+**Status: In progress — Checkpoint 1 of 9 (Steps 1-3) complete as of 2026-07-29; research component done**
 
 **Goal:** Overhaul the visual identity of PocketBeane from the current monochrome Tailwind default into a polished, premium sports analytics product.
 
-**Current state:** Dark background + single green accent (`#22c55e`, Tailwind `green-500`), monospace typography for data labels, no imagery, no logo beyond the wordmark. Functional but not visually distinctive.
+**Research component — done.** Direction is decided and documented, not still open:
+- `ui-redesign/D01_UI_REVAMP_DESIGN_BRIEF.md` — full competitive landscape, direction rationale ("The Front Office" — premium analytics + editorial voice, Moneyball green/brass palette), complete design token spec (Part 3), page-by-page layout guidance (Part 4), anti-vibe-code checklist (Part 5), and the 9-step build order (Part 6) referenced below.
+- `ui-redesign/D01_MOCKUPS.html` — working CSS reference implementation of every token, matched exactly by the real `tailwind.config.js`/`styles/globals.css` tokens.
 
-**What this covers:**
+**Execution approach — checkpointed, not one shot.** Each step below lands as its own reviewed pass rather than one giant redesign PR, per the brief's own build order (Part 6) plus explicit product decisions made when Checkpoint 1 was planned:
+- Season Hub (`pages/season.jsx`) gets *extracted* into per-tab files under `src/components/season/` when its turn comes (Step 5) — not just reskinned in place.
+- Shared UI primitives are hand-rolled (`src/components/ui/`), not Radix/shadcn — with a standing exception to selectively pull in one scoped headless primitive (e.g. `@radix-ui/react-tabs`) later *only if* a specific interactive component becomes error-prone to hand-roll accessibly (flag it if that happens, don't preempt it).
+- Mobile is built alongside desktop per page, not as a final retrofit pass — priority order highest-first: Draft DNA share card (acquisition surface, viewed on phones in group chats) → Season Hub (weekly phone usage) → homepage → draft board (desktop-first is fine here; live drafts are usually run on a second screen).
+- No light mode this pass (personal-use dark-first product), but the color tokens are stored as CSS custom properties (`rgb(var(--color-x) / <alpha-value>)` in `tailwind.config.js`) specifically so a future light theme is a `:root` swap, not a component rewrite.
 
-| Area | Current | Target |
+**Progress — 9 steps from the brief's Part 6 build order:**
+
+| # | Step | Status |
 |---|---|---|
-| Color palette | Single green on dark | Proper design system — primary, accent, muted, destructive tokens |
-| Imagery | None | Player silhouettes, sport-specific backgrounds, hero moments |
-| Typography | System font + mono for data | Sports-appropriate type scale — distinct heading vs. data vs. body |
-| Logo/wordmark | Plain text "PocketBeane" | Refined mark with optional icon |
-| Card system | Uniform surface/border pattern | Differentiated cards for draft board, recommendation panel, DNA card |
-| Mobile | Responsive but unstyled | Intentionally mobile-first layouts for Season Hub and Draft DNA share card |
+| 1 | Token foundation — Tailwind theme, CSS var color tokens, `next/font` (Fraunces/Inter/JetBrains Mono) | ✅ Done 2026-07-29 |
+| 2 | Global color/font sweep — all 19 files off old raw-Tailwind/legacy tokens (`bg-bg`, `text-pick`, `text-injury`, raw `green-500` etc.) onto the new semantic tokens; emoji-as-UI-chrome → inline SVGs | ✅ Done 2026-07-29 |
+| 3 | Shared component system — `src/components/ui/`: `Card` (data/advisor/identity variants), `Button`, `Badge` (with a `size="sm"` variant added for dense rows, discovered needed mid-sweep), `AdvisorCard`, `TabBar`; migrated into existing files alongside the color sweep | ✅ Done 2026-07-29 |
+| 4 | Draft DNA card rebuild — `src/components/DraftDNACard.jsx` full recomposition onto the `identity` Card variant + 9 monoline archetype SVGs, mobile-first (highest mobile priority) | ⏳ Not started |
+| 5 | Season Hub restructure — extract `pages/season.jsx`'s 8 inline panels into `src/components/season/` per-tab files, wire up `TabBar` (This Week / Waivers / Trades / League / My Team), mobile-first sticky tab strip | ⏳ Not started |
+| 6 | Homepage command center — `pages/index.jsx` calendar-aware hero + `AdvisorCard` "Beane's Note" + league grid, replacing the current vertical stack | ⏳ Not started |
+| 7 | Draft board refinement — promote `RecommendationPanel` to `AdvisorCard` (explicitly deferred out of Checkpoint 1 on purpose), tabular mono numerals + semantic value-deltas on `PlayerPool`'s table, on-the-clock pulse | ⏳ Not started |
+| 8 | A11y pass — full contrast audit, focus-state audit, keyboard nav verification on the draft board | ⏳ Not started |
+| 9 | Mobile pass — cross-cutting check now that mobile was built alongside each page rather than deferred; catch anything missed | ⏳ Not started |
 
-**Research component (do this first):**
-Before touching code, define the visual direction:
-- Reference apps: The Athletic, ESPN Fantasy, Stathead, Underdog Fantasy, Sleeper
-- Decide: sports-data minimal (high info density, monochrome) vs. brand-forward (team colors, hero imagery) vs. premium analytics (dark glass, gradient accents)
-- Mood board → token decisions → then code
+**Resuming this work:** re-read `ui-redesign/D01_UI_REVAMP_DESIGN_BRIEF.md` Part 6 for the step spec, then plan Step 4 (or whichever step is next) the same way Checkpoint 1 was planned — explore the current state of the target files first, design the approach, confirm scope boundaries with the user, then execute and verify (`npm run dev` + route-by-route visual pass + grep for leftover raw color classes) before moving to the next step.
 
-**Acceptance criteria:**
-- New color token system defined and applied globally (Tailwind config updated)
-- At least one imagery element on the home/draft screen
-- Draft DNA card looks polished enough to share publicly
-- Typography hierarchy is clear across all major screens
-- Passes a11y contrast check on all primary text
+**Acceptance criteria (unchanged, still the bar for calling D-01 fully done):**
+- New color token system defined and applied globally — ✅ done (Steps 1-2)
+- At least one imagery element on the home/draft screen — pending (Step 4, the archetype glyph system)
+- Draft DNA card looks polished enough to share publicly — pending (Step 4)
+- Typography hierarchy is clear across all major screens — partial (fonts loaded, Fraunces not yet applied to headings — that's page-level work in Steps 4-6)
+- Passes a11y contrast check on all primary text — spot-checked and passing for the token system itself (Checkpoint 1); full page-by-page audit is Step 8
 
 **Note:** This should happen before any public-facing launch or sharing push. The Draft DNA share card in particular will represent the app to anyone outside who receives it.
 
