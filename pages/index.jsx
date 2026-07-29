@@ -1,10 +1,18 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import useLeagueStore from '@/store/leagueStore'
 import { useYahooAuth } from '@/hooks/useYahooAuth'
+import nbaPlayers from '@/data/players.json'
+import mlbPlayers from '@/data/mlb_players.json'
+import { getSportConfig } from '@/config/sports'
+import { getGMProfile } from '@/utils/gmProfile'
 import { Card } from '@/components/ui'
+import { computeTeamStanding, TIER_STYLES, STANDING_TREND_ARROW } from '@/components/season/shared'
+import HeroCard from '@/components/home/HeroCard'
+import BeaneNote from '@/components/home/BeaneNote'
+import LeagueSwitcher from '@/components/home/LeagueSwitcher'
 
 const STATUS_LABEL = { drafting: 'In Draft', complete: 'Archived', season: 'Season' }
 const STATUS_COLOR = { drafting: 'text-beane-green-text', complete: 'text-ink-muted', season: 'text-signal-info' }
@@ -24,12 +32,32 @@ function formatSeasonYear(year, sport) {
   return String(year)
 }
 
+function playersFor(sport) {
+  return sport === 'mlb' ? mlbPlayers : nbaPlayers
+}
+
+// Which league's Hero/Beane's Note shows by default — prioritizes an
+// upcoming/in-progress draft over an active season over anything archived,
+// since that's the order a GM actually needs to act in.
+function pickHeroLeagueId(leagues) {
+  const candidates = leagues.filter(l => l.status !== 'complete')
+  const pool = candidates.length > 0 ? candidates : leagues
+  if (pool.length === 0) return null
+  const urgency = (l) => {
+    if (l.status === 'drafting') return l.draft.picks.length === 0 ? 3 : 2
+    if (l.status === 'season') return 1
+    return 0
+  }
+  return [...pool].sort((a, b) => urgency(b) - urgency(a))[0].id
+}
+
 export default function Home() {
   const router = useRouter()
   const { leagues, setActiveLeague, deleteLeague, setLeagueStatus, archiveLeague } = useLeagueStore()
   const [mounted, setMounted] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(null)
   const [yahooToast, setYahooToast] = useState(null)
+  const [selectedHeroId, setSelectedHeroId] = useState(null)
   const yahoo = useYahooAuth()
 
   useEffect(() => { setMounted(true) }, [])
@@ -59,6 +87,23 @@ export default function Home() {
       router.replace('/', undefined, { shallow: true })
     }
   }, [mounted, router.query])
+
+  const gmProfile = mounted ? getGMProfile() : null
+  const philosophySet = Boolean(gmProfile?.completedAt)
+
+  const nonArchivedLeagues = useMemo(() => leagues.filter(l => l.status !== 'complete'), [leagues])
+  const defaultHeroId = useMemo(() => pickHeroLeagueId(leagues), [leagues])
+  const heroLeagueId = selectedHeroId ?? defaultHeroId
+  const heroLeague = leagues.find(l => l.id === heroLeagueId) ?? null
+
+  const heroStanding = useMemo(() => {
+    if (!heroLeague || heroLeague.status !== 'season') return null
+    const rosters = heroLeague.leagueRosters
+    if (!rosters?.teams?.length) return null
+    const sportConfig = getSportConfig(heroLeague.config.sport ?? 'nba')
+    return computeTeamStanding({ league: heroLeague, rosters, players: playersFor(heroLeague.config.sport ?? 'nba'), sportConfig })
+  }, [heroLeague])
+  const heroSportConfig = heroLeague ? getSportConfig(heroLeague.config.sport ?? 'nba') : null
 
   if (!mounted) return null
 
@@ -127,15 +172,34 @@ export default function Home() {
         <meta name="description" content="AI-powered Assistant GM for fantasy basketball" />
       </Head>
       <main className="min-h-screen bg-surface-base text-ink-primary">
-        <div className="max-w-3xl mx-auto px-8 py-12">
+        <div className="max-w-5xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
 
-          {/* Header */}
-          <div className="flex items-baseline justify-between mb-6">
+          {/* Top bar */}
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
             <div>
               <h1 className="text-3xl font-bold text-ink-primary tracking-tight">PocketBeane</h1>
               <p className="text-ink-secondary mt-1 text-sm">AI-powered Assistant GM</p>
             </div>
+
+            {nonArchivedLeagues.length > 1 && (
+              <LeagueSwitcher
+                leagues={nonArchivedLeagues}
+                activeId={heroLeagueId}
+                onSelect={setSelectedHeroId}
+              />
+            )}
+
             <div className="flex items-center gap-3">
+              {yahoo.connected && (
+                <button
+                  onClick={yahoo.disconnect}
+                  title="Disconnect Yahoo"
+                  className="group flex items-center gap-1.5 text-xs font-mono text-ink-secondary hover:text-signal-down transition-colors"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-beane-green group-hover:bg-signal-down transition-colors" />
+                  {yahoo.screenName ?? 'Yahoo connected'}
+                </button>
+              )}
               <Link
                 href="/gm-profile"
                 className="text-xs text-ink-secondary hover:text-ink-primary transition-colors font-mono"
@@ -154,8 +218,9 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Yahoo connection */}
-          <YahooConnect yahoo={yahoo} />
+          {/* Yahoo connect CTA — only shown while disconnected; once connected
+              the top-bar status pill above covers it */}
+          {!yahoo.connected && <YahooConnect yahoo={yahoo} />}
 
           {/* Toast */}
           {yahooToast && (
@@ -165,44 +230,67 @@ export default function Home() {
             </div>
           )}
 
-          {/* League list */}
           {leagues.length === 0 ? (
             <EmptyState />
           ) : (
-            <div className="space-y-8">
-              {sportGroups.map(({ sport, active, archived }) => (
-                <div key={sport}>
-                  {hasMultipleSports && (
-                    <div className="flex items-center gap-3 mb-3">
-                      <h2 className="text-xs font-mono text-ink-secondary uppercase tracking-wider">
-                        {SPORT_LABELS[sport] ?? sport.toUpperCase()}
-                      </h2>
-                      <div className="flex-1 border-t border-surface-line" />
-                    </div>
-                  )}
+            <>
+              {/* Hero status + Beane's Note */}
+              {heroLeague && (
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8">
+                  <div className="lg:col-span-8">
+                    <HeroCard
+                      league={heroLeague}
+                      rosters={heroLeague.leagueRosters ?? null}
+                      standing={heroStanding}
+                      sportConfig={heroSportConfig}
+                      yahooConnected={yahoo.connected}
+                      philosophySet={philosophySet}
+                      onEnterDraft={handleEnterDraft}
+                      onEnterSeason={handleEnterSeason}
+                    />
+                  </div>
+                  <div className="lg:col-span-4">
+                    <BeaneNote gmProfile={gmProfile} standing={heroStanding} sportConfig={heroSportConfig} />
+                  </div>
+                </div>
+              )}
 
-                  <div className="space-y-3">
-                    {active.map((league) => (
-                      <LeagueCard
-                        key={league.id}
-                        league={league}
-                        confirmingDelete={confirmDelete === league.id}
+              {/* League list */}
+              <div className="space-y-8">
+                {sportGroups.map(({ sport, active, archived }) => (
+                  <div key={sport}>
+                    {hasMultipleSports && (
+                      <div className="flex items-center gap-3 mb-3">
+                        <h2 className="text-xs font-mono text-ink-secondary uppercase tracking-wider">
+                          {SPORT_LABELS[sport] ?? sport.toUpperCase()}
+                        </h2>
+                        <div className="flex-1 border-t border-surface-line" />
+                      </div>
+                    )}
+
+                    <div className="space-y-3">
+                      {active.map((league) => (
+                        <LeagueCard
+                          key={league.id}
+                          league={league}
+                          confirmingDelete={confirmDelete === league.id}
+                          {...sharedCardProps}
+                        />
+                      ))}
+                    </div>
+
+                    {archived.length > 0 && (
+                      <ArchivedSection
+                        leagues={archived}
+                        sport={sport}
+                        confirmDelete={confirmDelete}
                         {...sharedCardProps}
                       />
-                    ))}
+                    )}
                   </div>
-
-                  {archived.length > 0 && (
-                    <ArchivedSection
-                      leagues={archived}
-                      sport={sport}
-                      confirmDelete={confirmDelete}
-                      {...sharedCardProps}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            </>
           )}
         </div>
       </main>
@@ -273,13 +361,21 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
   const draftComplete = Boolean(config.draftSynced) || isSeason || isArchived
   const showSeasonHub = isSeason || isArchived || draftComplete
 
+  const rosters = league.leagueRosters ?? null
+  const sport = config.sport ?? 'nba'
+  const standing = (isSeason && rosters?.teams?.length)
+    ? computeTeamStanding({ league, rosters, players: playersFor(sport), sportConfig: getSportConfig(sport) })
+    : null
+  const userEntry = standing?.userEntry ?? null
+  const tierStyle = userEntry ? TIER_STYLES[userEntry.tier] ?? null : null
+  const trendArrow = userEntry && standing.trend ? STANDING_TREND_ARROW[standing.trend] : null
+
   const [picker, setPicker] = useState({ open: false, loading: false, leagues: [], error: null })
   const [syncState, setSyncState] = useState({ loading: false, error: null })
 
   const openPicker = async () => {
     setPicker({ open: true, loading: true, leagues: [], error: null })
     try {
-      const sport = config.sport ?? 'nba'
       const res = await fetch(`/api/yahoo/my-leagues?sport=${sport}`)
       const data = await res.json()
       if (!res.ok) throw new Error(data.error ?? 'Failed to load leagues')
@@ -301,7 +397,6 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
   const syncDraft = async () => {
     setSyncState({ loading: true, error: null })
     try {
-      const sport = config.sport ?? 'nba'
       const res = await fetch(`/api/yahoo/sync-draft?leagueKey=${encodeURIComponent(config.yahooLeagueKey)}&sport=${sport}`)
       const data = await res.json()
       if (!res.ok) throw new Error(data.error ?? 'Sync failed')
@@ -323,15 +418,22 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
       {/* Main row: info + primary actions */}
       <div className="flex items-center gap-5">
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-wrap">
             <span className="font-semibold text-ink-primary truncate">{config.name || 'Unnamed League'}</span>
             <span className={`text-xs font-mono ${STATUS_COLOR[status] ?? 'text-ink-secondary'}`}>
               {STATUS_LABEL[status] ?? status}
             </span>
+            {tierStyle && (
+              <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded border uppercase ${tierStyle.bg} ${tierStyle.color}`}>
+                {tierStyle.label}
+              </span>
+            )}
+            {trendArrow && <span className={`text-xs font-mono ${trendArrow.color}`}>{trendArrow.icon}</span>}
           </div>
           <div className="text-xs text-ink-secondary mt-0.5 font-mono">
             {config.numTeams} teams · Pick {config.draftPosition} · {config.scoringFormat?.toUpperCase() ?? '9CAT'}
             {isDrafting && pickCount > 0 && ` · R${round} P${pickCount + 1}`}
+            {userEntry && ` · #${userEntry.team.rank ?? '?'} ${userEntry.team.wins}-${userEntry.team.losses}${userEntry.team.ties ? `-${userEntry.team.ties}` : ''}`}
           </div>
         </div>
 
@@ -497,26 +599,6 @@ function YahooConnect({ yahoo }) {
       <Card variant="data" className="mb-6 flex items-center gap-3">
         <div className="w-2 h-2 rounded-full bg-ink-muted animate-pulse" />
         <span className="text-xs text-ink-secondary font-mono">Checking Yahoo connection…</span>
-      </Card>
-    )
-  }
-
-  if (yahoo.connected) {
-    return (
-      <Card variant="data" className="mb-6 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-2 h-2 rounded-full bg-beane-green" />
-          <span className="text-sm text-ink-primary">
-            Yahoo connected
-            {yahoo.screenName && <span className="text-ink-secondary ml-1">· {yahoo.screenName}</span>}
-          </span>
-        </div>
-        <button
-          onClick={yahoo.disconnect}
-          className="text-xs text-ink-secondary hover:text-signal-down transition-colors"
-        >
-          Disconnect
-        </button>
       </Card>
     )
   }

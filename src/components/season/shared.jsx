@@ -211,47 +211,55 @@ export function buildFallbackInsight(entry, sportConfig) {
   return `Sitting at #${entry.team.rank ?? '?'} (${tierLabel}) — strongest in ${strongest.label}, thinnest in ${weakest.label}.`
 }
 
-// Shared standing computation — Contender/Bubble/Rebuilding tier, trend
-// arrow, and per-category win rates for every team, resolved once and
-// consumed by both the League tab (full landscape) and the My Team tab
-// (just the user's own category bars). Pure client-side math over data
-// already on the page — no fetch involved.
+// Contender/Bubble/Rebuilding tier, trend arrow, and per-category win rates
+// for every team — pure client-side math over data already on the page, no
+// fetch involved. Plain function (not a hook) so callers that need it per-
+// league in a loop (the homepage league grid) can call it directly; useTeamStanding
+// below just memoizes it for the single-league case (League/My Team tabs).
+export function computeTeamStanding({ league, rosters, players, sportConfig }) {
+  const playerById = Object.fromEntries(players.map(p => [p.id, p]))
+  const resolveRoster = (roster) => roster
+    .map(r => (r.playerId && playerById[r.playerId]) || findPlayerByName(players, r.name))
+    .filter(Boolean)
+
+  const allTeamTotals = {}
+  for (const team of rosters.teams) {
+    allTeamTotals[team.teamKey] = aggregateCategoryTotals(
+      resolveRoster(team.roster), sportConfig.categories, sportConfig.percentageCategories
+    )
+  }
+
+  const numTeams = rosters.teams.length
+  const teams = [...rosters.teams]
+    .sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99))
+    .map(team => {
+      const winRates = getCategoryWinRates({
+        teamKey: team.teamKey,
+        allTeamTotals,
+        categories: sportConfig.categories,
+        lowerIsBetter: sportConfig.lowerIsBetter,
+      })
+      return { team, tier: getStandingTier({ rank: team.rank, numTeams }), overallWinRate: getOverallWinRate(winRates), winRates }
+    })
+
+  const userEntry = teams.find(t => t.team.isUser) ?? null
+  const previousRank = userEntry ? league.previousStandings?.[userEntry.team.teamKey]?.rank ?? null : null
+  const trend = userEntry ? getTrend({ currentRank: userEntry.team.rank, previousRank }) : null
+
+  return { teams, userEntry, trend }
+}
+
+// Shared standing computation for a single league, memoized — consumed by
+// both the League tab (full landscape) and the My Team tab (just the user's
+// own category bars).
 export function useTeamStanding({ league, rosters, players }) {
   const sport = league.config.sport ?? 'nba'
   const sportConfig = getSportConfig(sport)
 
-  const standing = useMemo(() => {
-    const playerById = Object.fromEntries(players.map(p => [p.id, p]))
-    const resolveRoster = (roster) => roster
-      .map(r => (r.playerId && playerById[r.playerId]) || findPlayerByName(players, r.name))
-      .filter(Boolean)
-
-    const allTeamTotals = {}
-    for (const team of rosters.teams) {
-      allTeamTotals[team.teamKey] = aggregateCategoryTotals(
-        resolveRoster(team.roster), sportConfig.categories, sportConfig.percentageCategories
-      )
-    }
-
-    const numTeams = rosters.teams.length
-    const teams = [...rosters.teams]
-      .sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99))
-      .map(team => {
-        const winRates = getCategoryWinRates({
-          teamKey: team.teamKey,
-          allTeamTotals,
-          categories: sportConfig.categories,
-          lowerIsBetter: sportConfig.lowerIsBetter,
-        })
-        return { team, tier: getStandingTier({ rank: team.rank, numTeams }), overallWinRate: getOverallWinRate(winRates), winRates }
-      })
-
-    const userEntry = teams.find(t => t.team.isUser) ?? null
-    const previousRank = userEntry ? league.previousStandings?.[userEntry.team.teamKey]?.rank ?? null : null
-    const trend = userEntry ? getTrend({ currentRank: userEntry.team.rank, previousRank }) : null
-
-    return { teams, userEntry, trend }
-  }, [rosters, sportConfig, players, league.previousStandings])
+  const standing = useMemo(
+    () => computeTeamStanding({ league, rosters, players, sportConfig }),
+    [rosters, sportConfig, players, league.previousStandings]
+  )
 
   return { ...standing, sportConfig, sport }
 }

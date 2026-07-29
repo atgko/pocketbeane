@@ -27,6 +27,7 @@ export const DEFAULT_CONFIG = {
   // IL slots are post-draft only, not part of the draft roster
   ilSlots: 1,
   ilPlusSlots: 0,
+  draftDate: null,         // 'YYYY-MM-DD' or null — powers the homepage pre-draft countdown
   draftType: 'snake',      // 'snake' | 'auction'
   auctionBudget: 200,      // total budget per team (auction only), Yahoo default is $200
   scoringFormat: '9cat',   // '9cat' | '8cat' | 'points' (non-9cat = future)

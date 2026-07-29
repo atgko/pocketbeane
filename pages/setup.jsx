@@ -323,6 +323,17 @@ export default function Setup() {
             />
           </div>
 
+          {/* Draft Date — optional, powers the homepage pre-draft countdown */}
+          <div className="bg-surface-raised rounded-lg border border-surface-line px-5 py-4 mb-4">
+            <label className="block text-xs text-ink-secondary mb-1.5">Draft Date (optional)</label>
+            <input
+              type="date"
+              value={config.draftDate ?? ''}
+              onChange={e => updateField('draftDate', e.target.value || null)}
+              className="bg-surface-base border border-surface-line rounded px-3 py-2 text-sm text-ink-primary focus:outline-none focus:border-beane-green [color-scheme:dark]"
+            />
+          </div>
+
           {/* Strategy + Composition */}
           <LeagueSetup
             config={config}
