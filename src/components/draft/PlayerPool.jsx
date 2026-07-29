@@ -339,6 +339,7 @@ export default function PlayerPool() {
               <th className="text-left px-4 py-3 w-28">Pos</th>
               <th className="text-left px-4 py-3 w-16">Team</th>
               <th className="text-right px-4 py-3 w-16">ADP</th>
+              <th className="text-right px-4 py-3 w-16">Value</th>
               <th className="w-28 px-2" />
             </tr>
           </thead>
@@ -354,6 +355,7 @@ export default function PlayerPool() {
                 pendingDraftedBy={pendingPick?.playerId === player.id ? pendingPick.draftedBy : null}
                 isMyTurn={isMyTurn}
                 isYahooLinked={isYahooLinked}
+                currentPickNum={currentPickNum}
                 onClick={() => setSelectedIndex(i)}
                 onDraftAsUser={() => handleDraftAs(player, 'user')}
                 onDraftAsOpponent={() => handleDraftAs(player, 'opponent')}
@@ -440,11 +442,20 @@ function PendingBanner({ pendingPick, players, onCancel, isAuction, pendingPrice
 }
 
 function PlayerRow({
-  player, rank, pick, isSelected, isPending, pendingDraftedBy, isMyTurn, isAuction, isYahooLinked,
+  player, rank, pick, isSelected, isPending, pendingDraftedBy, isMyTurn, isAuction, isYahooLinked, currentPickNum,
   onClick, onDraftAsUser, onDraftAsOpponent, onEdit, rowRef,
 }) {
   const isDrafted = !!pick
   const draftedBy = pick?.draftedBy ?? null
+
+  // Value delta: how far below (positive) or at/above (zero-or-negative) ADP
+  // this player is relative to the pick they were taken at (or would be
+  // taken at, right now, if still available) — a steal reads green, an
+  // at-value or reach pick stays neutral. No red: a reach isn't a mistake
+  // worth flagging with an alarm color, just not a discount.
+  const valueReference = pick ? pick.pickNumber : currentPickNum
+  const valueDelta = player.adp - valueReference
+  const isValue = valueDelta > 0
 
   let rowClass = 'border-b border-surface-line last:border-0 cursor-pointer transition-colors'
 
@@ -453,14 +464,14 @@ function PlayerRow({
   } else if (isSelected) {
     rowClass += ' bg-surface-overlay'
   } else if (isDrafted) {
-    rowClass += draftedBy === 'user' ? ' opacity-50' : ' opacity-30'
+    rowClass += ' opacity-40'
   } else {
     rowClass += ' hover:bg-surface-overlay'
   }
 
   return (
     <tr ref={rowRef} onClick={onClick} className={rowClass}>
-      <td className="text-right px-4 py-2.5 text-ink-muted font-mono text-xs">{rank}</td>
+      <td className="text-right px-4 py-2.5 text-ink-muted font-mono tabular-nums text-xs">{rank}</td>
       <td className="px-4 py-2.5">
         <span className={`font-medium ${draftedBy === 'opponent' ? 'line-through text-ink-secondary' : 'text-ink-primary'}`}>
           {player.name}
@@ -485,6 +496,9 @@ function PlayerRow({
       <td className="px-4 py-2.5 font-mono text-xs text-ink-secondary">{player.team}</td>
       <td className="text-right px-4 py-2.5 font-mono tabular-nums text-xs text-ink-secondary">
         {player.adp.toFixed(1)}
+      </td>
+      <td className={`text-right px-4 py-2.5 font-mono tabular-nums text-xs ${isValue ? 'text-signal-up' : 'text-ink-muted'}`}>
+        {isValue ? '+' : ''}{valueDelta.toFixed(1)}
       </td>
       <td className="px-2 py-2.5 text-center" onClick={e => isDrafted && e.stopPropagation()}>
         {isYahooLinked ? null : isDrafted ? (

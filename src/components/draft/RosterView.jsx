@@ -146,7 +146,7 @@ function SlotRow({ slot, player, pick, isBench, onEdit, isAuction }) {
         <>
           <span className="text-xs text-ink-primary truncate flex-1">{player.name}</span>
           {isAuction && pick?.price != null && (
-            <span className="text-xs font-mono text-ink-secondary shrink-0">${pick.price}</span>
+            <span className="text-xs font-mono tabular-nums text-ink-secondary shrink-0">${pick.price}</span>
           )}
           <button
             onClick={() => onEdit(pick)}
@@ -181,7 +181,7 @@ function PickHistory({ picks, playerMap, onEdit, isAuction }) {
         const isUser = pick.draftedBy === 'user'
         return (
           <div key={pick.pickNumber} className="flex-1 flex items-center gap-2 min-h-0 group">
-            <span className="text-xs font-mono text-ink-muted w-6 shrink-0 text-right">
+            <span className="text-xs font-mono tabular-nums text-ink-muted w-6 shrink-0 text-right">
               {pick.pickNumber}
             </span>
             <span className={`text-xs font-mono w-7 shrink-0 ${isUser ? 'text-beane-green-text' : 'text-ink-muted'}`}>
@@ -191,7 +191,7 @@ function PickHistory({ picks, playerMap, onEdit, isAuction }) {
               {player?.name ?? '—'}
             </span>
             {isAuction && isUser && pick.price != null && (
-              <span className="text-xs font-mono text-ink-secondary shrink-0">${pick.price}</span>
+              <span className="text-xs font-mono tabular-nums text-ink-secondary shrink-0">${pick.price}</span>
             )}
             <button
               onClick={() => onEdit(pick)}

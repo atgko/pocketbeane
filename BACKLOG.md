@@ -621,7 +621,7 @@ Full MLB 5×5 draft experience shipped 2026-06-27. Multi-sport architecture gene
 ---
 
 ### D-01 · Full App UI Revamp
-**Status: In progress — Steps 1-6 of 9 complete as of 2026-07-29 (Checkpoint 1 + Draft DNA rebuild + Season Hub restructure + homepage command center); research component done**
+**Status: In progress — Steps 1-7 of 9 complete as of 2026-07-29 (Checkpoint 1 + Draft DNA rebuild + Season Hub restructure + homepage command center + draft board refinement); research component done**
 
 **Goal:** Overhaul the visual identity of PocketBeane from the current monochrome Tailwind default into a polished, premium sports analytics product.
 
@@ -645,7 +645,7 @@ Full MLB 5×5 draft experience shipped 2026-06-27. Multi-sport architecture gene
 | 4 | Draft DNA card rebuild — `src/components/DraftDNACard.jsx` full recomposition onto the `identity` Card variant + 9 monoline archetype SVGs, mobile-first (highest mobile priority) | ✅ Done 2026-07-29 |
 | 5 | Season Hub restructure — extract `pages/season.jsx`'s 8 inline panels into `src/components/season/` per-tab files, wire up `TabBar` (This Week / Waivers / Trades / League / My Team), mobile-first sticky tab strip | ✅ Done 2026-07-29 |
 | 6 | Homepage command center — `pages/index.jsx` calendar-aware hero + `AdvisorCard` "Beane's Note" + league grid, replacing the current vertical stack | ✅ Done 2026-07-29 |
-| 7 | Draft board refinement — promote `RecommendationPanel` to `AdvisorCard` (explicitly deferred out of Checkpoint 1 on purpose), tabular mono numerals + semantic value-deltas on `PlayerPool`'s table, on-the-clock pulse | ⏳ Not started |
+| 7 | Draft board refinement — promote `RecommendationPanel` to `AdvisorCard` (explicitly deferred out of Checkpoint 1 on purpose), tabular mono numerals + semantic value-deltas on `PlayerPool`'s table, on-the-clock pulse | ✅ Done 2026-07-29 |
 | 8 | A11y pass — full contrast audit, focus-state audit, keyboard nav verification on the draft board | ⏳ Not started |
 | 9 | Mobile pass — cross-cutting check now that mobile was built alongside each page rather than deferred; catch anything missed | ⏳ Not started |
 
@@ -661,14 +661,20 @@ New `src/components/home/`: `HeroCard.jsx` (calendar-aware — pre-draft countdo
 
 Verified all 4 hero states (pre-draft with a real countdown, draft-in-progress, in-season with real standing math, archived) plus the League Switcher and enhanced league cards against seeded mock leagues — no runtime errors, no leftover raw color classes.
 
-**Resuming this work:** re-read `ui-redesign/D01_UI_REVAMP_DESIGN_BRIEF.md` Part 6 for the step spec, then plan Step 7 (Draft board refinement) the same way the prior steps were planned — explore the current state of the target files first, design the approach, confirm scope boundaries with the user, then execute and verify (`npm run dev` + route-by-route visual pass + grep for leftover raw color classes) before moving to the next step.
+**Step 7 detail (done 2026-07-29):** Two bullets of the brief's 4.3 refinements turned out already satisfied by existing code, no change needed: the round/pick ticker was already mono and pinned to the top (`FilterBar.jsx`'s `turnLabel`), and its on-the-clock dot already used Tailwind's default `animate-pulse` (2s cubic-bezier, opacity-only, no spin) — matches "subtle, 2s ease, no spinning" as-is.
+
+Three real changes: (1) `PlayerPool.jsx` gets a new **Value** column — `player.adp - referencePickNumber` (the pick they were actually taken at if drafted, else the current live pick), `signal-up` when positive ("still available below where ADP said they'd go"), `ink-muted` otherwise, no red per the brief's explicit two-color spec; rank/ADP/Value columns all `tabular-nums`. Drafted-row opacity unified to a flat 40% (previously 50%/30% split by user-vs-opponent) — kept the pre-existing strikethrough-only-on-opponent-picks distinction since the brief doesn't address it either way and it's a real, intentional UX signal (your own picks aren't "crossed off"). (2) `RecommendationPanel.jsx`'s three-zone layout (pinned header / scrollable results / pinned categories) — the header shell and every Claude-output result block (Bid Ceiling, picks list, Market Read briefing) switched from plain `Card` to `AdvisorCard`, so "the call" is now visually distinct from the board for the first time, per the brief's explicit goal. Sleeper Radar (deterministic, not Claude) and the Categories bar chart (Zone 3) stay on their existing non-Advisor styling — that distinction (Advisor card = Claude spoke; data card = deterministic) is the same rule Step 5 established for the Season Hub tabs. (3) Small consistency touch-up on `RosterView.jsx`: `tabular-nums` on the auction price and pick-number spans, following Part 3.2's global typography rule.
+
+Verified live against a real in-progress draft (seeded 2 opponent picks, user on the clock at pick 3) — a genuine Claude call fired and rendered inside the new AdvisorCard treatment with real reasoning, the Value column showed correctly-signed green deltas, no runtime errors, no leftover raw color classes.
+
+**Resuming this work:** re-read `ui-redesign/D01_UI_REVAMP_DESIGN_BRIEF.md` Part 6 for the step spec, then plan Step 8 (a11y pass) the same way the prior steps were planned — explore the current state first, design the approach, confirm scope boundaries with the user, then execute and verify before moving to the next step.
 
 **Acceptance criteria (unchanged, still the bar for calling D-01 fully done):**
 - New color token system defined and applied globally — ✅ done (Steps 1-2)
 - At least one imagery element on the home/draft screen — ✅ done (Step 4, the 9-glyph archetype system)
 - Draft DNA card looks polished enough to share publicly — ✅ done (Step 4)
-- Typography hierarchy is clear across all major screens — partial (Fraunces now live on the Draft DNA card, Season Hub Advisor cards, and the homepage Hero/Beane's Note; draft board headings still pending Step 7)
-- Passes a11y contrast check on all primary text — spot-checked and passing for the token system itself (Checkpoint 1), the Draft DNA card, the Season Hub tabs, and the homepage; full page-by-page audit is Step 8
+- Typography hierarchy is clear across all major screens — ✅ done (Fraunces/AdvisorCard now live on the Draft DNA card, Season Hub, the homepage, and the draft board's Beane's Corner)
+- Passes a11y contrast check on all primary text — spot-checked and passing on every screen touched so far (Checkpoint 1, Draft DNA card, Season Hub, homepage, draft board); full systematic page-by-page audit is still Step 8
 
 **Note:** This should happen before any public-facing launch or sharing push. The Draft DNA share card in particular will represent the app to anyone outside who receives it.
 

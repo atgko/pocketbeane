@@ -10,7 +10,7 @@ import { computeScarcity, getSmartScarcityAlerts, computePositionalDepth } from 
 import { rankByFit, computeSleepers } from '@/ai/valueCalculator'
 import { getSessionId } from '@/utils/session'
 import { resolveProfile } from '@/utils/gmProfile'
-import { Card, Badge } from '@/components/ui'
+import { Card, Badge, AdvisorCard } from '@/components/ui'
 
 const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers }
 
@@ -178,11 +178,12 @@ export default function RecommendationPanel({ league }) {
     <div className="h-full flex flex-col gap-3">
 
       {/* Zone 1 — header, always visible, pinned to top */}
-      <div className="shrink-0 bg-surface-raised rounded-lg border border-surface-line px-4 pt-4 pb-3">
-        <div className="flex items-center justify-between mb-1">
-          <h2 className="text-sm font-semibold text-ink-primary tracking-tight">Beane's Corner</h2>
-          {loading && <span className="text-xs font-mono text-ink-secondary animate-pulse">thinking…</span>}
-        </div>
+      <AdvisorCard eyebrow="BEANE'S CORNER" className="shrink-0">
+        {loading && (
+          <div className="flex justify-end -mt-1 mb-1">
+            <span className="text-xs font-mono text-ink-secondary animate-pulse">thinking…</span>
+          </div>
+        )}
         <p className="text-xs font-mono text-ink-muted">
           {isRosterFull
             ? 'Draft complete — see full analysis below'
@@ -192,8 +193,8 @@ export default function RecommendationPanel({ league }) {
         </p>
         {!isSnake && !isRosterFull && (
           <div className="mt-2 flex items-baseline justify-between">
-            <span className="text-xs font-mono text-ink-primary font-semibold">${budgetRemaining} left</span>
-            <span className="text-xs font-mono text-ink-muted">
+            <span className="text-xs font-mono tabular-nums text-ink-primary font-semibold">${budgetRemaining} left</span>
+            <span className="text-xs font-mono tabular-nums text-ink-muted">
               {slotsLeft} spots · ~${Math.round(avgPerSlot)}/slot
             </span>
           </div>
@@ -272,7 +273,7 @@ export default function RecommendationPanel({ league }) {
             )}
           </div>
         )}
-      </div>
+      </AdvisorCard>
 
       {/* Zone 2 — AI result, scrollable if content overflows */}
       <div className="flex-1 min-h-0 overflow-y-auto flex flex-col gap-3">
@@ -289,9 +290,9 @@ export default function RecommendationPanel({ league }) {
         )}
 
         {result?.verdict && (
-          <Card variant="data">
+          <AdvisorCard title="Bid Ceiling">
             <div className="flex items-baseline justify-between mb-2">
-              <p className="text-xs font-mono text-ink-secondary uppercase tracking-wider">Bid ceiling</p>
+              <p className="text-data-lg font-mono tabular-nums text-ink-primary">${result.ceiling}</p>
               <Badge
                 tone={result.verdict === 'buy' ? 'up' : result.verdict === 'stretch' ? 'watch' : 'down'}
                 className="font-mono"
@@ -299,29 +300,27 @@ export default function RecommendationPanel({ league }) {
                 {result.verdict === 'buy' ? 'BUY' : result.verdict === 'stretch' ? 'STRETCH' : 'PASS'}
               </Badge>
             </div>
-            <p className="text-2xl font-bold text-ink-primary font-mono mb-2">${result.ceiling}</p>
             <p className="text-xs text-ink-secondary leading-relaxed">{result.reason}</p>
-          </Card>
+          </AdvisorCard>
         )}
 
         {result?.picks?.length > 0 && (
-          <Card variant="data">
-            <p className="text-xs font-mono text-ink-secondary uppercase tracking-wider mb-3">
-              {result.mode === 'post-pick' ? 'On my radar'
-                : result.mode === 'nomination' ? 'Nomination targets'
-                : 'My board'}
-            </p>
+          <AdvisorCard
+            title={result.mode === 'post-pick' ? 'On My Radar'
+              : result.mode === 'nomination' ? 'Nomination Targets'
+              : 'My Board'}
+          >
             <div className="space-y-3">
               {result.picks.map((pick, i) => {
                 const player = playerMap[pick.id]
                 return (
                   <div key={pick.id} className="flex gap-3">
-                    <span className="text-xs font-mono text-beane-green-text mt-0.5 w-3 shrink-0 font-bold">{i + 1}</span>
+                    <span className="text-xs font-mono tabular-nums text-beane-green-text mt-0.5 w-3 shrink-0 font-bold">{i + 1}</span>
                     <div className="min-w-0">
                       <div className="flex items-baseline gap-1.5 flex-wrap">
                         <span className="text-xs font-semibold text-ink-primary">{pick.name}</span>
                         {player && (
-                          <span className="text-xs font-mono text-ink-muted">
+                          <span className="text-xs font-mono tabular-nums text-ink-muted">
                             {player.yahoo_positions.join('/')} · {player.adp.toFixed(1)}
                           </span>
                         )}
@@ -332,14 +331,13 @@ export default function RecommendationPanel({ league }) {
                 )
               })}
             </div>
-          </Card>
+          </AdvisorCard>
         )}
 
         {result?.briefing && (
-          <Card variant="data">
-            <p className="text-xs font-mono text-ink-secondary uppercase tracking-wider mb-3">Market read</p>
+          <AdvisorCard title="Market Read">
             <p className="text-xs text-ink-secondary leading-relaxed">{result.briefing}</p>
-          </Card>
+          </AdvisorCard>
         )}
 
         {/* Sleeper Radar — always visible when there are sleepers and draft is active */}
