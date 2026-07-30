@@ -75,8 +75,13 @@ export default function Draft() {
             </div>
           </main>
         ) : (
-          <main className="flex-1 min-h-0 p-5">
-            <div className="grid grid-cols-[288px_1fr_264px] gap-5 h-full">
+          // Desktop-first by design (live drafts are usually run on a second
+          // screen) — density here is the feature, not something to soften.
+          // overflow-x-auto is just a safety net so a phone check mid-draft
+          // gets horizontal scroll instead of the player pool being silently
+          // clipped and unreachable.
+          <main className="flex-1 min-h-0 p-5 overflow-x-auto">
+            <div className="grid grid-cols-[288px_1fr_264px] gap-5 h-full min-w-[880px]">
               <div className="h-full min-h-0">
                 <RecommendationPanel key={activeLeagueId} league={activeLeague} />
               </div>

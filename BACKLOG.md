@@ -621,7 +621,7 @@ Full MLB 5×5 draft experience shipped 2026-06-27. Multi-sport architecture gene
 ---
 
 ### D-01 · Full App UI Revamp
-**Status: In progress — Steps 1-8 of 9 complete as of 2026-07-29 (Checkpoint 1 + Draft DNA rebuild + Season Hub restructure + homepage command center + draft board refinement + a11y pass); research component done. Only Step 9 (mobile pass) remains.**
+**Status: ✅ COMPLETE as of 2026-07-29 — all 9 steps done (Checkpoint 1, Draft DNA rebuild, Season Hub restructure, homepage command center, draft board refinement, a11y pass, mobile pass). See the "Note" below for what's still worth doing before a public-facing push.**
 
 **Goal:** Overhaul the visual identity of PocketBeane from the current monochrome Tailwind default into a polished, premium sports analytics product.
 
@@ -647,7 +647,7 @@ Full MLB 5×5 draft experience shipped 2026-06-27. Multi-sport architecture gene
 | 6 | Homepage command center — `pages/index.jsx` calendar-aware hero + `AdvisorCard` "Beane's Note" + league grid, replacing the current vertical stack | ✅ Done 2026-07-29 |
 | 7 | Draft board refinement — promote `RecommendationPanel` to `AdvisorCard` (explicitly deferred out of Checkpoint 1 on purpose), tabular mono numerals + semantic value-deltas on `PlayerPool`'s table, on-the-clock pulse | ✅ Done 2026-07-29 |
 | 8 | A11y pass — full contrast audit, focus-state audit, keyboard nav verification on the draft board | ✅ Done 2026-07-29 |
-| 9 | Mobile pass — cross-cutting check now that mobile was built alongside each page rather than deferred; catch anything missed | ⏳ Not started |
+| 9 | Mobile pass — cross-cutting check now that mobile was built alongside each page rather than deferred; catch anything missed | ✅ Done 2026-07-29 |
 
 **Step 4 detail (done 2026-07-29):** New `src/components/ui/ArchetypeGlyph.jsx` — 9 abstract monoline SVGs (diamond/scope/blueprint-triangle/ascending-steps/dice/rising-arrow/sparkle-anchor/pillars/diverging-zigzag), brass stroke, single weight, no fills except a couple of small discovery-marker dots. `DraftDNACard.jsx` fully recomposed onto `Card variant="identity"` + `Badge tone="brass"` + `Button`: eyebrow row, glyph, Fraunces `text-display` archetype name, italic tagline, brass category pills, hairline-ruled Bold Prediction block, `pocketbeane.app` footer, barely-there radial brass glow top-center. Verified in-browser against all 9 archetypes (Chrome headless screenshots) — no clipping, correct wrapping on long names ("The Underdog Whisperer", "The Riverboat Gambler"). Card width made responsive (`w-[340px] max-w-[calc(100vw-2rem)]`, verified via isolated CSS test) and the action-button row given `flex-wrap` so both survive phones narrower than ~372px. Dropped an initial `aspect-[4/5]` constraint — it hard-clipped long-tagline archetypes (Zero-to-Hero) since a definite aspect-ratio height doesn't grow for overflow content; replaced with `min-h-[425px]` so the card grows naturally instead.
 
@@ -673,14 +673,23 @@ Added a single global `:focus-visible` rule to `globals.css` (beane-green outlin
 
 Also verified, via the same CDP approach, that none of Steps 4-7's styling-only changes broke the draft board's keyboard shortcuts: simulated ArrowDown (row selection), `U` (stage a pick), and `Enter` (confirm) in sequence against a real seeded draft and confirmed the pick actually landed in the roster panel. Confirmed separately that there are no keyboard-inaccessible click targets anywhere in the app (`<div onClick>` etc.) — the one non-native interactive element (the player pool's `<tr onClick>` row selection) already has a full keyboard equivalent via arrow keys.
 
-**Resuming this work:** re-read `ui-redesign/D01_UI_REVAMP_DESIGN_BRIEF.md` Part 6 for the step spec, then plan Step 9 (mobile pass) the same way the prior steps were planned — explore the current state first, design the approach, confirm scope boundaries with the user, then execute and verify before calling D-01 complete.
+**Step 9 detail (done 2026-07-29):** Cross-cutting mobile check using real device-metrics emulation via CDP (`Emulation.setDeviceMetricsOverride` at 390px, iPhone-width) plus a scripted overflow detector (`document.documentElement.scrollWidth > window.innerWidth`, excluding elements that legitimately manage their own `overflow-x-auto`) — a much more reliable signal than eyeballing screenshots. Homepage, Season Hub, setup, and gm-profile all passed clean with zero horizontal overflow — the responsive work already done in Steps 4-6 held up under an objective check, not just a visual spot-check.
 
-**Acceptance criteria (unchanged, still the bar for calling D-01 fully done):**
+Found and fixed two real breaks that had slipped through because neither page was exercised end-to-end at mobile width during its own step:
+- **`DraftRecap.jsx`** (and the dead, unused `DraftComplete.jsx` it replaced — confirmed via grep that nothing imports the latter, left alone) had a fixed `grid-cols-[1fr_300px]` for the post-draft roster table + Category Report sidebar. On a 390px screen the fixed 300px column left the roster table almost no room, and its wrapper's `overflow-hidden` clipped the excess **invisibly** rather than allowing scroll — the actual "what did you draft" content was silently unreadable. This page hosts the Draft DNA share card (the brief's #1 mobile priority) and is exactly the kind of page a user opens on their phone after a draft, so this wasn't a low-stakes miss. Fixed: `grid-cols-1 lg:grid-cols-[1fr_300px]` (stacks on mobile), and the roster table's wrapper switched from `overflow-hidden` to `overflow-x-auto` with a `min-w-[520px]` on the table itself — Slot/Player/Pos/PTS are visible immediately, the remaining stat columns are a horizontal swipe away, standard responsive-table pattern.
+- **`pages/draft.jsx`**'s live 3-column board (`grid-cols-[288px_1fr_264px]`, ~590px minimum) sits inside a `h-screen ... overflow-hidden` app-shell wrapper. On a 390px screen this **clipped the entire middle column — the player pool, the actual interactive draft table — completely invisible and unreachable**, not just cramped. This is a step past the checkpoint's deliberate "desktop-first is fine, live drafts run on a second screen" call from Step 4/7 planning: that reasoning covers *not optimizing* density for mobile, not making two-thirds of the board disappear if someone checks their phone mid-draft. Fixed with the smallest possible change that preserves the brief's explicit "don't soften the density" instruction: added `overflow-x-auto` to the `<main>` wrapping the grid and a `min-w-[880px]` on the grid itself, so the exact same dense desktop layout becomes horizontally scrollable instead of clipped. No layout redesign, no column changes — RecommendationPanel is visible on load, PlayerPool and RosterView are one swipe away.
+
+Also swept the whole codebase for other fixed-pixel-width red flags (`grid-cols-[...]`, `w-[NNNpx]`) — the only remaining ones are the two just-fixed instances (now safety-netted with scroll) and the Draft DNA card's already-responsive `max-w-[calc(100vw-2rem)]` clamp from Step 4. Spot-checked `setup.jsx` and `gm-profile.jsx` (never explicitly touched by any D-01 step) at 390px — both already read cleanly single-column with no overflow, no changes needed.
+
+**D-01 is now fully done — all 9 steps of the brief's Part 6 build order complete.**
+
+**Acceptance criteria — all met:**
 - New color token system defined and applied globally — ✅ done (Steps 1-2)
 - At least one imagery element on the home/draft screen — ✅ done (Step 4, the 9-glyph archetype system)
-- Draft DNA card looks polished enough to share publicly — ✅ done (Step 4)
+- Draft DNA card looks polished enough to share publicly — ✅ done (Step 4, and confirmed working on real mobile width in Step 9)
 - Typography hierarchy is clear across all major screens — ✅ done (Fraunces/AdvisorCard now live on the Draft DNA card, Season Hub, the homepage, and the draft board's Beane's Corner)
 - Passes a11y contrast check on all primary text — ✅ done (Step 8 — full computed audit, 15 fixes applied; `ink-muted`'s inherent AA-large-only solid contrast is a documented, deliberate exception, not an oversight)
+- Mobile — ✅ done (Step 9 — objective overflow-checked, not just eyeballed; two real invisible-content bugs found and fixed)
 
 **Note:** This should happen before any public-facing launch or sharing push. The Draft DNA share card in particular will represent the app to anyone outside who receives it.
 

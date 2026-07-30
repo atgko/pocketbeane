@@ -193,13 +193,14 @@ export default function DraftRecap({ league }) {
 
       {/* Main grid: roster + category outlook */}
       {userPicks.length > 0 && (
-        <div className="grid grid-cols-[1fr_300px] gap-5 items-start">
-          {/* Roster table */}
-          <div className="bg-surface-raised rounded-lg border border-surface-line overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-5 items-start">
+          {/* Roster table — dense (7 stat columns), scrolls horizontally on
+              narrow screens rather than clipping data invisibly */}
+          <div className="bg-surface-raised rounded-lg border border-surface-line overflow-x-auto">
             <div className="px-4 py-3 border-b border-surface-line">
               <h3 className="text-xs font-mono text-ink-secondary uppercase tracking-wider">Your Roster</h3>
             </div>
-            <table className="w-full text-xs">
+            <table className="w-full text-xs min-w-[520px]">
               <thead>
                 <tr className="border-b border-surface-line text-ink-muted uppercase tracking-wider">
                   <th className="text-left px-4 py-2 w-12">Slot</th>
