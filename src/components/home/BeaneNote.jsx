@@ -3,13 +3,29 @@ import { AdvisorCard } from '@/components/ui'
 import { STRATEGY_DISPLAY, INJURY_DISPLAY, CATEGORY_DISPLAY } from '@/utils/gmProfile'
 import { buildFallbackInsight } from '@/components/season/shared'
 
-// The homepage's personality anchor (D01 brief 4.1) — deterministic on
-// purpose: a live Claude call firing on every homepage visit would be an
-// uncapped LLM call outside PMF-01's rate-limit-behind-user-action design.
-// Built from data already on the page: the GM profile quiz answers, plus
-// the hero league's standing (reusing the same fallback-insight sentence
-// the League tab uses when Claude hasn't weighed in for that team either).
-export default function BeaneNote({ gmProfile, standing, sportConfig }) {
+// The homepage's personality anchor (D01 brief 4.1). When a weekly H2H
+// matchup projection is cached (see shared.jsx's fetchWeeklyMatchup/
+// isMatchupStale), this surfaces Claude's real narrative for it — genuine
+// commentary, not a generic recap, and it's free: the call already
+// happened (fired from here or from Season Hub's This Week tab, shared
+// cache either way) rather than firing a new one on every homepage visit,
+// which would be an uncapped LLM call outside PMF-01's
+// rate-limit-behind-user-action design. Without cached matchup data (no
+// GM profile, a Roto league, or an H2H league that hasn't fetched yet)
+// this falls back to the deterministic philosophy + standing insight.
+export default function BeaneNote({ gmProfile, standing, sportConfig, weeklyMatchup }) {
+  if (weeklyMatchup?.outlook) {
+    const wins = weeklyMatchup.winCategories?.length ?? 0
+    const losses = weeklyMatchup.loseCategories?.length ?? 0
+    const tossups = weeklyMatchup.tossupCategories?.length ?? 0
+    const title = `You're projected ${wins}-${losses}${tossups ? `-${tossups}` : ''} this week`
+    return (
+      <AdvisorCard title={title}>
+        <p>{weeklyMatchup.outlook}</p>
+      </AdvisorCard>
+    )
+  }
+
   if (!gmProfile?.completedAt) {
     return (
       <AdvisorCard title="Get to know your GM">

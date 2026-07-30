@@ -50,8 +50,19 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'leagueKey and leagueRosters required' })
   }
 
-  // Fetch current week's scoreboard
-  const scoreboardRaw = await yahooFetch(token, `/league/${leagueKey}/scoreboard`)
+  // The bare /scoreboard endpoint (no week specified) has been an
+  // unreliable 403 in the past even mid-season, for reasons Yahoo's error
+  // message doesn't actually explain ("not authorized" rather than e.g.
+  // 400/404). Fetching current_week first and requesting the scoreboard
+  // for that explicit week is Yahoo's documented pattern and doesn't rely
+  // on the bare endpoint being able to infer "current" on its own.
+  const metaRaw = await yahooFetch(token, `/league/${leagueKey}/metadata`)
+  const currentWeek = metaRaw?.fantasy_content?.league?.[0]?.current_week
+  if (!currentWeek) {
+    return res.status(502).json({ error: 'Could not determine the current week from Yahoo' })
+  }
+
+  const scoreboardRaw = await yahooFetch(token, `/league/${leagueKey}/scoreboard;week=${currentWeek}`)
   const leagueArr = scoreboardRaw?.fantasy_content?.league
   if (!Array.isArray(leagueArr)) {
     return res.status(502).json({ error: 'Unexpected scoreboard response from Yahoo' })
@@ -59,7 +70,7 @@ export default async function handler(req, res) {
 
   const scoreboardSection = leagueArr[1]?.scoreboard
   const firstMatchup = scoreboardSection?.matchups?.['0']?.matchup
-  const weekNum = scoreboardSection?.week ?? firstMatchup?.week ?? '?'
+  const weekNum = scoreboardSection?.week ?? firstMatchup?.week ?? currentWeek
 
   // Find user's matchup in the scoreboard — try both nesting patterns Yahoo uses
   const userTeamKey = leagueRosters.userTeamKey
@@ -198,6 +209,17 @@ Give me the matchup breakdown.`
   } catch (err) {
     const cause = err.cause?.message ?? err.cause ?? ''
     console.error('[matchup-advice] error:', err.message, cause ? `| cause: ${cause}` : '')
+    // Unlike sync-rosters/sync-draft, a 403 here isn't reliably a season-over
+    // signal — this same explicit-week request has 403'd before on leagues
+    // that were verifiably still mid-season, for a reason Yahoo's generic
+    // "not authorized" message never actually explains. Surface something
+    // a user can act on instead of the raw Yahoo error JSON.
+    const is403 = /\b403\b/.test(err.message) || /\b403\b/.test(cause)
+    if (is403) {
+      return res.status(502).json({
+        error: "Yahoo won't serve this week's matchup data right now. This can happen even mid-season — try refreshing your rosters first, or try again in a bit.",
+      })
+    }
     res.status(500).json({ error: cause ? `${err.message}: ${cause}` : err.message })
   }
 }

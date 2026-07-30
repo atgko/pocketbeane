@@ -1,5 +1,5 @@
 import { Card, Button } from '@/components/ui'
-import { TIER_STYLES, STANDING_TREND_ARROW } from '@/components/season/shared'
+import { TIER_STYLES, STANDING_TREND_ARROW, isH2HLeague } from '@/components/season/shared'
 
 // 'Draft in N days' from an optional config.draftDate — silent (no stale
 // negative countdown) once the date has passed, since the league's status
@@ -36,12 +36,46 @@ function HeroShell({ eyebrow, headline, children, action }) {
   )
 }
 
+const CAT_SEGMENT_STYLES = {
+  win:    'bg-signal-up/[.16] text-signal-up',
+  lose:   'bg-signal-down/[.13] text-signal-down',
+  tossup: 'bg-surface-overlay text-ink-secondary',
+}
+const CAT_SEGMENT_SYMBOL = { win: 'W', lose: 'L', tossup: '—' }
+
+// 9-segment win/lose/tossup bar (D01 mockup, homepage hero) — Claude's
+// matchup call returns category labels, not internal category ids, so
+// matching is label-first with id as a fallback.
+function MatchupCategoryBar({ sportConfig, winCategories = [], loseCategories = [] }) {
+  const resultFor = (cat) => {
+    if (winCategories.includes(cat.label) || winCategories.includes(cat.id)) return 'win'
+    if (loseCategories.includes(cat.label) || loseCategories.includes(cat.id)) return 'lose'
+    return 'tossup'
+  }
+  return (
+    <div className="flex gap-1">
+      {sportConfig.categories.map(cat => {
+        const result = resultFor(cat)
+        return (
+          <div
+            key={cat.id}
+            className={`flex-1 h-9 rounded-md flex flex-col items-center justify-center font-mono text-[10px] font-semibold ${CAT_SEGMENT_STYLES[result]}`}
+          >
+            {cat.label}
+            <span className="text-[9px] font-medium opacity-75">{CAT_SEGMENT_SYMBOL[result]}</span>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 // Calendar-aware hero status card (D01 brief 4.1) — the one thing on the
 // homepage that answers "what needs my attention" without clicking anything.
 // The in-season state uses deterministic standing math (tier/record/trend),
 // not a live matchup pull — an automatic Claude call on every homepage visit
 // would fight PMF-01's rate-limit-behind-user-action design.
-export default function HeroCard({ league, rosters, standing, sportConfig, yahooConnected, philosophySet, onEnterDraft, onEnterSeason }) {
+export default function HeroCard({ league, rosters, standing, sportConfig, weeklyMatchup, matchupLoading, yahooConnected, philosophySet, onEnterDraft, onEnterSeason }) {
   const { config, status, draft } = league
   const pickCount = draft.picks.length
   const isDrafting = status === 'drafting'
@@ -109,6 +143,33 @@ export default function HeroCard({ league, rosters, standing, sportConfig, yahoo
 
   const { userEntry, trend } = standing ?? {}
 
+  // H2H leagues with a real matchup projection cached get the mockup's
+  // opponent + category-bar format — the richer, more specific surface.
+  // Roto leagues (no weekly opponent exists) and H2H leagues still
+  // fetching/without a cached projection yet fall back to the
+  // deterministic standings hero below.
+  if (isH2HLeague(league) && weeklyMatchup) {
+    return (
+      <HeroShell
+        eyebrow={`Week ${weeklyMatchup.week} Matchup · ${config.name || 'Your League'}`}
+        headline={`You vs. ${weeklyMatchup.opponent}`}
+        action={<Button variant="primary" onClick={() => onEnterSeason(league.id)}>Open This Week</Button>}
+      >
+        <p className="text-xs text-ink-secondary">Projected category split for this week</p>
+        <MatchupCategoryBar
+          sportConfig={sportConfig}
+          winCategories={weeklyMatchup.winCategories}
+          loseCategories={weeklyMatchup.loseCategories}
+        />
+        {/* Full narrative lives in Beane's Note alongside this card — the
+            short action item is the only text worth repeating here too. */}
+        {weeklyMatchup.keyNote && (
+          <p className="text-xs text-ink-muted leading-relaxed">{weeklyMatchup.keyNote}</p>
+        )}
+      </HeroShell>
+    )
+  }
+
   if (!userEntry) {
     return (
       <HeroShell
@@ -150,6 +211,9 @@ export default function HeroCard({ league, rosters, standing, sportConfig, yahoo
           Strongest in <span className="text-signal-up">{strongest.label}</span>
           {weakest && <> · thinnest in <span className="text-signal-down">{weakest.label}</span></>}
         </p>
+      )}
+      {isH2HLeague(league) && matchupLoading && (
+        <p className="text-xs font-mono text-ink-muted animate-pulse">Pulling this week's matchup…</p>
       )}
     </HeroShell>
   )

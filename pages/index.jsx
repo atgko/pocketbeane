@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import useLeagueStore from '@/store/leagueStore'
 import { useYahooAuth } from '@/hooks/useYahooAuth'
 import nbaPlayers from '@/data/players.json'
@@ -9,7 +9,7 @@ import mlbPlayers from '@/data/mlb_players.json'
 import { getSportConfig } from '@/config/sports'
 import { getGMProfile } from '@/utils/gmProfile'
 import { Card } from '@/components/ui'
-import { computeTeamStanding, TIER_STYLES, STANDING_TREND_ARROW } from '@/components/season/shared'
+import { computeTeamStanding, TIER_STYLES, STANDING_TREND_ARROW, isH2HLeague, isMatchupStale, fetchWeeklyMatchup } from '@/components/season/shared'
 import HeroCard from '@/components/home/HeroCard'
 import BeaneNote from '@/components/home/BeaneNote'
 import LeagueSwitcher from '@/components/home/LeagueSwitcher'
@@ -36,16 +36,21 @@ function playersFor(sport) {
   return sport === 'mlb' ? mlbPlayers : nbaPlayers
 }
 
-// Which league's Hero/Beane's Note shows by default — prioritizes an
-// upcoming/in-progress draft over an active season over anything archived,
-// since that's the order a GM actually needs to act in.
+// Which league's Hero/Beane's Note shows by default. An upcoming draft
+// (no picks yet) is the one thing worth a proactive reminder, so it wins
+// outright. Below that, an active season league — your actual ongoing
+// weekly responsibility — outranks a 'drafting' league that already has
+// picks: that state is either a live draft you're already sitting at (so
+// seeing it on the homepage adds nothing) or a stale/abandoned one, and
+// either way it shouldn't silently bury a season you're supposed to be
+// managing.
 function pickHeroLeagueId(leagues) {
   const candidates = leagues.filter(l => l.status !== 'complete')
   const pool = candidates.length > 0 ? candidates : leagues
   if (pool.length === 0) return null
   const urgency = (l) => {
-    if (l.status === 'drafting') return l.draft.picks.length === 0 ? 3 : 2
-    if (l.status === 'season') return 1
+    if (l.status === 'drafting') return l.draft.picks.length === 0 ? 3 : 1
+    if (l.status === 'season') return 2
     return 0
   }
   return [...pool].sort((a, b) => urgency(b) - urgency(a))[0].id
@@ -53,7 +58,7 @@ function pickHeroLeagueId(leagues) {
 
 export default function Home() {
   const router = useRouter()
-  const { leagues, setActiveLeague, deleteLeague, setLeagueStatus, archiveLeague } = useLeagueStore()
+  const { leagues, setActiveLeague, deleteLeague, setLeagueStatus, archiveLeague, setWeeklyMatchup } = useLeagueStore()
   const [mounted, setMounted] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(null)
   const [yahooToast, setYahooToast] = useState(null)
@@ -104,6 +109,31 @@ export default function Home() {
     return computeTeamStanding({ league: heroLeague, rosters, players: playersFor(heroLeague.config.sport ?? 'nba'), sportConfig })
   }, [heroLeague])
   const heroSportConfig = heroLeague ? getSportConfig(heroLeague.config.sport ?? 'nba') : null
+
+  // Weekly matchup projection for the hero — H2H leagues only, and only
+  // when the shared cache (also written to by Season Hub's This Week tab)
+  // is missing or past the most recent Monday. One fetch per stale week,
+  // not one per homepage visit.
+  const [matchupLoading, setMatchupLoading] = useState(false)
+  const matchupFetchingRef = useRef(null)
+  useEffect(() => {
+    if (!heroLeague || heroLeague.status !== 'season') return
+    if (!isH2HLeague(heroLeague)) return
+    if (!yahoo.connected || !heroLeague.config.yahooLeagueKey) return
+    if (!heroLeague.leagueRosters?.teams?.length) return
+    if (!isMatchupStale(heroLeague.weeklyMatchup)) return
+    if (matchupFetchingRef.current === heroLeague.id) return
+
+    matchupFetchingRef.current = heroLeague.id
+    setMatchupLoading(true)
+    fetchWeeklyMatchup({ league: heroLeague, rosters: heroLeague.leagueRosters })
+      .then(data => setWeeklyMatchup(heroLeague.id, data))
+      .catch(() => {}) // silent on homepage — Season Hub's This Week tab surfaces the real error on demand
+      .finally(() => {
+        matchupFetchingRef.current = null
+        setMatchupLoading(false)
+      })
+  }, [heroLeague?.id, heroLeague?.weeklyMatchup, yahoo.connected])
 
   if (!mounted) return null
 
@@ -181,7 +211,7 @@ export default function Home() {
               <p className="text-ink-secondary mt-1 text-sm">AI-powered Assistant GM</p>
             </div>
 
-            {nonArchivedLeagues.length > 1 && (
+            {nonArchivedLeagues.length > 0 && (
               <LeagueSwitcher
                 leagues={nonArchivedLeagues}
                 activeId={heroLeagueId}
@@ -234,6 +264,16 @@ export default function Home() {
             <EmptyState />
           ) : (
             <>
+              {/* Active league quick actions — scoped to whichever league
+                  the Hero/Beane's Note below is currently showing */}
+              {heroLeague && heroLeague.status !== 'complete' && (
+                <ActiveLeagueBar
+                  league={heroLeague}
+                  confirmingDelete={confirmDelete === heroLeague.id}
+                  {...sharedCardProps}
+                />
+              )}
+
               {/* Hero status + Beane's Note */}
               {heroLeague && (
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8">
@@ -243,6 +283,8 @@ export default function Home() {
                       rosters={heroLeague.leagueRosters ?? null}
                       standing={heroStanding}
                       sportConfig={heroSportConfig}
+                      weeklyMatchup={!isMatchupStale(heroLeague.weeklyMatchup) ? heroLeague.weeklyMatchup : null}
+                      matchupLoading={matchupLoading}
                       yahooConnected={yahoo.connected}
                       philosophySet={philosophySet}
                       onEnterDraft={handleEnterDraft}
@@ -250,16 +292,21 @@ export default function Home() {
                     />
                   </div>
                   <div className="lg:col-span-4">
-                    <BeaneNote gmProfile={gmProfile} standing={heroStanding} sportConfig={heroSportConfig} />
+                    <BeaneNote
+                      gmProfile={gmProfile}
+                      standing={heroStanding}
+                      sportConfig={heroSportConfig}
+                      weeklyMatchup={!isMatchupStale(heroLeague.weeklyMatchup) ? heroLeague.weeklyMatchup : null}
+                    />
                   </div>
                 </div>
               )}
 
-              {/* League list */}
+              {/* League grid — info-only, click a card to make it active */}
               <div className="space-y-8">
                 {sportGroups.map(({ sport, active, archived }) => (
                   <div key={sport}>
-                    {hasMultipleSports && (
+                    {hasMultipleSports && active.length > 0 && (
                       <div className="flex items-center gap-3 mb-3">
                         <h2 className="text-xs font-mono text-ink-secondary uppercase tracking-wider">
                           {SPORT_LABELS[sport] ?? sport.toUpperCase()}
@@ -268,16 +315,18 @@ export default function Home() {
                       </div>
                     )}
 
-                    <div className="space-y-3">
-                      {active.map((league) => (
-                        <LeagueCard
-                          key={league.id}
-                          league={league}
-                          confirmingDelete={confirmDelete === league.id}
-                          {...sharedCardProps}
-                        />
-                      ))}
-                    </div>
+                    {active.length > 0 && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {active.map((league) => (
+                          <LeagueSummaryCard
+                            key={league.id}
+                            league={league}
+                            isActive={league.id === heroLeagueId}
+                            onSelect={setSelectedHeroId}
+                          />
+                        ))}
+                      </div>
+                    )}
 
                     {archived.length > 0 && (
                       <ArchivedSection
@@ -590,6 +639,228 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
 
       </div>
     </Card>
+  )
+}
+
+// Quick actions for whichever league the Hero/Beane's Note is currently
+// showing — consolidates what used to be a full action row on every
+// league card into one place "at the very top," since you only ever act
+// on one league at a time. Archived leagues keep their own full LeagueCard
+// treatment below (a command-center quick-action bar doesn't make sense
+// for something you're not actively managing).
+function ActiveLeagueBar({ league, yahooConnected, onEnterDraft, onEnterSeason, onEdit, onDelete, confirmingDelete, onCancelDelete, archiveLeague, onUnarchive }) {
+  const { config, status } = league
+  const { updateLeagueConfig, importDraft } = useLeagueStore()
+  const isSeason = status === 'season'
+  const isArchived = status === 'complete'
+  const draftComplete = Boolean(config.draftSynced) || isSeason || isArchived
+  const showSeasonHub = isSeason || isArchived || draftComplete
+  const sport = config.sport ?? 'nba'
+
+  const [picker, setPicker] = useState({ open: false, loading: false, leagues: [], error: null })
+  const [syncState, setSyncState] = useState({ loading: false, error: null })
+
+  const openPicker = async () => {
+    setPicker({ open: true, loading: true, leagues: [], error: null })
+    try {
+      const res = await fetch(`/api/yahoo/my-leagues?sport=${sport}`)
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? 'Failed to load leagues')
+      setPicker({ open: true, loading: false, leagues: data.leagues, error: null })
+    } catch (err) {
+      setPicker({ open: true, loading: false, leagues: [], error: err.message })
+    }
+  }
+
+  const selectLeague = (yl) => {
+    updateLeagueConfig(league.id, {
+      yahooLeagueKey: yl.leagueKey,
+      yahooLeagueName: yl.name,
+      ...(yl.season != null && { yahooSeason: yl.season }),
+    })
+    setPicker({ open: false, loading: false, leagues: [], error: null })
+  }
+
+  const syncDraft = async () => {
+    setSyncState({ loading: true, error: null })
+    try {
+      const res = await fetch(`/api/yahoo/sync-draft?leagueKey=${encodeURIComponent(config.yahooLeagueKey)}&sport=${sport}`)
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? 'Sync failed')
+      if (data.isSeasonOver) {
+        updateLeagueConfig(league.id, { isSeasonOver: true })
+        setSyncState({ loading: false, error: null })
+        return
+      }
+      importDraft(league.id, data.picks, data.draftPosition)
+      setSyncState({ loading: false, error: null })
+    } catch (err) {
+      setSyncState({ loading: false, error: err.message })
+    }
+  }
+
+  return (
+    <div className="mb-4">
+      <div className="flex flex-wrap items-center gap-2">
+        {showSeasonHub ? (
+          <button
+            onClick={() => onEnterSeason(league.id)}
+            className="px-4 py-1.5 bg-signal-info text-ink-primary rounded text-xs font-semibold hover:brightness-110 transition-colors"
+          >
+            Season Hub
+          </button>
+        ) : (
+          <button
+            onClick={() => onEnterDraft(league.id)}
+            className="px-4 py-1.5 bg-beane-green text-[#06120C] rounded text-xs font-semibold hover:brightness-110 transition-colors"
+          >
+            Draft Board
+          </button>
+        )}
+        <button
+          onClick={() => onEdit(league.id)}
+          className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded text-xs hover:text-ink-primary hover:border-ink-secondary transition-colors"
+        >
+          Edit
+        </button>
+
+        {yahooConnected && (
+          config.yahooLeagueKey ? (
+            !config.isSeasonOver && (
+              <button
+                onClick={syncDraft}
+                disabled={syncState.loading}
+                className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded text-xs hover:text-ink-primary hover:border-ink-secondary transition-colors disabled:opacity-40"
+              >
+                {syncState.loading ? 'Syncing…' : config.draftSynced ? 'Resync' : 'Import Picks'}
+              </button>
+            )
+          ) : (
+            <div className="relative">
+              <button
+                onClick={openPicker}
+                className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded text-xs hover:text-ink-primary hover:border-ink-secondary transition-colors"
+              >
+                Link Yahoo
+              </button>
+              {picker.open && (
+                <div className="absolute top-full left-0 mt-1 z-20 bg-surface-overlay border border-surface-line rounded-lg overflow-hidden min-w-[240px] shadow-lg">
+                  {picker.loading && <p className="text-xs text-ink-secondary font-mono px-3 py-2">Loading leagues…</p>}
+                  {picker.error && <p className="text-xs text-signal-down px-3 py-2">{picker.error}</p>}
+                  {!picker.loading && !picker.error && picker.leagues.length === 0 && (
+                    <p className="text-xs text-ink-secondary px-3 py-2">No active leagues found.</p>
+                  )}
+                  {!picker.loading && picker.leagues.map((yl) => (
+                    <button
+                      key={yl.leagueKey}
+                      onClick={() => selectLeague(yl)}
+                      className="block w-full text-left px-3 py-2 text-xs text-ink-primary hover:bg-surface-line/40 transition-colors"
+                    >
+                      <span className="font-medium">{yl.name}</span>
+                      <span className="text-ink-secondary ml-2">{yl.numTeams} teams · {yl.season}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )
+        )}
+
+        {isSeason && (
+          <button
+            onClick={() => archiveLeague(league.id)}
+            className="px-3 py-1.5 border border-surface-line text-ink-muted rounded text-xs hover:text-ink-secondary hover:border-ink-secondary transition-colors"
+          >
+            Archive
+          </button>
+        )}
+        {isArchived && (
+          <button
+            onClick={() => onUnarchive(league.id)}
+            className="px-3 py-1.5 border border-surface-line text-ink-muted rounded text-xs hover:text-ink-secondary hover:border-ink-secondary transition-colors"
+          >
+            Restore
+          </button>
+        )}
+
+        <div className="ml-auto flex items-center gap-2">
+          {confirmingDelete ? (
+            <>
+              <button
+                onClick={() => onDelete(league.id)}
+                className="px-3 py-1.5 bg-signal-down text-ink-primary rounded text-xs font-semibold hover:brightness-110 transition-colors"
+              >
+                Confirm Delete
+              </button>
+              <button
+                onClick={onCancelDelete}
+                className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded text-xs hover:text-ink-primary transition-colors"
+              >
+                Cancel
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => onDelete(league.id)}
+              className="px-3 py-1.5 text-xs text-ink-muted hover:text-signal-down transition-colors"
+            >
+              Delete
+            </button>
+          )}
+        </div>
+      </div>
+      {syncState.error && <p className="text-xs text-signal-down mt-1.5">{syncState.error}</p>}
+    </div>
+  )
+}
+
+// Minimal info-only card for the league grid (D01 mockup 4.1) — sport
+// badge, record, standing tier, trend arrow, click to make it the active
+// league. No action buttons here anymore; those live in ActiveLeagueBar
+// above, scoped to whichever league is currently active.
+function LeagueSummaryCard({ league, isActive, onSelect }) {
+  const { config, status, draft } = league
+  const sport = config.sport ?? 'nba'
+  const pickCount = draft.picks.length
+  const round = pickCount > 0 ? Math.ceil(pickCount / config.numTeams) : 0
+  const isSeason = status === 'season'
+  const isDrafting = status === 'drafting'
+
+  const rosters = league.leagueRosters ?? null
+  const standing = (isSeason && rosters?.teams?.length)
+    ? computeTeamStanding({ league, rosters, players: playersFor(sport), sportConfig: getSportConfig(sport) })
+    : null
+  const userEntry = standing?.userEntry ?? null
+  const tierStyle = userEntry ? TIER_STYLES[userEntry.tier] ?? null : null
+  const trendArrow = userEntry && standing.trend ? STANDING_TREND_ARROW[standing.trend] : null
+
+  return (
+    <button
+      onClick={() => onSelect(league.id)}
+      className={`text-left rounded-xl border p-4 transition-colors bg-surface-raised ${
+        isActive ? 'border-beane-green/50' : 'border-surface-line hover:border-ink-secondary'
+      }`}
+    >
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[11px] font-mono text-ink-muted uppercase tracking-wider">
+          {SPORT_LABELS[sport] ?? sport.toUpperCase()} · {config.scoringFormat?.toUpperCase() ?? '9CAT'}
+        </span>
+        {trendArrow && <span className={`text-sm font-mono ${trendArrow.color}`}>{trendArrow.icon}</span>}
+      </div>
+      <p className="font-semibold text-ink-primary text-sm truncate mb-0.5">{config.name || 'Unnamed League'}</p>
+      <p className="text-xs font-mono tabular-nums text-ink-secondary">
+        {userEntry
+          ? `${userEntry.team.wins}-${userEntry.team.losses}${userEntry.team.ties ? `-${userEntry.team.ties}` : ''} · #${userEntry.team.rank ?? '?'} of ${rosters.teams.length}`
+          : isDrafting
+            ? (pickCount > 0 ? `R${round} · Pick ${pickCount + 1}` : 'Draft not started')
+            : `${config.numTeams} teams`}
+      </p>
+      {tierStyle && (
+        <span className={`inline-block mt-2 text-[10px] font-mono px-1.5 py-0.5 rounded border uppercase ${tierStyle.bg} ${tierStyle.color}`}>
+          {tierStyle.label}
+        </span>
+      )}
+    </button>
   )
 }
 

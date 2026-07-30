@@ -36,6 +36,9 @@ export const DEFAULT_CONFIG = {
   yahooLeagueKey: null,
   yahooStatCategories: null,   // [{ id, name, higherIsBetter }]
   yahooRosterPositions: null,  // [{ position, count, isStarter }]
+  // 'head' | 'roto' | 'points' | null (unknown — treated as H2H, matching
+  // pre-existing behavior for leagues linked before this field existed)
+  yahooScoringType: null,
 }
 
 // Returns [{ type, playerId: null }, ...] in display order
@@ -123,6 +126,16 @@ const useLeagueStore = create(
       setSeasonRecap: (id, recap) =>
         set((state) => ({
           leagues: state.leagues.map((l) => (l.id === id ? { ...l, seasonRecap: recap } : l)),
+        })),
+
+      // Shared cache for the weekly matchup projection (H2H leagues only) —
+      // one copy on the league object, read by both the homepage hero and
+      // Season Hub's This Week tab, so whichever surface fetches it first
+      // is what the other one shows too. See isMatchupStale in shared.jsx
+      // for the Monday-based refresh rule.
+      setWeeklyMatchup: (id, matchup) =>
+        set((state) => ({
+          leagues: state.leagues.map((l) => (l.id === id ? { ...l, weeklyMatchup: matchup } : l)),
         })),
 
       // Stashes the outgoing snapshot's per-team standing (rank/wins/losses/

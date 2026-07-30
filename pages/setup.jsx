@@ -128,6 +128,7 @@ export default function Setup() {
         ...(data.leagueName && !prev.name && { name: data.leagueName }),
         ...(data.draftType && { draftType: data.draftType }),
         ...(data.auctionBudget != null && { auctionBudget: data.auctionBudget }),
+        ...(data.scoringType && { yahooScoringType: data.scoringType }),
         ...(ilCount !== null && { ilSlots: ilCount }),
         ...(ilPlusCount !== null && { ilPlusSlots: ilPlusCount }),
       }))

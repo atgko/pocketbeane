@@ -12,6 +12,50 @@ import {
 
 export const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000
 
+// H2H leagues only — Roto leagues have no weekly opponent, so there's
+// nothing here to be stale.
+export function isH2HLeague(league) {
+  return (league.config.yahooScoringType ?? 'head') !== 'roto'
+}
+
+// Fantasy weeks run Monday-Sunday. "Stale" means the most recent Monday
+// has passed since this was fetched — not a rolling N-day window — so a
+// week's projection stays put all week and only refreshes once, right
+// when the new week actually starts.
+function mostRecentMonday(date = new Date()) {
+  const d = new Date(date)
+  const day = d.getDay() // 0=Sun..6=Sat
+  d.setDate(d.getDate() - (day === 0 ? 6 : day - 1))
+  d.setHours(0, 0, 0, 0)
+  return d
+}
+
+export function isMatchupStale(weeklyMatchup) {
+  if (!weeklyMatchup?.fetchedAt) return true
+  return new Date(weeklyMatchup.fetchedAt) < mostRecentMonday()
+}
+
+// Shared POST to matchup-advice — used by both Season Hub's This Week tab
+// and the homepage hero, so the payload-building logic (and any future
+// changes to it) lives in exactly one place regardless of which surface
+// triggers the fetch.
+export async function fetchWeeklyMatchup({ league, rosters }) {
+  const res = await fetch('/api/season/matchup-advice', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      leagueKey: league.config.yahooLeagueKey,
+      sport: league.config.sport ?? 'nba',
+      leagueRosters: rosters,
+      gmProfile: { injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate' },
+      rosterConfig: { ilSlots: league.config.ilSlots, ilPlusSlots: league.config.ilPlusSlots },
+    }),
+  })
+  const data = await res.json()
+  if (!res.ok) throw new Error(data.error || 'Advice failed')
+  return { ...data, fetchedAt: new Date().toISOString() }
+}
+
 export const TREND_STYLES = {
   improving: { icon: '↑', color: 'text-signal-up' },
   'slightly-improving': { icon: '↗', color: 'text-signal-up' },

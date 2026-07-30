@@ -2,10 +2,15 @@ import { useState } from 'react'
 import nbaPlayers from '@/data/players.json'
 import { hasScheduleSupport, getStartSitMode } from '@/config/sports'
 import { AdvisorCard, Card } from '@/components/ui'
-import { TrendBadge, INJURY_LABELS, PITCHING_REC_STYLES, SLOT_CONFIG_KEYS, findPlayerByName } from './shared'
+import useLeagueStore from '@/store/leagueStore'
+import { TrendBadge, INJURY_LABELS, PITCHING_REC_STYLES, SLOT_CONFIG_KEYS, findPlayerByName, fetchWeeklyMatchup, isMatchupStale } from './shared'
 
 function MatchupPanel({ league, rosters, yahooConnected }) {
-  const [advice, setAdvice] = useState(null)
+  const { setWeeklyMatchup } = useLeagueStore()
+  // Cached result shows immediately if it's still this week's — no refetch
+  // needed just because the user opened this tab, the button is only for
+  // when it's actually stale or missing.
+  const [advice, setAdvice] = useState(!isMatchupStale(league.weeklyMatchup) ? league.weeklyMatchup : null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -13,23 +18,9 @@ function MatchupPanel({ league, rosters, yahooConnected }) {
     setLoading(true)
     setError(null)
     try {
-      const sport = league.config.sport ?? 'nba'
-      const res = await fetch('/api/season/matchup-advice', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          leagueKey: league.config.yahooLeagueKey,
-          sport,
-          leagueRosters: rosters,
-          gmProfile: {
-            injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
-          },
-          rosterConfig: { ilSlots: league.config.ilSlots, ilPlusSlots: league.config.ilPlusSlots },
-        }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Advice failed')
+      const data = await fetchWeeklyMatchup({ league, rosters })
       setAdvice(data)
+      setWeeklyMatchup(league.id, data)
     } catch (err) {
       setError(err.message)
     } finally {
