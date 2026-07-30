@@ -51,13 +51,19 @@ export default async function handler(req, res) {
   }
 
   // The bare /scoreboard endpoint (no week specified) has been an
-  // unreliable 403 in the past even mid-season, for reasons Yahoo's error
-  // message doesn't actually explain ("not authorized" rather than e.g.
-  // 400/404). Fetching current_week first and requesting the scoreboard
-  // for that explicit week is Yahoo's documented pattern and doesn't rely
-  // on the bare endpoint being able to infer "current" on its own.
-  const metaRaw = await yahooFetch(token, `/league/${leagueKey}/metadata`)
-  const currentWeek = metaRaw?.fantasy_content?.league?.[0]?.current_week
+  // unreliable 403 in the past even mid-season. First attempt at a fix
+  // (fetch current_week from /league/{key}/metadata, then request
+  // scoreboard;week={N} explicitly) turned out to be hitting the SAME
+  // restriction one step earlier: /metadata itself 403s with the identical
+  // "not authorized" error, confirmed against a real, verifiably mid-season
+  // H2H league. /settings and /standings do NOT — settings.js and
+  // sync-rosters.js already prove those work for this exact league — and
+  // Yahoo attaches the same base league meta (including current_week) to
+  // ANY successful league resource response, not just /metadata. So: get
+  // current_week from the already-proven-working /settings call instead of
+  // the apparently-restricted /metadata one.
+  const settingsRaw = await yahooFetch(token, `/league/${leagueKey}/settings`)
+  const currentWeek = settingsRaw?.fantasy_content?.league?.[0]?.current_week
   if (!currentWeek) {
     return res.status(502).json({ error: 'Could not determine the current week from Yahoo' })
   }
