@@ -482,7 +482,7 @@ function PlayerRow({
           </span>
         )}
         {player.injury_risk && (
-          <span className="ml-1.5 inline-flex align-middle text-signal-down/60" title={player.injury_notes || 'Injury risk'}>
+          <span className="ml-1.5 inline-flex align-middle text-signal-down" title={player.injury_notes || 'Injury risk'}>
             <IconWarning className="w-3 h-3" />
           </span>
         )}

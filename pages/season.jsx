@@ -213,7 +213,7 @@ export default function SeasonHub() {
               ) : yahoo.connected ? (
                 <span className="text-ink-secondary">Syncing rosters…</span>
               ) : (
-                <span className="text-signal-watch/70">Connect Yahoo to sync rosters</span>
+                <span className="text-signal-watch">Connect Yahoo to sync rosters</span>
               )}
               {syncError && <span className="text-signal-down ml-2">{syncError}</span>}
             </div>

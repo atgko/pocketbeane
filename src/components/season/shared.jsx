@@ -14,9 +14,9 @@ export const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000
 
 export const TREND_STYLES = {
   improving: { icon: '↑', color: 'text-signal-up' },
-  'slightly-improving': { icon: '↗', color: 'text-signal-up/70' },
+  'slightly-improving': { icon: '↗', color: 'text-signal-up' },
   stable:    { icon: '→', color: 'text-ink-secondary' },
-  'slightly-declining': { icon: '↘', color: 'text-signal-down/70' },
+  'slightly-declining': { icon: '↘', color: 'text-signal-down' },
   declining: { icon: '↓', color: 'text-signal-down' },
 }
 

@@ -32,6 +32,23 @@ body {
   color: rgb(var(--color-ink-primary));
 }
 
+/* Global focus-visible treatment (D01 brief 3.4) — most interactive
+   elements in this app are raw <button>/<a>/<input>, not the shared
+   Button component, so a single base-layer rule here is what actually
+   makes "kill all default focus rings" true app-wide. Keyboard-only:
+   :focus-visible skips mouse-click focus in modern browsers.
+   !important: several inputs already set their own `focus:outline-none`
+   (paired with a focus:border-color change) — verified via CDP that
+   without !important here, Tailwind's utility wins the cascade and the
+   ring silently disappears on exactly the elements that need it most. */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid rgb(var(--color-beane-green) / 0.6) !important;
+  outline-offset: 2px !important;
+}
+
 /* Scrollbar styling for dark theme */
 ::-webkit-scrollbar {
   width: 6px;

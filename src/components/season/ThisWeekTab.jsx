@@ -57,7 +57,7 @@ function MatchupPanel({ league, rosters, yahooConnected }) {
             {advice ? 'Refresh' : "Get Beane's Take"}
           </button>
         ) : (
-          <span className="shrink-0 text-xs text-signal-watch/60 font-mono">Needs Yahoo</span>
+          <span className="shrink-0 text-xs text-signal-watch font-mono">Needs Yahoo</span>
         )}
       </div>
 
@@ -197,7 +197,7 @@ function LineupAdvisorPanel({ league, rosters, sport, mode }) {
             {advice ? 'Refresh' : "Get Beane's Take"}
           </button>
         ) : (
-          <span className="shrink-0 text-xs text-signal-watch/60 font-mono">Not available for {sport.toUpperCase()} yet</span>
+          <span className="shrink-0 text-xs text-signal-watch font-mono">Not available for {sport.toUpperCase()} yet</span>
         )}
       </div>
 

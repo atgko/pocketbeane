@@ -231,7 +231,7 @@ export default function Setup() {
                   </p>
                 </div>
                 {isYahooSynced && (
-                  <span className="text-xs font-mono text-signal-up/70 shrink-0 ml-4">
+                  <span className="text-xs font-mono text-signal-up shrink-0 ml-4">
                     ✓ {config.yahooStatCategories?.length} cats · {config.numTeams} teams
                   </span>
                 )}
@@ -263,7 +263,7 @@ export default function Setup() {
                 </select>
               ) : leaguesSeasonOver ? (
                 <div className="space-y-2">
-                  <p className="text-xs text-signal-watch/70 leading-relaxed">
+                  <p className="text-xs text-signal-watch leading-relaxed">
                     No active {(config.sport ?? 'nba').toUpperCase()} leagues found — your most recent season has
                     concluded and Yahoo hasn't opened the next one yet. A league key won't help either, since Yahoo
                     blocks syncing for any league from a concluded season — come back once the new season starts.

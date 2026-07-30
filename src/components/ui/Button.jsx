@@ -8,8 +8,6 @@ export default function Button({ variant = 'primary', className = '', children, 
   return (
     <button
       className={`rounded-lg px-[18px] py-2.5 text-[13.5px] transition-colors
-        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-beane-green/60
-        focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base
         disabled:opacity-40 disabled:cursor-not-allowed
         ${VARIANTS[variant]} ${className}`}
       {...rest}

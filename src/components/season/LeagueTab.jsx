@@ -150,7 +150,7 @@ export default function LeagueTab({ league, rosters }) {
             )}
             {pulse.myTeamTake.weaknesses && (
               <p className="text-xs text-ink-secondary leading-relaxed">
-                <span className="text-signal-down/80 font-medium">Weaknesses: </span>{pulse.myTeamTake.weaknesses}
+                <span className="text-signal-down font-medium">Weaknesses: </span>{pulse.myTeamTake.weaknesses}
               </p>
             )}
             {pulse.myTeamTake.recommendation && (

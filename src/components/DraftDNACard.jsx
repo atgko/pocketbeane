@@ -40,7 +40,7 @@ export default function DraftDNACard({ archetype, topCategories = [], boldPredic
           <div className="relative flex items-baseline justify-center gap-2">
             <p className="text-label uppercase tracking-[0.15em] text-ink-muted">PocketBeane</p>
             <span className="text-ink-muted/40">·</span>
-            <p className="text-label uppercase tracking-[0.1em] text-ink-muted/70">Draft DNA</p>
+            <p className="text-label uppercase tracking-[0.1em] text-ink-secondary">Draft DNA</p>
           </div>
 
           <div className="relative flex-1 flex flex-col items-center justify-center gap-3.5 py-3">

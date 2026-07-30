@@ -343,7 +343,7 @@ export default function RecommendationPanel({ league }) {
         {/* Sleeper Radar — always visible when there are sleepers and draft is active */}
         {sleepers.length > 0 && !isRosterFull && (
           <div className="bg-surface-raised rounded-lg border border-signal-info/15 p-4">
-            <p className="text-xs font-mono text-signal-info/60 uppercase tracking-wider mb-3">Sleeper Radar</p>
+            <p className="text-xs font-mono text-signal-info uppercase tracking-wider mb-3">Sleeper Radar</p>
             <div className="space-y-2.5">
               {sleepers.map(({ player, signals }) => (
                 <div key={player.id} className="flex gap-3 items-start">
@@ -354,7 +354,7 @@ export default function RecommendationPanel({ league }) {
                         {player.yahoo_positions.join('/')}
                       </span>
                     </div>
-                    <p className="text-xs font-mono text-signal-info/50 mt-0.5">{signals.join(' · ')}</p>
+                    <p className="text-xs font-mono text-signal-info mt-0.5">{signals.join(' · ')}</p>
                   </div>
                 </div>
               ))}
@@ -403,7 +403,7 @@ function CategoryBar({ gap }) {
   const labelColor =
     gap.grade === 'strong' ? 'text-signal-up/80' :
     gap.grade === 'ok'     ? 'text-signal-watch' :
-    gap.grade === 'weak'   ? 'text-signal-down/80' :
+    gap.grade === 'weak'   ? 'text-signal-down' :
     'text-ink-muted'
 
   return (
