@@ -61,11 +61,13 @@ export default async function handler(req, res) {
         max_tokens: 80,
         system: [{
           type: 'text',
-          text: `You are Billy Beane making a bold prediction about a ${sportLabel} team. Generate exactly one sentence under 25 words. Be specific, name a player if possible, state it as fact — no hedging, no "might", no "could". Return only the sentence, nothing else.`,
+          text: `You are Billy Beane making a bold prediction about a ${sportLabel} team. Generate exactly one sentence under 25 words. Be specific, name a player if possible, state it as fact — no hedging, no "might", no "could".
+
+Ground every claim ONLY in the stats and categories given to you below. Do NOT invent or assert anything about a player's awards, rookie/veteran status, age, health, trades, or career history — you were not given that information and it may be wrong. Predict team/roster performance (standings, category dominance, stat-line outcomes), not biographical narratives. Return only the sentence, nothing else.`,
         }],
         messages: [{
           role: 'user',
-          content: `Archetype: ${archetypeName}\nTop categories: ${topCategories.join(', ') || 'none'}\nRoster: ${rosterPlayers.slice(0, 8).join(', ') || 'unknown'}\n\nGenerate one bold prediction about how this team performs this season.`,
+          content: `Archetype: ${archetypeName}\nTop categories: ${topCategories.join(', ') || 'none'}\nRoster (with current stats): ${rosterPlayers.slice(0, 8).join(', ') || 'unknown'}\n\nGenerate one bold prediction about how this team performs this season, grounded only in the stats above.`,
         }],
       })
       const prediction = predictionMsg.content[0]?.text?.trim() ?? ''

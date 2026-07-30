@@ -123,7 +123,7 @@ export default function DraftRecap({ league }) {
     setPredictionLoading(true)
     try {
       const userPicksWithData = userPicks.map(p => playerMap[p.playerId]).filter(Boolean)
-      const rosterNames = userPicksWithData.map(p => p.name)
+      const rosterSummaries = userPicksWithData.map(p => summarizePlayerStats(p, sport))
       const res = await fetch('/api/recommend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-Session-Id': getSessionId() ?? '' },
@@ -131,7 +131,7 @@ export default function DraftRecap({ league }) {
           mode: 'bold_prediction',
           archetypeName: archetype.name,
           topCategories,
-          rosterPlayers: rosterNames,
+          rosterPlayers: rosterSummaries,
           sport,
         }),
       })
@@ -377,6 +377,18 @@ function CategoryRow({ gap }) {
       </span>
     </div>
   )
+}
+
+function summarizePlayerStats(player, sport) {
+  const season = player.current_season ?? player.prior_season
+  if (!season) return player.name
+
+  if (sport === 'mlb') {
+    return player.player_type === 'pitcher'
+      ? `${player.name} (${season.era ?? '—'} ERA, ${season.so ?? season.k ?? '—'} K)`
+      : `${player.name} (${season.hr ?? '—'} HR, ${season.sb ?? '—'} SB, .${String(Math.round((season.avg ?? 0) * 1000)).padStart(3, '0')} AVG)`
+  }
+  return `${player.name} (${season.pts ?? '—'} PTS, ${season.reb ?? '—'} REB, ${season.ast ?? '—'} AST)`
 }
 
 function fmtStat(player, key) {
