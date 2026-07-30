@@ -57,7 +57,7 @@ function MatchupPanel({ league, rosters, yahooConnected }) {
       )}
 
       {error && !loading && (
-        <p className="text-xs text-signal-down font-mono mt-4">{error}</p>
+        <p className="text-xs text-signal-down font-mono mt-4 whitespace-pre-wrap">{error}</p>
       )}
 
       {advice && !loading && (

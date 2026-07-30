@@ -52,7 +52,11 @@ export async function fetchWeeklyMatchup({ league, rosters }) {
     }),
   })
   const data = await res.json()
-  if (!res.ok) throw new Error(data.error || 'Advice failed')
+  if (!res.ok) {
+    // TEMPORARY: appending debugRaw (the actual Yahoo error) when present —
+    // see matchup-advice.js, still tracking down the real scoreboard 403 cause.
+    throw new Error(data.debugRaw ? `${data.error || 'Advice failed'}\n\n${data.debugRaw}` : (data.error || 'Advice failed'))
+  }
   return { ...data, fetchedAt: new Date().toISOString() }
 }
 
