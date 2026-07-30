@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AdvisorCard } from '@/components/ui'
+import { AdvisorCard, AdvisorError } from '@/components/ui'
 import { TradeFavorBar, TradePlayerToggle } from './shared'
 
 function TradeAnalyzerPanel({ league, rosters }) {
@@ -59,9 +59,9 @@ function TradeAnalyzerPanel({ league, rosters }) {
   }
 
   return (
-    <AdvisorCard>
+    <AdvisorCard eyebrow="THE VERDICT">
       <div className="mb-3">
-        <p className="text-sm font-semibold text-ink-primary">Trade Analyzer</p>
+        <h3 className="font-display text-heading font-medium text-ink-primary">Trade Analyzer</h3>
         <p className="text-xs text-ink-secondary mt-0.5">
           Pick players from your roster and an opponent's to see the net category impact, positional fit, and buy-low/sell-high signal.
         </p>
@@ -69,7 +69,7 @@ function TradeAnalyzerPanel({ league, rosters }) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
         <div>
-          <label className="text-[10px] font-mono text-ink-muted uppercase tracking-wider">
+          <label className="text-micro font-mono text-ink-muted uppercase tracking-wider">
             You give {give.length > 0 && <span className="text-beane-green-text tabular-nums">({give.length})</span>}
           </label>
           <div className="mt-1 space-y-1 max-h-64 overflow-y-auto pr-1">
@@ -84,7 +84,7 @@ function TradeAnalyzerPanel({ league, rosters }) {
           </div>
         </div>
         <div>
-          <label className="text-[10px] font-mono text-ink-muted uppercase tracking-wider">
+          <label className="text-micro font-mono text-ink-muted uppercase tracking-wider">
             You receive {receive.length > 0 && <span className="text-beane-green-text tabular-nums">({receive.length})</span>}
           </label>
           <select
@@ -127,7 +127,7 @@ function TradeAnalyzerPanel({ league, rosters }) {
       )}
 
       {error && !loading && (
-        <p className="text-xs text-signal-down font-mono mt-4">{error}</p>
+        <AdvisorError message={error} onRetry={handleGetAdvice} />
       )}
 
       {advice && !loading && (
@@ -139,7 +139,7 @@ function TradeAnalyzerPanel({ league, rosters }) {
           <div className="grid grid-cols-3 gap-3">
             {advice.improveCategories?.length > 0 && (
               <div>
-                <p className="text-[10px] font-mono text-signal-up uppercase tracking-wider mb-1.5">Improves</p>
+                <p className="text-micro font-mono text-signal-up uppercase tracking-wider mb-1.5">Improves</p>
                 <div className="flex flex-wrap gap-1">
                   {advice.improveCategories.map(c => (
                     <span key={c} className="text-xs font-mono bg-signal-up/15 text-signal-up px-1.5 py-0.5 rounded">{c}</span>
@@ -149,7 +149,7 @@ function TradeAnalyzerPanel({ league, rosters }) {
             )}
             {advice.declineCategories?.length > 0 && (
               <div>
-                <p className="text-[10px] font-mono text-signal-down uppercase tracking-wider mb-1.5">Declines</p>
+                <p className="text-micro font-mono text-signal-down uppercase tracking-wider mb-1.5">Declines</p>
                 <div className="flex flex-wrap gap-1">
                   {advice.declineCategories.map(c => (
                     <span key={c} className="text-xs font-mono bg-signal-down/15 text-signal-down px-1.5 py-0.5 rounded">{c}</span>
@@ -159,7 +159,7 @@ function TradeAnalyzerPanel({ league, rosters }) {
             )}
             {advice.neutralCategories?.length > 0 && (
               <div>
-                <p className="text-[10px] font-mono text-ink-secondary uppercase tracking-wider mb-1.5">Neutral</p>
+                <p className="text-micro font-mono text-ink-secondary uppercase tracking-wider mb-1.5">Neutral</p>
                 <div className="flex flex-wrap gap-1">
                   {advice.neutralCategories.map(c => (
                     <span key={c} className="text-xs font-mono bg-surface-overlay text-ink-secondary px-1.5 py-0.5 rounded">{c}</span>
@@ -219,10 +219,10 @@ function TradeValueIndexPanel({ league, rosters }) {
   }
 
   return (
-    <AdvisorCard>
+    <AdvisorCard eyebrow="THE TRADE MARKET">
       <div className="flex items-start justify-between gap-4 mb-1">
         <div>
-          <p className="text-sm font-semibold text-ink-primary">Trade Value Index</p>
+          <h3 className="font-display text-heading font-medium text-ink-primary">Trade Value Index</h3>
           <p className="text-xs text-ink-secondary mt-0.5">
             Sell-high candidates on your roster and buy-low targets across the league.
           </p>
@@ -241,7 +241,7 @@ function TradeValueIndexPanel({ league, rosters }) {
       )}
 
       {error && !loading && (
-        <p className="text-xs text-signal-down font-mono mt-4">{error}</p>
+        <AdvisorError message={error} onRetry={handleGetIndex} />
       )}
 
       {index && !loading && (
@@ -251,7 +251,7 @@ function TradeValueIndexPanel({ league, rosters }) {
           )}
           {index.sellHigh?.length > 0 && (
             <div className="space-y-2">
-              <p className="text-[10px] font-mono text-signal-up uppercase tracking-wider">Sell high (your roster)</p>
+              <p className="text-micro font-mono text-signal-up uppercase tracking-wider">Sell high (your roster)</p>
               {index.sellHigh.map((entry, i) => (
                 <div key={i} className="border border-surface-line rounded-md px-4 py-3">
                   <p className="text-xs text-signal-up font-medium mb-1">{entry.player}</p>
@@ -262,7 +262,7 @@ function TradeValueIndexPanel({ league, rosters }) {
           )}
           {index.buyLowTargets?.length > 0 && (
             <div className="space-y-2 pt-2 border-t border-surface-line">
-              <p className="text-[10px] font-mono text-signal-info uppercase tracking-wider pt-2">Buy low (league targets)</p>
+              <p className="text-micro font-mono text-signal-info uppercase tracking-wider pt-2">Buy low (league targets)</p>
               {index.buyLowTargets.map((entry, i) => (
                 <div key={i} className="border border-surface-line rounded-md px-4 py-3">
                   <p className="text-xs text-signal-info font-medium mb-1">

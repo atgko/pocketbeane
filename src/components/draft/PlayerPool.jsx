@@ -322,9 +322,9 @@ export default function PlayerPool() {
       )}
 
       {blockMessage && (
-        <div className="flex items-center justify-between px-4 py-2 rounded-lg text-xs font-mono border bg-signal-down/10 border-signal-down/30 text-signal-down">
+        <div role="status" aria-live="polite" className="flex items-center justify-between px-4 py-2 rounded-lg text-xs font-mono border bg-signal-down/10 border-signal-down/30 text-signal-down">
           <span>{blockMessage}</span>
-          <button onClick={() => setBlockMessage(null)} className="hover:text-ink-primary transition-colors ml-4">
+          <button onClick={() => setBlockMessage(null)} aria-label="Dismiss" className="hover:text-ink-primary transition-colors ml-4">
             <IconClose className="w-3 h-3" />
           </button>
         </div>
@@ -434,7 +434,7 @@ function PendingBanner({ pendingPick, players, onCancel, isAuction, pendingPrice
           <span>— press <kbd className="px-1 py-0.5 rounded bg-surface-overlay">Enter</kbd> to confirm</span>
         )}
       </span>
-      <button onClick={onCancel} className="hover:text-ink-primary transition-colors">
+      <button onClick={onCancel} aria-label="Cancel pending pick" className="hover:text-ink-primary transition-colors">
         <IconClose className="w-3 h-3" />
       </button>
     </div>
@@ -457,20 +457,27 @@ function PlayerRow({
   const valueDelta = player.adp - valueReference
   const isValue = valueDelta > 0
 
-  let rowClass = 'border-b border-surface-line last:border-0 cursor-pointer transition-colors'
+  let rowClass = 'border-b border-l-2 border-surface-line last:border-b-0 cursor-pointer transition-colors'
 
   if (isPending) {
-    rowClass += pendingDraftedBy === 'user' ? ' bg-beane-green/20' : ' bg-surface-overlay/60'
+    rowClass += pendingDraftedBy === 'user' ? ' border-l-beane-green bg-beane-green/20' : ' border-l-surface-line bg-surface-overlay/60'
   } else if (isSelected) {
-    rowClass += ' bg-surface-overlay'
+    rowClass += ' border-l-beane-green bg-surface-overlay'
   } else if (isDrafted) {
-    rowClass += ' opacity-40'
+    rowClass += ' border-l-transparent opacity-40'
   } else {
-    rowClass += ' hover:bg-surface-overlay'
+    rowClass += ' border-l-transparent hover:bg-surface-overlay'
   }
 
   return (
-    <tr ref={rowRef} onClick={onClick} className={rowClass}>
+    <tr
+      ref={rowRef}
+      onClick={onClick}
+      onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick() } }}
+      tabIndex={0}
+      aria-selected={isSelected}
+      className={rowClass}
+    >
       <td className="text-right px-4 py-2.5 text-ink-muted font-mono tabular-nums text-xs">{rank}</td>
       <td className="px-4 py-2.5">
         <span className={`font-medium ${draftedBy === 'opponent' ? 'line-through text-ink-secondary' : 'text-ink-primary'}`}>
@@ -504,10 +511,11 @@ function PlayerRow({
         {isYahooLinked ? null : isDrafted ? (
           <button
             onClick={e => { e.stopPropagation(); onEdit() }}
-            className={`inline-flex items-center justify-center p-1 rounded transition-colors ${
+            className={`inline-flex items-center justify-center p-1 rounded-lg transition-colors ${
               isSelected ? 'bg-surface-overlay text-ink-primary hover:text-ink-primary' : 'text-ink-muted hover:text-ink-secondary'
             }`}
             title="Edit this pick"
+            aria-label="Edit this pick"
           >
             <IconUndo className="w-3.5 h-3.5" />
           </button>

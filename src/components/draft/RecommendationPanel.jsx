@@ -29,6 +29,13 @@ export default function RecommendationPanel({ league }) {
   const [bidPlayer, setBidPlayer] = useState(null)
   const [bidAmount, setBidAmount] = useState('')
   const bidSearchRef = useRef(null)
+  // Elapsed-since-this-pick-became-current clock. Yahoo doesn't expose a
+  // synced pick timer to us, so a countdown against an assumed duration
+  // would be fabricated precision — an honest count-up is what we can
+  // actually back, and it's still the "is there a clock at all" signal
+  // the draft board was missing entirely.
+  const pickStartRef = useRef(Date.now())
+  const [elapsedSec, setElapsedSec] = useState(0)
 
   const sport = league.config.sport ?? 'nba'
   const sportConfig = getSportConfig(sport)
@@ -126,7 +133,10 @@ export default function RecommendationPanel({ league }) {
   async function runAnalysis(mode, extra = {}) {
     setLoading(true)
     setError(null)
-    setResult(null)
+    // Deliberately NOT setResult(null) here — this is the exact moment the
+    // user is under real pick-clock pressure. The prior recommendation
+    // stays on screen (dimmed via `loading` in Zone 2) until the new one
+    // actually lands, instead of going blank for the ~4s Claude call.
     try {
       const res = await fetch('/api/recommend', {
         method: 'POST',
@@ -148,6 +158,17 @@ export default function RecommendationPanel({ league }) {
     if (!bidPlayer || amount < 1) return
     runAnalysis('bid-advice', { bidTarget: { player: bidPlayer, currentBid: amount } })
   }
+
+  // Reset the clock every time a new pick becomes current (not on every
+  // render — picks.length is the real "a pick happened" signal).
+  useEffect(() => {
+    pickStartRef.current = Date.now()
+    setElapsedSec(0)
+    const interval = setInterval(() => {
+      setElapsedSec(Math.floor((Date.now() - pickStartRef.current) / 1000))
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [currentPickNum])
 
   const bidMatches = bidSearch.trim().length > 1 && !bidPlayer
     ? players.filter(p => p.name.toLowerCase().includes(bidSearch.trim().toLowerCase())).slice(0, 5)
@@ -179,9 +200,19 @@ export default function RecommendationPanel({ league }) {
 
       {/* Zone 1 — header, always visible, pinned to top */}
       <AdvisorCard eyebrow="BEANE'S CORNER" className="shrink-0">
+        {!isRosterFull && (
+          <div className="flex items-center justify-between -mt-1 mb-1.5">
+            <span className="text-data-lg font-mono tabular-nums text-ink-primary" title="Elapsed since this pick became current">
+              {formatClock(elapsedSec)}
+            </span>
+            {loading && (
+              <span className="text-xs font-mono text-ink-secondary animate-pulse">thinking…</span>
+            )}
+          </div>
+        )}
         {loading && (
-          <div className="flex justify-end -mt-1 mb-1">
-            <span className="text-xs font-mono text-ink-secondary animate-pulse">thinking…</span>
+          <div className="mb-1.5">
+            <ThinkingProgress />
           </div>
         )}
         <p className="text-xs font-mono text-ink-muted">
@@ -205,7 +236,7 @@ export default function RecommendationPanel({ league }) {
               <button
                 onClick={handleRefreshClick}
                 disabled={!canRefresh}
-                className={`w-full py-1.5 px-3 rounded text-xs font-mono font-semibold transition-colors ${
+                className={`w-full py-1.5 px-3 rounded-lg text-xs font-mono font-semibold transition-colors ${
                   canRefresh
                     ? 'text-ink-primary hover:bg-surface-overlay border border-surface-line'
                     : 'text-ink-muted cursor-not-allowed border border-transparent'
@@ -228,10 +259,10 @@ export default function RecommendationPanel({ league }) {
                     value={bidPlayer ? bidPlayer.name : bidSearch}
                     onChange={e => { setBidSearch(e.target.value); setBidPlayer(null) }}
                     placeholder="Search player…"
-                    className="w-full bg-surface-overlay border border-surface-line rounded px-2.5 py-1.5 text-xs text-ink-primary placeholder-ink-muted font-mono focus:outline-none focus:border-beane-green/50"
+                    className="w-full bg-surface-overlay border border-surface-line rounded-lg px-2.5 py-1.5 text-xs text-ink-primary placeholder-ink-muted font-mono focus:outline-none focus:border-beane-green/50"
                   />
                   {bidMatches.length > 0 && (
-                    <div className="absolute top-full left-0 right-0 z-10 mt-0.5 bg-surface-overlay border border-surface-line rounded overflow-hidden">
+                    <div className="absolute top-full left-0 right-0 z-10 mt-0.5 bg-surface-overlay border border-surface-line rounded-lg overflow-hidden">
                       {bidMatches.map(p => (
                         <button
                           key={p.id}
@@ -254,12 +285,12 @@ export default function RecommendationPanel({ league }) {
                       onChange={e => setBidAmount(e.target.value)}
                       onKeyDown={e => { if (e.key === 'Enter') handleBidAdvice() }}
                       placeholder="bid"
-                      className="w-14 bg-surface-overlay border border-surface-line rounded px-2 py-1 text-xs text-ink-primary font-mono text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:outline-none focus:border-beane-green/50"
+                      className="w-14 bg-surface-overlay border border-surface-line rounded-lg px-2 py-1 text-xs text-ink-primary font-mono text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:outline-none focus:border-beane-green/50"
                     />
                     <button
                       onClick={handleBidAdvice}
                       disabled={Number(bidAmount) < 1 || loading}
-                      className={`flex-1 py-1 px-2 rounded text-xs font-mono font-semibold transition-colors ${
+                      className={`flex-1 py-1 px-2 rounded-lg text-xs font-mono font-semibold transition-colors ${
                         Number(bidAmount) >= 1 && !loading
                           ? 'text-ink-primary hover:bg-surface-overlay border border-surface-line'
                           : 'text-ink-muted cursor-not-allowed border border-transparent'
@@ -275,7 +306,11 @@ export default function RecommendationPanel({ league }) {
         )}
       </AdvisorCard>
 
-      {/* Zone 2 — AI result, scrollable if content overflows */}
+      {/* Zone 2 — AI result, scrollable if content overflows. The result
+          block stays mounted and dims (rather than unmounting) while a
+          fresh analysis is in flight, so the answer never goes blank
+          during the wait — only the placeholder-when-truly-empty and the
+          error banner are gated on `loading` directly. */}
       <div className="flex-1 min-h-0 overflow-y-auto flex flex-col gap-3">
         {!error && !result && !loading && (
           <div className="flex-1 flex items-center justify-center">
@@ -284,13 +319,17 @@ export default function RecommendationPanel({ league }) {
         )}
 
         {error && (
-          <div className="bg-surface-raised rounded-lg border border-signal-down/20 p-4">
+          <div role="alert" className="bg-surface-raised rounded-lg border border-signal-down/20 p-4">
             <p className="text-xs text-signal-down font-mono">{error}</p>
+            {result && (
+              <p className="text-xs text-ink-muted font-mono mt-1.5">Showing the last successful read below.</p>
+            )}
           </div>
         )}
 
+      <div className={`flex flex-col gap-3 transition-opacity duration-300 ${loading ? 'opacity-50' : 'opacity-100'}`}>
         {result?.verdict && (
-          <AdvisorCard title="Bid Ceiling">
+          <AdvisorCard eyebrow="THE CEILING" title="Bid Ceiling">
             <div className="flex items-baseline justify-between mb-2">
               <p className="text-data-lg font-mono tabular-nums text-ink-primary">${result.ceiling}</p>
               <Badge
@@ -306,6 +345,7 @@ export default function RecommendationPanel({ league }) {
 
         {result?.picks?.length > 0 && (
           <AdvisorCard
+            eyebrow="THE CALL"
             title={result.mode === 'post-pick' ? 'On My Radar'
               : result.mode === 'nomination' ? 'Nomination Targets'
               : 'My Board'}
@@ -335,12 +375,14 @@ export default function RecommendationPanel({ league }) {
         )}
 
         {result?.briefing && (
-          <AdvisorCard title="Market Read">
+          <AdvisorCard eyebrow="THE MARKET" title="Market Read">
             <p className="text-xs text-ink-secondary leading-relaxed">{result.briefing}</p>
           </AdvisorCard>
         )}
+      </div>
 
-        {/* Sleeper Radar — always visible when there are sleepers and draft is active */}
+        {/* Sleeper Radar — deterministic (not a Claude result), so it stays
+            outside the loading-dim wrapper above and never fades. */}
         {sleepers.length > 0 && !isRosterFull && (
           <div className="bg-surface-raised rounded-lg border border-signal-info/15 p-4">
             <p className="text-xs font-mono text-signal-info uppercase tracking-wider mb-3">Sleeper Radar</p>
@@ -373,6 +415,34 @@ export default function RecommendationPanel({ league }) {
         </div>
       </Card>
 
+    </div>
+  )
+}
+
+function formatClock(totalSeconds) {
+  const m = Math.floor(totalSeconds / 60)
+  const s = totalSeconds % 60
+  return `${m}:${String(s).padStart(2, '0')}`
+}
+
+// Determinate-feeling progress cue for the ~4s Claude synthesis call.
+// Remounts fresh each time `loading` flips true (parent renders it
+// conditionally), so the width transition restarts from 0 every time.
+function ThinkingProgress() {
+  const [started, setStarted] = useState(false)
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => setStarted(true))
+    return () => cancelAnimationFrame(raf)
+  }, [])
+  return (
+    <div className="h-0.5 w-full bg-surface-overlay rounded-full overflow-hidden">
+      <div
+        className="h-full w-full bg-beane-green rounded-full origin-left"
+        style={{
+          transform: `scaleX(${started ? 0.92 : 0})`,
+          transition: started ? 'transform 4000ms cubic-bezier(0.11, 0, 0.5, 0)' : 'none',
+        }}
+      />
     </div>
   )
 }

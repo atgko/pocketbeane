@@ -222,15 +222,15 @@ Give me the matchup breakdown.`
     // a user can act on instead of the raw Yahoo error JSON.
     const is403 = /\b403\b/.test(err.message) || /\b403\b/.test(cause)
     if (is403) {
-      // TEMPORARY: surfacing the raw Yahoo response inline (not just in
-      // server logs) since the explicit-week fix didn't resolve this and
-      // we need to see exactly what Yahoo says this time to diagnose the
-      // real cause. Revert to the clean friendly-only message once fixed.
+      // The explicit-week fix (fetching current_week from /settings first)
+      // resolved the reliable repro of this; the raw Yahoo response is
+      // still logged server-side above for the rare remaining case, but
+      // never belongs in the response body — a user can't do anything
+      // with a Yahoo API error string.
       return res.status(502).json({
         error: "Yahoo won't serve this week's matchup data right now. This can happen even mid-season — try refreshing your rosters first, or try again in a bit.",
-        debugRaw: cause ? `${err.message} | cause: ${cause}` : err.message,
       })
     }
-    res.status(500).json({ error: cause ? `${err.message}: ${cause}` : err.message })
+    res.status(500).json({ error: "Couldn't reach Yahoo for this week's matchup. Try again in a bit." })
   }
 }

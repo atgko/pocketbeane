@@ -150,8 +150,9 @@ function SlotRow({ slot, player, pick, isBench, onEdit, isAuction }) {
           )}
           <button
             onClick={() => onEdit(pick)}
-            className="text-xs text-ink-muted hover:text-ink-primary opacity-0 group-hover:opacity-100 transition-all shrink-0 ml-auto px-1"
+            className="text-xs text-ink-muted hover:text-ink-primary opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-all shrink-0 ml-auto px-1"
             title="Edit pick"
+            aria-label="Edit pick"
           >
             ↩
           </button>

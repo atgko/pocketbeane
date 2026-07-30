@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/components/season/shared.jsx"
+        ],
+        "createdAt": "2026-07-30T15:13:43.907Z",
+        "reason": "TradeFavorBar CSS-triangle pointer marker, not a colored card accent - confirmed false positive independently by critique + typeset detector passes 2026-07-30"
+      }
+    ]
+  }
+}

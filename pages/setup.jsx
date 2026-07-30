@@ -209,9 +209,9 @@ export default function Setup() {
                   key={opt.value}
                   type="button"
                   onClick={() => handleSportChange(opt.value)}
-                  className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
                     (config.sport ?? 'nba') === opt.value
-                      ? 'bg-beane-green text-ink-primary'
+                      ? 'bg-beane-green text-[#06120C]'
                       : 'bg-surface-base border border-surface-line text-ink-secondary hover:border-beane-green hover:text-ink-primary'
                   }`}
                 >

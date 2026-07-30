@@ -12,7 +12,7 @@ const TONES = {
 // smaller footprint.
 const SIZES = {
   default: 'px-2.5 py-[3px] text-label',
-  sm: 'px-2 py-[1px] text-[10px]',
+  sm: 'px-2 py-[1px] text-micro',
 }
 
 export default function Badge({ tone = 'neutral', size = 'default', children, className = '' }) {

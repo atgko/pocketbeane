@@ -256,9 +256,9 @@ export default function LeagueSetup({ config, onUpdate, onToggleCategory, isYaho
                 type="button"
                 onClick={() => !isYahooSynced && onToggleCategory(cat.id)}
                 disabled={isYahooSynced}
-                className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
                   config.categories.includes(cat.id)
-                    ? 'bg-beane-green text-ink-primary'
+                    ? 'bg-beane-green text-[#06120C]'
                     : 'bg-surface-base border border-surface-line text-ink-secondary hover:border-beane-green hover:text-ink-primary'
                 }`}
               >
@@ -285,9 +285,9 @@ function SlotCountRow({ label, value, onChange, max = 3, disabled = false }) {
           type="button"
           onClick={() => !disabled && onChange(n)}
           disabled={disabled}
-          className={`w-7 h-7 rounded text-xs font-mono transition-colors ${
+          className={`w-7 h-7 rounded-lg text-xs font-mono transition-colors ${
             value === n
-              ? 'bg-beane-green text-ink-primary'
+              ? 'bg-beane-green text-[#06120C]'
               : 'bg-surface-base border border-surface-line text-ink-secondary hover:border-beane-green'
           }`}
         >
@@ -307,9 +307,9 @@ function ToggleGroup({ options, value, onChange, disabled = false }) {
           type="button"
           onClick={() => !disabled && onChange(opt.value)}
           disabled={disabled}
-          className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+          className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
             value === opt.value
-              ? 'bg-beane-green text-ink-primary'
+              ? 'bg-beane-green text-[#06120C]'
               : 'bg-surface-base border border-surface-line text-ink-secondary hover:border-beane-green hover:text-ink-primary'
           }`}
         >

@@ -59,10 +59,10 @@ function MatchupCategoryBar({ sportConfig, winCategories = [], loseCategories = 
         return (
           <div
             key={cat.id}
-            className={`flex-1 h-9 rounded-md flex flex-col items-center justify-center font-mono text-[10px] font-semibold ${CAT_SEGMENT_STYLES[result]}`}
+            className={`flex-1 h-9 rounded-md flex flex-col items-center justify-center font-mono text-micro font-semibold ${CAT_SEGMENT_STYLES[result]}`}
           >
             {cat.label}
-            <span className="text-[9px] font-medium opacity-75">{CAT_SEGMENT_SYMBOL[result]}</span>
+            <span className="text-micro font-medium opacity-75">{CAT_SEGMENT_SYMBOL[result]}</span>
           </div>
         )
       })}
@@ -200,7 +200,7 @@ export default function HeroCard({ league, rosters, standing, sportConfig, weekl
     >
       <div className="flex flex-wrap items-center gap-2">
         {tierStyle && (
-          <span className={`text-[10px] font-mono px-2 py-0.5 rounded border uppercase ${tierStyle.bg} ${tierStyle.color}`}>
+          <span className={`text-micro font-mono px-2 py-0.5 rounded-full border uppercase ${tierStyle.bg} ${tierStyle.color}`}>
             {tierStyle.label}
           </span>
         )}

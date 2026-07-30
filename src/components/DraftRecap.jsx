@@ -10,7 +10,7 @@ import { getSessionId } from '@/utils/session'
 import { resolveProfile } from '@/utils/gmProfile'
 import { classifyDraftDNA, getTopCategories, getFallbackPrediction, trackArchetypeStat } from '@/utils/draftDNA'
 import DraftDNACard from '@/components/DraftDNACard'
-import { Card, Badge } from '@/components/ui'
+import { Card, Badge, AdvisorError } from '@/components/ui'
 
 const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers }
 
@@ -327,15 +327,7 @@ export default function DraftRecap({ league }) {
           )}
 
           {recapError && (
-            <div className="space-y-2">
-              <p className="text-xs text-signal-down font-mono">{recapError}</p>
-              <button
-                onClick={generateOutlook}
-                className="text-xs font-mono px-3 py-1.5 rounded bg-surface-overlay border border-surface-line text-ink-secondary hover:text-ink-primary hover:border-beane-green transition-colors"
-              >
-                Try again
-              </button>
-            </div>
+            <AdvisorError message={recapError} onRetry={generateOutlook} />
           )}
         </Card>
       )}

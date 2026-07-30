@@ -45,6 +45,11 @@ module.exports = {
         heading:   ['1.125rem',  { lineHeight: '1.35' }],
         body:      ['0.9375rem', { lineHeight: '1.5' }],
         label:     ['0.8125rem', { lineHeight: '1.3', letterSpacing: '0.02em' }],
+        // Compact badge/eyebrow-only step below `label`. Documents what was
+        // previously ~40 scattered text-[9px]/[10px]/[11px] arbitrary
+        // values (found by the D-01 audit) as one real, deliberate token —
+        // never for body or data content, only dense inline badges/pills.
+        micro:     ['0.625rem', { lineHeight: '1.3', letterSpacing: '0.02em' }],
         data:      ['0.875rem',  { lineHeight: '1.4' }],
         'data-lg': ['1.25rem',   { lineHeight: '1.2' }],
       },

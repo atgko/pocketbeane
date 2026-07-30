@@ -52,11 +52,7 @@ export async function fetchWeeklyMatchup({ league, rosters }) {
     }),
   })
   const data = await res.json()
-  if (!res.ok) {
-    // TEMPORARY: appending debugRaw (the actual Yahoo error) when present —
-    // see matchup-advice.js, still tracking down the real scoreboard 403 cause.
-    throw new Error(data.debugRaw ? `${data.error || 'Advice failed'}\n\n${data.debugRaw}` : (data.error || 'Advice failed'))
-  }
+  if (!res.ok) throw new Error(data.error || "Couldn't get this week's matchup advice. Try again in a bit.")
   return { ...data, fetchedAt: new Date().toISOString() }
 }
 
@@ -157,7 +153,7 @@ export function TrendBadge({ player }) {
   const dateLabel = new Date(cs.as_of_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })
   return (
     <span
-      className={`ml-1 text-[10px] font-mono tabular-nums whitespace-nowrap ${stale ? 'text-ink-muted' : style.color}`}
+      className={`ml-1 text-micro font-mono tabular-nums whitespace-nowrap ${stale ? 'text-ink-muted' : style.color}`}
       title={`Current season stats as of ${cs.as_of_date} (${cs.gp} GP)${stale ? ' — stale, treat as prior-season-only' : ''}`}
     >
       {style.icon} {stale ? `stale·${dateLabel}` : dateLabel}
@@ -193,7 +189,7 @@ export function TradeFavorBar({ favorScore, partnerTeamName }) {
   return (
     <div>
       <p className="text-sm text-ink-primary font-medium mb-3">{favorStatement(score, partnerTeamName)}</p>
-      <div className="flex items-center justify-between text-[10px] font-mono text-ink-muted uppercase tracking-wider mb-1.5">
+      <div className="flex items-center justify-between text-micro font-mono text-ink-muted uppercase tracking-wider mb-1.5">
         <span>You</span>
         <span>{partnerTeamName}</span>
       </div>
@@ -215,7 +211,7 @@ export function TradeFavorBar({ favorScore, partnerTeamName }) {
           }}
         />
       </div>
-      <p className="text-center text-[9px] font-mono tabular-nums text-ink-muted mt-2.5">50 / 50</p>
+      <p className="text-center text-micro font-mono tabular-nums text-ink-muted mt-2.5">50 / 50</p>
     </div>
   )
 }
@@ -236,8 +232,8 @@ export function TradePlayerToggle({ player, selected, onToggle }) {
       }`}
     >
       {player.name}
-      {player.positions && <span className="ml-1.5 font-mono text-[10px] text-ink-muted">{player.positions}</span>}
-      {hurt && <span className="ml-1.5 font-mono text-[10px] text-signal-watch/80">{player.status}</span>}
+      {player.positions && <span className="ml-1.5 font-mono text-micro text-ink-muted">{player.positions}</span>}
+      {hurt && <span className="ml-1.5 font-mono text-micro text-signal-watch/80">{player.status}</span>}
     </button>
   )
 }

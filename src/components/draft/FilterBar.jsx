@@ -15,7 +15,7 @@ export default function FilterBar({
           value={search}
           onChange={e => onSearch(e.target.value)}
           placeholder="Search players..."
-          className="bg-surface-base border border-surface-line rounded pl-7 pr-3 py-2 text-sm text-ink-primary w-52 focus:outline-none focus:border-beane-green placeholder-ink-muted"
+          className="bg-surface-base border border-surface-line rounded-lg pl-7 pr-3 py-2 text-sm text-ink-primary w-52 focus:outline-none focus:border-beane-green placeholder-ink-muted"
         />
       </div>
 
@@ -37,7 +37,7 @@ export default function FilterBar({
       </div>
 
       {turnLabel && (
-        <div className={`ml-auto flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono ${
+        <div role="status" aria-live="polite" className={`ml-auto flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono ${
           isMyTurn
             ? 'bg-beane-green/15 text-beane-green-text border border-beane-green/30'
             : 'bg-surface-overlay text-ink-secondary border border-surface-line'
@@ -55,9 +55,9 @@ function FilterButton({ active, onClick, children }) {
     <button
       type="button"
       onClick={onClick}
-      className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+      className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
         active
-          ? 'bg-beane-green text-ink-primary'
+          ? 'bg-beane-green text-[#06120C]'
           : 'bg-surface-base border border-surface-line text-ink-secondary hover:border-beane-green hover:text-ink-primary'
       }`}
     >

@@ -23,11 +23,11 @@ export default function LeagueSwitcher({ leagues, activeId, onSelect }) {
           canSwitch ? 'hover:border-ink-secondary cursor-pointer' : 'cursor-default'
         }`}
       >
-        <span className="font-mono text-[10px] text-ink-muted">
+        <span className="font-mono text-micro text-ink-muted">
           {SPORT_LABELS[active.config.sport] ?? (active.config.sport ?? 'nba').toUpperCase()}
         </span>
         {active.config.name || 'Unnamed League'}
-        {canSwitch && <span className="text-ink-muted text-[10px]">▾</span>}
+        {canSwitch && <span className="text-ink-muted text-micro">▾</span>}
       </button>
 
       {open && canSwitch && (
@@ -40,7 +40,7 @@ export default function LeagueSwitcher({ leagues, activeId, onSelect }) {
                 l.id === active.id ? 'text-beane-green-text' : 'text-ink-primary'
               }`}
             >
-              <span className="font-mono text-[10px] text-ink-muted mr-1.5">
+              <span className="font-mono text-micro text-ink-muted mr-1.5">
                 {SPORT_LABELS[l.config.sport] ?? (l.config.sport ?? 'nba').toUpperCase()}
               </span>
               {l.config.name || 'Unnamed League'}

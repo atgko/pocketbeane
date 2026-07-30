@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-30T00:00:00.000Z",
+  "title": "Design System: PocketBeane",
+  "extensions": {
+    "colorMeta": {
+      "surface-base": { "role": "neutral", "displayName": "Surface Base", "canonical": "#0E1613", "tonalRamp": ["#141f1b", "#283e36", "#3f6456", "#578976", "#76a895", "#9bc0b2", "#c1d7cf", "#e9f1ee"] },
+      "surface-raised": { "role": "neutral", "displayName": "Surface Raised", "canonical": "#17231D", "tonalRamp": ["#141f1a", "#283e33", "#416252", "#598770", "#78a68f", "#9dbead", "#c1d7cc", "#e9f1ed"] },
+      "surface-overlay": { "role": "neutral", "displayName": "Surface Overlay", "canonical": "#203027", "tonalRamp": ["#141f19", "#293d32", "#416250", "#5a876d", "#78a58c", "#9dbeab", "#c2d6cb", "#eaf1ed"] },
+      "surface-line": { "role": "neutral", "displayName": "Surface Line", "canonical": "#2C3E34", "tonalRamp": ["#151e19", "#2a3c32", "#445f50", "#5d836e", "#7ca28d", "#a0bbac", "#c3d5cb", "#eaf0ed"] },
+      "beane-green": { "role": "primary", "displayName": "Beane Green", "canonical": "#1DB068", "tonalRamp": ["#072c1a", "#0e5834", "#178c53", "#20c172", "#3edf90", "#73e8af", "#a7f1cd", "#e0faed"] },
+      "beane-green-dim": { "role": "primary", "displayName": "Beane Green Dim", "canonical": "#14724A", "tonalRamp": ["#082b1c", "#0f5738", "#188b5a", "#21bf7c", "#40de9b", "#74e7b6", "#a8f0d1", "#e1faef"] },
+      "beane-green-text": { "role": "primary", "displayName": "Beane Green Text", "canonical": "#34C77F", "tonalRamp": ["#0b281a", "#155134", "#228153", "#2eb272", "#4dd190", "#7eddae", "#aeeacd", "#e3f8ed"] },
+      "brass": { "role": "secondary", "displayName": "Brass", "canonical": "#C9A227", "tonalRamp": ["#2b2208", "#554511", "#896e1b", "#bc9724", "#dbb643", "#e4ca76", "#eedeaa", "#f9f3e1"] },
+      "ink-primary": { "role": "neutral", "displayName": "Ink Primary", "canonical": "#E8ECEA", "tonalRamp": ["#171c19", "#2e3833", "#4a5952", "#667b70", "#84998f", "#a6b5ad", "#c7d1cc", "#ebefed"] },
+      "ink-secondary": { "role": "neutral", "displayName": "Ink Secondary", "canonical": "#93A69B", "tonalRamp": ["#171c19", "#2e3832", "#4a5950", "#657b6e", "#849a8d", "#a6b5ac", "#c7d1cb", "#ebefed"] },
+      "ink-muted": { "role": "neutral", "displayName": "Ink Muted", "canonical": "#7C8D84", "tonalRamp": ["#181b19", "#2f3733", "#4c5751", "#687870", "#87978e", "#a8b3ad", "#c8d0cc", "#eceeed"] },
+      "signal-up": { "role": "semantic", "displayName": "Signal Up", "canonical": "#2FBF71", "tonalRamp": ["#0a2918", "#145230", "#20834d", "#2cb46b", "#4bd389", "#7cdfa9", "#adebc9", "#e2f8ec"] },
+      "signal-down": { "role": "semantic", "displayName": "Signal Down", "canonical": "#E05252", "tonalRamp": ["#2b0808", "#571010", "#8a1919", "#be2222", "#dd4141", "#e67575", "#f0a9a9", "#fae1e1"] },
+      "signal-watch": { "role": "semantic", "displayName": "Signal Watch", "canonical": "#E0A83D", "tonalRamp": ["#2c1f07", "#583f0e", "#8d6416", "#c18a1f", "#e0a83e", "#e9c072", "#f1d8a7", "#faf1e0"] },
+      "signal-info": { "role": "semantic", "displayName": "Signal Info", "canonical": "#4E9CD3", "tonalRamp": ["#0a1c29", "#143852", "#205a83", "#2d7cb4", "#4b9ad2", "#7cb6df", "#add1eb", "#e2eff8"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Page heroes, Draft DNA archetype names, Bold Predictions. Fraunces only, 24px+, weights 500-600." },
+      "title": { "displayName": "Title", "purpose": "Section/panel titles, Season Outlook headlines." },
+      "heading": { "displayName": "Heading", "purpose": "Card headers, Advisor card titles." },
+      "body": { "displayName": "Body", "purpose": "Default copy." },
+      "label": { "displayName": "Label", "purpose": "Eyebrow labels, badges, captions; uppercase for eyebrows." },
+      "micro": { "displayName": "Micro", "purpose": "Compact badge/tier-pill/sport-tag text only, added 2026-07-30 to replace ~40 arbitrary sub-13px values found by the D-01 audit." },
+      "data": { "displayName": "Data", "purpose": "Every numeral in tables and stat lines; always tabular-nums." },
+      "data-lg": { "displayName": "Data Large", "purpose": "Hero stats." }
+    },
+    "shadows": [
+      { "name": "identity-glass-ring", "value": "0 0 0 1px rgba(255,255,255,0.05)", "purpose": "The one elevation exception in the system — Draft DNA and identity/modal cards only, paired with a subtle top-center radial brass glow." }
+    ],
+    "motion": [
+      { "name": "hover-transition", "value": "150ms ease (Tailwind transition-colors default)", "purpose": "Button/tab/card hover and focus state changes." },
+      { "name": "draft-clock-pulse", "value": "2s cubic-bezier(0.4, 0, 0.6, 1) infinite (Tailwind animate-pulse default)", "purpose": "The on-the-clock indicator during a live draft. Subtle opacity pulse only — no spinning, no scaling." }
+    ],
+    "breakpoints": [
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Default action button — CTAs, confirmations, the primary path forward.",
+      "html": "<button class=\"ds-btn-primary\">Take Luka Doncic</button>",
+      "css": ".ds-btn-primary { background: rgb(var(--color-beane-green)); color: #06120C; font-family: 'Inter', -apple-system, sans-serif; font-weight: 600; font-size: 13.5px; padding: 10px 18px; border-radius: 8px; border: none; transition: filter 150ms ease; } .ds-btn-primary:hover { filter: brightness(1.1); } .ds-btn-primary:focus-visible { outline: 2px solid rgb(var(--color-beane-green) / 0.6); outline-offset: 2px; } .ds-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Lower-emphasis action alongside a primary button.",
+      "html": "<button class=\"ds-btn-secondary\">Cancel</button>",
+      "css": ".ds-btn-secondary { background: transparent; color: rgb(var(--color-ink-primary)); font-family: 'Inter', -apple-system, sans-serif; font-weight: 500; font-size: 13.5px; padding: 10px 18px; border-radius: 8px; border: 1px solid rgb(var(--color-surface-line)); transition: background-color 150ms ease; } .ds-btn-secondary:hover { background: rgb(var(--color-surface-overlay)); } .ds-btn-secondary:focus-visible { outline: 2px solid rgb(var(--color-beane-green) / 0.6); outline-offset: 2px; }"
+    },
+    {
+      "name": "Destructive Button",
+      "kind": "button",
+      "refersTo": "button-destructive",
+      "description": "Delete/disconnect/archive actions — outline style, filled only on confirm.",
+      "html": "<button class=\"ds-btn-destructive\">Delete League</button>",
+      "css": ".ds-btn-destructive { background: transparent; color: rgb(var(--color-signal-down)); font-family: 'Inter', -apple-system, sans-serif; font-weight: 500; font-size: 13.5px; padding: 10px 18px; border-radius: 8px; border: 1px solid rgb(var(--color-signal-down)); transition: background-color 150ms ease; } .ds-btn-destructive:hover { background: rgb(var(--color-signal-down) / 0.1); }"
+    },
+    {
+      "name": "Data Card",
+      "kind": "card",
+      "refersTo": "card-data",
+      "description": "Dense, mono-numeral card for raw data — player rows, stat tables, standings.",
+      "html": "<div class=\"ds-card-data\"><p class=\"ds-card-data__label\">ADP</p><p class=\"ds-card-data__value\">3.0</p></div>",
+      "css": ".ds-card-data { background: rgb(var(--color-surface-raised)); border: 1px solid rgb(var(--color-surface-line)); border-radius: 12px; padding: 20px; } .ds-card-data__label { font-family: 'Inter', sans-serif; font-size: 13px; color: rgb(var(--color-ink-secondary)); margin-bottom: 4px; } .ds-card-data__value { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; font-size: 20px; font-weight: 600; color: rgb(var(--color-ink-primary)); }"
+    },
+    {
+      "name": "Advisor Card",
+      "kind": "custom",
+      "refersTo": "card-advisor",
+      "description": "The signature component — anywhere Claude's analysis appears, it renders as this and nothing else does. Green left rule + brass eyebrow signal \"Beane is talking.\"",
+      "html": "<div class=\"ds-card-advisor\"><p class=\"ds-card-advisor__eyebrow\">Beane's Take</p><h3 class=\"ds-card-advisor__title\">Take the point guard</h3><p class=\"ds-card-advisor__body\">He's the best <strong>value</strong> at this pick — an elite floor-general fills the one gap your roster actually has.</p></div>",
+      "css": ".ds-card-advisor { background: rgb(var(--color-surface-raised)); border: 1px solid rgb(var(--color-surface-line)); border-left: 3px solid rgb(var(--color-beane-green)); border-radius: 12px; padding: 20px; } .ds-card-advisor__eyebrow { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(var(--color-brass)); margin: 0; } .ds-card-advisor__title { font-family: 'Fraunces', Georgia, serif; font-size: 18px; font-weight: 500; margin: 8px 0 6px; color: rgb(var(--color-ink-primary)); } .ds-card-advisor__body { font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.5; color: rgb(var(--color-ink-secondary)); margin: 0; } .ds-card-advisor__body strong { color: rgb(var(--color-ink-primary)); font-weight: 500; }"
+    },
+    {
+      "name": "Identity Card",
+      "kind": "card",
+      "refersTo": "card-identity",
+      "description": "The rare, premium tier — Draft DNA reveal, share card, modals. Dark glass, center-aligned, Fraunces display type.",
+      "html": "<div class=\"ds-card-identity\"><p class=\"ds-card-identity__eyebrow\">Draft DNA</p><h2 class=\"ds-card-identity__name\">The Moneyball GM</h2><p class=\"ds-card-identity__tagline\">Value first, upside never explained away.</p></div>",
+      "css": ".ds-card-identity { background: radial-gradient(ellipse at top, rgb(var(--color-brass) / 0.08), transparent 60%), linear-gradient(to bottom, rgb(var(--color-surface-overlay)), rgb(var(--color-surface-base))); border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 0 0 1px rgba(255,255,255,0.05); border-radius: 20px; padding: 36px 36px 28px; text-align: center; } .ds-card-identity__eyebrow { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgb(var(--color-brass)); } .ds-card-identity__name { font-family: 'Fraunces', Georgia, serif; font-size: 2.4rem; font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; color: rgb(var(--color-ink-primary)); margin: 12px 0 6px; } .ds-card-identity__tagline { font-family: 'Inter', sans-serif; font-style: italic; font-size: 15px; color: rgb(var(--color-ink-secondary)); }"
+    },
+    {
+      "name": "Badge",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "Semantic status pill — position eligibility, injury status, trend/value deltas. Color = meaning, never decoration.",
+      "html": "<span class=\"ds-badge ds-badge--up\">+8 vs ADP</span>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; gap: 4px; border-radius: 9999px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13px; padding: 3px 10px; } .ds-badge--up { background: rgb(var(--color-signal-up) / 0.15); color: rgb(var(--color-signal-up)); } .ds-badge--down { background: rgb(var(--color-signal-down) / 0.15); color: rgb(var(--color-signal-down)); } .ds-badge--watch { background: rgb(var(--color-signal-watch) / 0.15); color: rgb(var(--color-signal-watch)); } .ds-badge--info { background: rgb(var(--color-signal-info) / 0.15); color: rgb(var(--color-signal-info)); } .ds-badge--brass { background: rgb(var(--color-brass) / 0.12); color: rgb(var(--color-brass)); border: 1px solid rgb(var(--color-brass) / 0.35); } .ds-badge--neutral { background: rgb(var(--color-surface-overlay)); color: rgb(var(--color-ink-secondary)); }"
+    },
+    {
+      "name": "Tab Bar",
+      "kind": "nav",
+      "refersTo": "tabbar",
+      "description": "Season Hub sub-navigation — underlined active state, horizontal-scroll on mobile.",
+      "html": "<div class=\"ds-tabbar\" role=\"tablist\"><button class=\"ds-tabbar__tab ds-tabbar__tab--active\">This Week</button><button class=\"ds-tabbar__tab\">Waivers</button><button class=\"ds-tabbar__tab\">Trades</button></div>",
+      "css": ".ds-tabbar { display: flex; gap: 4px; overflow-x: auto; border-bottom: 1px solid rgb(var(--color-surface-line)); } .ds-tabbar__tab { flex-shrink: 0; padding: 10px 16px; font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 500; color: rgb(var(--color-ink-secondary)); border: none; border-bottom: 2px solid transparent; margin-bottom: -1px; background: none; transition: color 150ms ease; } .ds-tabbar__tab:hover { color: rgb(var(--color-ink-primary)); } .ds-tabbar__tab--active { color: rgb(var(--color-ink-primary)); border-bottom-color: rgb(var(--color-beane-green)); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Front Office",
+    "overview": "PocketBeane is styled as an MLB front office war room: dark, focused, expensive-feeling, where data is rendered with Bloomberg-terminal discipline and analysis is delivered with the editorial confidence of a beat writer who's earned the right to an opinion. It is a premium analytics foundation with one editorial voice layered on top — Beane's takes are visually distinct from the raw board everywhere they appear, because the product's whole thesis is \"one opinionated call,\" not a ranked list or a spreadsheet.\n\nThe palette carries the brand story on purpose: a deeper, less-neon green than the default \"AI-assembled app\" tell, paired with a desaturated brass/gold that quietly nods to the Oakland Athletics — the Moneyball tie made visual without ever needing to explain itself. Confirmed anti-references, deliberately rejected during D-01: Sleeper's chat-first social energy, Underdog's bright casual/slot-machine feel, FantasyPros' spreadsheet-with-a-navbar anonymity, Yahoo's mass-market portal chrome, and generically the 2020s pastel-gradient SaaS look.",
+    "keyCharacteristics": [
+      "Dark-first, desaturated green-black surfaces — never pure black or Tailwind gray-900",
+      "Three-font system with one job each: Fraunces (editorial voice), Inter (structure), JetBrains Mono (every number)",
+      "One signature \"Beane speaks\" component (the Advisor card), visually distinct from raw data everywhere it appears",
+      "Brass/gold is a rare, deliberate accent reserved for identity moments, not a general secondary color",
+      "Flat by default — no drop shadows; depth comes from surface-lightness steps and hairline borders, with one deliberate \"dark glass\" exception for identity moments"
+    ],
+    "rules": [
+      { "name": "The Brass Scarcity Rule", "body": "If brass appears more than roughly three times on one screen, it's being overused — its rarity is what makes it read as premium instead of decorative.", "section": "colors" },
+      { "name": "The Meaning-Only Rule", "body": "A signal color means exactly one thing everywhere it appears. Red never means \"look here,\" only \"negative/broken\"; if a color isn't carrying real semantic weight, it shouldn't be there.", "section": "colors" },
+      { "name": "The Sentence-or-Number Rule", "body": "If it's a sentence, Inter. If it's a number, Mono. If it's Beane speaking or an identity moment, Fraunces. Nothing crosses lanes.", "section": "typography" },
+      { "name": "The Tabular Rule", "body": "Every numeral in a table or stat line renders in JetBrains Mono with tabular-nums. Proportional-figure numerals in a data column are the single most common tell of an unfinished data product.", "section": "typography" },
+      { "name": "The No-Uniform-Stack Rule", "body": "A single max-w-4xl mx-auto vertical column repeated on every page is the generic-SaaS tell; hierarchy comes from a real grid, not a list where every element carries equal visual weight.", "section": "layout" },
+      { "name": "The Flat-By-Default Rule", "body": "Surfaces are flat at rest — elevation is a lightness step and a hairline border, never a shadow. The one exception (identity glass) exists to make premium moments feel different, not to become a second elevation system.", "section": "elevation" },
+      { "name": "The One-Radius-Per-Tier Rule", "body": "Controls, cards, and identity moments each get exactly one radius value. A fourth, arbitrary radius appearing anywhere else in the app is a regression, not a variant.", "section": "shapes" },
+      { "name": "The One Voice Rule", "body": "Anywhere Claude's analysis appears, it renders as an Advisor card and nothing else does. The moment the green rule and brass eyebrow appear, the user knows Beane is talking, not the board.", "section": "components" },
+      { "name": "The Named-Take Rule", "body": "The Advisor card eyebrow names the kind of take (THE CALL, THE VERDICT, THE CEILING, THE MATCHUP READ) — never a repeated generic default. No screen may show the same eyebrow word twice.", "section": "components" }
+    ],
+    "dos": [
+      "Do render every numeral — tables, stat lines, ADP, scores, budgets, timers — in JetBrains Mono with tabular-nums.",
+      "Do reserve brass for identity/premium moments only, at roughly three or fewer appearances per screen.",
+      "Do render every Claude-authored insight as an Advisor card — the green rule plus brass eyebrow is the only signal for \"Beane spoke here.\"",
+      "Do keep card padding at a 20px floor; treat cramped padding as an unfinished-product regression, not a density choice.",
+      "Do apply the global :focus-visible treatment to every interactive element, including raw, pre-design-system <button>/<a>/<input> elements."
+    ],
+    "donts": [
+      "Don't use Tailwind's raw default accent colors (green-500, blue-500, indigo-600) anywhere — always the semantic token.",
+      "Don't use a pure #000000/gray-900 background or pure #FFFFFF text — surface-base and ink-primary carry a deliberate green cast instead.",
+      "Don't add a drop shadow to a data or advisor card — elevation is a lightness step and a hairline border; the dark-glass ring is reserved for identity cards only.",
+      "Don't use emoji as functional UI chrome (icons, status indicators, badges) — emoji are permitted only inside Beane's conversational text, never as interface elements.",
+      "Don't force a page into a single max-w-4xl mx-auto vertical stack — use a real grid so hierarchy is structural, not just a list.",
+      "Don't use red or green decoratively — they mean exactly one thing (negative/positive) everywhere they appear."
+    ]
+  }
+}

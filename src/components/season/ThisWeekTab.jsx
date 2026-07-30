@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import nbaPlayers from '@/data/players.json'
 import { hasScheduleSupport, getStartSitMode } from '@/config/sports'
-import { AdvisorCard, Card } from '@/components/ui'
+import { AdvisorCard, Card, AdvisorError } from '@/components/ui'
 import useLeagueStore from '@/store/leagueStore'
 import { TrendBadge, INJURY_LABELS, PITCHING_REC_STYLES, SLOT_CONFIG_KEYS, findPlayerByName, fetchWeeklyMatchup, isMatchupStale } from './shared'
 
@@ -31,10 +31,10 @@ function MatchupPanel({ league, rosters, yahooConnected }) {
   const canRun = yahooConnected && Boolean(league.config.yahooLeagueKey)
 
   return (
-    <AdvisorCard>
+    <AdvisorCard eyebrow="THE MATCHUP READ">
       <div className="flex items-start justify-between gap-4 mb-1">
         <div>
-          <p className="text-sm font-semibold text-ink-primary">Head-to-Head Matchup Advisor</p>
+          <h3 className="font-display text-heading font-medium text-ink-primary">Head-to-Head Matchup Advisor</h3>
           <p className="text-xs text-ink-secondary mt-0.5">
             Weekly category projections vs. your current opponent with lineup suggestions.
           </p>
@@ -57,7 +57,7 @@ function MatchupPanel({ league, rosters, yahooConnected }) {
       )}
 
       {error && !loading && (
-        <p className="text-xs text-signal-down font-mono mt-4 whitespace-pre-wrap">{error}</p>
+        <AdvisorError message={error} onRetry={handleGetAdvice} />
       )}
 
       {advice && !loading && (
@@ -71,7 +71,7 @@ function MatchupPanel({ league, rosters, yahooConnected }) {
           <div className="grid grid-cols-3 gap-3">
             {advice.winCategories?.length > 0 && (
               <div>
-                <p className="text-[10px] font-mono text-signal-up uppercase tracking-wider mb-1.5">Win</p>
+                <p className="text-micro font-mono text-signal-up uppercase tracking-wider mb-1.5">Win</p>
                 <div className="flex flex-wrap gap-1">
                   {advice.winCategories.map(c => (
                     <span key={c} className="text-xs font-mono bg-signal-up/15 text-signal-up px-1.5 py-0.5 rounded">{c}</span>
@@ -81,7 +81,7 @@ function MatchupPanel({ league, rosters, yahooConnected }) {
             )}
             {advice.loseCategories?.length > 0 && (
               <div>
-                <p className="text-[10px] font-mono text-signal-down uppercase tracking-wider mb-1.5">Lose</p>
+                <p className="text-micro font-mono text-signal-down uppercase tracking-wider mb-1.5">Lose</p>
                 <div className="flex flex-wrap gap-1">
                   {advice.loseCategories.map(c => (
                     <span key={c} className="text-xs font-mono bg-signal-down/15 text-signal-down px-1.5 py-0.5 rounded">{c}</span>
@@ -91,7 +91,7 @@ function MatchupPanel({ league, rosters, yahooConnected }) {
             )}
             {advice.tossupCategories?.length > 0 && (
               <div>
-                <p className="text-[10px] font-mono text-signal-watch uppercase tracking-wider mb-1.5">Tossup</p>
+                <p className="text-micro font-mono text-signal-watch uppercase tracking-wider mb-1.5">Tossup</p>
                 <div className="flex flex-wrap gap-1">
                   {advice.tossupCategories.map(c => (
                     <span key={c} className="text-xs font-mono bg-signal-watch/15 text-signal-watch px-1.5 py-0.5 rounded">{c}</span>
@@ -169,10 +169,10 @@ function LineupAdvisorPanel({ league, rosters, sport, mode }) {
   }
 
   return (
-    <AdvisorCard>
+    <AdvisorCard eyebrow="THE LINEUP CALL">
       <div className="flex items-start justify-between gap-4 mb-1">
         <div>
-          <p className="text-sm font-semibold text-ink-primary">Start / Sit Advisor</p>
+          <h3 className="font-display text-heading font-medium text-ink-primary">Start / Sit Advisor</h3>
           <p className="text-xs text-ink-secondary mt-0.5">
             {condensed
               ? 'Optimal lineup by games this week, injury status, and recent form.'
@@ -197,7 +197,7 @@ function LineupAdvisorPanel({ league, rosters, sport, mode }) {
       )}
 
       {error && !loading && (
-        <p className="text-xs text-signal-down font-mono mt-4">{error}</p>
+        <AdvisorError message={error} onRetry={handleGetAdvice} />
       )}
 
       {advice && !loading && (
@@ -218,7 +218,7 @@ function LineupAdvisorPanel({ league, rosters, sport, mode }) {
                 return (
                   <div key={i} className="border border-surface-line rounded-md px-4 py-3">
                     <div className="flex flex-wrap items-center gap-2 mb-1">
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-surface-overlay text-ink-secondary">
+                      <span className="text-micro font-mono px-2 py-0.5 rounded-full bg-surface-overlay text-ink-secondary">
                         {entry.slot}
                       </span>
                       <span className="text-xs text-ink-primary font-medium flex items-center">
@@ -226,14 +226,14 @@ function LineupAdvisorPanel({ league, rosters, sport, mode }) {
                         <TrendBadge player={player} />
                       </span>
                       {!condensed && entry.gamesThisWeek != null && (
-                        <span className="text-[10px] font-mono tabular-nums text-ink-secondary">
+                        <span className="text-micro font-mono tabular-nums text-ink-secondary">
                           {entry.gamesThisWeek}g{entry.backToBack ? ' · B2B' : ''}
                         </span>
                       )}
                     </div>
                     {condensed ? (
                       <>
-                        <p className="text-[11px] text-ink-secondary font-mono tabular-nums">
+                        <p className="text-micro text-ink-secondary font-mono tabular-nums">
                           {entry.gamesThisWeek != null ? `${entry.gamesThisWeek}g this week${entry.backToBack ? ' · B2B' : ''}` : ''}
                           {hurt && (
                             <span className="text-signal-watch/80"> · {INJURY_LABELS[entry.injuryStatus] ?? entry.injuryStatus}</span>
@@ -251,7 +251,7 @@ function LineupAdvisorPanel({ league, rosters, sport, mode }) {
           )}
           {advice.benchNotes?.length > 0 && (
             <div className="pt-3 border-t border-surface-line space-y-2">
-              <p className="text-[10px] font-mono text-ink-muted uppercase tracking-wider">Bench notes</p>
+              <p className="text-micro font-mono text-ink-muted uppercase tracking-wider">Bench notes</p>
               {advice.benchNotes.map((note, i) => {
                 const hurt = note.injuryStatus && note.injuryStatus !== 'healthy'
                 return (
@@ -302,7 +302,7 @@ function PitchingStartsPanel({ rosters }) {
     <Card>
       <div className="flex items-start justify-between gap-4 mb-1">
         <div>
-          <p className="text-sm font-semibold text-ink-primary">Pitching Starts</p>
+          <h3 className="font-display text-heading font-medium text-ink-primary">Pitching Starts</h3>
           <p className="text-xs text-ink-secondary mt-0.5">
             Scheduled starts this week for your rostered SPs, with a start / stream / hold call.
           </p>
@@ -321,7 +321,7 @@ function PitchingStartsPanel({ rosters }) {
       )}
 
       {error && !loading && (
-        <p className="text-xs text-signal-down font-mono mt-4">{error}</p>
+        <AdvisorError message={error} onRetry={handleCheckStarts} />
       )}
 
       {data && !loading && (
@@ -341,7 +341,7 @@ function PitchingStartsPanel({ rosters }) {
                       <p className="text-xs text-ink-primary font-medium">
                         {s.player} <span className="text-ink-muted font-mono">{s.team}</span>
                       </p>
-                      <p className="text-[11px] text-ink-secondary font-mono tabular-nums mt-0.5">
+                      <p className="text-micro text-ink-secondary font-mono tabular-nums mt-0.5">
                         Team plays {s.teamGamesThisWeek} time{s.teamGamesThisWeek === 1 ? '' : 's'} this week
                         {hurt && (
                           <span className="text-signal-watch/80">
@@ -350,7 +350,7 @@ function PitchingStartsPanel({ rosters }) {
                         )}
                       </p>
                     </div>
-                    <span className={`shrink-0 text-[10px] font-mono px-2 py-0.5 rounded uppercase ${PITCHING_REC_STYLES[s.recommendation] ?? PITCHING_REC_STYLES.hold}`}>
+                    <span className={`shrink-0 text-micro font-mono px-2 py-0.5 rounded-full uppercase ${PITCHING_REC_STYLES[s.recommendation] ?? PITCHING_REC_STYLES.hold}`}>
                       {s.recommendation}
                     </span>
                   </div>

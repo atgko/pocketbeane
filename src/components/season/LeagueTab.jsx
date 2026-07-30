@@ -2,7 +2,7 @@ import { useState } from 'react'
 import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
 import { getWinRateGrade } from '@/utils/teamStanding'
-import { AdvisorCard } from '@/components/ui'
+import { AdvisorCard, Card, AdvisorError } from '@/components/ui'
 import {
   TIER_STYLES,
   STANDING_TREND_ARROW,
@@ -96,20 +96,22 @@ export default function LeagueTab({ league, rosters }) {
     : null
 
   return (
-    <AdvisorCard>
-      <p className="text-sm font-semibold text-ink-primary mb-3">League Standing Intelligence</p>
+    <div className="space-y-4">
 
-      {/* 1. User's team position */}
-      <div className="border border-surface-line rounded-md px-4 py-3 mb-4">
-        <div className="flex flex-wrap items-center gap-2 mb-2">
+      {/* 1. Your standing — the one thing to read first. Beane's per-team
+          take is a real LLM call, so this stays an Advisor card; the tier/
+          trend/category chips are deterministic quick-glance summary for
+          the same team, not a separate topic. */}
+      <AdvisorCard eyebrow="THE SCOUTING REPORT" title="Your Standing">
+        <div className="flex flex-wrap items-center gap-2 mb-3">
           {tierStyle && (
-            <span className={`text-[10px] font-mono px-2 py-0.5 rounded border uppercase ${tierStyle.bg} ${tierStyle.color}`}>
+            <span className={`text-micro font-mono px-2 py-0.5 rounded-full border uppercase ${tierStyle.bg} ${tierStyle.color}`}>
               {tierStyle.label}
             </span>
           )}
           {trendArrow && <span className={`text-sm font-mono ${trendArrow.color}`}>{trendArrow.icon}</span>}
           <span className="text-xs text-ink-primary font-medium">{userTeam.teamName} · #{userTeam.rank ?? '?'}</span>
-          <span className="text-[11px] font-mono tabular-nums text-ink-secondary">
+          <span className="text-micro font-mono tabular-nums text-ink-secondary">
             {userTeam.wins}-{userTeam.losses}{userTeam.ties ? `-${userTeam.ties}` : ''}
           </span>
         </div>
@@ -122,7 +124,7 @@ export default function LeagueTab({ league, rosters }) {
               <span
                 key={cat.id}
                 title={wr ? `Beats ${wr.wins}/${wr.of} teams in ${cat.label}` : 'Not enough data yet'}
-                className={`text-[10px] font-mono tabular-nums px-1.5 py-0.5 rounded border ${grade ? WIN_RATE_GRADE_STYLES[grade] : 'text-ink-muted bg-surface-overlay border-surface-line'}`}
+                className={`text-micro font-mono tabular-nums px-1.5 py-0.5 rounded-lg border ${grade ? WIN_RATE_GRADE_STYLES[grade] : 'text-ink-muted bg-surface-overlay border-surface-line'}`}
               >
                 {cat.label} {wr?.rate != null ? `${Math.round(wr.rate * 100)}%` : '—'}
               </span>
@@ -133,15 +135,15 @@ export default function LeagueTab({ league, rosters }) {
         {!pulse && !pulseLoading && (
           <button
             onClick={handleGetInsight}
-            className="text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors"
+            className="text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded-lg hover:bg-beane-green/20 transition-colors"
           >
             Get Beane's Take
           </button>
         )}
         {pulseLoading && <p className="text-xs text-ink-secondary font-mono animate-pulse">Reading the league…</p>}
-        {pulseError && !pulseLoading && <p className="text-xs text-signal-down font-mono">{pulseError}</p>}
+        {pulseError && !pulseLoading && <AdvisorError message={pulseError} onRetry={handleGetInsight} />}
         {pulse?.myTeamTake && !pulseLoading && (
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 pt-3 border-t border-surface-line/60 mt-3">
             <p className="text-xs text-ink-secondary leading-relaxed">{pulse.myTeamTake.summary}</p>
             {pulse.myTeamTake.strengths && (
               <p className="text-xs text-ink-secondary leading-relaxed">
@@ -160,24 +162,26 @@ export default function LeagueTab({ league, rosters }) {
             )}
           </div>
         )}
-        {insight && !pulseLoading && <p className="text-xs text-ink-secondary leading-relaxed">{insight}</p>}
-      </div>
+        {insight && !pulseLoading && <p className="text-xs text-ink-secondary leading-relaxed pt-3 border-t border-surface-line/60 mt-3">{insight}</p>}
+      </AdvisorCard>
 
-      {/* 2. League landscape */}
-      <div className="mb-4">
-        <p className="text-[10px] font-mono text-ink-muted uppercase tracking-wider mb-2">League Landscape</p>
+      {/* 2. League landscape — deterministic standings data, not a Claude
+          result, so it belongs on a data card, not inside the Advisor
+          card above (that was the actual One Voice Rule violation here). */}
+      <Card variant="data">
+        <h3 className="font-display text-heading font-medium text-ink-primary mb-3">League Landscape</h3>
         <div className="space-y-1">
           {teams.map(({ team, tier, overallWinRate }) => {
             const style = TIER_STYLES[tier] ?? null
             return (
               <div
                 key={team.teamKey}
-                className={`flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 text-xs px-2 py-1 rounded border ${style ? style.bg : 'border-transparent'}`}
+                className={`flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 text-xs px-2 py-1 rounded-lg border ${style ? style.bg : 'border-transparent'}`}
               >
                 <span className={`font-medium ${style ? style.color : 'text-ink-secondary'}`}>
                   #{team.rank ?? '?'} {team.teamName}{team.isUser ? ' (ME)' : ''}
                 </span>
-                <span className="font-mono tabular-nums text-ink-secondary text-[11px]">
+                <span className="font-mono tabular-nums text-ink-secondary text-micro">
                   {team.wins}-{team.losses}{team.ties ? `-${team.ties}` : ''}
                   {overallWinRate != null ? ` · ${Math.round(overallWinRate * 100)}% cat wins` : ''}
                 </span>
@@ -185,23 +189,21 @@ export default function LeagueTab({ league, rosters }) {
             )
           })}
         </div>
-      </div>
+      </Card>
 
-      {/* 3. Trade opportunity flags */}
-      <div className="pt-3 border-t border-surface-line">
-        <div className="flex items-center justify-between gap-2 mb-2">
-          <p className="text-[10px] font-mono text-ink-muted uppercase tracking-wider">Trade Opportunities</p>
-          {!tradeFlags && !tradeLoading && (
-            <button
-              onClick={handleGetTradeFlags}
-              className="shrink-0 text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors"
-            >
-              Scan for fits
-            </button>
-          )}
-        </div>
+      {/* 3. Trade opportunity flags — its own Advisor card (a separate real
+          LLM call from the standing take above, not a footnote on it). */}
+      <AdvisorCard eyebrow="ON THE RADAR" title="Trade Opportunities">
+        {!tradeFlags && !tradeLoading && (
+          <button
+            onClick={handleGetTradeFlags}
+            className="text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded-lg hover:bg-beane-green/20 transition-colors"
+          >
+            Scan for fits
+          </button>
+        )}
         {tradeLoading && <p className="text-xs text-ink-secondary font-mono animate-pulse">Cross-referencing rosters…</p>}
-        {tradeError && !tradeLoading && <p className="text-xs text-signal-down font-mono">{tradeError}</p>}
+        {tradeError && !tradeLoading && <AdvisorError message={tradeError} onRetry={handleGetTradeFlags} />}
         {tradeFlags && !tradeLoading && (
           tradeFlags.length > 0 ? (
             <div className="space-y-1.5">
@@ -215,7 +217,7 @@ export default function LeagueTab({ league, rosters }) {
             <p className="text-xs text-ink-secondary">No standout trade fits right now.</p>
           )
         )}
-      </div>
-    </AdvisorCard>
+      </AdvisorCard>
+    </div>
   )
 }

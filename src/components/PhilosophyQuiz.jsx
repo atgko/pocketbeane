@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { QUIZ_QUESTIONS } from '@/utils/gmProfile'
+import Modal from '@/components/ui/Modal'
 
 export default function PhilosophyQuiz({ onComplete, onSkip, initialAnswers = {} }) {
   const [step, setStep] = useState(0)
@@ -28,57 +29,55 @@ export default function PhilosophyQuiz({ onComplete, onSkip, initialAnswers = {}
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="absolute inset-0 bg-surface-base/80 backdrop-blur-sm" />
+    <Modal
+      onClose={onSkip}
+      labelledBy="quiz-title"
+      className="relative w-full max-w-md mx-4 bg-surface-raised border border-surface-line rounded-xl p-8 shadow-2xl"
+    >
+      {success ? (
+        <SuccessState />
+      ) : (
+        <div
+          className="transition-all duration-150"
+          style={{ opacity: fading ? 0 : 1, transform: fading ? 'translateY(6px)' : 'translateY(0)' }}
+        >
+          <Progress step={step} total={QUIZ_QUESTIONS.length} />
 
-      <div className="relative z-10 w-full max-w-md mx-4">
-        <div className="bg-surface-raised border border-surface-line rounded-xl p-8 shadow-2xl">
-          {success ? (
-            <SuccessState />
-          ) : (
-            <div
-              className="transition-all duration-150"
-              style={{ opacity: fading ? 0 : 1, transform: fading ? 'translateY(6px)' : 'translateY(0)' }}
-            >
-              <Progress step={step} total={QUIZ_QUESTIONS.length} />
+          <h2 id="quiz-title" className="text-lg font-semibold text-ink-primary mb-5 mt-6">
+            {question.question}
+          </h2>
 
-              <h2 className="text-lg font-semibold text-ink-primary mb-5 mt-6">
-                {question.question}
-              </h2>
+          <div className="space-y-2.5">
+            {question.options.map(opt => {
+              const selected = answers[question.id] === opt.value
+              return (
+                <button
+                  key={opt.value}
+                  onClick={() => selectAnswer(opt.value)}
+                  className={`w-full text-left px-4 py-3.5 rounded-lg border transition-all group ${
+                    selected
+                      ? 'border-beane-green bg-beane-green/10'
+                      : 'border-surface-line bg-surface-base hover:border-beane-green/60 hover:bg-beane-green/5'
+                  }`}
+                >
+                  <div className={`font-medium text-sm transition-colors ${selected ? 'text-beane-green-text' : 'text-ink-primary group-hover:text-ink-primary'}`}>
+                    {opt.label}
+                  </div>
+                  <div className="text-xs text-ink-secondary mt-0.5">{opt.desc}</div>
+                </button>
+              )
+            })}
+          </div>
 
-              <div className="space-y-2.5">
-                {question.options.map(opt => {
-                  const selected = answers[question.id] === opt.value
-                  return (
-                    <button
-                      key={opt.value}
-                      onClick={() => selectAnswer(opt.value)}
-                      className={`w-full text-left px-4 py-3.5 rounded-lg border transition-all group ${
-                        selected
-                          ? 'border-beane-green bg-beane-green/10'
-                          : 'border-surface-line bg-surface-base hover:border-beane-green/60 hover:bg-beane-green/5'
-                      }`}
-                    >
-                      <div className={`font-medium text-sm transition-colors ${selected ? 'text-beane-green-text' : 'text-ink-primary group-hover:text-ink-primary'}`}>
-                        {opt.label}
-                      </div>
-                      <div className="text-xs text-ink-secondary mt-0.5">{opt.desc}</div>
-                    </button>
-                  )
-                })}
-              </div>
-
-              <button
-                onClick={onSkip}
-                className="mt-5 w-full text-center text-xs text-ink-muted hover:text-ink-secondary transition-colors py-2"
-              >
-                Skip for now — use generic recommendations
-              </button>
-            </div>
-          )}
+          <button
+            onClick={onSkip}
+            className="mt-5 w-full text-center text-xs text-ink-muted hover:text-ink-secondary transition-colors py-2"
+          >
+            Skip for now — use generic recommendations
+          </button>
         </div>
-      </div>
-    </div>
+      )}
+    </Modal>
   )
 }
 

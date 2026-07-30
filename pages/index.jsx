@@ -473,7 +473,7 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
               {STATUS_LABEL[status] ?? status}
             </span>
             {tierStyle && (
-              <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded border uppercase ${tierStyle.bg} ${tierStyle.color}`}>
+              <span className={`text-micro font-mono px-1.5 py-0.5 rounded-full border uppercase ${tierStyle.bg} ${tierStyle.color}`}>
                 {tierStyle.label}
               </span>
             )}
@@ -490,28 +490,28 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
           {showSeasonHub ? (
             <button
               onClick={() => onEnterSeason(league.id)}
-              className="px-4 py-1.5 bg-signal-info text-ink-primary rounded text-xs font-semibold hover:brightness-110 transition-colors"
+              className="px-4 py-1.5 bg-beane-green text-[#06120C] rounded-lg text-xs font-semibold hover:brightness-110 transition-colors"
             >
               Season Hub
             </button>
           ) : (
             <button
               onClick={() => onEnterDraft(league.id)}
-              className="px-4 py-1.5 bg-beane-green text-[#06120C] rounded text-xs font-semibold hover:brightness-110 transition-colors"
+              className="px-4 py-1.5 bg-beane-green text-[#06120C] rounded-lg text-xs font-semibold hover:brightness-110 transition-colors"
             >
               Draft Board
             </button>
           )}
           <button
             onClick={() => onEdit(league.id)}
-            className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded text-xs hover:text-ink-primary hover:border-ink-secondary transition-colors"
+            className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded-lg text-xs hover:text-ink-primary hover:border-ink-secondary transition-colors"
           >
             Edit
           </button>
           {showSeasonHub && (
             <button
               onClick={() => onEnterDraft(league.id)}
-              className="px-3 py-1.5 border border-surface-line text-ink-muted rounded text-xs hover:text-ink-secondary hover:border-ink-secondary transition-colors"
+              className="px-3 py-1.5 border border-surface-line text-ink-muted rounded-lg text-xs hover:text-ink-secondary hover:border-ink-secondary transition-colors"
             >
               ← Draft
             </button>
@@ -616,13 +616,13 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
             <div className="flex items-center gap-2">
               <button
                 onClick={() => onDelete(league.id)}
-                className="px-3 py-1 bg-signal-down text-ink-primary rounded text-xs font-semibold hover:brightness-110 transition-colors"
+                className="px-3 py-1 bg-signal-down text-[#1A0505] rounded-lg text-xs font-semibold hover:brightness-110 transition-colors"
               >
                 Confirm
               </button>
               <button
                 onClick={onCancelDelete}
-                className="px-3 py-1 border border-surface-line text-ink-secondary rounded text-xs hover:text-ink-primary transition-colors"
+                className="px-3 py-1 border border-surface-line text-ink-secondary rounded-lg text-xs hover:text-ink-primary transition-colors"
               >
                 Cancel
               </button>
@@ -705,21 +705,21 @@ function ActiveLeagueBar({ league, yahooConnected, onEnterDraft, onEnterSeason, 
         {showSeasonHub ? (
           <button
             onClick={() => onEnterSeason(league.id)}
-            className="px-4 py-1.5 bg-signal-info text-ink-primary rounded text-xs font-semibold hover:brightness-110 transition-colors"
+            className="px-4 py-1.5 bg-beane-green text-[#06120C] rounded-lg text-xs font-semibold hover:brightness-110 transition-colors"
           >
             Season Hub
           </button>
         ) : (
           <button
             onClick={() => onEnterDraft(league.id)}
-            className="px-4 py-1.5 bg-beane-green text-[#06120C] rounded text-xs font-semibold hover:brightness-110 transition-colors"
+            className="px-4 py-1.5 bg-beane-green text-[#06120C] rounded-lg text-xs font-semibold hover:brightness-110 transition-colors"
           >
             Draft Board
           </button>
         )}
         <button
           onClick={() => onEdit(league.id)}
-          className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded text-xs hover:text-ink-primary hover:border-ink-secondary transition-colors"
+          className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded-lg text-xs hover:text-ink-primary hover:border-ink-secondary transition-colors"
         >
           Edit
         </button>
@@ -730,7 +730,7 @@ function ActiveLeagueBar({ league, yahooConnected, onEnterDraft, onEnterSeason, 
               <button
                 onClick={syncDraft}
                 disabled={syncState.loading}
-                className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded text-xs hover:text-ink-primary hover:border-ink-secondary transition-colors disabled:opacity-40"
+                className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded-lg text-xs hover:text-ink-primary hover:border-ink-secondary transition-colors disabled:opacity-40"
               >
                 {syncState.loading ? 'Syncing…' : config.draftSynced ? 'Resync' : 'Import Picks'}
               </button>
@@ -739,7 +739,7 @@ function ActiveLeagueBar({ league, yahooConnected, onEnterDraft, onEnterSeason, 
             <div className="relative">
               <button
                 onClick={openPicker}
-                className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded text-xs hover:text-ink-primary hover:border-ink-secondary transition-colors"
+                className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded-lg text-xs hover:text-ink-primary hover:border-ink-secondary transition-colors"
               >
                 Link Yahoo
               </button>
@@ -769,7 +769,7 @@ function ActiveLeagueBar({ league, yahooConnected, onEnterDraft, onEnterSeason, 
         {isSeason && (
           <button
             onClick={() => archiveLeague(league.id)}
-            className="px-3 py-1.5 border border-surface-line text-ink-muted rounded text-xs hover:text-ink-secondary hover:border-ink-secondary transition-colors"
+            className="px-3 py-1.5 border border-surface-line text-ink-muted rounded-lg text-xs hover:text-ink-secondary hover:border-ink-secondary transition-colors"
           >
             Archive
           </button>
@@ -777,7 +777,7 @@ function ActiveLeagueBar({ league, yahooConnected, onEnterDraft, onEnterSeason, 
         {isArchived && (
           <button
             onClick={() => onUnarchive(league.id)}
-            className="px-3 py-1.5 border border-surface-line text-ink-muted rounded text-xs hover:text-ink-secondary hover:border-ink-secondary transition-colors"
+            className="px-3 py-1.5 border border-surface-line text-ink-muted rounded-lg text-xs hover:text-ink-secondary hover:border-ink-secondary transition-colors"
           >
             Restore
           </button>
@@ -788,13 +788,13 @@ function ActiveLeagueBar({ league, yahooConnected, onEnterDraft, onEnterSeason, 
             <>
               <button
                 onClick={() => onDelete(league.id)}
-                className="px-3 py-1.5 bg-signal-down text-ink-primary rounded text-xs font-semibold hover:brightness-110 transition-colors"
+                className="px-3 py-1.5 bg-signal-down text-[#1A0505] rounded-lg text-xs font-semibold hover:brightness-110 transition-colors"
               >
                 Confirm Delete
               </button>
               <button
                 onClick={onCancelDelete}
-                className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded text-xs hover:text-ink-primary transition-colors"
+                className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded-lg text-xs hover:text-ink-primary transition-colors"
               >
                 Cancel
               </button>
@@ -842,7 +842,7 @@ function LeagueSummaryCard({ league, isActive, onSelect }) {
       }`}
     >
       <div className="flex items-center justify-between mb-2">
-        <span className="text-[11px] font-mono text-ink-muted uppercase tracking-wider">
+        <span className="text-micro font-mono text-ink-muted uppercase tracking-wider">
           {SPORT_LABELS[sport] ?? sport.toUpperCase()} · {config.scoringFormat?.toUpperCase() ?? '9CAT'}
         </span>
         {trendArrow && <span className={`text-sm font-mono ${trendArrow.color}`}>{trendArrow.icon}</span>}
@@ -856,7 +856,7 @@ function LeagueSummaryCard({ league, isActive, onSelect }) {
             : `${config.numTeams} teams`}
       </p>
       {tierStyle && (
-        <span className={`inline-block mt-2 text-[10px] font-mono px-1.5 py-0.5 rounded border uppercase ${tierStyle.bg} ${tierStyle.color}`}>
+        <span className={`inline-block mt-2 text-micro font-mono px-1.5 py-0.5 rounded-full border uppercase ${tierStyle.bg} ${tierStyle.color}`}>
           {tierStyle.label}
         </span>
       )}

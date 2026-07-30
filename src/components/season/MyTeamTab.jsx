@@ -19,7 +19,7 @@ function WinRateRow({ cat, winRate }) {
       <span className="text-xs font-mono tabular-nums text-ink-secondary w-10 text-right">
         {winRate?.rate != null ? `${barPct}%` : '—'}
       </span>
-      <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded border w-14 text-center shrink-0 ${gradeStyle}`}>
+      <span className={`text-micro font-mono px-1.5 py-0.5 rounded-full border w-14 text-center shrink-0 ${gradeStyle}`}>
         {grade ?? 'n/a'}
       </span>
     </div>
@@ -33,12 +33,12 @@ function RosterRow({ entry, player }) {
       <div className="flex items-center gap-2 min-w-0">
         <span className="text-xs text-ink-primary font-medium truncate">{entry.name}</span>
         {entry.positions && (
-          <span className="text-[10px] font-mono text-ink-muted shrink-0">{entry.positions}</span>
+          <span className="text-micro font-mono text-ink-muted shrink-0">{entry.positions}</span>
         )}
         <TrendBadge player={player} />
       </div>
       {hurt && (
-        <span className="shrink-0 text-[10px] font-mono px-1.5 py-0.5 rounded bg-signal-watch/15 text-signal-watch uppercase">
+        <span className="shrink-0 text-micro font-mono px-1.5 py-0.5 rounded-full bg-signal-watch/15 text-signal-watch uppercase">
           {entry.status}
         </span>
       )}
@@ -64,12 +64,12 @@ export default function MyTeamTab({ league, rosters }) {
     <div className="space-y-4">
       <Card>
         <div className="flex items-center justify-between gap-3 mb-4">
-          <p className="text-sm font-semibold text-ink-primary">{userTeam.teamName}</p>
-          <span className="text-[11px] font-mono tabular-nums text-ink-secondary">
+          <h3 className="font-display text-heading font-medium text-ink-primary">{userTeam.teamName}</h3>
+          <span className="text-micro font-mono tabular-nums text-ink-secondary">
             #{userTeam.rank ?? '?'} · {userTeam.wins}-{userTeam.losses}{userTeam.ties ? `-${userTeam.ties}` : ''}
           </span>
         </div>
-        <p className="text-[10px] font-mono text-ink-muted uppercase tracking-wider mb-2">Category Profile</p>
+        <p className="text-micro font-mono text-ink-muted uppercase tracking-wider mb-2">Category Profile</p>
         <div className="space-y-1.5">
           {sportConfig.categories.map(cat => (
             <WinRateRow key={cat.id} cat={cat} winRate={userEntry.winRates[cat.id]} />
@@ -78,7 +78,7 @@ export default function MyTeamTab({ league, rosters }) {
       </Card>
 
       <Card>
-        <p className="text-[10px] font-mono text-ink-muted uppercase tracking-wider mb-3">Roster</p>
+        <p className="text-micro font-mono text-ink-muted uppercase tracking-wider mb-3">Roster</p>
         <div className="space-y-1.5">
           {userTeam.roster.map((entry, i) => (
             <RosterRow key={entry.playerKey ?? i} entry={entry} player={resolvePlayer(entry)} />

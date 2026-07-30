@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
-import { AdvisorCard } from '@/components/ui'
+import { AdvisorCard, AdvisorError } from '@/components/ui'
 import { TrendBadge, PRIORITY_STYLES, findPlayerByName } from './shared'
 
 export default function WaiversTab({ league, rosters }) {
@@ -37,10 +37,10 @@ export default function WaiversTab({ league, rosters }) {
   }
 
   return (
-    <AdvisorCard>
+    <AdvisorCard eyebrow="THE WAIVER CALL">
       <div className="flex items-start justify-between gap-4 mb-1">
         <div>
-          <p className="text-sm font-semibold text-ink-primary">Waiver Wire Advisor</p>
+          <h3 className="font-display text-heading font-medium text-ink-primary">Waiver Wire Advisor</h3>
           <p className="text-xs text-ink-secondary mt-0.5">
             Recommended adds and drops based on your roster gaps and available free agents.
           </p>
@@ -59,7 +59,7 @@ export default function WaiversTab({ league, rosters }) {
       )}
 
       {error && !loading && (
-        <p className="text-xs text-signal-down font-mono mt-4">{error}</p>
+        <AdvisorError message={error} onRetry={handleGetAdvice} />
       )}
 
       {advice && !loading && (
@@ -73,7 +73,7 @@ export default function WaiversTab({ league, rosters }) {
             return (
               <div key={i} className="border border-surface-line rounded-md px-4 py-3">
                 <div className="flex flex-wrap items-center gap-2 mb-2">
-                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${PRIORITY_STYLES[move.priority] ?? 'bg-surface-overlay text-ink-secondary'}`}>
+                  <span className={`text-micro font-mono px-2 py-0.5 rounded-full ${PRIORITY_STYLES[move.priority] ?? 'bg-surface-overlay text-ink-secondary'}`}>
                     {move.priority ?? 'add'}
                   </span>
                   <span className="text-xs text-signal-up font-medium flex items-center">

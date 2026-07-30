@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import useLeagueStore from '@/store/leagueStore'
+import { AdvisorError } from '@/components/ui'
 import { TROPHY_BY_RANK } from './shared'
 
 // One-time end-of-season recap: fires exactly once per league (guarded by
@@ -15,37 +16,37 @@ export default function SeasonRecapPanel({ league, rosters }) {
   const recap = league.seasonRecap
   const hasFinalRoster = Boolean(rosters?.teams?.length)
 
+  async function fetchRecap() {
+    setLoading(true)
+    setError(null)
+    try {
+      const sport = league.config.sport ?? 'nba'
+      const res = await fetch('/api/season/season-recap', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sport,
+          leagueRosters: rosters,
+          gmProfile: {
+            injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
+            draftStrategy: league.config.philosophy?.draftStrategy,
+          },
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Couldn't put together your season recap.")
+      setSeasonRecap(league.id, data)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
     if (recap || !hasFinalRoster || attempted.current) return
     attempted.current = true
-    setLoading(true)
-    setError(null)
-
-    async function run() {
-      try {
-        const sport = league.config.sport ?? 'nba'
-        const res = await fetch('/api/season/season-recap', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            sport,
-            leagueRosters: rosters,
-            gmProfile: {
-              injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
-              draftStrategy: league.config.philosophy?.draftStrategy,
-            },
-          }),
-        })
-        const data = await res.json()
-        if (!res.ok) throw new Error(data.error || 'Recap failed')
-        setSeasonRecap(league.id, data)
-      } catch (err) {
-        setError(err.message)
-      } finally {
-        setLoading(false)
-      }
-    }
-    run()
+    fetchRecap()
   }, [recap, hasFinalRoster])
 
   if (!hasFinalRoster) return null
@@ -56,7 +57,7 @@ export default function SeasonRecapPanel({ league, rosters }) {
         <p className="text-xs text-ink-secondary font-mono animate-pulse">Putting together your season recap…</p>
       )}
       {error && !recap && !loading && (
-        <p className="text-xs text-signal-down font-mono">{error}</p>
+        <AdvisorError message={error} onRetry={fetchRecap} />
       )}
       {recap && (
         <div className="space-y-4">
@@ -65,9 +66,9 @@ export default function SeasonRecapPanel({ league, rosters }) {
               <span className="text-4xl leading-none">{TROPHY_BY_RANK[recap.rank]}</span>
             )}
             <div>
-              <p className="text-sm font-semibold text-ink-primary">
+              <h3 className="font-display text-heading font-medium text-ink-primary">
                 Finished #{recap.rank ?? '?'} of {recap.numTeams} — {recap.teamName}
-              </p>
+              </h3>
               <p className="text-xs text-ink-secondary font-mono tabular-nums">
                 {recap.wins}-{recap.losses}{recap.ties ? `-${recap.ties}` : ''}
               </p>

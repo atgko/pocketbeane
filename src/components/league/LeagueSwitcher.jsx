@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import useLeagueStore from '@/store/leagueStore'
+import Modal from '@/components/ui/Modal'
 
 const SHORTCUTS = [
   ['↑ ↓', 'navigate players'],
@@ -45,39 +46,29 @@ function KeyboardIcon({ className = '' }) {
 }
 
 function ShortcutsModal({ onClose }) {
-  useEffect(() => {
-    function onKey(e) { if (e.key === 'Escape') onClose() }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [onClose])
-
   return (
-    <div
-      className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
-      onClick={onClose}
+    <Modal
+      onClose={onClose}
+      labelledBy="shortcuts-modal-title"
+      className="bg-surface-raised border border-surface-line rounded-xl p-6 w-72 shadow-xl"
     >
-      <div
-        className="bg-surface-raised border border-surface-line rounded-xl p-6 w-72 shadow-xl"
-        onClick={e => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold text-ink-primary">Keyboard Shortcuts</h3>
-          <button onClick={onClose} className="inline-flex items-center justify-center text-ink-secondary hover:text-ink-primary transition-colors">
-            <CloseIcon />
-          </button>
-        </div>
-        <div className="space-y-2.5">
-          {SHORTCUTS.map(([key, label]) => (
-            <div key={key} className="flex items-center gap-3">
-              <kbd className="text-xs font-mono text-ink-primary bg-surface-overlay border border-surface-line px-2 py-1 rounded min-w-[3rem] text-center shrink-0">
-                {key}
-              </kbd>
-              <span className="text-xs font-mono text-ink-secondary">{label}</span>
-            </div>
-          ))}
-        </div>
+      <div className="flex items-center justify-between mb-4">
+        <h3 id="shortcuts-modal-title" className="text-sm font-semibold text-ink-primary">Keyboard Shortcuts</h3>
+        <button onClick={onClose} aria-label="Close" className="inline-flex items-center justify-center text-ink-secondary hover:text-ink-primary transition-colors">
+          <CloseIcon />
+        </button>
       </div>
-    </div>
+      <div className="space-y-2.5">
+        {SHORTCUTS.map(([key, label]) => (
+          <div key={key} className="flex items-center gap-3">
+            <kbd className="text-xs font-mono text-ink-primary bg-surface-overlay border border-surface-line px-2 py-1 rounded-lg min-w-[3rem] text-center shrink-0">
+              {key}
+            </kbd>
+            <span className="text-xs font-mono text-ink-secondary">{label}</span>
+          </div>
+        ))}
+      </div>
+    </Modal>
   )
 }
 
@@ -136,6 +127,7 @@ export default function LeagueSwitcher() {
             onClick={() => setShowShortcuts(true)}
             className="flex items-center px-4 text-ink-muted hover:text-ink-primary transition-colors shrink-0"
             title="Keyboard shortcuts"
+            aria-label="Keyboard shortcuts"
           >
             <KeyboardIcon />
           </button>
@@ -145,6 +137,7 @@ export default function LeagueSwitcher() {
           href="/gm-profile"
           className="flex items-center px-3 text-ink-muted hover:text-ink-primary transition-colors shrink-0"
           title="GM Profile"
+          aria-label="GM Profile"
         >
           <GearIcon />
         </Link>
