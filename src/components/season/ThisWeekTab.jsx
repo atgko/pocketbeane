@@ -122,14 +122,15 @@ function StartSitPanel({ league, rosters }) {
   const mode = getStartSitMode(sport)
 
   if (mode === 'pitching-starts') {
-    return <PitchingStartsPanel rosters={rosters} />
+    return <PitchingStartsPanel league={league} rosters={rosters} />
   }
 
   return <LineupAdvisorPanel league={league} rosters={rosters} sport={sport} mode={mode} />
 }
 
 function LineupAdvisorPanel({ league, rosters, sport, mode }) {
-  const [advice, setAdvice] = useState(null)
+  const { setSeasonAdvice } = useLeagueStore()
+  const [advice, setAdvice] = useState(league.seasonAdvice?.startSit ?? null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   // mlb routes to PitchingStartsPanel above and never reaches this component —
@@ -161,6 +162,7 @@ function LineupAdvisorPanel({ league, rosters, sport, mode }) {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Advice failed')
       setAdvice(data)
+      setSeasonAdvice(league.id, 'startSit', data)
     } catch (err) {
       setError(err.message)
     } finally {
@@ -274,8 +276,9 @@ function LineupAdvisorPanel({ league, rosters, sport, mode }) {
 // start/sit call, so this shows scheduled starts for rostered SPs with a
 // simple start/stream/hold recommendation instead of a full weekly lineup.
 // Deterministic (no LLM call) — stays on the plain data Card, not AdvisorCard.
-function PitchingStartsPanel({ rosters }) {
-  const [data, setData] = useState(null)
+function PitchingStartsPanel({ league, rosters }) {
+  const { setSeasonAdvice } = useLeagueStore()
+  const [data, setData] = useState(league.seasonAdvice?.pitchingStarts ?? null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -291,6 +294,7 @@ function PitchingStartsPanel({ rosters }) {
       const result = await res.json()
       if (!res.ok) throw new Error(result.error || 'Pitching starts lookup failed')
       setData(result)
+      setSeasonAdvice(league.id, 'pitchingStarts', result)
     } catch (err) {
       setError(err.message)
     } finally {

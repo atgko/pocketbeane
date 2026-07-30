@@ -3,6 +3,7 @@ import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
 import { getWinRateGrade } from '@/utils/teamStanding'
 import { AdvisorCard, Card, AdvisorError } from '@/components/ui'
+import useLeagueStore from '@/store/leagueStore'
 import {
   TIER_STYLES,
   STANDING_TREND_ARROW,
@@ -13,24 +14,24 @@ import {
 
 // League tab — the merged League Standing Intelligence panel: the never-shipped
 // Roster Health Score (now a deterministic Contender/Bubble/Rebuilding tier +
-// trend arrow, rather than a fabricated 1-10 number), the full league
-// landscape, and League Pulse's trade-opportunity flags. Tier, trend, and
-// category win rates are pure client-side math (useTeamStanding) — no fetch
-// needed for those. The per-team Claude insight and the trade-opportunity
-// flags are still real LLM calls, gated behind a button like every other
-// advisor in the hub.
+// trend arrow, rather than a fabricated 1-10 number) plus the full league
+// landscape. Tier, trend, and category win rates are pure client-side math
+// (useTeamStanding) — no fetch needed for those. The per-team Claude insight
+// is still a real LLM call, gated behind a button like every other advisor
+// in the hub. Trade opportunity flags used to live here too (a second,
+// redundant call to trade-value-index just to read one field of a response
+// the Trades tab already fetches in full) — an /organize IA audit found the
+// same content living under two labels, so it moved to Trades tab as a third
+// panel of TradeValueIndexPanel's existing result. See that component for it.
 export default function LeagueTab({ league, rosters }) {
   const sport = league.config.sport ?? 'nba'
   const players = sport === 'mlb' ? mlbPlayers : nbaPlayers
   const { teams, userEntry, trend, sportConfig } = useTeamStanding({ league, rosters, players })
+  const { setSeasonAdvice } = useLeagueStore()
 
-  const [pulse, setPulse] = useState(null)
+  const [pulse, setPulse] = useState(league.seasonAdvice?.leaguePulse ?? null)
   const [pulseLoading, setPulseLoading] = useState(false)
   const [pulseError, setPulseError] = useState(null)
-
-  const [tradeFlags, setTradeFlags] = useState(null)
-  const [tradeLoading, setTradeLoading] = useState(false)
-  const [tradeError, setTradeError] = useState(null)
 
   const gmProfile = {
     injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
@@ -50,29 +51,11 @@ export default function LeagueTab({ league, rosters }) {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Pulse failed')
       setPulse(data)
+      setSeasonAdvice(league.id, 'leaguePulse', data)
     } catch (err) {
       setPulseError(err.message)
     } finally {
       setPulseLoading(false)
-    }
-  }
-
-  async function handleGetTradeFlags() {
-    setTradeLoading(true)
-    setTradeError(null)
-    try {
-      const res = await fetch('/api/season/trade-value-index', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sport, leagueRosters: rosters, gmProfile, rosterConfig }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Trade scan failed')
-      setTradeFlags(data.tradeOpportunityFlags ?? [])
-    } catch (err) {
-      setTradeError(err.message)
-    } finally {
-      setTradeLoading(false)
     }
   }
 
@@ -190,34 +173,6 @@ export default function LeagueTab({ league, rosters }) {
           })}
         </div>
       </Card>
-
-      {/* 3. Trade opportunity flags — its own Advisor card (a separate real
-          LLM call from the standing take above, not a footnote on it). */}
-      <AdvisorCard eyebrow="ON THE RADAR" title="Trade Opportunities">
-        {!tradeFlags && !tradeLoading && (
-          <button
-            onClick={handleGetTradeFlags}
-            className="text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded-lg hover:bg-beane-green/20 transition-colors"
-          >
-            Scan for fits
-          </button>
-        )}
-        {tradeLoading && <p className="text-xs text-ink-secondary font-mono animate-pulse">Cross-referencing rosters…</p>}
-        {tradeError && !tradeLoading && <AdvisorError message={tradeError} onRetry={handleGetTradeFlags} />}
-        {tradeFlags && !tradeLoading && (
-          tradeFlags.length > 0 ? (
-            <div className="space-y-1.5">
-              {tradeFlags.map((flag, i) => (
-                <p key={i} className="text-xs text-ink-secondary leading-relaxed">
-                  <span className="text-ink-primary font-medium">{flag.player} ({flag.team}):</span> {flag.reason}
-                </p>
-              ))}
-            </div>
-          ) : (
-            <p className="text-xs text-ink-secondary">No standout trade fits right now.</p>
-          )
-        )}
-      </AdvisorCard>
     </div>
   )
 }

@@ -2,10 +2,14 @@ import { useState } from 'react'
 import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
 import { AdvisorCard, AdvisorError } from '@/components/ui'
+import useLeagueStore from '@/store/leagueStore'
 import { TrendBadge, PRIORITY_STYLES, findPlayerByName } from './shared'
 
 export default function WaiversTab({ league, rosters }) {
-  const [advice, setAdvice] = useState(null)
+  const { setSeasonAdvice } = useLeagueStore()
+  // Seeded from the league store, not null — surviving a tab switch is the
+  // whole point (see setSeasonAdvice in leagueStore.js for why).
+  const [advice, setAdvice] = useState(league.seasonAdvice?.waivers ?? null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const sport = league.config.sport ?? 'nba'
@@ -29,6 +33,7 @@ export default function WaiversTab({ league, rosters }) {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Advice failed')
       setAdvice(data)
+      setSeasonAdvice(league.id, 'waivers', data)
     } catch (err) {
       setError(err.message)
     } finally {

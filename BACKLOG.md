@@ -1,6 +1,8 @@
 # PocketBeane — Active Backlog
 
-Last updated: 2026-07-30 — D-01 post-completion refinement: fixed a real Yahoo `/scoreboard` 403 (explicit-week fetch pattern), added H2H-vs-Roto league-type awareness, and rebuilt the homepage hero to match the mockup's weekly-matchup format for H2H leagues (Roto leagues correctly keep the standings hero). See the D-01 entry below for full detail.
+Last updated: 2026-07-30 (later same day) — Intent dark-pattern audit of the paywall, trial-upgrade prompt, email opt-in, and Beane persona (paywall/trial-upgrade don't exist in code yet — audited PMF-03/PMF-09 as specs instead). One real, fixable finding: `RecommendationPanel.jsx`'s `ThinkingProgress` bar was animating to a hardcoded 92% over a fixed 4000ms regardless of when the Claude call actually resolved — fabricated determinate progress, inconsistent with the pick clock's deliberate honest-count-up-over-fake-countdown choice right above it in the same file. Fixed: swapped for a genuinely indeterminate sliding-bar animation (new `animate-indeterminate-slide` in `tailwind.config.js`) that doesn't imply a percentage the app can't actually measure. Everything else audited came back clean or not-yet-built: `EmailDigestSettings` (`pages/gm-profile.jsx`) is a good opt-in example (no pre-checked box, plain purpose statement, one-click symmetric withdrawal); Beane's voice avoids confirmshaming and sycophancy by design. Ethical-design constraints from the audit are now attached directly to PMF-03 and PMF-09 below, to apply whenever those get built.
+
+Previously: 2026-07-30 — D-01 post-completion refinement: fixed a real Yahoo `/scoreboard` 403 (explicit-week fetch pattern), added H2H-vs-Roto league-type awareness, and rebuilt the homepage hero to match the mockup's weekly-matchup format for H2H leagues (Roto leagues correctly keep the standings hero). See the D-01 entry below for full detail.
 
 Previously: 2026-07-29 — D-01 (Full App UI Revamp) kicked off with a research brief + static mockup already written (`ui-redesign/D01_UI_REVAMP_DESIGN_BRIEF.md`, `ui-redesign/D01_MOCKUPS.html` — direction: "The Front Office," dark editorial analytics, Fraunces/Inter/JetBrains Mono, Moneyball green + brass palette). Execution is split into 9 checkpointed steps (see updated D-01 entry below for the full phase list and resume instructions); **Checkpoint 1 (Steps 1-3) is done**: token foundation (`tailwind.config.js`/`styles/globals.css` rebuilt around CSS-custom-property color tokens + `next/font`-loaded type system in `pages/_app.jsx`), a global color/font sweep across all 19 files still on the old raw-Tailwind/legacy tokens (including the 1548-line `season.jsx`, done last), and a new shared component library at `src/components/ui/` (`Card`, `Button`, `Badge`, `AdvisorCard`, `TabBar`) migrated into call sites wherever a clean fit existed. All 5 routes verified compiling; full-codebase grep confirms zero leftover raw color classes; contrast spot-checked against the brief's Part 3.1 pairs (all clear AA, `signal-down` tightest at ~4.8:1). Nothing pushed yet. Steps 4-9 (Draft DNA rebuild, Season Hub tab extraction, homepage command center, draft board refinement, a11y/mobile passes) remain, each planned separately before execution.
 
@@ -856,6 +858,12 @@ Paywall trigger: when a free user's recommendation would include Steps 3–5, sh
 
 **Prerequisite:** Billing/subscription layer (Stripe) needed before `userTier` is production-enforced.
 
+**Ethical-design constraints (Intent dark-pattern audit, 2026-07-30) — apply when this is actually built:**
+- The `RecommendationPanel.jsx` refresh cap already sets the right precedent: budget shown upfront ("N of 5 refreshes left"), plain "No refreshes remaining" state, no upsell copy. `PaywallPrompt`/`TierComparison` should match that tone — state the limit and the unlock, no urgency fabrication (no fake countdowns, no "X spots left").
+- Trigger point stays what Finding 3 already settled (category-gap-analysis need, not an arbitrary cutoff) — but also don't fire it while the pick clock is running. A user with an opponent on the clock is the wrong moment to interrupt with a sales screen (Obstruction Interstitial, Cat. 5). Surface it between picks or at Season Hub entry instead.
+- Watermarked recap copy ("Upgrade to see your full draft grade") must not tip into Confirmshaming (Cat. 1) if it ever needs a decline/skip action — keep any "not now" path as neutral as `PhilosophyQuiz`'s "Skip for now — use generic recommendations."
+- Cancellation/downgrade path (once Stripe exists) must be symmetric with signup — same number of steps, no phone/email-only cancellation (Forced Continuity, Cat. 2, Critical — also FTC click-to-cancel territory).
+
 ---
 
 ### PMF-05 · Email Capture + Resend Integration
@@ -881,6 +889,8 @@ Paywall trigger: when a free user's recommendation would include Steps 3–5, sh
 **Deferred reason:** Requires PMF-03 + Stripe + real users. Revisit if the project goes commercial.
 
 **Prerequisite:** PMF-03 (Freemium Tier Architecture) + Stripe account setup
+
+**Ethical-design constraint (Intent dark-pattern audit, 2026-07-30):** Finding 7's winning frame — "$14 more for the full season" net-of-trial — is honest reframing, not manipulation, as long as the sticker price is shown too. Don't let it slide into Loss Framing (Cat. 3, Medium — "you're losing $X by not upgrading"). State both numbers (trial cost, full price) and let the math speak; don't editorialize the loss. Auto-conversion from trial to paid needs an explicit heads-up before the charge and an easy pre-charge cancel — silent trial-to-paid rollover is Forced Continuity (Cat. 2, Critical) and the exact FTC negative-option pattern currently under active enforcement.
 
 ---
 

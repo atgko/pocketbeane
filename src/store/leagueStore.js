@@ -138,6 +138,22 @@ const useLeagueStore = create(
           leagues: state.leagues.map((l) => (l.id === id ? { ...l, weeklyMatchup: matchup } : l)),
         })),
 
+      // Season Hub's per-tab advisor results (waivers, trade analyzer incl.
+      // in-progress give/receive picks, trade value index, league pulse,
+      // trade opportunity flags, start/sit) — keyed by advisor so each tab
+      // can read/write its own slice. Lifted from component-local useState
+      // (a /journey audit found every tab but This Week's matchup lost its
+      // result the instant the user switched tabs, since swapping
+      // ActiveTabComponent unmounts the previous tab entirely — that forced
+      // a fresh Claude call on ordinary navigation, undermining the same
+      // rate-limit-behind-user-action design PMF-01 already established).
+      setSeasonAdvice: (id, key, data) =>
+        set((state) => ({
+          leagues: state.leagues.map((l) =>
+            l.id === id ? { ...l, seasonAdvice: { ...l.seasonAdvice, [key]: data } } : l
+          ),
+        })),
+
       // Stashes the outgoing snapshot's per-team standing (rank/wins/losses/
       // ties, keyed by teamKey) as previousStandings before overwriting —
       // Team Pulse's trend arrow diffs the new sync against this. A league's

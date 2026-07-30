@@ -425,24 +425,15 @@ function formatClock(totalSeconds) {
   return `${m}:${String(s).padStart(2, '0')}`
 }
 
-// Determinate-feeling progress cue for the ~4s Claude synthesis call.
-// Remounts fresh each time `loading` flips true (parent renders it
-// conditionally), so the width transition restarts from 0 every time.
+// Indeterminate progress cue for the Claude synthesis call — actual
+// duration isn't known up front, so this shows "a call is in flight"
+// rather than implying a measured percentage we don't have (a determinate
+// fill tied to a hardcoded timer would just be fabricated precision, the
+// same thing the pick clock above deliberately avoids).
 function ThinkingProgress() {
-  const [started, setStarted] = useState(false)
-  useEffect(() => {
-    const raf = requestAnimationFrame(() => setStarted(true))
-    return () => cancelAnimationFrame(raf)
-  }, [])
   return (
     <div className="h-0.5 w-full bg-surface-overlay rounded-full overflow-hidden">
-      <div
-        className="h-full w-full bg-beane-green rounded-full origin-left"
-        style={{
-          transform: `scaleX(${started ? 0.92 : 0})`,
-          transition: started ? 'transform 4000ms cubic-bezier(0.11, 0, 0.5, 0)' : 'none',
-        }}
-      />
+      <div className="h-full w-2/5 bg-beane-green rounded-full animate-indeterminate-slide" />
     </div>
   )
 }

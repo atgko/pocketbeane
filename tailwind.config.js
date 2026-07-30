@@ -53,6 +53,19 @@ module.exports = {
         data:      ['0.875rem',  { lineHeight: '1.4' }],
         'data-lg': ['1.25rem',   { lineHeight: '1.2' }],
       },
+      keyframes: {
+        // Indeterminate loading bar — a sliding segment, not a fill that
+        // implies a known percentage. Used where we're waiting on a Claude
+        // call of unknown duration (see AdvisorCard "thinking" states) and
+        // don't want to fabricate progress we can't actually measure.
+        'indeterminate-slide': {
+          '0%':   { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(250%)' },
+        },
+      },
+      animation: {
+        'indeterminate-slide': 'indeterminate-slide 1.4s ease-in-out infinite',
+      },
     },
   },
   plugins: [],

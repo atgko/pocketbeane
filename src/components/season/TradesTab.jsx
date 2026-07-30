@@ -1,18 +1,28 @@
 import { useState } from 'react'
 import { AdvisorCard, AdvisorError } from '@/components/ui'
+import useLeagueStore from '@/store/leagueStore'
 import { TradeFavorBar, TradePlayerToggle } from './shared'
 
 function TradeAnalyzerPanel({ league, rosters }) {
+  const { setSeasonAdvice } = useLeagueStore()
   const userTeam = rosters.teams.find(t => t.isUser)
   const otherTeams = rosters.teams.filter(t => !t.isUser)
 
-  const [give, setGive] = useState([])
-  const [receiveTeamKey, setReceiveTeamKey] = useState('')
-  const [receive, setReceive] = useState([])
-  const [advice, setAdvice] = useState(null)
+  // Seeded from the store, including the in-progress give/receive picks —
+  // this is the one advisor where a tab switch could previously destroy
+  // real user input (a half-built trade), not just a fetched result.
+  const saved = league.seasonAdvice?.tradeAnalyzer ?? {}
+  const [give, setGive] = useState(saved.give ?? [])
+  const [receiveTeamKey, setReceiveTeamKey] = useState(saved.receiveTeamKey ?? '')
+  const [receive, setReceive] = useState(saved.receive ?? [])
+  const [advice, setAdvice] = useState(saved.advice ?? null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const sport = league.config.sport ?? 'nba'
+
+  function persist(next) {
+    setSeasonAdvice(league.id, 'tradeAnalyzer', { give, receiveTeamKey, receive, advice, ...next })
+  }
 
   const gmProfile = {
     injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',
@@ -23,16 +33,21 @@ function TradeAnalyzerPanel({ league, rosters }) {
   const receiveTeam = otherTeams.find(t => t.teamKey === receiveTeamKey) ?? null
 
   function toggleGive(name) {
-    setGive(prev => prev.includes(name) ? prev.filter(n => n !== name) : [...prev, name])
+    const next = give.includes(name) ? give.filter(n => n !== name) : [...give, name]
+    setGive(next)
+    persist({ give: next })
   }
 
   function toggleReceive(name) {
-    setReceive(prev => prev.includes(name) ? prev.filter(n => n !== name) : [...prev, name])
+    const next = receive.includes(name) ? receive.filter(n => n !== name) : [...receive, name]
+    setReceive(next)
+    persist({ receive: next })
   }
 
   function handleReceiveTeamChange(teamKey) {
     setReceiveTeamKey(teamKey)
     setReceive([]) // a trade only involves one opposing team — switching resets the picks
+    persist({ receiveTeamKey: teamKey, receive: [] })
   }
 
   async function handleGetAdvice() {
@@ -51,6 +66,7 @@ function TradeAnalyzerPanel({ league, rosters }) {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Advice failed')
       setAdvice(data)
+      persist({ advice: data })
     } catch (err) {
       setError(err.message)
     } finally {
@@ -188,7 +204,8 @@ function TradeAnalyzerPanel({ league, rosters }) {
 }
 
 function TradeValueIndexPanel({ league, rosters }) {
-  const [index, setIndex] = useState(null)
+  const { setSeasonAdvice } = useLeagueStore()
+  const [index, setIndex] = useState(league.seasonAdvice?.tradeValueIndex ?? null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const sport = league.config.sport ?? 'nba'
@@ -211,6 +228,7 @@ function TradeValueIndexPanel({ league, rosters }) {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Index failed')
       setIndex(data)
+      setSeasonAdvice(league.id, 'tradeValueIndex', data)
     } catch (err) {
       setError(err.message)
     } finally {
@@ -224,7 +242,7 @@ function TradeValueIndexPanel({ league, rosters }) {
         <div>
           <h3 className="font-display text-heading font-medium text-ink-primary">Trade Value Index</h3>
           <p className="text-xs text-ink-secondary mt-0.5">
-            Sell-high candidates on your roster and buy-low targets across the league.
+            Sell-high candidates on your roster, buy-low targets across the league, and specific trade fits worth pursuing now.
           </p>
         </div>
         <button
@@ -274,8 +292,18 @@ function TradeValueIndexPanel({ league, rosters }) {
               ))}
             </div>
           )}
-          {!index.sellHigh?.length && !index.buyLowTargets?.length && (
-            <p className="text-xs text-ink-secondary">No standout sell-high or buy-low signals this week.</p>
+          {index.tradeOpportunityFlags?.length > 0 && (
+            <div className="space-y-2 pt-2 border-t border-surface-line">
+              <p className="text-micro font-mono text-ink-secondary uppercase tracking-wider pt-2">On the radar — specific fits</p>
+              {index.tradeOpportunityFlags.map((flag, i) => (
+                <p key={i} className="text-xs text-ink-secondary leading-relaxed">
+                  <span className="text-ink-primary font-medium">{flag.player} ({flag.team}):</span> {flag.reason}
+                </p>
+              ))}
+            </div>
+          )}
+          {!index.sellHigh?.length && !index.buyLowTargets?.length && !index.tradeOpportunityFlags?.length && (
+            <p className="text-xs text-ink-secondary">No standout sell-high, buy-low, or trade-fit signals this week.</p>
           )}
         </div>
       )}
