@@ -17,9 +17,12 @@ const SCORING_OPTIONS = {
     { value: '6x6',   label: '6×6' },
     { value: 'points', label: 'Points' },
   ],
+  nfl: [
+    { value: 'half-ppr', label: 'Half-PPR Points' },
+  ],
 }
 
-const DEFAULT_SCORING_FORMAT = { nba: '9cat', mlb: '5x5' }
+const DEFAULT_SCORING_FORMAT = { nba: '9cat', mlb: '5x5', nfl: 'half-ppr' }
 
 const STRATEGY_OPTIONS = [
   { value: 'beane',            label: 'Beane Mode' },

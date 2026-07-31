@@ -6,6 +6,7 @@ import useLeagueStore from '@/store/leagueStore'
 import { useYahooAuth } from '@/hooks/useYahooAuth'
 import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
+import nflPlayers from '@/data/nfl_players.json'
 import { getSportConfig } from '@/config/sports'
 import { getGMProfile } from '@/utils/gmProfile'
 import { Card } from '@/components/ui'
@@ -33,7 +34,7 @@ function formatSeasonYear(year, sport) {
 }
 
 function playersFor(sport) {
-  return sport === 'mlb' ? mlbPlayers : nbaPlayers
+  return sport === 'mlb' ? mlbPlayers : sport === 'nfl' ? nflPlayers : nbaPlayers
 }
 
 // Which league's Hero/Beane's Note shows by default. An upcoming draft
@@ -449,8 +450,11 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
       const res = await fetch(`/api/yahoo/sync-draft?leagueKey=${encodeURIComponent(config.yahooLeagueKey)}&sport=${sport}`)
       const data = await res.json()
       if (!res.ok) throw new Error(data.error ?? 'Sync failed')
+      // Always write the current value, not just true — otherwise a stale
+      // 403 sticks isSeasonOver forever with no way back even once a later
+      // sync genuinely succeeds.
+      updateLeagueConfig(league.id, { isSeasonOver: Boolean(data.isSeasonOver) })
       if (data.isSeasonOver) {
-        updateLeagueConfig(league.id, { isSeasonOver: true })
         setSyncState({ loading: false, error: null })
         return
       }
@@ -687,8 +691,11 @@ function ActiveLeagueBar({ league, yahooConnected, onEnterDraft, onEnterSeason, 
       const res = await fetch(`/api/yahoo/sync-draft?leagueKey=${encodeURIComponent(config.yahooLeagueKey)}&sport=${sport}`)
       const data = await res.json()
       if (!res.ok) throw new Error(data.error ?? 'Sync failed')
+      // Always write the current value, not just true — otherwise a stale
+      // 403 sticks isSeasonOver forever with no way back even once a later
+      // sync genuinely succeeds.
+      updateLeagueConfig(league.id, { isSeasonOver: Boolean(data.isSeasonOver) })
       if (data.isSeasonOver) {
-        updateLeagueConfig(league.id, { isSeasonOver: true })
         setSyncState({ loading: false, error: null })
         return
       }

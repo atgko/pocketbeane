@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
+import nflPlayers from '@/data/nfl_players.json'
 import { getWinRateGrade } from '@/utils/teamStanding'
 import { AdvisorCard, Card, AdvisorError } from '@/components/ui'
 import useLeagueStore from '@/store/leagueStore'
@@ -25,7 +26,7 @@ import {
 // panel of TradeValueIndexPanel's existing result. See that component for it.
 export default function LeagueTab({ league, rosters }) {
   const sport = league.config.sport ?? 'nba'
-  const players = sport === 'mlb' ? mlbPlayers : nbaPlayers
+  const players = sport === 'mlb' ? mlbPlayers : sport === 'nfl' ? nflPlayers : nbaPlayers
   const { teams, userEntry, trend, sportConfig } = useTeamStanding({ league, rosters, players })
   const { setSeasonAdvice } = useLeagueStore()
 

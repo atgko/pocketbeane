@@ -1,4 +1,5 @@
 import { getValidToken } from '@/utils/yahooAuth'
+import { getPlayerFile } from '@/config/sports'
 import fs from 'fs'
 import path from 'path'
 
@@ -40,8 +41,7 @@ export default async function handler(req, res) {
 
   try {
   // Build name → PocketBeane id map from the right sport's player pool
-  const playerFile = sport === 'mlb' ? 'mlb_players.json' : 'players.json'
-  const playersPath = path.join(process.cwd(), 'src/data', playerFile)
+  const playersPath = path.join(process.cwd(), 'src/data', getPlayerFile(sport))
   const players = JSON.parse(fs.readFileSync(playersPath, 'utf8'))
   const nameToId = {}
   for (const p of players) {

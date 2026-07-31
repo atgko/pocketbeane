@@ -1,1 +1,7430 @@
-[]
+[
+  {
+    "id": "bijan-robinson",
+    "name": "Bijan Robinson",
+    "team": "ATL",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 1.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 62,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 1478,
+      "rush_td": 7,
+      "rec": 79,
+      "rec_yd": 820,
+      "rec_td": 4,
+      "gp": 17,
+      "fantasy_ppg": 19.72
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jahmyr-gibbs",
+    "name": "Jahmyr Gibbs",
+    "team": "DET",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 1.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 59,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 1223,
+      "rush_td": 13,
+      "rec": 77,
+      "rec_yd": 616,
+      "rec_td": 5,
+      "gp": 17,
+      "fantasy_ppg": 19.44
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ja-marr-chase",
+    "name": "Ja'Marr Chase",
+    "team": "CIN",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 52,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 14,
+      "rush_td": 0,
+      "rec": 125,
+      "rec_yd": 1412,
+      "rec_td": 8,
+      "gp": 16,
+      "fantasy_ppg": 15.82
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "puka-nacua",
+    "name": "Puka Nacua",
+    "team": "LAR",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 4,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 48,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 105,
+      "rush_td": 1,
+      "rec": 129,
+      "rec_yd": 1715,
+      "rec_td": 10,
+      "gp": 16,
+      "fantasy_ppg": 19.53
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "christian-mccaffrey",
+    "name": "Christian McCaffrey",
+    "team": "SF",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 45,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 0,
+      "int": 0,
+      "rush_yd": 1202,
+      "rush_td": 10,
+      "rec": 102,
+      "rec_yd": 924,
+      "rec_td": 7,
+      "gp": 17,
+      "fantasy_ppg": 21.51
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jaxon-smith-njigba",
+    "name": "Jaxon Smith-Njigba",
+    "team": "SEA",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 6.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 43,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 36,
+      "rush_td": 0,
+      "rec": 119,
+      "rec_yd": 1793,
+      "rec_td": 10,
+      "gp": 17,
+      "fantasy_ppg": 17.79
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jonathan-taylor",
+    "name": "Jonathan Taylor",
+    "team": "IND",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 6.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 42,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 1585,
+      "rush_td": 18,
+      "rec": 46,
+      "rec_yd": 378,
+      "rec_td": 2,
+      "gp": 17,
+      "fantasy_ppg": 19.96
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "amon-ra-st-brown",
+    "name": "Amon-Ra St. Brown",
+    "team": "DET",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 8,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 40,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 9,
+      "rush_td": 0,
+      "rec": 117,
+      "rec_yd": 1401,
+      "rec_td": 11,
+      "gp": 17,
+      "fantasy_ppg": 15.62
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "james-cook",
+    "name": "James Cook III",
+    "team": "BUF",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 9.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 37,
+    "prior_season": {
+      "pass_yd": 2,
+      "pass_td": 11,
+      "int": 51,
+      "rush_yd": 1621,
+      "rush_td": 12,
+      "rec": 33,
+      "rec_yd": 291,
+      "rec_td": 2,
+      "gp": 17,
+      "fantasy_ppg": 16.75
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ashton-jeanty",
+    "name": "Ashton Jeanty",
+    "team": "LV",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 11,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 36,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 975,
+      "rush_td": 5,
+      "rec": 55,
+      "rec_yd": 346,
+      "rec_td": 5,
+      "gp": 17,
+      "fantasy_ppg": 12.92
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ceedee-lamb",
+    "name": "CeeDee Lamb",
+    "team": "DAL",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 11.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 35,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 2,
+      "rush_td": 0,
+      "rec": 75,
+      "rec_yd": 1077,
+      "rec_td": 3,
+      "gp": 14,
+      "fantasy_ppg": 11.67
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "justin-jefferson",
+    "name": "Justin Jefferson",
+    "team": "MIN",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 11.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 35,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 7,
+      "rush_td": 0,
+      "rec": 84,
+      "rec_yd": 1048,
+      "rec_td": 2,
+      "gp": 17,
+      "fantasy_ppg": 9.38
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "de-von-achane",
+    "name": "De'Von Achane",
+    "team": "MIA",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 13,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 34,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 1350,
+      "rush_td": 8,
+      "rec": 67,
+      "rec_yd": 488,
+      "rec_td": 4,
+      "gp": 16,
+      "fantasy_ppg": 18.08
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "saquon-barkley",
+    "name": "Saquon Barkley",
+    "team": "PHI",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 14,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 33,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 1140,
+      "rush_td": 7,
+      "rec": 37,
+      "rec_yd": 273,
+      "rec_td": 2,
+      "gp": 16,
+      "fantasy_ppg": 13.36
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "chase-brown",
+    "name": "Chase Brown",
+    "team": "CIN",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 15,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 32,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 1019,
+      "rush_td": 6,
+      "rec": 69,
+      "rec_yd": 437,
+      "rec_td": 5,
+      "gp": 17,
+      "fantasy_ppg": 14.48
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "omarion-hampton",
+    "name": "Omarion Hampton",
+    "team": "LAC",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 15.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 32,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 7,
+      "int": 22,
+      "rush_yd": 545,
+      "rush_td": 4,
+      "rec": 32,
+      "rec_yd": 192,
+      "rec_td": 1,
+      "gp": 9,
+      "fantasy_ppg": 13.97
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "drake-london",
+    "name": "Drake London",
+    "team": "ATL",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 17,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 30,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 68,
+      "rec_yd": 919,
+      "rec_td": 7,
+      "gp": 12,
+      "fantasy_ppg": 13.99
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "trey-mcbride",
+    "name": "Trey McBride",
+    "team": "ARI",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 19.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 29,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 126,
+      "rec_yd": 1239,
+      "rec_td": 11,
+      "gp": 17,
+      "fantasy_ppg": 14.88
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brock-bowers",
+    "name": "Brock Bowers",
+    "team": "LV",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 20,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 28,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 2,
+      "rush_td": 0,
+      "rec": 64,
+      "rec_yd": 680,
+      "rec_td": 7,
+      "gp": 12,
+      "fantasy_ppg": 11.85
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kenneth-walker",
+    "name": "Kenneth Walker III",
+    "team": "KC",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 20.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 28,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 12,
+      "int": 46,
+      "rush_yd": 1027,
+      "rush_td": 5,
+      "rec": 31,
+      "rec_yd": 282,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 10.49
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "josh-allen",
+    "name": "Josh Allen",
+    "team": "BUF",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 21.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 28,
+    "prior_season": {
+      "pass_yd": 3668,
+      "pass_td": 25,
+      "int": 10,
+      "rush_yd": 579,
+      "rush_td": 14,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 22.27
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "derrick-henry",
+    "name": "Derrick Henry",
+    "team": "BAL",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 22,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 27,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 0,
+      "int": 0,
+      "rush_yd": 1595,
+      "rush_td": 16,
+      "rec": 15,
+      "rec_yd": 150,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 16.35
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "aj-brown",
+    "name": "A.J. Brown",
+    "team": "NE",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 22.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 27,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 78,
+      "rec_yd": 1003,
+      "rec_td": 7,
+      "gp": 15,
+      "fantasy_ppg": 12.09
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "nico-collins",
+    "name": "Nico Collins",
+    "team": "HOU",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 23,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 27,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 15,
+      "rush_td": 1,
+      "rec": 71,
+      "rec_yd": 1117,
+      "rec_td": 6,
+      "gp": 15,
+      "fantasy_ppg": 12.71
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jeremiyah-love",
+    "name": "Jeremiyah Love",
+    "team": "ARI",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 24.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 26,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "george-pickens",
+    "name": "George Pickens",
+    "team": "DAL",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 25.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 25,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 93,
+      "rec_yd": 1429,
+      "rec_td": 9,
+      "gp": 17,
+      "fantasy_ppg": 14.32
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "josh-jacobs",
+    "name": "Josh Jacobs",
+    "team": "GB",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 28,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 24,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 8,
+      "int": 31,
+      "rush_yd": 929,
+      "rush_td": 13,
+      "rec": 36,
+      "rec_yd": 282,
+      "rec_td": 1,
+      "gp": 15,
+      "fantasy_ppg": 14.94
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "chris-olave",
+    "name": "Chris Olave",
+    "team": "NO",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 29,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 24,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 0,
+      "int": 1,
+      "rush_yd": -3,
+      "rush_td": 0,
+      "rec": 100,
+      "rec_yd": 1163,
+      "rec_td": 9,
+      "gp": 16,
+      "fantasy_ppg": 13.69
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kyren-williams",
+    "name": "Kyren Williams",
+    "team": "LAR",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 29,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 24,
+    "prior_season": {
+      "pass_yd": 3,
+      "pass_td": 12,
+      "int": 30,
+      "rush_yd": 1252,
+      "rush_td": 10,
+      "rec": 36,
+      "rec_yd": 281,
+      "rec_td": 3,
+      "gp": 17,
+      "fantasy_ppg": 15.73
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "rashee-rice",
+    "name": "Rashee Rice",
+    "team": "KC",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 29.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 24,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 20,
+      "rush_td": 1,
+      "rec": 53,
+      "rec_yd": 571,
+      "rec_td": 5,
+      "gp": 8,
+      "fantasy_ppg": 15.2
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "javonte-williams",
+    "name": "Javonte Williams",
+    "team": "DAL",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 31.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 23,
+    "prior_season": {
+      "pass_yd": 2,
+      "pass_td": 7,
+      "int": 14,
+      "rush_yd": 1201,
+      "rush_td": 11,
+      "rec": 35,
+      "rec_yd": 137,
+      "rec_td": 2,
+      "gp": 16,
+      "fantasy_ppg": 15.21
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "breece-hall",
+    "name": "Breece Hall",
+    "team": "NYJ",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 33,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 22,
+    "prior_season": {
+      "pass_yd": 4,
+      "pass_td": 1,
+      "int": 0,
+      "rush_yd": 1065,
+      "rush_td": 4,
+      "rec": 36,
+      "rec_yd": 350,
+      "rec_td": 1,
+      "gp": 16,
+      "fantasy_ppg": 12.1
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "devonta-smith",
+    "name": "DeVonta Smith",
+    "team": "PHI",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 33.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 22,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 77,
+      "rec_yd": 1008,
+      "rec_td": 4,
+      "gp": 17,
+      "fantasy_ppg": 9.61
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "lamar-jackson",
+    "name": "Lamar Jackson",
+    "team": "BAL",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 36.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 21,
+    "prior_season": {
+      "pass_yd": 2549,
+      "pass_td": 21,
+      "int": 7,
+      "rush_yd": 349,
+      "rush_td": 2,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 13,
+      "fantasy_ppg": 17.37
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cam-skattebo",
+    "name": "Cam Skattebo",
+    "team": "NYG",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 37,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 21,
+    "prior_season": {
+      "pass_yd": 2,
+      "pass_td": 11,
+      "int": 21,
+      "rush_yd": 410,
+      "rush_td": 5,
+      "rec": 24,
+      "rec_yd": 207,
+      "rec_td": 2,
+      "gp": 8,
+      "fantasy_ppg": 17.35
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tetairoa-mcmillan",
+    "name": "Tetairoa McMillan",
+    "team": "CAR",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 37.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 21,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 70,
+      "rec_yd": 1014,
+      "rec_td": 7,
+      "gp": 17,
+      "fantasy_ppg": 10.49
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "malik-nabers",
+    "name": "Malik Nabers",
+    "team": "NYG",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 38,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 21,
+    "prior_season": {
+      "pass_yd": 2,
+      "pass_td": 11,
+      "int": 48,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 18,
+      "rec_yd": 271,
+      "rec_td": 2,
+      "gp": 4,
+      "fantasy_ppg": 11.04
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "travis-etienne",
+    "name": "Travis Etienne Jr.",
+    "team": "NO",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 38,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 21,
+    "prior_season": {
+      "pass_yd": 6,
+      "pass_td": 14,
+      "int": 45,
+      "rush_yd": 1107,
+      "rush_td": 7,
+      "rec": 36,
+      "rec_yd": 292,
+      "rec_td": 6,
+      "gp": 17,
+      "fantasy_ppg": 14.54
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tee-higgins",
+    "name": "Tee Higgins",
+    "team": "CIN",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 38.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 20,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 59,
+      "rec_yd": 846,
+      "rec_td": 11,
+      "gp": 15,
+      "fantasy_ppg": 12.01
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "zay-flowers",
+    "name": "Zay Flowers",
+    "team": "BAL",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 41.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 20,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 62,
+      "rush_td": 1,
+      "rec": 86,
+      "rec_yd": 1211,
+      "rec_td": 5,
+      "gp": 17,
+      "fantasy_ppg": 12.14
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "garrett-wilson",
+    "name": "Garrett Wilson",
+    "team": "NYJ",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 42,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 19,
+    "prior_season": {
+      "pass_yd": 4,
+      "pass_td": 18,
+      "int": 33,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 36,
+      "rec_yd": 395,
+      "rec_td": 4,
+      "gp": 7,
+      "fantasy_ppg": 17.24
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "colston-loveland",
+    "name": "Colston Loveland",
+    "team": "CHI",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 42,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 19,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": -2,
+      "rush_td": 0,
+      "rec": 58,
+      "rec_yd": 713,
+      "rec_td": 6,
+      "gp": 16,
+      "fantasy_ppg": 8.51
+    },
+    "age": 21,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "emeka-egbuka",
+    "name": "Emeka Egbuka",
+    "team": "TB",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 42.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 19,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 9,
+      "rush_td": 0,
+      "rec": 63,
+      "rec_yd": 938,
+      "rec_td": 6,
+      "gp": 17,
+      "fantasy_ppg": 9.54
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bucky-irving",
+    "name": "Bucky Irving",
+    "team": "TB",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 44.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 19,
+    "prior_season": {
+      "pass_yd": 3,
+      "pass_td": 11,
+      "int": 72,
+      "rush_yd": 588,
+      "rush_td": 1,
+      "rec": 30,
+      "rec_yd": 277,
+      "rec_td": 3,
+      "gp": 10,
+      "fantasy_ppg": 9.76
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ladd-mcconkey",
+    "name": "Ladd McConkey",
+    "team": "LAC",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 45.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 18,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 66,
+      "rec_yd": 789,
+      "rec_td": 6,
+      "gp": 16,
+      "fantasy_ppg": 9.24
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "quinshon-judkins",
+    "name": "Quinshon Judkins",
+    "team": "CLE",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 46.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 18,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 7,
+      "int": 58,
+      "rush_yd": 827,
+      "rush_td": 7,
+      "rec": 26,
+      "rec_yd": 171,
+      "rec_td": 0,
+      "gp": 14,
+      "fantasy_ppg": 8.91
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "luther-burden",
+    "name": "Luther Burden III",
+    "team": "CHI",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 49.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 17,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 37,
+      "rush_td": 0,
+      "rec": 47,
+      "rec_yd": 652,
+      "rec_td": 2,
+      "gp": 15,
+      "fantasy_ppg": 6.96
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "treveyon-henderson",
+    "name": "TreVeyon Henderson",
+    "team": "NE",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 49.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 17,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 7,
+      "int": 19,
+      "rush_yd": 911,
+      "rush_td": 9,
+      "rec": 35,
+      "rec_yd": 221,
+      "rec_td": 1,
+      "gp": 17,
+      "fantasy_ppg": 11.75
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jaylen-waddle",
+    "name": "Jaylen Waddle",
+    "team": "DEN",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 50.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 17,
+    "prior_season": {
+      "pass_yd": 8,
+      "pass_td": 0,
+      "int": 0,
+      "rush_yd": 28,
+      "rush_td": 0,
+      "rec": 64,
+      "rec_yd": 910,
+      "rec_td": 6,
+      "gp": 16,
+      "fantasy_ppg": 10.13
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "drake-maye",
+    "name": "Drake Maye",
+    "team": "NE",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 50.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 17,
+    "prior_season": {
+      "pass_yd": 4394,
+      "pass_td": 31,
+      "int": 8,
+      "rush_yd": 450,
+      "rush_td": 4,
+      "rec": 1,
+      "rec_yd": 2,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 21.26
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "joe-burrow",
+    "name": "Joe Burrow",
+    "team": "CIN",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 51,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 17,
+    "prior_season": {
+      "pass_yd": 1809,
+      "pass_td": 17,
+      "int": 5,
+      "rush_yd": 41,
+      "rush_td": 0,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 8,
+      "fantasy_ppg": 17.43
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dj-moore",
+    "name": "DJ Moore",
+    "team": "BUF",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 51.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 17,
+    "prior_season": {
+      "pass_yd": 2,
+      "pass_td": 1,
+      "int": 0,
+      "rush_yd": 79,
+      "rush_td": 1,
+      "rec": 50,
+      "rec_yd": 682,
+      "rec_td": 6,
+      "gp": 17,
+      "fantasy_ppg": 8.66
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "david-montgomery",
+    "name": "David Montgomery",
+    "team": "HOU",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 51.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 17,
+    "prior_season": {
+      "pass_yd": 3,
+      "pass_td": 1,
+      "int": 0,
+      "rush_yd": 716,
+      "rush_td": 8,
+      "rec": 24,
+      "rec_yd": 192,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 9.11
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tyler-warren",
+    "name": "Tyler Warren",
+    "team": "IND",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 52.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 17,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 0,
+      "int": 0,
+      "rush_yd": 8,
+      "rush_td": 1,
+      "rec": 76,
+      "rec_yd": 817,
+      "rec_td": 4,
+      "gp": 17,
+      "fantasy_ppg": 8.85
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "terry-mclaurin",
+    "name": "Terry McLaurin",
+    "team": "WAS",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 54,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 16,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 38,
+      "rec_yd": 582,
+      "rec_td": 3,
+      "gp": 10,
+      "fantasy_ppg": 9.52
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "d-andre-swift",
+    "name": "D'Andre Swift",
+    "team": "CHI",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 54.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 16,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 11,
+      "int": 55,
+      "rush_yd": 1087,
+      "rush_td": 9,
+      "rec": 34,
+      "rec_yd": 299,
+      "rec_td": 1,
+      "gp": 16,
+      "fantasy_ppg": 12.79
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "davante-adams",
+    "name": "Davante Adams",
+    "team": "LAR",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 55.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 16,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 60,
+      "rec_yd": 789,
+      "rec_td": 14,
+      "gp": 14,
+      "fantasy_ppg": 13.78
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bhayshul-tuten",
+    "name": "Bhayshul Tuten",
+    "team": "JAC",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 56,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 16,
+    "prior_season": {
+      "pass_yd": 2,
+      "pass_td": 3,
+      "int": 24,
+      "rush_yd": 307,
+      "rush_td": 5,
+      "rec": 10,
+      "rec_yd": 79,
+      "rec_td": 2,
+      "gp": 15,
+      "fantasy_ppg": 4.91
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jameson-williams",
+    "name": "Jameson Williams",
+    "team": "DET",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 57,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 16,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 12,
+      "rush_td": 0,
+      "rec": 65,
+      "rec_yd": 1117,
+      "rec_td": 7,
+      "gp": 17,
+      "fantasy_ppg": 11.02
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jayden-daniels",
+    "name": "Jayden Daniels",
+    "team": "WAS",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 59.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 15,
+    "prior_season": {
+      "pass_yd": 1262,
+      "pass_td": 8,
+      "int": 3,
+      "rush_yd": 278,
+      "rush_td": 2,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 7,
+      "fantasy_ppg": 17.04
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "mike-evans",
+    "name": "Mike Evans",
+    "team": "SF",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 60.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 15,
+    "prior_season": {
+      "pass_yd": 3,
+      "pass_td": 23,
+      "int": 45,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 30,
+      "rec_yd": 368,
+      "rec_td": 3,
+      "gp": 8,
+      "fantasy_ppg": 14.62
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jadarian-price",
+    "name": "Jadarian Price",
+    "team": "SEA",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 61,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 15,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jalen-hurts",
+    "name": "Jalen Hurts",
+    "team": "PHI",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 63,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 14,
+    "prior_season": {
+      "pass_yd": 3224,
+      "pass_td": 25,
+      "int": 6,
+      "rush_yd": 421,
+      "rush_td": 8,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 16,
+      "fantasy_ppg": 19.57
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "rome-odunze",
+    "name": "Rome Odunze",
+    "team": "CHI",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 64.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 14,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 44,
+      "rec_yd": 661,
+      "rec_td": 6,
+      "gp": 12,
+      "fantasy_ppg": 10.34
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "harold-fannin",
+    "name": "Harold Fannin Jr.",
+    "team": "CLE",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 67,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 14,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 13,
+      "rush_td": 1,
+      "rec": 72,
+      "rec_yd": 731,
+      "rec_td": 6,
+      "gp": 16,
+      "fantasy_ppg": 9.53
+    },
+    "age": 21,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "christian-watson",
+    "name": "Christian Watson",
+    "team": "GB",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 67,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 14,
+    "prior_season": {
+      "pass_yd": 6,
+      "pass_td": 28,
+      "int": 52,
+      "rush_yd": 3,
+      "rush_td": 0,
+      "rec": 35,
+      "rec_yd": 611,
+      "rec_td": 6,
+      "gp": 10,
+      "fantasy_ppg": 17.51
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jaylen-warren",
+    "name": "Jaylen Warren",
+    "team": "PIT",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 69.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 13,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 958,
+      "rush_td": 6,
+      "rec": 40,
+      "rec_yd": 333,
+      "rec_td": 2,
+      "gp": 16,
+      "fantasy_ppg": 12.32
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tucker-kraft",
+    "name": "Tucker Kraft",
+    "team": "GB",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 70.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 13,
+    "prior_season": {
+      "pass_yd": 6,
+      "pass_td": 22,
+      "int": 59,
+      "rush_yd": 3,
+      "rush_td": 0,
+      "rec": 32,
+      "rec_yd": 489,
+      "rec_td": 6,
+      "gp": 8,
+      "fantasy_ppg": 16.3
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "carnell-tate",
+    "name": "Carnell Tate",
+    "team": "TEN",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 72,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 13,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kyle-pitts",
+    "name": "Kyle Pitts Sr.",
+    "team": "ATL",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 72.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 13,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 88,
+      "rec_yd": 928,
+      "rec_td": 5,
+      "gp": 17,
+      "fantasy_ppg": 9.81
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brian-thomas",
+    "name": "Brian Thomas Jr.",
+    "team": "JAC",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 73.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 13,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 21,
+      "rush_td": 1,
+      "rec": 48,
+      "rec_yd": 707,
+      "rec_td": 2,
+      "gp": 14,
+      "fantasy_ppg": 8.2
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "chuba-hubbard",
+    "name": "Chuba Hubbard",
+    "team": "CAR",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 75,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 12,
+    "prior_season": {
+      "pass_yd": 3,
+      "pass_td": 12,
+      "int": 35,
+      "rush_yd": 511,
+      "rush_td": 1,
+      "rec": 30,
+      "rec_yd": 223,
+      "rec_td": 3,
+      "gp": 15,
+      "fantasy_ppg": 8.37
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "rj-harvey",
+    "name": "RJ Harvey",
+    "team": "DEN",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 75.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 12,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 0,
+      "int": 0,
+      "rush_yd": 540,
+      "rush_td": 7,
+      "rec": 47,
+      "rec_yd": 356,
+      "rec_td": 5,
+      "gp": 17,
+      "fantasy_ppg": 10.89
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "rhamondre-stevenson",
+    "name": "Rhamondre Stevenson",
+    "team": "NE",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 76,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 12,
+    "prior_season": {
+      "pass_yd": 2,
+      "pass_td": 11,
+      "int": 55,
+      "rush_yd": 603,
+      "rush_td": 7,
+      "rec": 32,
+      "rec_yd": 345,
+      "rec_td": 2,
+      "gp": 14,
+      "fantasy_ppg": 10.99
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "marvin-harrison",
+    "name": "Marvin Harrison Jr.",
+    "team": "ARI",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 76.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 12,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 41,
+      "rec_yd": 608,
+      "rec_td": 4,
+      "gp": 12,
+      "fantasy_ppg": 8.78
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "caleb-williams",
+    "name": "Caleb Williams",
+    "team": "CHI",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 77.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 12,
+    "prior_season": {
+      "pass_yd": 3942,
+      "pass_td": 27,
+      "int": 7,
+      "rush_yd": 388,
+      "rush_td": 3,
+      "rec": 2,
+      "rec_yd": 22,
+      "rec_td": 1,
+      "gp": 17,
+      "fantasy_ppg": 19.1
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "rico-dowdle",
+    "name": "Rico Dowdle",
+    "team": "PIT",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 77.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 12,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 1076,
+      "rush_td": 6,
+      "rec": 39,
+      "rec_yd": 297,
+      "rec_td": 1,
+      "gp": 17,
+      "fantasy_ppg": 11.69
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "sam-laporta",
+    "name": "Sam LaPorta",
+    "team": "DET",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 78,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 12,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 40,
+      "rec_yd": 489,
+      "rec_td": 3,
+      "gp": 9,
+      "fantasy_ppg": 9.66
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "justin-herbert",
+    "name": "Justin Herbert",
+    "team": "LAC",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 79.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 12,
+    "prior_season": {
+      "pass_yd": 3727,
+      "pass_td": 26,
+      "int": 13,
+      "rush_yd": 498,
+      "rush_td": 2,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 16,
+      "fantasy_ppg": 18.87
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tony-pollard",
+    "name": "Tony Pollard",
+    "team": "TEN",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 79.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 12,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 11,
+      "int": 29,
+      "rush_yd": 1082,
+      "rush_td": 5,
+      "rec": 33,
+      "rec_yd": 206,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 11.19
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "alec-pierce",
+    "name": "Alec Pierce",
+    "team": "IND",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 82,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 11,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 47,
+      "rec_yd": 1003,
+      "rec_td": 6,
+      "gp": 15,
+      "fantasy_ppg": 10.65
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dak-prescott",
+    "name": "Dak Prescott",
+    "team": "DAL",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 82.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 11,
+    "prior_season": {
+      "pass_yd": 4552,
+      "pass_td": 30,
+      "int": 10,
+      "rush_yd": 177,
+      "rush_td": 2,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 18.93
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jaxson-dart",
+    "name": "Jaxson Dart",
+    "team": "NYG",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 83.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 11,
+    "prior_season": {
+      "pass_yd": 2272,
+      "pass_td": 15,
+      "int": 5,
+      "rush_yd": 487,
+      "rush_td": 9,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 14,
+      "fantasy_ppg": 17.76
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kyle-monangai",
+    "name": "Kyle Monangai",
+    "team": "CHI",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 83.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 11,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 7,
+      "int": 34,
+      "rush_yd": 783,
+      "rush_td": 5,
+      "rec": 18,
+      "rec_yd": 164,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 7.51
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dk-metcalf",
+    "name": "DK Metcalf",
+    "team": "PIT",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 84.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 11,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 12,
+      "rush_td": 1,
+      "rec": 59,
+      "rec_yd": 850,
+      "rec_td": 6,
+      "gp": 15,
+      "fantasy_ppg": 10.51
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jordyn-tyson",
+    "name": "Jordyn Tyson",
+    "team": "NO",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 85.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 11,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "trevor-lawrence",
+    "name": "Trevor Lawrence",
+    "team": "JAC",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 85.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 11,
+    "prior_season": {
+      "pass_yd": 4007,
+      "pass_td": 29,
+      "int": 12,
+      "rush_yd": 359,
+      "rush_td": 9,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 20.83
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "courtland-sutton",
+    "name": "Courtland Sutton",
+    "team": "DEN",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 86.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 11,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 0,
+      "int": 0,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 74,
+      "rec_yd": 1017,
+      "rec_td": 7,
+      "gp": 17,
+      "fantasy_ppg": 10.63
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "michael-wilson",
+    "name": "Michael Wilson",
+    "team": "ARI",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 86.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 11,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 78,
+      "rec_yd": 1006,
+      "rec_td": 7,
+      "gp": 17,
+      "fantasy_ppg": 10.68
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "chris-godwin",
+    "name": "Chris Godwin Jr.",
+    "team": "TB",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 91.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 10,
+    "prior_season": {
+      "pass_yd": 2,
+      "pass_td": 21,
+      "int": 59,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 33,
+      "rec_yd": 360,
+      "rec_td": 2,
+      "gp": 9,
+      "fantasy_ppg": 9.95
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "parker-washington",
+    "name": "Parker Washington",
+    "team": "JAC",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 92.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 10,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 58,
+      "rec_yd": 847,
+      "rec_td": 5,
+      "gp": 16,
+      "fantasy_ppg": 8.98
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jk-dobbins",
+    "name": "J.K. Dobbins",
+    "team": "DEN",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 94,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 10,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 0,
+      "int": 9,
+      "rush_yd": 772,
+      "rush_td": 4,
+      "rec": 11,
+      "rec_yd": 37,
+      "rec_td": 0,
+      "gp": 10,
+      "fantasy_ppg": 10.14
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "makai-lemon",
+    "name": "Makai Lemon",
+    "team": "PHI",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 94.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 10,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "blake-corum",
+    "name": "Blake Corum",
+    "team": "LAR",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 94.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 9,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 2,
+      "int": 14,
+      "rush_yd": 746,
+      "rush_td": 6,
+      "rec": 8,
+      "rec_yd": 36,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 6.6
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "george-kittle",
+    "name": "George Kittle",
+    "team": "SF",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 97.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 9,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": -3,
+      "rush_td": 0,
+      "rec": 57,
+      "rec_yd": 628,
+      "rec_td": 7,
+      "gp": 11,
+      "fantasy_ppg": 12.09
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "patrick-mahomes",
+    "name": "Patrick Mahomes II",
+    "team": "KC",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 100.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 9,
+    "prior_season": {
+      "pass_yd": 3587,
+      "pass_td": 22,
+      "int": 11,
+      "rush_yd": 422,
+      "rush_td": 5,
+      "rec": 1,
+      "rec_yd": -10,
+      "rec_td": 0,
+      "gp": 14,
+      "fantasy_ppg": 20.87
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "travis-kelce",
+    "name": "Travis Kelce",
+    "team": "KC",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 101.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 9,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 1,
+      "rush_td": 0,
+      "rec": 76,
+      "rec_yd": 851,
+      "rec_td": 5,
+      "gp": 17,
+      "fantasy_ppg": 9.01
+    },
+    "age": 36,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ricky-pearsall",
+    "name": "Ricky Pearsall",
+    "team": "SF",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 103,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 8,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 28,
+      "int": 45,
+      "rush_yd": -2,
+      "rush_td": 0,
+      "rec": 36,
+      "rec_yd": 528,
+      "rec_td": 0,
+      "gp": 9,
+      "fantasy_ppg": 15.29
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dalton-kincaid",
+    "name": "Dalton Kincaid",
+    "team": "BUF",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 104.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 8,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 39,
+      "rec_yd": 571,
+      "rec_td": 5,
+      "gp": 12,
+      "fantasy_ppg": 8.88
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brock-purdy",
+    "name": "Brock Purdy",
+    "team": "SF",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 105,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 8,
+    "prior_season": {
+      "pass_yd": 2167,
+      "pass_td": 20,
+      "int": 10,
+      "rush_yd": 147,
+      "rush_td": 3,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 9,
+      "fantasy_ppg": 21.04
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jonathon-brooks",
+    "name": "Jonathon Brooks",
+    "team": "CAR",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 106,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 8,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bo-nix",
+    "name": "Bo Nix",
+    "team": "DEN",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 106.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 8,
+    "prior_season": {
+      "pass_yd": 3931,
+      "pass_td": 25,
+      "int": 11,
+      "rush_yd": 356,
+      "rush_td": 5,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 18.34
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "isaiah-likely",
+    "name": "Isaiah Likely",
+    "team": "NYG",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 107,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 8,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 11,
+      "int": 43,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 27,
+      "rec_yd": 307,
+      "rec_td": 1,
+      "gp": 14,
+      "fantasy_ppg": 3.66
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kenny-gainwell",
+    "name": "Kenny Gainwell",
+    "team": "TB",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 107,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 8,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 537,
+      "rush_td": 5,
+      "rec": null,
+      "rec_yd": null,
+      "rec_td": null,
+      "gp": 17,
+      "fantasy_ppg": 4.92
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "matthew-stafford",
+    "name": "Matthew Stafford",
+    "team": "LAR",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 107.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 8,
+    "prior_season": {
+      "pass_yd": 4707,
+      "pass_td": 46,
+      "int": 8,
+      "rush_yd": 1,
+      "rush_td": 0,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 21.43
+    },
+    "age": 37,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jakobi-meyers",
+    "name": "Jakobi Meyers",
+    "team": "JAC",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 108.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 8,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 13,
+      "rush_td": 0,
+      "rec": 75,
+      "rec_yd": 835,
+      "rec_td": 3,
+      "gp": 16,
+      "fantasy_ppg": 8.77
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "michael-pittman",
+    "name": "Michael Pittman Jr.",
+    "team": "PIT",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 108.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 8,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 80,
+      "rec_yd": 784,
+      "rec_td": 7,
+      "gp": 17,
+      "fantasy_ppg": 9.44
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jake-ferguson",
+    "name": "Jake Ferguson",
+    "team": "DAL",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 110.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 8,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 1,
+      "rush_td": 0,
+      "rec": 82,
+      "rec_yd": 600,
+      "rec_td": 8,
+      "gp": 17,
+      "fantasy_ppg": 8.77
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jacory-croskey-merritt",
+    "name": "Jacory Croskey-Merritt",
+    "team": "WAS",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 110.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 8,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 3,
+      "int": 28,
+      "rush_yd": 805,
+      "rush_td": 8,
+      "rec": 9,
+      "rec_yd": 68,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 7.28
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "quentin-johnston",
+    "name": "Quentin Johnston",
+    "team": "LAC",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 111,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 8,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 7,
+      "rush_td": 0,
+      "rec": 51,
+      "rec_yd": 735,
+      "rec_td": 8,
+      "gp": 14,
+      "fantasy_ppg": 10.55
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jordan-addison",
+    "name": "Jordan Addison",
+    "team": "MIN",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 111.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 7,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 81,
+      "rush_td": 1,
+      "rec": 42,
+      "rec_yd": 610,
+      "rec_td": 3,
+      "gp": 14,
+      "fantasy_ppg": 8.15
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "rachaad-white",
+    "name": "Rachaad White",
+    "team": "WAS",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 112.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 7,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 572,
+      "rush_td": 4,
+      "rec": 40,
+      "rec_yd": 218,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 7.24
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "aaron-jones",
+    "name": "Aaron Jones Sr.",
+    "team": "MIN",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 114.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 7,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 9,
+      "int": 27,
+      "rush_yd": 548,
+      "rush_td": 2,
+      "rec": 28,
+      "rec_yd": 199,
+      "rec_td": 1,
+      "gp": 12,
+      "fantasy_ppg": 9.65
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brandon-aubrey",
+    "name": "Brandon Aubrey",
+    "team": "DAL",
+    "positions": [
+      "K"
+    ],
+    "yahoo_positions": [
+      "K"
+    ],
+    "adp": 114.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 7,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jared-goff",
+    "name": "Jared Goff",
+    "team": "DET",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 115.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 7,
+    "prior_season": {
+      "pass_yd": 4564,
+      "pass_td": 34,
+      "int": 8,
+      "rush_yd": 45,
+      "rush_td": 0,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 18.53
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "mark-andrews",
+    "name": "Mark Andrews",
+    "team": "BAL",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 115.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 7,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 48,
+      "rush_td": 1,
+      "rec": 48,
+      "rec_yd": 422,
+      "rec_td": 5,
+      "gp": 17,
+      "fantasy_ppg": 6.29
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jordan-mason",
+    "name": "Jordan Mason",
+    "team": "MIN",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 115.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 7,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 1,
+      "int": 13,
+      "rush_yd": 758,
+      "rush_td": 6,
+      "rec": 14,
+      "rec_yd": 51,
+      "rec_td": 0,
+      "gp": 16,
+      "fantasy_ppg": 7.18
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "wan-dale-robinson",
+    "name": "Wan'Dale Robinson",
+    "team": "TEN",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 116,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 7,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 5,
+      "rush_td": 0,
+      "rec": 92,
+      "rec_yd": 1014,
+      "rec_td": 4,
+      "gp": 16,
+      "fantasy_ppg": 10.74
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jayden-reed",
+    "name": "Jayden Reed",
+    "team": "GB",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 117.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 7,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 8,
+      "int": 31,
+      "rush_yd": 28,
+      "rush_td": 0,
+      "rec": 19,
+      "rec_yd": 207,
+      "rec_td": 1,
+      "gp": 7,
+      "fantasy_ppg": 5.72
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dallas-goedert",
+    "name": "Dallas Goedert",
+    "team": "PHI",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 120,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 7,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 60,
+      "rec_yd": 591,
+      "rec_td": 11,
+      "gp": 15,
+      "fantasy_ppg": 10.34
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "josh-downs",
+    "name": "Josh Downs",
+    "team": "IND",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 121.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 6,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": -2,
+      "rush_td": 0,
+      "rec": 58,
+      "rec_yd": 566,
+      "rec_td": 4,
+      "gp": 16,
+      "fantasy_ppg": 6.84
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "houston-texans",
+    "name": "Houston Texans",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 124.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 6,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "xavier-worthy",
+    "name": "Xavier Worthy",
+    "team": "KC",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 130,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 6,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 87,
+      "rush_td": 0,
+      "rec": 42,
+      "rec_yd": 532,
+      "rec_td": 1,
+      "gp": 14,
+      "fantasy_ppg": 6.35
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "los-angeles-rams",
+    "name": "Los Angeles Rams",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 130,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 6,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kyler-murray",
+    "name": "Kyler Murray",
+    "team": "MIN",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 131.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 6,
+    "prior_season": {
+      "pass_yd": 962,
+      "pass_td": 6,
+      "int": 3,
+      "rush_yd": 173,
+      "rush_td": 1,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 5,
+      "fantasy_ppg": 16.56
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "oronde-gadsden",
+    "name": "Oronde Gadsden II",
+    "team": "LAC",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 133,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 5,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 49,
+      "rec_yd": 664,
+      "rec_td": 3,
+      "gp": 15,
+      "fantasy_ppg": 7.26
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "zach-charbonnet",
+    "name": "Zach Charbonnet",
+    "team": "SEA",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 133,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 5,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 7,
+      "int": 21,
+      "rush_yd": 730,
+      "rush_td": 12,
+      "rec": 20,
+      "rec_yd": 144,
+      "rec_td": 0,
+      "gp": 16,
+      "fantasy_ppg": 11.03
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jordan-love",
+    "name": "Jordan Love",
+    "team": "GB",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 135.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 5,
+    "prior_season": {
+      "pass_yd": 3381,
+      "pass_td": 23,
+      "int": 6,
+      "rush_yd": 199,
+      "rush_td": 0,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 15,
+      "fantasy_ppg": 16.08
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "malik-willis",
+    "name": "Malik Willis",
+    "team": "MIA",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 136.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 5,
+    "prior_season": {
+      "pass_yd": 422,
+      "pass_td": 3,
+      "int": 0,
+      "rush_yd": 123,
+      "rush_td": 2,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 4,
+      "fantasy_ppg": 13.29
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "baker-mayfield",
+    "name": "Baker Mayfield",
+    "team": "TB",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 139,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 5,
+    "prior_season": {
+      "pass_yd": 3693,
+      "pass_td": 26,
+      "int": 11,
+      "rush_yd": 382,
+      "rush_td": 1,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 16.76
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "denver-broncos",
+    "name": "Denver Broncos",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 139,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 5,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "romeo-doubs",
+    "name": "Romeo Doubs",
+    "team": "NE",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 139.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 5,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 55,
+      "rec_yd": 724,
+      "rec_td": 6,
+      "gp": 16,
+      "fantasy_ppg": 8.49
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "hunter-henry",
+    "name": "Hunter Henry",
+    "team": "NE",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 139.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 5,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 60,
+      "rec_yd": 768,
+      "rec_td": 7,
+      "gp": 17,
+      "fantasy_ppg": 8.75
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brenton-strange",
+    "name": "Brenton Strange",
+    "team": "JAC",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 140.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 5,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 46,
+      "rec_yd": 540,
+      "rec_td": 3,
+      "gp": 12,
+      "fantasy_ppg": 7.92
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "seattle-seahawks",
+    "name": "Seattle Seahawks",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 140.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 5,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tyler-allgeier",
+    "name": "Tyler Allgeier",
+    "team": "ARI",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 140.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 5,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 3,
+      "int": 31,
+      "rush_yd": 514,
+      "rush_td": 8,
+      "rec": 14,
+      "rec_yd": 96,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 5.71
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tyrone-tracy",
+    "name": "Tyrone Tracy Jr.",
+    "team": "NYG",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 141.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 5,
+    "prior_season": {
+      "pass_yd": 2,
+      "pass_td": 14,
+      "int": 42,
+      "rush_yd": 740,
+      "rush_td": 2,
+      "rec": 36,
+      "rec_yd": 288,
+      "rec_td": 2,
+      "gp": 15,
+      "fantasy_ppg": 10.59
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tyler-shough",
+    "name": "Tyler Shough",
+    "team": "NO",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 141.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 5,
+    "prior_season": {
+      "pass_yd": 2384,
+      "pass_td": 10,
+      "int": 6,
+      "rush_yd": 186,
+      "rush_td": 3,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 11,
+      "fantasy_ppg": 15.09
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kc-concepcion",
+    "name": "KC Concepcion",
+    "team": "CLE",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 143.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 4,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brian-robinson",
+    "name": "Brian Robinson Jr.",
+    "team": "ATL",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 143.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 4,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 1,
+      "int": 6,
+      "rush_yd": 400,
+      "rush_td": 2,
+      "rec": 8,
+      "rec_yd": 25,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 3.32
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "chig-okonkwo",
+    "name": "Chig Okonkwo",
+    "team": "WAS",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 145.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 4,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 56,
+      "rec_yd": 560,
+      "rec_td": 2,
+      "gp": 17,
+      "fantasy_ppg": 5.65
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "aaron-rodgers",
+    "name": "Aaron Rodgers",
+    "team": "PIT",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 145.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 4,
+    "prior_season": {
+      "pass_yd": 3322,
+      "pass_td": 24,
+      "int": 7,
+      "rush_yd": 61,
+      "rush_td": 1,
+      "rec": 1,
+      "rec_yd": -9,
+      "rec_td": 0,
+      "gp": 16,
+      "fantasy_ppg": 14.6
+    },
+    "age": 42,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "woody-marks",
+    "name": "Woody Marks",
+    "team": "HOU",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 147,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 4,
+    "prior_season": {
+      "pass_yd": 3,
+      "pass_td": 7,
+      "int": 50,
+      "rush_yd": 703,
+      "rush_td": 2,
+      "rec": 24,
+      "rec_yd": 208,
+      "rec_td": 3,
+      "gp": 16,
+      "fantasy_ppg": 6.95
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "juwan-johnson",
+    "name": "Juwan Johnson",
+    "team": "NO",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 147.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 4,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 77,
+      "rec_yd": 889,
+      "rec_td": 3,
+      "gp": 17,
+      "fantasy_ppg": 8.55
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "rashid-shaheed",
+    "name": "Rashid Shaheed",
+    "team": "SEA",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 148,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 4,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 69,
+      "rush_td": 0,
+      "rec": 59,
+      "rec_yd": 687,
+      "rec_td": 2,
+      "gp": 18,
+      "fantasy_ppg": 6.51
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "sam-darnold",
+    "name": "Sam Darnold",
+    "team": "SEA",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 148,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 4,
+    "prior_season": {
+      "pass_yd": 4048,
+      "pass_td": 25,
+      "int": 14,
+      "rush_yd": 95,
+      "rush_td": 0,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 15.14
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kenyon-sadiq",
+    "name": "Kenyon Sadiq",
+    "team": "NYJ",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 149,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 4,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ka-imi-fairbairn",
+    "name": "Ka'imi Fairbairn",
+    "team": "HOU",
+    "positions": [
+      "K"
+    ],
+    "yahoo_positions": [
+      "K"
+    ],
+    "adp": 149,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 4,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "matthew-golden",
+    "name": "Matthew Golden",
+    "team": "GB",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 149.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 4,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 16,
+      "int": 46,
+      "rush_yd": 49,
+      "rush_td": 0,
+      "rec": 29,
+      "rec_yd": 361,
+      "rec_td": 0,
+      "gp": 14,
+      "fantasy_ppg": 5.25
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "alvin-kamara",
+    "name": "Alvin Kamara",
+    "team": "NO",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 149.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 4,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 7,
+      "int": 26,
+      "rush_yd": 471,
+      "rush_td": 1,
+      "rec": 33,
+      "rec_yd": 186,
+      "rec_td": 0,
+      "gp": 11,
+      "fantasy_ppg": 8.2
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jonah-coleman",
+    "name": "Jonah Coleman",
+    "team": "DEN",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 150,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 4,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "nick-folk",
+    "name": "Nick Folk",
+    "team": "ATL",
+    "positions": [
+      "K"
+    ],
+    "yahoo_positions": [
+      "K"
+    ],
+    "adp": 151,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 4,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "khalil-shakir",
+    "name": "Khalil Shakir",
+    "team": "BUF",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 155,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 5,
+      "rush_td": 0,
+      "rec": 72,
+      "rec_yd": 719,
+      "rec_td": 4,
+      "gp": 16,
+      "fantasy_ppg": 8.28
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "isiah-pacheco",
+    "name": "Isiah Pacheco",
+    "team": "DET",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 155,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 4,
+      "int": 31,
+      "rush_yd": 462,
+      "rush_td": 1,
+      "rec": 19,
+      "rec_yd": 101,
+      "rec_td": 1,
+      "gp": 13,
+      "fantasy_ppg": 4.83
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cj-stroud",
+    "name": "C.J. Stroud",
+    "team": "HOU",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 155.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": 3041,
+      "pass_td": 19,
+      "int": 8,
+      "rush_yd": 209,
+      "rush_td": 1,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 14,
+      "fantasy_ppg": 15.47
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cameron-dicker",
+    "name": "Cameron Dicker",
+    "team": "LAC",
+    "positions": [
+      "K"
+    ],
+    "yahoo_positions": [
+      "K"
+    ],
+    "adp": 155.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "chris-rodriguez",
+    "name": "Chris Rodriguez Jr.",
+    "team": "JAC",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 155.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 1,
+      "int": 18,
+      "rush_yd": 500,
+      "rush_td": 6,
+      "rec": 3,
+      "rec_yd": 30,
+      "rec_td": 0,
+      "gp": 13,
+      "fantasy_ppg": 5.88
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tyjae-spears",
+    "name": "Tyjae Spears",
+    "team": "TEN",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 156,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 283,
+      "rush_td": 2,
+      "rec": 45,
+      "rec_yd": 264,
+      "rec_td": 0,
+      "gp": 13,
+      "fantasy_ppg": 6.86
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "bryce-young",
+    "name": "Bryce Young",
+    "team": "CAR",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 157.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": 3011,
+      "pass_td": 23,
+      "int": 11,
+      "rush_yd": 216,
+      "rush_td": 2,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 16,
+      "fantasy_ppg": 14.69
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jayden-higgins",
+    "name": "Jayden Higgins",
+    "team": "HOU",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 157.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 41,
+      "rec_yd": 525,
+      "rec_td": 6,
+      "gp": 17,
+      "fantasy_ppg": 6.41
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "stefon-diggs",
+    "name": "Stefon Diggs",
+    "team": "",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 159,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 85,
+      "rec_yd": 1013,
+      "rec_td": 4,
+      "gp": 17,
+      "fantasy_ppg": 9.87
+    },
+    "age": 32,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cam-ward",
+    "name": "Cam Ward",
+    "team": "TEN",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 159,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": 3169,
+      "pass_td": 15,
+      "int": 7,
+      "rush_yd": 159,
+      "rush_td": 2,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 12.22
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "philadelphia-eagles",
+    "name": "Philadelphia Eagles",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 159,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "theo-johnson",
+    "name": "Theo Johnson",
+    "team": "NYG",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 159,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 45,
+      "rec_yd": 528,
+      "rec_td": 5,
+      "gp": 15,
+      "fantasy_ppg": 7.02
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "david-njoku",
+    "name": "David Njoku",
+    "team": "LAC",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 160,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": 4,
+      "pass_td": 11,
+      "int": 23,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 33,
+      "rec_yd": 293,
+      "rec_td": 4,
+      "gp": 12,
+      "fantasy_ppg": 7.58
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jalen-coker",
+    "name": "Jalen Coker",
+    "team": "CAR",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 160.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": 3,
+      "pass_td": 22,
+      "int": 34,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 33,
+      "rec_yd": 394,
+      "rec_td": 3,
+      "gp": 11,
+      "fantasy_ppg": 11.64
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "fernando-mendoza",
+    "name": "Fernando Mendoza",
+    "team": "LV",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 163,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tj-hockenson",
+    "name": "T.J. Hockenson",
+    "team": "MIN",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 164,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 51,
+      "rec_yd": 438,
+      "rec_td": 3,
+      "gp": 15,
+      "fantasy_ppg": 5.82
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "denzel-boston",
+    "name": "Denzel Boston",
+    "team": "CLE",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 165,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "omar-cooper",
+    "name": "Omar Cooper Jr.",
+    "team": "NYJ",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 165,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jauan-jennings",
+    "name": "Jauan Jennings",
+    "team": "MIN",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 165.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 55,
+      "rec_yd": 643,
+      "rec_td": 9,
+      "gp": 15,
+      "fantasy_ppg": 9.72
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jalen-mcmillan",
+    "name": "Jalen McMillan",
+    "team": "TB",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 165.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 8,
+      "int": 33,
+      "rush_yd": 1,
+      "rush_td": 0,
+      "rec": 12,
+      "rec_yd": 178,
+      "rec_td": 0,
+      "gp": 4,
+      "fantasy_ppg": 5.72
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jerry-jeudy",
+    "name": "Jerry Jeudy",
+    "team": "CLE",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 167,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 5,
+      "rush_td": 0,
+      "rec": 50,
+      "rec_yd": 602,
+      "rec_td": 2,
+      "gp": 17,
+      "fantasy_ppg": 5.75
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jason-myers",
+    "name": "Jason Myers",
+    "team": "SEA",
+    "positions": [
+      "K"
+    ],
+    "yahoo_positions": [
+      "K"
+    ],
+    "adp": 167.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dylan-sampson",
+    "name": "Dylan Sampson",
+    "team": "CLE",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 168,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 3,
+    "prior_season": {
+      "pass_yd": 2,
+      "pass_td": 8,
+      "int": 66,
+      "rush_yd": 175,
+      "rush_td": 0,
+      "rec": 33,
+      "rec_yd": 271,
+      "rec_td": 2,
+      "gp": 15,
+      "fantasy_ppg": 2.61
+    },
+    "age": 21,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dalton-schultz",
+    "name": "Dalton Schultz",
+    "team": "HOU",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 168.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 82,
+      "rec_yd": 777,
+      "rec_td": 3,
+      "gp": 17,
+      "fantasy_ppg": 8.04
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "daniel-jones",
+    "name": "Daniel Jones",
+    "team": "IND",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 169,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": 3101,
+      "pass_td": 19,
+      "int": 8,
+      "rush_yd": 164,
+      "rush_td": 5,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 13,
+      "fantasy_ppg": 18.34
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "travis-hunter",
+    "name": "Travis Hunter",
+    "team": "JAC",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 170,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 12,
+      "int": 44,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 28,
+      "rec_yd": 298,
+      "rec_td": 1,
+      "gp": 7,
+      "fantasy_ppg": 7.69
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "aj-barner",
+    "name": "AJ Barner",
+    "team": "SEA",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 170.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 14,
+      "rush_td": 1,
+      "rec": 52,
+      "rec_yd": 519,
+      "rec_td": 6,
+      "gp": 17,
+      "fantasy_ppg": 7.14
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "keaton-mitchell",
+    "name": "Keaton Mitchell",
+    "team": "LAC",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 170.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 2,
+      "int": 17,
+      "rush_yd": 341,
+      "rush_td": 1,
+      "rec": 9,
+      "rec_yd": 63,
+      "rec_td": 0,
+      "gp": 13,
+      "fantasy_ppg": 3.22
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "pat-freiermuth",
+    "name": "Pat Freiermuth",
+    "team": "PIT",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 171,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 41,
+      "rec_yd": 486,
+      "rec_td": 4,
+      "gp": 17,
+      "fantasy_ppg": 5.48
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cam-little",
+    "name": "Cam Little",
+    "team": "JAC",
+    "positions": [
+      "K"
+    ],
+    "yahoo_positions": [
+      "K"
+    ],
+    "adp": 171.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "braelon-allen",
+    "name": "Braelon Allen",
+    "team": "NYJ",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 173.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 1,
+      "int": 12,
+      "rush_yd": 76,
+      "rush_td": 1,
+      "rec": 2,
+      "rec_yd": 17,
+      "rec_td": 0,
+      "gp": 4,
+      "fantasy_ppg": 2.08
+    },
+    "age": 21,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "mike-washington",
+    "name": "Mike Washington Jr.",
+    "team": "LV",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 173.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 110,
+      "rush_td": 1,
+      "rec": null,
+      "rec_yd": null,
+      "rec_td": null,
+      "gp": 17,
+      "fantasy_ppg": 1
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "new-england-patriots",
+    "name": "New England Patriots",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 174.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "isaac-teslaa",
+    "name": "Isaac TeSlaa",
+    "team": "DET",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 175,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": 6,
+      "pass_td": 14,
+      "int": 29,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 16,
+      "rec_yd": 239,
+      "rec_td": 6,
+      "gp": 17,
+      "fantasy_ppg": 5.6
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tank-bigsby",
+    "name": "Tank Bigsby",
+    "team": "PHI",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 175,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 1,
+      "int": 31,
+      "rush_yd": 356,
+      "rush_td": 2,
+      "rec": 3,
+      "rec_yd": 32,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 1.49
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "austin-ekeler",
+    "name": "Austin Ekeler",
+    "team": "",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 176,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 2,
+      "int": 15,
+      "rush_yd": 43,
+      "rush_td": 0,
+      "rec": 5,
+      "rec_yd": 38,
+      "rec_td": 0,
+      "gp": 2,
+      "fantasy_ppg": 1.8
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "james-conner",
+    "name": "James Conner",
+    "team": "ARI",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 177.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 4,
+      "int": 18,
+      "rush_yd": 95,
+      "rush_td": 1,
+      "rec": 8,
+      "rec_yd": 38,
+      "rec_td": 1,
+      "gp": 3,
+      "fantasy_ppg": 9.11
+    },
+    "age": 30,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "gunnar-helm",
+    "name": "Gunnar Helm",
+    "team": "TEN",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 179,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 44,
+      "rec_yd": 357,
+      "rec_td": 2,
+      "gp": 16,
+      "fantasy_ppg": 4.36
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "emmett-johnson",
+    "name": "Emmett Johnson",
+    "team": "KC",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 179.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kayshon-boutte",
+    "name": "Kayshon Boutte",
+    "team": "NE",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 179.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": 6,
+      "pass_td": 27,
+      "int": 39,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 33,
+      "rec_yd": 551,
+      "rec_td": 6,
+      "gp": 14,
+      "fantasy_ppg": 12.63
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "cade-otton",
+    "name": "Cade Otton",
+    "team": "TB",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 181.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 59,
+      "rec_yd": 572,
+      "rec_td": 1,
+      "gp": 16,
+      "fantasy_ppg": 5.79
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tyreek-hill",
+    "name": "Tyreek Hill",
+    "team": "",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 182.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 2,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 17,
+      "int": 47,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 21,
+      "rec_yd": 265,
+      "rec_td": 1,
+      "gp": 4,
+      "fantasy_ppg": 16.01
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jalen-nailor",
+    "name": "Jalen Nailor",
+    "team": "LV",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 182.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 4,
+      "pass_td": 23,
+      "int": 62,
+      "rush_yd": 13,
+      "rush_td": 0,
+      "rec": 29,
+      "rec_yd": 444,
+      "rec_td": 4,
+      "gp": 17,
+      "fantasy_ppg": 6.73
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "deebo-samuel",
+    "name": "Deebo Samuel Sr.",
+    "team": "",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 183.3,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 75,
+      "rush_td": 1,
+      "rec": 72,
+      "rec_yd": 727,
+      "rec_td": 5,
+      "gp": 16,
+      "fantasy_ppg": 9.51
+    },
+    "age": 29,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "nicholas-singleton",
+    "name": "Nicholas Singleton",
+    "team": "TEN",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 184,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "calvin-ridley",
+    "name": "Calvin Ridley",
+    "team": "TEN",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 184.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 13,
+      "int": 47,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 17,
+      "rec_yd": 303,
+      "rec_td": 0,
+      "gp": 7,
+      "fantasy_ppg": 6.26
+    },
+    "age": 31,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jacoby-brissett",
+    "name": "Jacoby Brissett",
+    "team": "ARI",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 184.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 3366,
+      "pass_td": 23,
+      "int": 8,
+      "rush_yd": 168,
+      "rush_td": 1,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 14,
+      "fantasy_ppg": 17.25
+    },
+    "age": 33,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "geno-smith",
+    "name": "Geno Smith",
+    "team": "NYJ",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 185,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 3025,
+      "pass_td": 19,
+      "int": 17,
+      "rush_yd": 109,
+      "rush_td": 0,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 15,
+      "fantasy_ppg": 12.73
+    },
+    "age": 35,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "malik-washington",
+    "name": "Malik Washington",
+    "team": "MIA",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 186,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 110,
+      "rush_td": 1,
+      "rec": 46,
+      "rec_yd": 317,
+      "rec_td": 3,
+      "gp": 17,
+      "fantasy_ppg": 5.28
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "antonio-williams",
+    "name": "Antonio Williams",
+    "team": "WAS",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 186.7,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "terrance-ferguson",
+    "name": "Terrance Ferguson",
+    "team": "LAR",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 190,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 3,
+      "pass_td": 9,
+      "int": 36,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 11,
+      "rec_yd": 231,
+      "rec_td": 3,
+      "gp": 14,
+      "fantasy_ppg": 3.34
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "minnesota-vikings",
+    "name": "Minnesota Vikings",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 192,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "justice-hill",
+    "name": "Justice Hill",
+    "team": "BAL",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 193,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 6,
+      "int": 37,
+      "rush_yd": 93,
+      "rush_td": 2,
+      "rec": 21,
+      "rec_yd": 169,
+      "rec_td": 1,
+      "gp": 10,
+      "fantasy_ppg": 4.17
+    },
+    "age": 28,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "adonai-mitchell",
+    "name": "Adonai Mitchell",
+    "team": "NYJ",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 193.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 2,
+      "pass_td": 15,
+      "int": 75,
+      "rush_yd": -4,
+      "rush_td": 0,
+      "rec": 33,
+      "rec_yd": 453,
+      "rec_td": 2,
+      "gp": 16,
+      "fantasy_ppg": 3.66
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tre-tucker",
+    "name": "Tre Tucker",
+    "team": "LV",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 196,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 51,
+      "rush_td": 0,
+      "rec": 57,
+      "rec_yd": 696,
+      "rec_td": 5,
+      "gp": 17,
+      "fantasy_ppg": 7.84
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kaytron-allen",
+    "name": "Kaytron Allen",
+    "team": "WAS",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 196.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "sean-tucker",
+    "name": "Sean Tucker",
+    "team": "TB",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 196.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 1,
+      "int": 28,
+      "rush_yd": 320,
+      "rush_td": 7,
+      "rec": 8,
+      "rec_yd": 34,
+      "rec_td": 1,
+      "gp": 17,
+      "fantasy_ppg": 3.73
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "greg-dulcich",
+    "name": "Greg Dulcich",
+    "team": "MIA",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 197,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 14,
+      "int": 29,
+      "rush_yd": -7,
+      "rush_td": 0,
+      "rec": 26,
+      "rec_yd": 335,
+      "rec_td": 1,
+      "gp": 10,
+      "fantasy_ppg": 7.88
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jordan-james",
+    "name": "Jordan James",
+    "team": "SF",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 198,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "marshawn-lloyd",
+    "name": "MarShawn Lloyd",
+    "team": "GB",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 199,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "george-holani",
+    "name": "George Holani",
+    "team": "SEA",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 200,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 1,
+      "int": 11,
+      "rush_yd": 73,
+      "rush_td": 1,
+      "rec": 2,
+      "rec_yd": 15,
+      "rec_td": 0,
+      "gp": 11,
+      "fantasy_ppg": 0.8
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "dallas-cowboys",
+    "name": "Dallas Cowboys",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 202.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "zachariah-branch",
+    "name": "Zachariah Branch",
+    "team": "ATL",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 203,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "san-francisco-ers",
+    "name": "San Francisco 49ers",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 205,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kimani-vidal",
+    "name": "Kimani Vidal",
+    "team": "LAC",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 205.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 6,
+      "int": 60,
+      "rush_yd": 643,
+      "rush_td": 3,
+      "rec": 16,
+      "rec_yd": 136,
+      "rec_td": 1,
+      "gp": 13,
+      "fantasy_ppg": 5.69
+    },
+    "age": 24,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brandon-aiyuk",
+    "name": "Brandon Aiyuk",
+    "team": "SF",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 206,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kendre-miller",
+    "name": "Kendre Miller",
+    "team": "NO",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 206,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 1,
+      "int": 11,
+      "rush_yd": 193,
+      "rush_td": 1,
+      "rec": 5,
+      "rec_yd": 30,
+      "rec_td": 0,
+      "gp": 7,
+      "fantasy_ppg": 3.4
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "new-york-giants",
+    "name": "New York Giants",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 206.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ray-davis",
+    "name": "Ray Davis",
+    "team": "BUF",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 206.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 2,
+      "pass_td": 7,
+      "int": 21,
+      "rush_yd": 275,
+      "rush_td": 0,
+      "rec": 10,
+      "rec_yd": 86,
+      "rec_td": 2,
+      "gp": 17,
+      "fantasy_ppg": 3.54
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "marvin-mims",
+    "name": "Marvin Mims Jr.",
+    "team": "DEN",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 207,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": 78,
+      "rush_td": 1,
+      "rec": 37,
+      "rec_yd": 322,
+      "rec_td": 1,
+      "gp": 15,
+      "fantasy_ppg": 4.7
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tank-dell",
+    "name": "Tank Dell",
+    "team": "HOU",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 207.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "harrison-mevis",
+    "name": "Harrison Mevis",
+    "team": "LAR",
+    "positions": [
+      "K"
+    ],
+    "yahoo_positions": [
+      "K"
+    ],
+    "adp": 208,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "brashard-smith",
+    "name": "Brashard Smith",
+    "team": "KC",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 208,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 7,
+      "int": 17,
+      "rush_yd": 151,
+      "rush_td": 0,
+      "rec": 25,
+      "rec_yd": 172,
+      "rec_td": 1,
+      "gp": 17,
+      "fantasy_ppg": 3.64
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jacksonville-jaguars",
+    "name": "Jacksonville Jaguars",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 209,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "eli-stowers",
+    "name": "Eli Stowers",
+    "team": "PHI",
+    "positions": [
+      "TE"
+    ],
+    "yahoo_positions": [
+      "TE"
+    ],
+    "adp": 210,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "malachi-fields",
+    "name": "Malachi Fields",
+    "team": "NYG",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 210,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kyle-williams",
+    "name": "Kyle Williams",
+    "team": "NE",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 211,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 3,
+      "pass_td": 7,
+      "int": 72,
+      "rush_yd": 3,
+      "rush_td": 0,
+      "rec": 10,
+      "rec_yd": 209,
+      "rec_td": 3,
+      "gp": 17,
+      "fantasy_ppg": 0.02
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jake-elliott",
+    "name": "Jake Elliott",
+    "team": "PHI",
+    "positions": [
+      "K"
+    ],
+    "yahoo_positions": [
+      "K"
+    ],
+    "adp": 211.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tre-harris",
+    "name": "Tre' Harris",
+    "team": "LAC",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 211.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": null,
+      "pass_td": null,
+      "int": null,
+      "rush_yd": null,
+      "rush_td": null,
+      "rec": 30,
+      "rec_yd": 324,
+      "rec_td": 1,
+      "gp": 17,
+      "fantasy_ppg": 3.14
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "atlanta-falcons",
+    "name": "Atlanta Falcons",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 213,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "demond-claiborne",
+    "name": "Demond Claiborne",
+    "team": "MIN",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 213.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "pittsburgh-steelers",
+    "name": "Pittsburgh Steelers",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 214,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jake-bates",
+    "name": "Jake Bates",
+    "team": "DET",
+    "positions": [
+      "K"
+    ],
+    "yahoo_positions": [
+      "K"
+    ],
+    "adp": 215,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "emanuel-wilson",
+    "name": "Emanuel Wilson",
+    "team": "SEA",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 215.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 5,
+      "int": 25,
+      "rush_yd": 496,
+      "rush_td": 3,
+      "rec": 15,
+      "rec_yd": 99,
+      "rec_td": 0,
+      "gp": 17,
+      "fantasy_ppg": 4.71
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "chicago-bears",
+    "name": "Chicago Bears",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 217,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jaylen-wright",
+    "name": "Jaylen Wright",
+    "team": "MIA",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 217.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 2,
+      "int": 18,
+      "rush_yd": 288,
+      "rush_td": 2,
+      "rec": 5,
+      "rec_yd": 44,
+      "rec_td": 0,
+      "gp": 10,
+      "fantasy_ppg": 3.77
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tyler-loop",
+    "name": "Tyler Loop",
+    "team": "BAL",
+    "positions": [
+      "K"
+    ],
+    "yahoo_positions": [
+      "K"
+    ],
+    "adp": 218,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "kirk-cousins",
+    "name": "Kirk Cousins",
+    "team": "LV",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 218,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 1721,
+      "pass_td": 10,
+      "int": 5,
+      "rush_yd": 7,
+      "rush_td": 1,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 10,
+      "fantasy_ppg": 11.05
+    },
+    "age": 37,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "michael-penix",
+    "name": "Michael Penix Jr.",
+    "team": "ATL",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 219,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 1982,
+      "pass_td": 9,
+      "int": 3,
+      "rush_yd": 70,
+      "rush_td": 1,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 9,
+      "fantasy_ppg": 13.92
+    },
+    "age": 25,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "deshaun-watson",
+    "name": "Deshaun Watson",
+    "team": "CLE",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 219,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tory-horton",
+    "name": "Tory Horton",
+    "team": "SEA",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 219,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 5,
+      "pass_td": 7,
+      "int": 25,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 13,
+      "rec_yd": 161,
+      "rec_td": 5,
+      "gp": 8,
+      "fantasy_ppg": 6.97
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "tua-tagovailoa",
+    "name": "Tua Tagovailoa",
+    "team": "ATL",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 220.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 2660,
+      "pass_td": 20,
+      "int": 15,
+      "rush_yd": 43,
+      "rush_td": 0,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 14,
+      "fantasy_ppg": 12.55
+    },
+    "age": 27,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "los-angeles-chargers",
+    "name": "Los Angeles Chargers",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 220.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "audric-estime",
+    "name": "Audric Estime",
+    "team": "NO",
+    "positions": [
+      "RB"
+    ],
+    "yahoo_positions": [
+      "RB"
+    ],
+    "adp": 221,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 0,
+      "pass_td": 3,
+      "int": 19,
+      "rush_yd": 198,
+      "rush_td": 1,
+      "rec": 12,
+      "rec_yd": 103,
+      "rec_td": 0,
+      "gp": 7,
+      "fantasy_ppg": 5.01
+    },
+    "age": 22,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "buffalo-bills",
+    "name": "Buffalo Bills",
+    "team": "DST",
+    "positions": [
+      "DEF"
+    ],
+    "yahoo_positions": [
+      "DEF"
+    ],
+    "adp": 221.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "jalen-tolbert",
+    "name": "Jalen Tolbert",
+    "team": "MIA",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 223,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 1,
+      "pass_td": 12,
+      "int": 35,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec": 18,
+      "rec_yd": 203,
+      "rec_td": 1,
+      "gp": 13,
+      "fantasy_ppg": 3.72
+    },
+    "age": 26,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "shedeur-sanders",
+    "name": "Shedeur Sanders",
+    "team": "CLE",
+    "positions": [
+      "QB"
+    ],
+    "yahoo_positions": [
+      "QB"
+    ],
+    "adp": 223.5,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": {
+      "pass_yd": 1400,
+      "pass_td": 7,
+      "int": 10,
+      "rush_yd": 169,
+      "rush_td": 1,
+      "rec": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "gp": 8,
+      "fantasy_ppg": 12.11
+    },
+    "age": 23,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  },
+  {
+    "id": "ja-kobi-lane",
+    "name": "Ja'Kobi Lane",
+    "team": "BAL",
+    "positions": [
+      "WR"
+    ],
+    "yahoo_positions": [
+      "WR"
+    ],
+    "adp": 224,
+    "adp_source": "FantasyPros Consensus 2026 NFL",
+    "auction_value": 1,
+    "prior_season": null,
+    "age": null,
+    "injury_risk": false,
+    "injury_notes": null,
+    "injury_status": "healthy",
+    "contract_year": false,
+    "notes": null
+  }
+]

@@ -151,12 +151,13 @@ export const SPORT_CONFIGS = {
     },
   },
 
-  // nhl and nfl below are scaffolded structurally (slots, positions,
-  // categories, startSitMode) but ship with empty placeholder player/schedule
-  // files — no real player pool exists yet. hasScheduleSupport() is true for
-  // both so the Start/Sit Advisor's conditional rendering is exercised, but
-  // an empty roster means it'll only ever show the "no games scheduled"
-  // empty state until real data files replace the placeholders.
+  // nhl is scaffolded structurally (slots, positions, categories,
+  // startSitMode) but ships with empty placeholder player/schedule files —
+  // no real player pool exists yet. hasScheduleSupport() is true so the
+  // Start/Sit Advisor's conditional rendering is exercised, but an empty
+  // roster means it'll only ever show the "no games scheduled" empty state
+  // until real data files replace the placeholders. (nfl below has real
+  // data — see build-nfl-players.js.)
   nhl: {
     id: 'nhl',
     label: 'NHL',
@@ -239,23 +240,26 @@ export const SPORT_CONFIGS = {
       FLEX: ['RB', 'WR', 'TE'],
     },
 
+    // The user's real Yahoo league is Head-to-Head POINTS (half-PPR), not a
+    // roto/category league — modeled as a single synthetic category rather
+    // than threading a parallel "points mode" through every category-based
+    // consumer (categoryAnalysis, valueCalculator, draftDNA, season API
+    // prompts). A 1-category league degrades cleanly through all of that
+    // existing infrastructure: it sums/grades to one number instead of nine,
+    // which is exactly the right behavior for a points format. See BACKLOG.md
+    // NFL-01 for the roto-vs-points reconciliation this replaces.
     categories: [
-      { id: 'pass_yd', label: 'PaYD', description: 'Passing Yards' },
-      { id: 'pass_td', label: 'PaTD', description: 'Passing Touchdowns' },
-      { id: 'rush_yd', label: 'RuYD', description: 'Rushing Yards' },
-      { id: 'rush_td', label: 'RuTD', description: 'Rushing Touchdowns' },
-      { id: 'rec',     label: 'REC',  description: 'Receptions' },
-      { id: 'rec_yd',  label: 'ReYD', description: 'Receiving Yards' },
-      { id: 'rec_td',  label: 'ReTD', description: 'Receiving Touchdowns' },
-      { id: 'int',     label: 'INT',  description: 'Interceptions Thrown' },
+      { id: 'fantasy_ppg', label: 'PPG', description: 'Fantasy Points Per Game (Half-PPR)' },
     ],
 
     percentageCategories: [],
-    lowerIsBetter: ['int'],
+    lowerIsBetter: [],
 
+    // Approximate sum of starter-tier PPG across a competitive 9-starter
+    // half-PPR roster (QB~18, 2xRB~12, 2xWR~12, TE~8, FLEX~10, K~8, DEF~8).
+    // Tune after live use, same spirit as other sports' benchmarks.
     benchmarks: {
-      pass_yd: 3800, pass_td: 26, rush_yd: 900, rush_td: 8,
-      rec: 75, rec_yd: 950, rec_td: 7, int: 10,
+      fantasy_ppg: 105,
     },
 
     defaultRosterConfig: {

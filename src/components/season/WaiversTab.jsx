@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
+import nflPlayers from '@/data/nfl_players.json'
 import { AdvisorCard, AdvisorError } from '@/components/ui'
 import useLeagueStore from '@/store/leagueStore'
 import { TrendBadge, PRIORITY_STYLES, findPlayerByName } from './shared'
@@ -13,7 +14,7 @@ export default function WaiversTab({ league, rosters }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const sport = league.config.sport ?? 'nba'
-  const players = sport === 'mlb' ? mlbPlayers : nbaPlayers
+  const players = sport === 'mlb' ? mlbPlayers : sport === 'nfl' ? nflPlayers : nbaPlayers
 
   const gmProfile = {
     injuryTolerance: league.config.philosophy?.injuryTolerance ?? 'moderate',

@@ -1,6 +1,7 @@
 import { useState, useRef, useMemo } from 'react'
 import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
+import nflPlayers from '@/data/nfl_players.json'
 import { getSportConfig } from '@/config/sports'
 import {
   buildPlayerMap,
@@ -9,7 +10,7 @@ import {
 import UndoModal from './UndoModal'
 import useLeagueStore from '@/store/leagueStore'
 
-const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers }
+const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers, nfl: nflPlayers }
 
 export default function RosterView({ league }) {
   const { removePick, reassignPick } = useLeagueStore()

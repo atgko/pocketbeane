@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
 import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
+import nflPlayers from '@/data/nfl_players.json'
 import { getSportConfig } from '@/config/sports'
 import { buildPlayerMap } from '@/utils/roster'
 import { isUserTurn, getNextUserPickNum } from '@/utils/snake'
@@ -12,7 +13,7 @@ import { getSessionId } from '@/utils/session'
 import { resolveProfile } from '@/utils/gmProfile'
 import { Card, Badge, AdvisorCard } from '@/components/ui'
 
-const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers }
+const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers, nfl: nflPlayers }
 
 export default function RecommendationPanel({ league }) {
   const [result, setResult] = useState(null)

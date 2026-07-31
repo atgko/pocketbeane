@@ -1,8 +1,9 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
 import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
+import nflPlayers from '@/data/nfl_players.json'
 
-const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers }
+const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers, nfl: nflPlayers }
 import FilterBar from './FilterBar'
 import UndoModal from './UndoModal'
 import useLeagueStore from '@/store/leagueStore'

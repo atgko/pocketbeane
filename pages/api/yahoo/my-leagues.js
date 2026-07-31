@@ -12,7 +12,7 @@ async function yahooFetch(token, path) {
   return res.json()
 }
 
-const SPORT_GAME_CODES = { nba: 'nba', mlb: 'mlb' }
+const SPORT_GAME_CODES = { nba: 'nba', mlb: 'mlb', nfl: 'nfl' }
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).end()

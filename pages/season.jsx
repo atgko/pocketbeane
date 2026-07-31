@@ -73,7 +73,10 @@ export default function SeasonHub() {
       // was last cached instead of overwriting it, so the final roster/
       // standings snapshot survives for the season recap below.
       setLeagueRosters(league.id, data.isSeasonOver ? { ...(rosters ?? {}), ...data } : data)
-      if (data.isSeasonOver) updateLeagueConfig(league.id, { isSeasonOver: true })
+      // Always write the current value, not just true — otherwise a stale
+      // 403 sticks isSeasonOver forever with no way back even once a later
+      // sync genuinely succeeds.
+      updateLeagueConfig(league.id, { isSeasonOver: Boolean(data.isSeasonOver) })
     } catch (err) {
       setSyncError(err.message)
     } finally {

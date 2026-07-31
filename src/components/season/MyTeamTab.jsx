@@ -1,5 +1,6 @@
 import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
+import nflPlayers from '@/data/nfl_players.json'
 import { getWinRateGrade } from '@/utils/teamStanding'
 import { Card } from '@/components/ui'
 import { TrendBadge, WIN_RATE_GRADE_STYLES, WIN_RATE_BAR_COLOR, findPlayerByName, useTeamStanding } from './shared'
@@ -51,7 +52,7 @@ function RosterRow({ entry, player }) {
 // call), built from the same win-rate math the League tab uses.
 export default function MyTeamTab({ league, rosters }) {
   const sport = league.config.sport ?? 'nba'
-  const players = sport === 'mlb' ? mlbPlayers : nbaPlayers
+  const players = sport === 'mlb' ? mlbPlayers : sport === 'nfl' ? nflPlayers : nbaPlayers
   const { userEntry, sportConfig } = useTeamStanding({ league, rosters, players })
 
   if (!userEntry) return null

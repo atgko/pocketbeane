@@ -69,7 +69,7 @@ export default function Setup() {
   const handleSportChange = (newSport) => {
     if (newSport === config.sport) return
     const newSportConfig = getSportConfig(newSport)
-    const defaultScoringFormat = newSport === 'mlb' ? '5x5' : '9cat'
+    const defaultScoringFormat = newSport === 'mlb' ? '5x5' : newSport === 'nfl' ? 'half-ppr' : '9cat'
     const slotDefaults = Object.fromEntries(
       newSportConfig.slotOrder.map(slot => [slot.configKey, slot.default])
     )
@@ -204,7 +204,7 @@ export default function Setup() {
           <div className="mb-4 bg-surface-raised rounded-lg border border-surface-line px-5 py-4">
             <label className="block text-xs text-ink-secondary mb-1.5">Sport</label>
             <div className="flex gap-1.5">
-              {[{ value: 'nba', label: 'NBA' }, { value: 'mlb', label: 'MLB' }].map(opt => (
+              {[{ value: 'nba', label: 'NBA' }, { value: 'mlb', label: 'MLB' }, { value: 'nfl', label: 'NFL' }].map(opt => (
                 <button
                   key={opt.value}
                   type="button"
@@ -263,27 +263,9 @@ export default function Setup() {
                   })}
                 </select>
               ) : leaguesSeasonOver ? (
-                <div className="space-y-2">
-                  <p className="text-xs text-signal-watch leading-relaxed">
-                    No active {(config.sport ?? 'nba').toUpperCase()} leagues found — your most recent season has
-                    concluded and Yahoo hasn't opened the next one yet. A league key won't help either, since Yahoo
-                    blocks syncing for any league from a concluded season — come back once the new season starts.
-                  </p>
-                  <div className="flex gap-2 opacity-40 cursor-not-allowed" title="Not available until a new season opens">
-                    <input
-                      type="text"
-                      disabled
-                      placeholder="Yahoo league key, e.g. 466.l.22207"
-                      className="flex-1 bg-surface-base border border-surface-line rounded px-3 py-1.5 text-xs text-ink-primary font-mono placeholder:text-ink-muted pointer-events-none"
-                    />
-                    <button
-                      disabled
-                      className="px-4 py-1.5 border border-surface-line text-ink-primary rounded text-xs font-mono cursor-not-allowed pointer-events-none"
-                    >
-                      Sync
-                    </button>
-                  </div>
-                </div>
+                <p className="text-xs text-ink-secondary leading-relaxed">
+                  No active leagues found — you can still set this one up manually below.
+                </p>
               ) : (
                 <div className="flex gap-2">
                   <input

@@ -177,6 +177,73 @@ The sport-agnostic wrapper (`as_of_date`, `trend`, `injury_status`, `injury_note
 
 ---
 
+## NFL Player (`nfl_players.json`)
+
+Unlike NBA/MLB (roto/category leagues), NFL is modeled for a **Head-to-Head Points (half-PPR)** league. Rather than a parallel "points mode" through every category-consuming file, `SPORT_CONFIGS.nfl` (`src/config/sports.js`) exposes a single synthetic category, `fantasy_ppg`, computed once at build time and stored on `prior_season` — everything downstream (category grading, `valueCalculator`, `draftDNA`, season prompts) then treats NFL as a 1-category league, which degrades correctly to "rank by best available value" for a points format.
+
+```json
+{
+  "id": "bijan-robinson",
+  "name": "Bijan Robinson",
+  "team": "ATL",
+  "positions": ["RB"],
+  "yahoo_positions": ["RB"],
+  "adp": 1.3,
+  "adp_source": "FantasyPros Consensus 2026 NFL",
+  "auction_value": 65,
+  "prior_season": {
+    "pass_yd": null,
+    "pass_td": null,
+    "int": null,
+    "rush_yd": 1720,
+    "rush_td": 20,
+    "rec": 51,
+    "rec_yd": 420,
+    "rec_td": 3,
+    "gp": 17,
+    "fantasy_ppg": 19.72
+  },
+  "age": 24,
+  "injury_risk": false,
+  "injury_notes": null,
+  "injury_status": "healthy",
+  "contract_year": false,
+  "notes": null
+}
+```
+
+### NFL `prior_season` fields
+
+| Field | Type | Description |
+|---|---|---|
+| `pass_yd` | number\|null | Passing yards (season total) — QBs only |
+| `pass_td` | number\|null | Passing touchdowns (season total) — QBs only |
+| `int` | number\|null | Interceptions thrown (season total) — QBs only |
+| `rush_yd` | number\|null | Rushing yards (season total) |
+| `rush_td` | number\|null | Rushing touchdowns (season total) |
+| `rec` | number\|null | Receptions (season total) |
+| `rec_yd` | number\|null | Receiving yards (season total) |
+| `rec_td` | number\|null | Receiving touchdowns (season total) |
+| `gp` | number | Games played |
+| `fantasy_ppg` | number\|null | Half-PPR fantasy points per game, computed from the fields above (see formula below) |
+
+`prior_season` is `null` for K/DEF — Pro-Football-Reference's passing/rushing/receiving tables don't cover those positions, so they're ranked by ADP alone, same fallback `valueCalculator.js` already uses for any player with no matched stats row.
+
+**`fantasy_ppg` formula** (built by `scripts/build-nfl-players.js`, matching this league's actual Yahoo scoring):
+
+```
+total = 0.04·pass_yd + 4·pass_td − 1·int + 0.1·rush_yd + 6·rush_td + 0.5·rec + 0.1·rec_yd + 6·rec_td
+fantasy_ppg = total / gp
+```
+
+**Deliberate omission:** fumbles-lost (−2), return TDs (+6), and 2-point conversions (+2) are excluded — Pro-Football-Reference's standard tables expose total fumbles (not fumbles *lost*) and don't isolate return TDs per player, so including them isn't possible from this data source. This is an approximation, same spirit as ADP itself being an approximation. K/DEF scoring (field-goal-distance brackets, points-allowed tiers) isn't modeled at all for the same reason.
+
+### NFL `current_season`
+
+Not yet populated — `mergeCurrentSeasonData.js`'s `buildTrendInputs()` has no NFL branch yet (falls through to NBA's trend profile, which is wrong for a weekly sport). Deferred to Phase 2, once in-season stats matter (after the draft).
+
+---
+
 ## Team Schedule (`nba_schedule.json`, `mlb_schedule.json`)
 
 Season-long game list, one file per sport that supports the Start/Sit Advisor (Y-05). Unlike `current_season` player stats, a team's full-season schedule is fixed and known in advance — these files are a one-time-per-season data drop, not a weekly-refreshed pipeline output. `src/config/sports.js`'s `getScheduleFile(sport)`/`hasScheduleSupport(sport)` drive which sports have this data; a sport with no `scheduleFile` configured (currently NHL, NFL) gets a clean "not available yet" response from the advisor instead of a hardcoded sport check — adding NHL/NFL support later is a pure data-file drop plus one `sports.js` config entry, no code changes to the advisor.

@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
+import nflPlayers from '@/data/nfl_players.json'
 import { getSportConfig } from '@/config/sports'
 import { buildPlayerMap, computeRosterAssignment } from '@/utils/roster'
 import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
@@ -9,7 +10,7 @@ import { getSessionId } from '@/utils/session'
 import { resolveProfile } from '@/utils/gmProfile'
 import { Card, Badge } from '@/components/ui'
 
-const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers }
+const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers, nfl: nflPlayers }
 
 const ROSTER_STAT_COLS = {
   nba: [

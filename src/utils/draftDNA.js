@@ -161,9 +161,12 @@ export function classifyDraftDNA(userPicks, playerMap, categoryGaps, numTeams, g
 
   // 5. Riverboat Gambler — maximum variance across the board
   const allInjuryPicks = enriched.filter(e => e.player.injury_risk)
-  // MLB: pitchers have naturally low gp (30 starts vs 162 games), so use injury_risk as the variance signal instead
+  // MLB: pitchers have naturally low gp (30 starts vs 162 games), so use injury_risk as the variance signal instead.
+  // NFL: 17-game season, not NBA's 82 — a missed-time threshold needs its own scale.
   const lowGpPicks = sport === 'mlb'
     ? enriched.filter(e => e.player.injury_risk)
+    : sport === 'nfl'
+    ? enriched.filter(e => (e.player.prior_season?.gp ?? 17) < 12)
     : enriched.filter(e => (e.player.prior_season?.gp ?? 82) < 65)
   const riverboatFired = allInjuryPicks.length >= 3 && lowGpPicks.length >= 2 && strongCats.length >= 2 && weakCats.length >= 2
   log('riverboat_gambler', riverboatFired, `allInjury=${allInjuryPicks.length}(need≥3), lowGp=${lowGpPicks.length}(need≥2), strong=${strongCats.length}(need≥2), weak=${weakCats.length}(need≥2)`)
@@ -188,8 +191,9 @@ export function classifyDraftDNA(userPicks, playerMap, categoryGaps, numTeams, g
 
   // 8. Floor Builder — zero injury risks, high games played
   const avgGp = enriched.reduce((s, e) => s + (e.player.prior_season?.gp ?? 0), 0) / enriched.length
-  // MLB: SP have ~30 starts vs batters' ~140 games; threshold of 20 ensures any healthy mixed roster qualifies
-  const gpFloorThreshold = sport === 'mlb' ? 20 : 70
+  // MLB: SP have ~30 starts vs batters' ~140 games; threshold of 20 ensures any healthy mixed roster qualifies.
+  // NFL: 17-game season — 12 ensures a healthy roster with a bye week or two still qualifies.
+  const gpFloorThreshold = sport === 'mlb' ? 20 : sport === 'nfl' ? 12 : 70
   const floorFired = allInjuryPicks.length === 0 && avgGp > gpFloorThreshold
   log('floor_builder', floorFired, `injuryPicks=${allInjuryPicks.length}(need=0), avgGp=${avgGp.toFixed(1)}(need>70)`)
   if (floorFired) return ARCHETYPES.floor_builder

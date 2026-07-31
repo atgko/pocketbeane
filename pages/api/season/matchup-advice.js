@@ -51,19 +51,18 @@ export default async function handler(req, res) {
   }
 
   // The bare /scoreboard endpoint (no week specified) has been an
-  // unreliable 403 in the past even mid-season. First attempt at a fix
-  // (fetch current_week from /league/{key}/metadata, then request
-  // scoreboard;week={N} explicitly) turned out to be hitting the SAME
-  // restriction one step earlier: /metadata itself 403s with the identical
-  // "not authorized" error, confirmed against a real, verifiably mid-season
-  // H2H league. /settings and /standings do NOT — settings.js and
-  // sync-rosters.js already prove those work for this exact league — and
-  // Yahoo attaches the same base league meta (including current_week) to
-  // ANY successful league resource response, not just /metadata. So: get
-  // current_week from the already-proven-working /settings call instead of
-  // the apparently-restricted /metadata one.
-  const settingsRaw = await yahooFetch(token, `/league/${leagueKey}/settings`)
-  const currentWeek = settingsRaw?.fantasy_content?.league?.[0]?.current_week
+  // unreliable 403 in the past even mid-season. Earlier fixes tried
+  // /metadata, then /settings, to fetch current_week first — both turned
+  // out to independently 403 at different times for reasons Yahoo's generic
+  // "not authorized" error never explains, even against a verifiably active,
+  // mid-season league. /standings is the one endpoint proven reliable here:
+  // sync-rosters.js calls it successfully on every roster refresh, and Yahoo
+  // attaches the same base league meta (including current_week, alongside
+  // is_finished/end_date) to ANY successful league resource response, not
+  // just one specific sub-resource. Use whichever endpoint is actually
+  // working, not whichever "should" carry the field.
+  const standingsRaw = await yahooFetch(token, `/league/${leagueKey}/standings`)
+  const currentWeek = standingsRaw?.fantasy_content?.league?.[0]?.current_week
   if (!currentWeek) {
     return res.status(502).json({ error: 'Could not determine the current week from Yahoo' })
   }

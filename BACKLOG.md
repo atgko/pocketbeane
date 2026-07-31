@@ -1,5 +1,19 @@
 # PocketBeane — Active Backlog
 
+## 🔴 CRITICAL — Active Blockers (2026-07-31)
+
+Development is currently stalled on Yahoo API access. Three distinct issues, tracked together because they surfaced in the same session:
+
+**1. `isSeasonOver` sticky-flag bug — confirmed code bug, fixed 2026-07-31.** `season.jsx`'s `handleSync` and both `syncDraft` copies in `index.jsx` only ever wrote `updateLeagueConfig(..., { isSeasonOver: true })` — never `false`. Once Yahoo 403'd once, the flag was permanent even after a later sync genuinely succeeded; "Re-check" could never actually recover the Season Hub. Fixed: all three now write `Boolean(data.isSeasonOver)` unconditionally, so it self-heals once Yahoo responds normally again. This part is done — no longer blocking anything once Yahoo access itself recovers.
+
+**2. Matchup Advisor / Season Hub 403 on the real MLB league (`469.l.209547`) — matches Y-05d exactly, not yet confirmed cleared.** `/settings`, `/standings`, and `/teams/roster` all returned Yahoo's "not authorized" 403 today, identical in every detail (same league, same error shape) to **Y-05d** (2026-07-24), which was root-caused as a rate-limit from a burst of Yahoo API calls in one debugging session and confirmed to clear on its own after **~2 days**, no code changes. Today's session made heavy Yahoo API calls across both this MLB league and NFL league discovery — the same trigger pattern. Not yet re-confirmed clear as of 2026-07-31. **Do not hammer it with retries** — Y-05d's own notes suggest that's what caused it last time. Re-test in a day or two.
+
+**3. NFL `game_codes=nfl` returns 403 at the game level — separate, likely additional cause.** Confirmed 2026-07-31: Yahoo rejects `/users;use_login=1/games;game_codes=nfl` outright (not just a leagues-listing quirk — tested a bare game lookup too). Most likely explanation: the 2026 NFL fantasy API isn't live on Yahoo's end yet, independent of the #2 throttle above. See NFL-01 for full detail. User deleted their in-progress NFL league setup; revisit once Yahoo opens NFL access — try `/setup` → NFL → Sync periodically.
+
+**Trust note for whoever reads this next:** the evidence for "Yahoo-side, not our code" is the Y-05d precedent above — same league, same fingerprint, previously confirmed via actual retest after a cooldown, not assumption. That said, it's fair to stay skeptical: if #2 hasn't cleared after several days (well past the ~2-day Y-05d precedent), stop assuming throttle and treat it as a real regression worth re-investigating from scratch (token scope, app credentials, Yahoo API changes).
+
+---
+
 Last updated: 2026-07-30 (later same day) — Intent dark-pattern audit of the paywall, trial-upgrade prompt, email opt-in, and Beane persona (paywall/trial-upgrade don't exist in code yet — audited PMF-03/PMF-09 as specs instead). One real, fixable finding: `RecommendationPanel.jsx`'s `ThinkingProgress` bar was animating to a hardcoded 92% over a fixed 4000ms regardless of when the Claude call actually resolved — fabricated determinate progress, inconsistent with the pick clock's deliberate honest-count-up-over-fake-countdown choice right above it in the same file. Fixed: swapped for a genuinely indeterminate sliding-bar animation (new `animate-indeterminate-slide` in `tailwind.config.js`) that doesn't imply a percentage the app can't actually measure. Everything else audited came back clean or not-yet-built: `EmailDigestSettings` (`pages/gm-profile.jsx`) is a good opt-in example (no pre-checked box, plain purpose statement, one-click symmetric withdrawal); Beane's voice avoids confirmshaming and sycophancy by design. Ethical-design constraints from the audit are now attached directly to PMF-03 and PMF-09 below, to apply whenever those get built.
 
 Previously: 2026-07-30 — D-01 post-completion refinement: fixed a real Yahoo `/scoreboard` 403 (explicit-week fetch pattern), added H2H-vs-Roto league-type awareness, and rebuilt the homepage hero to match the mockup's weekly-matchup format for H2H leagues (Roto leagues correctly keep the standings hero). See the D-01 entry below for full detail.
@@ -597,26 +611,54 @@ Full MLB 5×5 draft experience shipped 2026-06-27. Multi-sport architecture gene
 ---
 
 ### NFL-01 · NFL League Support
-**Status: Blocked on data — nfl_players.json needed (August 2026)**
+**Status: Phase 1 done (2026-07-31) — draft-ready. Phase 2 (season features) open.**
 
 **Goal:** Full NFL draft experience — same structure as NHL, same timeline.
 
-**Complexity note:** NFL has the most position heterogeneity of any sport. QB is a completely separate stat pool (passing yards, TDs, INTs, rushing). K and DST are streaming positions that change weekly. Bye weeks add lineup complexity that doesn't exist in NBA/NHL. Standard scoring vs. PPR vs. half-PPR creates divergent ADP curves — need to decide which format to target first (PPR is the most common).
+**Complexity note:** NFL has the most position heterogeneity of any sport. QB is a completely separate stat pool (passing yards, TDs, INTs, rushing). K and DST are streaming positions that change weekly. Bye weeks add lineup complexity that doesn't exist in NBA/NHL. Standard scoring vs. PPR vs. half-PPR creates divergent ADP curves.
 
-**Update 2026-07-26:** `sports.js` NFL entry is now real (same Start/Sit sport-aware split as NHL above, not a dedicated NFL sprint) — `filterPositions`, `slotOrder` (QB/RB/WR/TE/FLEX/K/DEF/BN), `slotEligibility: { FLEX: ['RB','WR','TE'] }`, `startSitMode: 'full'` (NFL is the one sport that kept the detailed per-position matchup treatment, since it's a weekly not daily sport). **Categories were scaffolded as roto-style counting stats** (`pass_yd`/`pass_td`/`rush_yd`/`rush_td`/`rec`/`rec_yd`/`rec_td`/`int`) to fit this codebase's existing category-league shape (`categories`/`benchmarks`/`percentageCategories` — the same shape every other sport uses for the scarcity engine) — **not** the points-based PPR scoring this ticket originally called for. Reconcile that mismatch before building the real draft experience: either add points-based scoring as a genuinely new mode, or confirm roto-style categories are actually fine for the target NFL leagues. `nfl_players.json`/`nfl_schedule.json` exist but are **empty placeholder files** — same caveats as NHL above (Start/Sit degrades gracefully, everything else is non-functional, `setup.jsx` sport picker doesn't offer `nfl` yet either).
+**Update 2026-07-31 — Phase 1 shipped:** the roto-vs-points mismatch flagged below is resolved. The user's real Yahoo league is Head-to-Head Points, half-PPR — confirmed from their actual league settings (25 pass-yd/pt, 4-pt pass TD, -1 INT, 10 rush/rec-yd/pt, 6-pt rush/rec TD, 0.5/rec, -2 fumble lost). Rather than threading a parallel "points mode" through every category-consuming file (categoryAnalysis, valueCalculator, draftDNA, 6 season API routes, 8 display components), `SPORT_CONFIGS.nfl.categories` now models NFL as a **single synthetic category** (`fantasy_ppg`) — a 1-category league degrades cleanly through all the existing category infrastructure with zero new branching logic needed anywhere except `sports.js` itself and the new build script. Shipped:
+- `scripts/build-nfl-players.js` — merges FantasyPros consensus ADP + 3 Pro-Football-Reference 2025 CSVs (passing/rushing/receiving) into real `nfl_players.json` (250 players, 198 with stats, computing `fantasy_ppg` from the league's actual scoring weights). Caught and fixed a real bug along the way: PFR's passing CSV has two columns both named `Yds` (passing yards + sack-yards-lost) that a naive parser would silently swap.
+- `nfl` added to the sport picker, Yahoo league lookup/sync routes (`my-leagues.js`, `sync-draft.js`, `sync-rosters.js`), `LeagueSetup`'s scoring toggle, and every `PLAYER_DATA` map across draft/season components.
+- `draftDNA.js` gp-thresholds and `docs/SCHEMA.md` updated for NFL's shape.
 
-**What's still needed:**
-- `nfl_players.json` — ~200 relevant skill-position players, PPR ADP + 2025 season stats (replacing the empty placeholder)
-  - Source: FantasyPros NFL ADP (August), Pro Football Reference
-- `nfl_schedule.json` — real season schedule (replacing the empty placeholder)
-- Resolve the roto-categories-vs-PPR-points scoring mismatch noted above
-- Claude prompt tuning for NFL draft strategy (Zero RB, Hero RB, Robust RB, TE-premium)
-- `sync-rosters.js` game_codes=nfl variant
-- Add `nfl` to `setup.jsx`'s sport picker (currently hardcoded to `['nba', 'mlb']`)
+**Deliberate approximation:** fumbles-lost (-2), return TDs (+6), and 2-pt conversions (+2) are NOT included in `fantasy_ppg` — PFR's standard tables expose total fumbles (not fumbles *lost*) and don't isolate return TDs per player, so this isn't computable from this data source. K/DEF scoring (FG-distance brackets, points-allowed tiers) isn't modeled at all for the same reason — those positions rank by ADP only, same fallback used for any player with no stats match.
 
-**Testing constraint:** No completed NFL league available. September 2026 draft window is the first test opportunity.
+**Phase 2 — deferred (post-draft, not needed until games start):**
+- [ ] `mergeCurrentSeasonData.js`: add an NFL branch to `buildTrendInputs()` (currently silently falls through to NBA's trend profile — wrong for a weekly sport) + test coverage
+- [ ] `nfl_schedule.json` — still an empty placeholder; Start/Sit Advisor degrades gracefully but won't do anything useful for NFL until this is real
+- [ ] Season API routes (`waiver-advice`, `trade-value-index`, `trade-advice`, `matchup-advice`, `league-pulse`, `season-recap`) — already work generically off the 1-category model with no code changes required, but Beane-voice prompt copy will read generic ("weak in PPG") rather than NFL-flavored; polish once there's real season data to react to
+- [ ] NFL-specific draft-strategy framing (Zero-RB / Hero-RB / Robust-RB / TE-premium) in `recommend.js`'s prompts — nice-to-have, not required for correct ranking
+- [ ] `gmProfile.js`'s `categoryStrategy` quiz question ("Compete in all 9" / "Punt 1-2 categories") is copy-mismatched for a 1-category sport — harmless (naturally degrades, punt options just never trigger `category_surgeon`), cosmetic fix only
+- [ ] `draftDNA.js`'s `getFallbackPrediction` has MLB-specific archetype overrides but no NFL ones yet — falls back to the generic predictions, fine but not tailored
 
-**Timing:** Data available August 2026. Build alongside PMF-08 and NHL-01 data sprint.
+**Confirmed platform limitation (2026-07-31):** as of this date, Yahoo rejects `game_codes=nfl` at the game level itself (`/users;use_login=1/games;game_codes=nfl` → 403 "not authorized"), not just the bulk `/leagues` expansion — confirmed by testing both the bulk listing (`my-leagues.js`) and a bare game lookup (`league.js`, generalized to accept a `sport` param during this investigation). The 2026 NFL fantasy API simply isn't live on Yahoo's end yet; no PocketBeane endpoint can route around it, and a manual league key doesn't help either (the direct `/league/{key}/settings` call 403s identically). `setup.jsx`'s manual-entry fallback stays disabled in this state — confirmed correct, not overcautious. Workaround: set the league up manually (sport/teams/scoring/roster slots by hand) and sync via `sync-draft.js` after the draft, once Yahoo opens NFL access. Revisit timing closer to the season if this resolves.
+
+**Testing constraint:** No completed NFL league available yet. September 2026 draft window is the first real test.
+
+---
+
+### MLB-02 · H2H Category Scoring Verification
+**Status: Open (2026-07-31) — scoping/verification, not a confirmed engine bug**
+
+**Context:** the user's real MLB league is Yahoo Head-to-Head Categories (H2H — "hence the name"), not Rotisserie. MLB-01 shipped assuming Roto as the default MLB format. Investigated what's actually affected before assuming a NFL-style architectural mismatch — the picture is more mixed than NFL's roto-vs-points gap:
+
+**Already fine — no fix needed:**
+- `pages/api/season/trade-value-index.js`, `league-pulse.js`, `season-recap.js` already use `aggregateCategoryTotals`/`getCategoryWinRates` from `src/utils/teamStanding.js` — a pairwise per-category win-rate comparison across all teams, which is the correct model for H2H standings (not a Roto-style fixed-benchmark comparison). These already work for the user's league as-is.
+- `pages/api/season/matchup-advice.js` is inherently H2H-only already (built on Yahoo's `/scoreboard` matchup endpoints, which don't exist for Roto leagues) — nothing to fix here, it was never assuming Roto.
+- `src/components/season/shared.jsx`'s `isH2HLeague()` already gates H2H-specific UI (the weekly scoreboard) off the real `config.yahooScoringType` pulled from Yahoo settings, not the cosmetic `scoringFormat` field.
+- Draft-time category-gap analysis (`categoryAnalysis.js`, `valueCalculator.js`) — building a category-balanced roster is a valid goal whether the league scores it via Roto season-long totals or H2H weekly matchup wins, so this likely doesn't need format-specific logic. Not fully certain — see below.
+
+**Confirmed cosmetic mismatch:**
+- `pages/setup.jsx`'s `defaultScoringFormat = newSport === 'mlb' ? '5x5' : ...` and `LeagueSetup.jsx`'s `DEFAULT_SCORING_FORMAT.mlb = '5x5'` both default/label every MLB league as "5×5 Roto" regardless of the real Yahoo scoring type — even though the correct H2H/Roto distinction is already tracked separately via `yahooScoringType`. Purely a label; doesn't affect any actual recommendation logic, but reads wrong on the setup page for an H2H league.
+
+**Still needs verification (not yet confirmed broken or fine):**
+- `waiver-advice.js` and `trade-advice.js` — use `sportConfig.categories` for prompt text but weren't checked for whether their Beane-voice framing implicitly assumes season-long Roto standing ("your team's weak in X all season") vs. week-to-week H2H framing ("you need to win X this week"). Worth an actual read-through with a real H2H league's data before concluding either way.
+- Whether `scoringFormat` (the manual/cosmetic field) is read anywhere else beyond display — a full grep wasn't done in this pass.
+
+**What to build:** fix the two confirmed default-label mismatches above (cheap, cosmetic); then do a proper read-through of `waiver-advice.js`/`trade-advice.js`'s prompt framing against the user's actual H2H league once they're using it in-season, since that's the fastest way to spot any real tone/logic mismatch rather than guessing at ones that may not exist.
+
+**Timing:** Not draft-blocking (H2H vs Roto doesn't change draft-time value). Revisit once the user's MLB season is live and in-season features (waivers, trades) are actually being used against a real H2H league.
 
 ---
 
@@ -768,6 +810,7 @@ Also swept the whole codebase for other fixed-pixel-width red flags (`grid-cols-
 | Y-04 · Post-Draft Roster Sync | Done — `/api/yahoo/sync-rosters` fetches all team rosters + standings in parallel, name-matches to players.json IDs, stored as league.leagueRosters. Season Hub rebuilt: standings table with expandable rosters, user's team highlighted and auto-expanded, Refresh button for in-season updates. |
 | MLB-01 · MLB League Support | Done — full 5×5 draft + recommendations + Draft DNA + Season Hub sync. `lowerIsBetter` config field, sport-aware scarcity, 300-player `mlb_players.json` (FantasyPros 2026 ADP + BBRef 2025 stats). `build-mlb-players.js` script for future data refreshes. |
 | MLB-01 UAT fixes + polish (2026-06-29) | `sync-draft.js` was hardcoded to NBA — fixed with `?sport=` param, `mlb_players.json`, `game_codes=mlb`. IL `SlotCountRow` max raised from 3→6 so value=4 renders correctly. `importDraft` now sets `status: 'season'` (was `'complete'`); Zustand migration v0→v1 converts existing affected leagues on first load. Setup page: sport selector moved above Yahoo Sync and filters the dropdown by sport. `yahooSeason` threaded from my-leagues response → league config for year-based archive grouping. Season Hub: standings table removed; weekly auto-sync on mount (stale after 7 days). Home page: leagues grouped by sport with section headers; archive/restore system (manual archive for `season` leagues; NBA auto-archives after 7 days inactive; restore button on archived leagues; archived grouped by year within sport). Draft DNA: `getFallbackPrediction(archetypeId, sport)` with MLB month-aware overrides; `lowGpPicks` uses `injury_risk` flag for MLB instead of gp count; `gpFloorThreshold` 70→20 for MLB; Moneyball GM threshold raised 4→5. `recommend.js`: `buildAdviceSystem(sport)` and `buildAuctionWatchingSystem(sport)` replace static constants with MLB-specific style examples. |
+| MLB-02 · H2H Category Scoring Verification 🟡 | Open (2026-07-31) — user's real MLB league is Head-to-Head Categories, not Roto, despite `setup.jsx` defaulting `scoringFormat` to `'5x5'` (a Roto label) for every MLB league regardless of actual format. See ticket below for what's confirmed fine vs. still needs checking. |
 
 ---
 
