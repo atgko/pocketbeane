@@ -10,6 +10,11 @@ export const DEFAULT_PHILOSOPHY = {
 
 export const DEFAULT_CONFIG = {
   name: '',
+  // 'yahoo' | 'sleeper' — see src/platforms for the adapter layer. Leagues
+  // created before this field existed load with platform === undefined;
+  // treat that as 'yahoo' at read time (same pattern as yahooScoringType's
+  // null-means-legacy-default below) rather than migrating old data.
+  platform: 'yahoo',
   sport: 'nba',
   numTeams: 10,
   draftPosition: 1,
@@ -39,6 +44,16 @@ export const DEFAULT_CONFIG = {
   // 'head' | 'roto' | 'points' | null (unknown — treated as H2H, matching
   // pre-existing behavior for leagues linked before this field existed)
   yahooScoringType: null,
+  // Sleeper-synced league settings — null until synced via setup page.
+  // Mirrors the yahoo* fields above field-for-field (see
+  // src/platforms/sleeper/normalize.js's NormalizedLeagueSettings output).
+  sleeperUserId: null,
+  sleeperUsername: null,
+  sleeperLeagueId: null,
+  sleeperLeagueName: null,
+  sleeperDraftId: null,
+  sleeperStatCategories: null,
+  sleeperRosterPositions: null,
 }
 
 // Returns [{ type, playerId: null }, ...] in display order
@@ -179,6 +194,20 @@ const useLeagueStore = create(
         set((state) => ({
           leagues: state.leagues.map((l) =>
             l.id === id ? { ...l, profileOverride: { ...DEFAULT_PROFILE_OVERRIDE, ...override } } : l
+          ),
+        })),
+
+      // Wholesale-replaces draft.picks — used by the Sleeper live-draft
+      // sync poller (src/hooks/useSleeperLiveDraftSync.js) to mirror
+      // Sleeper's actual pick list, as opposed to addPick/undoPick/
+      // removePick's incremental single-pick edits for manual drafting.
+      // Deliberately does NOT touch `status` — draft.jsx's isDraftComplete
+      // already derives completion from picks.length vs rosterSlots.length
+      // reactively, same as the organic manual-draft flow.
+      setDraftPicks: (id, picks) =>
+        set((state) => ({
+          leagues: state.leagues.map((l) =>
+            l.id !== id ? l : { ...l, draft: { picks } }
           ),
         })),
 

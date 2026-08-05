@@ -6,9 +6,9 @@ import { getSportConfig } from '@/config/sports'
 import { buildPlayerMap } from '@/utils/roster'
 import { isUserTurn, getNextUserPickNum } from '@/utils/snake'
 import { computeBoardState } from '@/ai/boardState'
-import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
+import { analyzeCategoryGaps, analyzePositionalNeeds } from '@/ai/categoryAnalysis'
 import { computeScarcity, getSmartScarcityAlerts, computePositionalDepth } from '@/ai/scarcity'
-import { rankByFit, computeSleepers } from '@/ai/valueCalculator'
+import { rankByFit, rankByFitPoints, computeSleepers } from '@/ai/valueCalculator'
 import { getSessionId } from '@/utils/session'
 import { resolveProfile } from '@/utils/gmProfile'
 import { Card, Badge, AdvisorCard } from '@/components/ui'
@@ -61,15 +61,25 @@ export default function RecommendationPanel({ league }) {
 
   const philosophy = league.config.philosophy ?? {}
 
+  const isPointsFormat = league.config.scoringFormat === 'points'
+
   const { boardState, categoryGaps, scarcityAlerts, topCandidates, sleepers } = useMemo(() => {
     const bs = computeBoardState(league, players)
-    const gaps = analyzeCategoryGaps(bs.userPicks, playerMap, sportConfig, bs.totalRosterSlots)
+    // Points-format leagues (Sleeper NFL) use positional roster-fit instead
+    // of category z-scoring — see BACKLOG.md NFL-01 / memory
+    // project_sleeper_integration_scope. Yahoo NFL's fantasy_ppg-as-
+    // single-category leagues stay on the category path unchanged.
+    const gaps = isPointsFormat
+      ? analyzePositionalNeeds(bs.userPicks, playerMap, league.rosterSlots)
+      : analyzeCategoryGaps(bs.userPicks, playerMap, sportConfig, bs.totalRosterSlots)
     const scarcity = computeScarcity(players, bs.draftedIds, sportConfig)
     const alerts = getSmartScarcityAlerts(scarcity, bs.userPicks, playerMap, sport)
-    const ranked = rankByFit(bs.available, gaps, sportConfig, bs.currentPick, philosophy)
+    const ranked = isPointsFormat
+      ? rankByFitPoints(bs.available, gaps, sportConfig, bs.currentPick, philosophy, { numTeams, rosterSlots: league.rosterSlots })
+      : rankByFit(bs.available, gaps, sportConfig, bs.currentPick, philosophy)
     const sleeperList = computeSleepers(bs.available, bs.currentPick)
     return { boardState: bs, categoryGaps: gaps, scarcityAlerts: alerts, topCandidates: ranked, sleepers: sleeperList }
-  }, [picks, league.rosterSlots, league.config.philosophy])
+  }, [picks, league.rosterSlots, league.config.philosophy, isPointsFormat])
 
   const userPickCount = boardState.userPicks.length
   const isRosterFull = boardState.userPicksRemaining <= 0

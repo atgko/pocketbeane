@@ -14,13 +14,11 @@ async function yahooFetch(token, path) {
 
 const SPORT_GAME_CODES = { nba: 'nba', mlb: 'mlb', nfl: 'nfl' }
 
-export default async function handler(req, res) {
-  if (req.method !== 'GET') return res.status(405).end()
-
-  const token = await getValidToken(req, res)
-  if (!token) return res.status(401).json({ error: 'Not connected to Yahoo' })
-
-  const sport = req.query.sport ?? 'nba'
+// Core sync logic, extracted so src/platforms/yahoo/adapter.js can call it
+// directly instead of duplicating this parsing — the route handler below is
+// now a thin req/res wrapper around this same function, same HTTP contract
+// as before.
+export async function fetchMyLeagues(token, { sport = 'nba' } = {}) {
   const gameCode = SPORT_GAME_CODES[sport] ?? 'nba'
 
   try {
@@ -57,7 +55,7 @@ export default async function handler(req, res) {
   const latestSeason = leagues[0]?.season
   const filtered = latestSeason ? leagues.filter((l) => l.season === latestSeason) : leagues
 
-  res.json({ leagues: filtered })
+  return { leagues: filtered }
   } catch (err) {
     const cause = err.cause?.message ?? err.cause ?? ''
     console.error('[my-leagues] error:', err.message, cause ? `| cause: ${cause}` : '')
@@ -66,13 +64,30 @@ export default async function handler(req, res) {
     // recent season for this sport is fully concluded, Yahoo 403s the whole
     // games;game_codes={sport}/leagues lookup, not just per-league calls —
     // there's nothing "current" left to list until the next season opens.
-    // Surface that distinctly instead of silently returning an empty list
-    // the client can't tell apart from "you just have no leagues yet."
+    // Return this shape distinctly instead of silently returning an empty
+    // list the client can't tell apart from "you just have no leagues yet."
     const is403 = /\b403\b/.test(err.message) || /\b403\b/.test(cause)
     if (is403) {
-      return res.json({ leagues: [], seasonOver: true })
+      return { leagues: [], seasonOver: true }
     }
 
+    throw err
+  }
+}
+
+export default async function handler(req, res) {
+  if (req.method !== 'GET') return res.status(405).end()
+
+  const token = await getValidToken(req, res)
+  if (!token) return res.status(401).json({ error: 'Not connected to Yahoo' })
+
+  const sport = req.query.sport ?? 'nba'
+
+  try {
+    const result = await fetchMyLeagues(token, { sport })
+    res.json(result)
+  } catch (err) {
+    const cause = err.cause?.message ?? err.cause ?? ''
     res.status(502).json({ error: cause ? `${err.message}: ${cause}` : err.message })
   }
 }

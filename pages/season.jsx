@@ -52,20 +52,32 @@ export default function SeasonHub() {
     if (typeof tab === 'string' && TAB_COMPONENTS[tab]) setActiveTab(tab)
   }, [router.query.tab])
 
-  const canSync = Boolean(league?.config.yahooLeagueKey)
+  const isSleeperLeague = league?.config.platform === 'sleeper'
+  const canSync = Boolean(isSleeperLeague ? league?.config.sleeperLeagueId : league?.config.yahooLeagueKey)
   const rosters = league?.leagueRosters ?? null
   // Either surface can learn the season is over first (this page's own sync,
   // or the home page's draft Re-sync hitting the same Yahoo 403) — trust
-  // whichever one has already found out.
+  // whichever one has already found out. Sleeper doesn't 403 like Yahoo
+  // does on season end (see normalize.js's normalizeRosters) — isSeasonOver
+  // for a Sleeper league only ever comes from config.isSeasonOver, which
+  // nothing currently sets; season-over UI is effectively Yahoo-only until
+  // a Sleeper equivalent (driven by getState('nfl')) is built.
   const seasonOver = Boolean(league?.config.isSeasonOver) || Boolean(rosters?.isSeasonOver)
+  // "Connected" as this page uses it below means "can this platform sync
+  // right now" — Sleeper has no session to check (see useSleeperAuth), so
+  // it's just always true once a Sleeper league is actually linked.
+  const platformConnected = isSleeperLeague ? true : yahoo.connected
 
   async function handleSync() {
-    if (!league?.config.yahooLeagueKey) return
+    if (!canSync) return
     setSyncing(true)
     setSyncError(null)
     try {
       const sport = league.config.sport ?? 'nba'
-      const res = await fetch(`/api/yahoo/sync-rosters?leagueKey=${encodeURIComponent(league.config.yahooLeagueKey)}&sport=${sport}`)
+      const url = isSleeperLeague
+        ? `/api/sleeper/sync-rosters?leagueId=${encodeURIComponent(league.config.sleeperLeagueId)}&userId=${encodeURIComponent(league.config.sleeperUserId ?? '')}`
+        : `/api/yahoo/sync-rosters?leagueKey=${encodeURIComponent(league.config.yahooLeagueKey)}&sport=${sport}`
+      const res = await fetch(url)
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Sync failed')
       // On a season-over detection, the response has no `teams` (the call
@@ -87,12 +99,12 @@ export default function SeasonHub() {
   const isArchived = league?.status === 'complete'
 
   useEffect(() => {
-    if (!mounted || !canSync || !yahoo.connected || autoSyncAttempted.current || isArchived || seasonOver) return
+    if (!mounted || !canSync || !platformConnected || autoSyncAttempted.current || isArchived || seasonOver) return
     if (isSyncStale(rosters?.syncedAt)) {
       autoSyncAttempted.current = true
       handleSync()
     }
-  }, [mounted, yahoo.connected, canSync, isArchived, seasonOver])
+  }, [mounted, platformConnected, canSync, isArchived, seasonOver])
 
   if (!mounted) return null
 
@@ -164,8 +176,11 @@ export default function SeasonHub() {
               </h1>
               <p className="text-ink-secondary text-sm mt-0.5">
                 {league.config.numTeams} teams · {league.config.scoringFormat?.toUpperCase() ?? '9CAT'}
-                {league.config.yahooLeagueName && (
-                  <span className="ml-2 text-ink-muted">· {league.config.yahooLeagueName}</span>
+                {(league.config.yahooLeagueName || league.config.sleeperLeagueName) && (
+                  <span className="ml-2 text-ink-muted">· {league.config.yahooLeagueName ?? league.config.sleeperLeagueName}</span>
+                )}
+                {isSleeperLeague && (
+                  <span className="ml-2 text-ink-muted">· Data provided by Sleeper</span>
                 )}
               </p>
             </div>
@@ -189,11 +204,11 @@ export default function SeasonHub() {
                   <span className="text-ink-muted tabular-nums">
                     {rosters?.syncedAt ? `Checked ${formatSyncedAt(rosters.syncedAt)} · season complete` : 'Season complete'}
                   </span>
-                  {yahoo.connected && (
+                  {platformConnected && (
                     <button
                       onClick={handleSync}
                       className="text-ink-muted hover:text-ink-secondary transition-colors ml-1"
-                      title="Force a re-check with Yahoo — the season won't have restarted, this is just a safety valve"
+                      title={isSleeperLeague ? 'Force a re-check with Sleeper' : "Force a re-check with Yahoo — the season won't have restarted, this is just a safety valve"}
                     >
                       · Re-check
                     </button>
@@ -204,7 +219,7 @@ export default function SeasonHub() {
                   <span className="text-ink-muted tabular-nums">
                     Synced {formatSyncedAt(rosters.syncedAt)} · {rosters.matched}/{rosters.total} matched
                   </span>
-                  {yahoo.connected && (
+                  {platformConnected && (
                     <button
                       onClick={handleSync}
                       className="text-ink-muted hover:text-ink-primary transition-colors ml-1"
@@ -213,7 +228,7 @@ export default function SeasonHub() {
                     </button>
                   )}
                 </>
-              ) : yahoo.connected ? (
+              ) : platformConnected ? (
                 <span className="text-ink-secondary">Syncing rosters…</span>
               ) : (
                 <span className="text-signal-watch">Connect Yahoo to sync rosters</span>
@@ -224,7 +239,7 @@ export default function SeasonHub() {
             <div className="mb-6">
               <Card>
                 <p className="text-sm text-ink-secondary">
-                  This league isn't linked to Yahoo.{' '}
+                  This league isn't linked to {isSleeperLeague ? 'Sleeper' : 'Yahoo'}.{' '}
                   <button onClick={() => router.push(`/setup?id=${league.id}`)} className="text-beane-green-text hover:underline">
                     Edit league settings →
                   </button>
@@ -253,7 +268,7 @@ export default function SeasonHub() {
                 onChange={setActiveTab}
                 className="sticky top-0 z-10 bg-surface-base mb-4"
               />
-              <ActiveTabComponent league={league} rosters={rosters} yahooConnected={yahoo.connected} />
+              <ActiveTabComponent league={league} rosters={rosters} yahooConnected={platformConnected} />
             </>
           ) : canSync ? (
             <Card className="text-xs text-ink-secondary">

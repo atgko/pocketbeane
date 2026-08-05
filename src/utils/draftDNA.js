@@ -61,7 +61,16 @@ export function getFallbackPrediction(archetypeId, sport = 'nba') {
     ceiling_chaser: 'One of your upside picks is going to be the most-discussed player in your league by July.',
     floor_builder:  'Durability wins leagues in August when everyone else is scrambling for replacements.',
   }
+  // NFL is points-format, not category — category_surgeon/architect are
+  // classified off positional roster fit there (see
+  // analyzePositionalNeeds in categoryAnalysis.js), so the default
+  // "categories" framing below would misdescribe what actually happened.
+  const nflOverrides = {
+    category_surgeon: 'The positions you loaded up on will be unbeatable on a bye week — opponents won\'t see it coming.',
+    architect:         'A roster with no thin spots at any position will quietly put you in playoff position by December.',
+  }
   if (sport === 'mlb' && mlbOverrides[archetypeId]) return mlbOverrides[archetypeId]
+  if (sport === 'nfl' && nflOverrides[archetypeId]) return nflOverrides[archetypeId]
   return FALLBACK_PREDICTIONS[archetypeId]
 }
 

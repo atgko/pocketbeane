@@ -56,15 +56,11 @@ async function fetchPlayerNames(token, playerKeys) {
   return playerKeyToName
 }
 
-export default async function handler(req, res) {
-  if (req.method !== 'GET') return res.status(405).end()
-
-  const token = await getValidToken(req, res)
-  if (!token) return res.status(401).json({ error: 'Not connected to Yahoo' })
-
-  const { leagueKey, sport = 'nba' } = req.query
-  if (!leagueKey) return res.status(400).json({ error: 'leagueKey required' })
-
+// Core sync logic, extracted so src/platforms/yahoo/adapter.js can call it
+// directly instead of duplicating this parsing — the route handler below is
+// now a thin req/res wrapper around this same function, same HTTP contract
+// as before.
+export async function syncDraft(token, { leagueKey, sport = 'nba' }) {
   // Build name → PocketBeane id map from the correct sport's player pool
   const playersPath = path.join(process.cwd(), 'src/data', getPlayerFile(sport))
   const players = JSON.parse(fs.readFileSync(playersPath, 'utf8'))
@@ -140,7 +136,7 @@ export default async function handler(req, res) {
 
   const matched = picks.filter((p) => p.playerId !== null).length
 
-  res.json({ picks, userTeamKey, draftPosition, matched, total: picks.length })
+  return { picks, userTeamKey, draftPosition, matched, total: picks.length }
   } catch (err) {
     const cause = err.cause?.message ?? err.cause ?? ''
     console.error('[sync-draft] error:', err.message, cause ? `| cause: ${cause}` : '')
@@ -148,13 +144,32 @@ export default async function handler(req, res) {
     // Same season-over signal as sync-rosters.js: once a league's game/season
     // is fully concluded, Yahoo 403s league-scoped calls like draftresults and
     // the games;teams lookup for good (not the transient Y-05d throttle,
-    // which cleared on its own). Surface it as a 200 so the client can
-    // persist it instead of showing a raw Yahoo error on every click.
+    // which cleared on its own). Return this shape instead of throwing so
+    // callers can persist it instead of showing a raw Yahoo error on every
+    // click.
     const is403 = /\b403\b/.test(err.message) || /\b403\b/.test(cause)
     if (is403) {
-      return res.json({ isSeasonOver: true, seasonOverReason: '403' })
+      return { isSeasonOver: true, seasonOverReason: '403' }
     }
 
+    throw err
+  }
+}
+
+export default async function handler(req, res) {
+  if (req.method !== 'GET') return res.status(405).end()
+
+  const token = await getValidToken(req, res)
+  if (!token) return res.status(401).json({ error: 'Not connected to Yahoo' })
+
+  const { leagueKey, sport = 'nba' } = req.query
+  if (!leagueKey) return res.status(400).json({ error: 'leagueKey required' })
+
+  try {
+    const result = await syncDraft(token, { leagueKey, sport })
+    res.json(result)
+  } catch (err) {
+    const cause = err.cause?.message ?? err.cause ?? ''
     res.status(502).json({ error: cause ? `${err.message}: ${cause}` : err.message })
   }
 }

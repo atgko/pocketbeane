@@ -68,6 +68,88 @@ export function rankByFit(available, categoryGaps, sportConfig, currentPickNumbe
   return scored.sort((a, b) => b.score - a.score)
 }
 
+// ─── Points mode ──────────────────────────────────────────────────────────────
+
+// Positional-VORP ranking for scoringFormat === 'points' leagues (Sleeper
+// NFL — see BACKLOG.md NFL-01 / memory project_sleeper_integration_scope
+// for why Yahoo NFL stays on the single-synthetic-category fantasy_ppg
+// shim instead of this). Category z-scoring (rankByFit's core signal)
+// doesn't mean anything when there's only one real stat — the equivalent
+// "how much better is this player than what's replaceable" signal for a
+// points league is replacement-level value: how far above the last
+// starter-worthy player at that position (league-wide) a player's
+// fantasy_ppg sits. Combined with ADP value and positional need, mirroring
+// rankByFit's signal mix as closely as a points format allows.
+//
+// positionalNeeds: analyzePositionalNeeds()'s output (categoryAnalysis.js).
+// rosterContext: { numTeams, rosterSlots } — rosterSlots is league.rosterSlots.
+export function rankByFitPoints(available, positionalNeeds, sportConfig, currentPickNumber, philosophy = {}, rosterContext = {}) {
+  if (available.length === 0) return []
+
+  const { strategy = 'beane', injuryTolerance = 'moderate' } = philosophy
+  const { numTeams = 10, rosterSlots = [] } = rosterContext
+  // sportConfig.categories is the single synthetic category for a points
+  // sport (e.g. NFL's fantasy_ppg) — see src/config/sports.js.
+  const valueField = sportConfig.categories[0]?.id ?? 'fantasy_ppg'
+
+  const slotsPerPosition = {}
+  for (const slot of rosterSlots) {
+    if (slot.type === 'BN' || slot.type === 'IL' || slot.type === 'IL+') continue
+    slotsPerPosition[slot.type] = (slotsPerPosition[slot.type] ?? 0) + 1
+  }
+
+  // Group available players by primary position, sorted by value
+  // descending, so replacement level shrinks dynamically as a position
+  // gets drafted — same spirit as ADP being a live, shrinking signal.
+  const byPosition = {}
+  for (const p of available) {
+    const pos = p.positions?.[0] ?? p.yahoo_positions?.[0]
+    if (!pos) continue
+    ;(byPosition[pos] ??= []).push(p)
+  }
+  for (const list of Object.values(byPosition)) {
+    list.sort((a, b) => (b.prior_season?.[valueField] ?? -Infinity) - (a.prior_season?.[valueField] ?? -Infinity))
+  }
+
+  const replacementLevel = {}
+  for (const [pos, list] of Object.entries(byPosition)) {
+    const startersLeagueWide = (slotsPerPosition[pos] ?? 1) * numTeams
+    const idx = Math.min(startersLeagueWide, list.length - 1)
+    replacementLevel[pos] = list[Math.max(idx, 0)]?.prior_season?.[valueField] ?? 0
+  }
+
+  const needByPosition = Object.fromEntries(positionalNeeds.map(n => [n.id, n.grade]))
+
+  const scored = available.map(player => {
+    const value = player.prior_season?.[valueField]
+    const pos = player.positions?.[0] ?? player.yahoo_positions?.[0]
+    const replacement = replacementLevel[pos] ?? 0
+    // Unranked/no-stats players (K/DEF with no matched PFR row — see
+    // docs/SCHEMA.md) sink to the bottom, same fallback spirit rankByFit
+    // already has for missing category stats.
+    const vorp = value != null ? value - replacement : -1000
+
+    const adpValue = (currentPickNumber - player.adp) / 15
+
+    // A position the team is still missing/weak in gets a boost; one
+    // that's already full gets a small discount — positional analog of
+    // rankByFit's strong/weak category weighting.
+    const grade = needByPosition[pos]
+    const needWeight = grade === 'missing' ? 1.3 : grade === 'weak' ? 1.15 : grade === 'strong' ? 0.85 : 1.0
+
+    let score = (vorp * needWeight) + (adpValue * (strategy === 'stars-and-scrubs' ? 0.6 : 0.3))
+
+    if (player.injury_risk) {
+      if (injuryTolerance === 'conservative') score -= 2.0
+      else if (injuryTolerance === 'aggressive') score += 0.5
+    }
+
+    return { player, score, vorp, adpValue }
+  })
+
+  return scored.sort((a, b) => b.score - a.score)
+}
+
 // ─── Auction ──────────────────────────────────────────────────────────────────
 
 // Ranks available players by fit for the user's team in an auction draft.

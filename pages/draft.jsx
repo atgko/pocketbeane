@@ -10,6 +10,7 @@ import DraftRecap from '@/components/DraftRecap'
 import PhilosophyQuiz from '@/components/PhilosophyQuiz'
 import ProfileNudge from '@/components/ProfileNudge'
 import { getGMProfile, saveGMProfile } from '@/utils/gmProfile'
+import { useSleeperLiveDraftSync } from '@/hooks/useSleeperLiveDraftSync'
 
 export default function Draft() {
   const router = useRouter()
@@ -17,6 +18,13 @@ export default function Draft() {
   const [mounted, setMounted] = useState(false)
   const [quizOpen, setQuizOpen] = useState(false)
   const [showNudge, setShowNudge] = useState(false)
+
+  // Called unconditionally (before the mounted/activeLeague early returns
+  // below) per the rules of hooks — getActiveLeague() is a plain store
+  // read, safe to call even before leagues are hydrated, and the hook
+  // itself no-ops via optional chaining when league is null/not Sleeper.
+  const activeLeagueForSync = getActiveLeague()
+  useSleeperLiveDraftSync(activeLeagueForSync)
 
   useEffect(() => { setMounted(true) }, [])
 
@@ -63,6 +71,12 @@ export default function Draft() {
 
       <div className="h-screen bg-surface-base text-ink-primary flex flex-col overflow-hidden">
         <LeagueSwitcher />
+
+        {activeLeague.config.platform === 'sleeper' && (
+          <p className="text-xs font-mono text-ink-muted text-center py-1 border-b border-surface-line/50">
+            Data provided by Sleeper
+          </p>
+        )}
 
         {showNudge && !quizOpen && (
           <ProfileNudge onOpen={() => { setShowNudge(false); setQuizOpen(true) }} />

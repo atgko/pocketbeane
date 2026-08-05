@@ -6,6 +6,7 @@ import LeagueSetup from '@/components/league/LeagueSetup'
 import { getSportConfig } from '@/config/sports'
 import ProfileOverrideScreen from '@/components/ProfileOverrideScreen'
 import { useYahooAuth } from '@/hooks/useYahooAuth'
+import { useSleeperAuth } from '@/hooks/useSleeperAuth'
 import { getGMProfile, INJURY_DISPLAY, CATEGORY_DISPLAY, STRATEGY_DISPLAY } from '@/utils/gmProfile'
 import { Button } from '@/components/ui'
 
@@ -23,6 +24,10 @@ export default function Setup() {
   const [showOverride, setShowOverride] = useState(false)
   const [pendingOverride, setPendingOverride] = useState(null)
   const yahoo = useYahooAuth()
+  const sleeper = useSleeperAuth()
+  const [sleeperUsernameInput, setSleeperUsernameInput] = useState('')
+  const [sleeperLeagues, setSleeperLeagues] = useState([])
+  const [sleeperLeaguesLoading, setSleeperLeaguesLoading] = useState(false)
 
   useEffect(() => { setMounted(true) }, [])
 
@@ -63,6 +68,20 @@ export default function Setup() {
       .catch(() => setLeaguesLoading(false))
   }, [mounted, yahoo.connected, config.sport])
 
+  // Sleeper is NFL-only (see memory project_sleeper_integration_scope) —
+  // only fetch leagues once a username is resolved and the sport is nfl.
+  useEffect(() => {
+    if (!mounted || !sleeper.connected || (config.sport ?? 'nba') !== 'nfl') return
+    setSleeperLeaguesLoading(true)
+    fetch(`/api/sleeper/my-leagues?userId=${encodeURIComponent(sleeper.userId)}`)
+      .then(r => r.json())
+      .then(d => {
+        setSleeperLeagues(d.leagues ?? [])
+        setSleeperLeaguesLoading(false)
+      })
+      .catch(() => setSleeperLeaguesLoading(false))
+  }, [mounted, sleeper.connected, sleeper.userId, config.sport])
+
   const updateField = (field, value) =>
     setConfig((prev) => ({ ...prev, [field]: value }))
 
@@ -76,16 +95,45 @@ export default function Setup() {
     setSyncState(null)
     setSyncError(null)
     setYahooLeagues([])
+    setSleeperLeagues([])
     setConfig(prev => ({
       ...prev,
       sport: newSport,
+      // Sleeper is NFL-only — leaving nfl while on Sleeper would strand the
+      // config on an unreachable platform (see memory
+      // project_sleeper_integration_scope), so fall back to Yahoo.
+      platform: newSport !== 'nfl' && prev.platform === 'sleeper' ? 'yahoo' : prev.platform,
       categories: newSportConfig.categories.map(c => c.id),
       scoringFormat: defaultScoringFormat,
       yahooLeagueKey: null,
       yahooLeagueName: null,
       yahooStatCategories: null,
       yahooRosterPositions: null,
+      sleeperLeagueId: null,
+      sleeperLeagueName: null,
+      sleeperStatCategories: null,
+      sleeperRosterPositions: null,
+      sleeperDraftId: null,
       ...slotDefaults,
+    }))
+  }
+
+  const handlePlatformChange = (newPlatform) => {
+    if (newPlatform === (config.platform ?? 'yahoo')) return
+    setSyncState(null)
+    setSyncError(null)
+    setConfig(prev => ({
+      ...prev,
+      platform: newPlatform,
+      yahooLeagueKey: null,
+      yahooLeagueName: null,
+      yahooStatCategories: null,
+      yahooRosterPositions: null,
+      sleeperLeagueId: null,
+      sleeperLeagueName: null,
+      sleeperStatCategories: null,
+      sleeperRosterPositions: null,
+      sleeperDraftId: null,
     }))
   }
 
@@ -139,6 +187,39 @@ export default function Setup() {
     }
   }, [])
 
+  const handleSleeperLeagueSelect = useCallback(async (leagueId, leagueName) => {
+    if (!leagueId) return
+    setSyncState('loading')
+    setSyncError(null)
+    try {
+      const res = await fetch(`/api/sleeper/settings?leagueId=${encodeURIComponent(leagueId)}`)
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Sync failed')
+
+      setConfig(prev => ({
+        ...prev,
+        sleeperLeagueId: leagueId,
+        sleeperLeagueName: leagueName ?? data.leagueName ?? null,
+        sleeperUserId: sleeper.userId,
+        sleeperUsername: sleeper.username,
+        sleeperStatCategories: data.statCategories,
+        sleeperRosterPositions: data.rosterPositions,
+        sleeperDraftId: data.draftId ?? null,
+        ...(data.numTeams && { numTeams: data.numTeams }),
+        ...(data.leagueName && !prev.name && { name: data.leagueName }),
+        // Sleeper NFL leagues are points/PPR, not category — see memory
+        // project_sleeper_integration_scope. data.scoringType is always
+        // 'points' here (detectScoringFormat in normalize.js), but read it
+        // rather than hardcoding in case that ever changes.
+        scoringFormat: data.scoringType ?? 'points',
+      }))
+      setSyncState('success')
+    } catch (err) {
+      setSyncError(err.message)
+      setSyncState('error')
+    }
+  }, [sleeper.userId, sleeper.username])
+
   const handleSave = async () => {
     if (editId) {
       updateLeagueConfig(editId, config)
@@ -150,7 +231,19 @@ export default function Setup() {
     if (pendingOverride?.hasOverride) setProfileOverride(leagueId, pendingOverride)
     setActiveLeague(leagueId)
 
-    if (config.yahooLeagueKey) {
+    if (config.platform === 'sleeper' && config.sleeperDraftId) {
+      try {
+        const res = await fetch(`/api/sleeper/sync-draft?draftId=${encodeURIComponent(config.sleeperDraftId)}&userId=${encodeURIComponent(config.sleeperUserId ?? '')}`)
+        const data = await res.json()
+        if (res.ok && data.total > 0) {
+          importDraft(leagueId, data.picks, data.draftPosition)
+          router.push('/season')
+          return
+        }
+      } catch {
+        // Draft sync failed — fall through to draft board
+      }
+    } else if (config.yahooLeagueKey) {
       try {
         const res = await fetch(`/api/yahoo/sync-draft?leagueKey=${encodeURIComponent(config.yahooLeagueKey)}&sport=${config.sport ?? 'nba'}`)
         const data = await res.json()
@@ -168,7 +261,7 @@ export default function Setup() {
   }
 
   const isEditing = Boolean(editId)
-  const isYahooSynced = syncState === 'success' || Boolean(config.yahooStatCategories)
+  const isPlatformSynced = syncState === 'success' || Boolean(config.yahooStatCategories) || Boolean(config.sleeperStatCategories)
 
   if (!mounted) return null
 
@@ -221,8 +314,116 @@ export default function Setup() {
             </div>
           </div>
 
+          {/* Platform — Sleeper is NFL-only (see memory
+              project_sleeper_integration_scope), so only offer it there. */}
+          {(config.sport ?? 'nba') === 'nfl' && (
+            <div className="mb-4 bg-surface-raised rounded-lg border border-surface-line px-5 py-4">
+              <label className="block text-xs text-ink-secondary mb-1.5">Platform</label>
+              <div className="flex gap-1.5">
+                {[{ value: 'yahoo', label: 'Yahoo' }, { value: 'sleeper', label: 'Sleeper' }].map(opt => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => handlePlatformChange(opt.value)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
+                      (config.platform ?? 'yahoo') === opt.value
+                        ? 'bg-beane-green text-[#06120C]'
+                        : 'bg-surface-base border border-surface-line text-ink-secondary hover:border-beane-green hover:text-ink-primary'
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Sleeper Sync — no OAuth, just a username lookup */}
+          {(config.platform ?? 'yahoo') === 'sleeper' && (
+            <div className="mb-4 bg-surface-raised rounded-lg border border-surface-line p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-semibold text-ink-primary">Sync from Sleeper</p>
+                  <p className="text-xs text-ink-muted mt-0.5 font-mono">
+                    No login needed — just your Sleeper username. Data provided by Sleeper.
+                  </p>
+                </div>
+                {isPlatformSynced && config.sleeperStatCategories && (
+                  <span className="text-xs font-mono text-signal-up shrink-0 ml-4">
+                    ✓ {config.numTeams} teams
+                  </span>
+                )}
+              </div>
+
+              {!sleeper.connected ? (
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={sleeperUsernameInput}
+                    onChange={e => setSleeperUsernameInput(e.target.value)}
+                    placeholder="Sleeper username"
+                    className="flex-1 bg-surface-base border border-surface-line rounded px-3 py-1.5 text-xs text-ink-primary font-mono focus:outline-none focus:border-beane-green placeholder:text-ink-muted"
+                  />
+                  <button
+                    onClick={() => sleeper.connect(sleeperUsernameInput).catch(() => {})}
+                    disabled={!sleeperUsernameInput.trim() || sleeper.loading}
+                    className="px-4 py-1.5 border border-surface-line text-ink-primary rounded text-xs font-mono hover:bg-surface-overlay disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {sleeper.loading ? 'Looking up…' : 'Connect'}
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <p className="text-xs font-mono text-ink-muted">
+                    Connected as <span className="text-ink-primary">{sleeper.username}</span>
+                    {' · '}
+                    <button onClick={sleeper.disconnect} className="text-ink-secondary hover:text-ink-primary underline">
+                      switch account
+                    </button>
+                  </p>
+                  {sleeperLeaguesLoading ? (
+                    <p className="text-xs text-ink-secondary font-mono">Loading leagues…</p>
+                  ) : sleeperLeagues.length > 0 ? (
+                    <select
+                      value={config.sleeperLeagueId ?? ''}
+                      onChange={e => {
+                        const l = sleeperLeagues.find(l => l.leagueKey === e.target.value)
+                        if (!l) return
+                        const alreadyUsed = !isEditing && leagues.some(existing => existing.config.sleeperLeagueId === l.leagueKey)
+                        if (alreadyUsed) return
+                        handleSleeperLeagueSelect(l.leagueKey, l.name)
+                      }}
+                      className="w-full bg-surface-base border border-surface-line rounded px-3 py-2 text-sm text-ink-primary focus:outline-none focus:border-beane-green"
+                    >
+                      <option value="">Select a Sleeper league…</option>
+                      {sleeperLeagues.map(l => {
+                        const alreadyUsed = !isEditing && leagues.some(existing => existing.config.sleeperLeagueId === l.leagueKey)
+                        return (
+                          <option key={l.leagueKey} value={l.leagueKey} disabled={alreadyUsed}>
+                            {l.name} ({l.numTeams} teams · {l.season}){alreadyUsed ? ' — already set up' : ''}
+                          </option>
+                        )
+                      })}
+                    </select>
+                  ) : (
+                    <p className="text-xs text-ink-secondary leading-relaxed">
+                      No NFL leagues found for this account — you can still set this one up manually below.
+                    </p>
+                  )}
+                </>
+              )}
+
+              {sleeper.error && (
+                <p className="text-xs text-signal-down font-mono">{sleeper.error}</p>
+              )}
+              {syncState === 'error' && config.platform === 'sleeper' && (
+                <p className="text-xs text-signal-down font-mono">{syncError}</p>
+              )}
+            </div>
+          )}
+
           {/* Yahoo Sync */}
-          {yahoo.connected && (
+          {(config.platform ?? 'yahoo') === 'yahoo' && yahoo.connected && (
             <div className="mb-4 bg-surface-raised rounded-lg border border-surface-line p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <div>
@@ -231,7 +432,7 @@ export default function Setup() {
                     Pulls real stat categories, roster slots, and league settings.
                   </p>
                 </div>
-                {isYahooSynced && (
+                {isPlatformSynced && config.yahooStatCategories && (
                   <span className="text-xs font-mono text-signal-up shrink-0 ml-4">
                     ✓ {config.yahooStatCategories?.length} cats · {config.numTeams} teams
                   </span>
@@ -322,7 +523,7 @@ export default function Setup() {
             config={config}
             onUpdate={updateField}
             onToggleCategory={toggleCategory}
-            isYahooSynced={isYahooSynced}
+            isYahooSynced={isPlatformSynced}
           />
 
           {/* Flow C — profile acknowledgment for second+ league */}

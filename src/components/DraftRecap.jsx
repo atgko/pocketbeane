@@ -5,7 +5,7 @@ import mlbPlayers from '@/data/mlb_players.json'
 import nflPlayers from '@/data/nfl_players.json'
 import { getSportConfig } from '@/config/sports'
 import { buildPlayerMap, computeRosterAssignment } from '@/utils/roster'
-import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
+import { analyzeCategoryGaps, analyzePositionalNeeds } from '@/ai/categoryAnalysis'
 import useLeagueStore from '@/store/leagueStore'
 import { getSessionId } from '@/utils/session'
 import { resolveProfile } from '@/utils/gmProfile'
@@ -55,9 +55,18 @@ export default function DraftRecap({ league }) {
     [league.draft.picks]
   )
 
+  const isPointsFormat = league.config.scoringFormat === 'points'
+
+  // Points-format leagues (Sleeper NFL) use positional roster-fit instead
+  // of category grading — see BACKLOG.md NFL-01 / memory
+  // project_sleeper_integration_scope. Shaped identically to
+  // analyzeCategoryGaps's output so classifyDraftDNA, recommend.js, and
+  // the category bars below all work unchanged.
   const categoryGaps = useMemo(
-    () => analyzeCategoryGaps(userPicks, playerMap, sportConfig, league.rosterSlots.length),
-    [userPicks, playerMap, league.rosterSlots.length]
+    () => isPointsFormat
+      ? analyzePositionalNeeds(userPicks, playerMap, league.rosterSlots)
+      : analyzeCategoryGaps(userPicks, playerMap, sportConfig, league.rosterSlots.length),
+    [userPicks, playerMap, league.rosterSlots, isPointsFormat]
   )
 
   const slots = useMemo(

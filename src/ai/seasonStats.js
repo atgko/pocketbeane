@@ -22,6 +22,19 @@ function formatSeasonStats(stats, player, sport) {
     if (isPitcher) return `w=${fmt(stats.w, false)} sv=${fmt(stats.sv, false)} k=${fmt(stats.k, false)} era=${fmt(stats.era, false)} whip=${fmt(stats.whip, false)}`
     return `r=${fmt(stats.r, false)} hr=${fmt(stats.hr, false)} rbi=${fmt(stats.rbi, false)} sb=${fmt(stats.sb, false)} avg=${fmt(stats.avg, true)}`
   }
+  if (sport === 'nfl') {
+    // QBs have a passing stat line; every other skill position (RB/WR/TE)
+    // has null pass_yd/pass_td/int (see docs/SCHEMA.md's NFL prior_season
+    // table) — branch on that instead of the positions array so a
+    // multi-position-eligible player still gets the line that matches the
+    // stats actually present. K/DEF have prior_season === null entirely,
+    // already short-circuited by formatStats()'s "rookie/no stats" fallback.
+    const isQB = stats.pass_yd != null
+    if (isQB) {
+      return `passYd=${fmt(stats.pass_yd, false)} passTD=${fmt(stats.pass_td, false)} int=${fmt(stats.int, false)} rushYd=${fmt(stats.rush_yd, false)} rushTD=${fmt(stats.rush_td, false)} ppg=${fmt(stats.fantasy_ppg, false)}`
+    }
+    return `rushYd=${fmt(stats.rush_yd, false)} rushTD=${fmt(stats.rush_td, false)} rec=${fmt(stats.rec, false)} recYd=${fmt(stats.rec_yd, false)} recTD=${fmt(stats.rec_td, false)} ppg=${fmt(stats.fantasy_ppg, false)}`
+  }
   return `pts=${fmt(stats.pts, false)} reb=${fmt(stats.reb, false)} ast=${fmt(stats.ast, false)} stl=${fmt(stats.stl, false)} blk=${fmt(stats.blk, false)} 3pm=${fmt(stats.three_pm, false)} fg%=${fmt(stats.fg_pct, true)} ft%=${fmt(stats.ft_pct, true)}`
 }
 
