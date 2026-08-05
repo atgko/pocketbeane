@@ -861,7 +861,34 @@ Minor (not yet fixed): delete-confirmation copy differs between `ActiveLeagueBar
 
 **Parked — bolder/executive visual direction (2026-08-04):** separately, the user is unhappy with the current look: *"it feels flat, with a lot of greens but it doesn't pop... I want an executive, polished look and this does not look how I envision it."* Brass is explicitly called out as the one accent that's working — the ask is to lean harder into that rather than the current green-dominant balance, without abandoning "The Front Office" identity DESIGN.md already documents. This directly echoes D-01's "Next phase" note above, which already flagged brass/Fraunces as under-deployed outside the homepage/Draft DNA card — same root complaint, not yet resolved by that pass either.
 
-**Explicitly not started — user said to park this for now.** When resumed, likely sequence: `/impeccable critique` across more surfaces than just the homepage (draft board, Season Hub) to get fresh evidence rather than assume D-01's July findings still hold, then `/impeccable bolder` and/or `/impeccable colorize` targeted at the green/brass balance specifically, guided by the user's own framing ("executive, polished," brass-forward) rather than a generic bolder pass. Do not start this without the user explicitly asking to resume it.
+**Resumed 2026-08-05.** User asked to move forward with the sequence above. `/impeccable critique` kicked off first (dual-agent, draft board + Season Hub — see D-03) to get fresh evidence before touching color, per the plan above. `/impeccable colorize` and `/impeccable bolder` are queued as separate tickets (D-04, D-05) to run once that critique lands, scoped by its actual findings rather than a blind pass.
+
+---
+
+### D-03 · Fresh Critique — Draft Board + Season Hub · ✅ Done 2026-08-05
+**Status: Complete.** Dual-agent critique (Assessment A: design review, 154K tokens/58 tool uses; Assessment B: `detect.mjs` + live browser-injected overlay evidence, 144K tokens/78 tool uses), synthesized and persisted to `.impeccable/critique/2026-08-05T19-17-14Z__board-season-hub-pages-draft-jsx-pages-season-jsx.md`. Scored **25/40 ("Acceptable")**, 0 P0s, 3 P1s.
+
+**Headline finding:** the "flat, a lot of green" complaint is measurable, not a vibe — **203 green-tinted text nodes vs. 2 brass** on one Draft Board render, because the Value column paints `signal-up` on ~100% of visible rows instead of reserving it for outliers. The Season Hub's `max-w-3xl mx-auto` (704px column on a 1440px canvas) is DESIGN.md's own named anti-pattern (the No-Uniform-Stack Rule) — structural before it's chromatic. Both detector passes (static + live-injected overlay) came back **completely clean** — expected, since mechanical scanning catches structural anti-patterns, not compositional judgments like "this column is 100% green." Reassuring finding: the Named-Take Rule (which had regressed on the homepage per D-02) **held** on both these screens — 6 distinct Advisor-card eyebrows, zero repeats. The regression moved down a level instead: every card's CTA button reads "Get Beane's Take," six identical times.
+
+**3 P1s:** (1) green has no scarcity (`/impeccable colorize`), (2) brass is present but never the loudest thing, and is **absent entirely on the My Team tab** (`/impeccable bolder`), (3) the Season Hub's own layout is DESIGN.md's named anti-pattern (`/impeccable layout`).
+**2 P2s rolled in per user decision below:** six identical CTAs + a self-contradicting filter-toggle label + a dead-end "Needs Yahoo" state (`/impeccable clarify`); compounding design-system drift — the shared `Button` primitive is imported **zero times** on either screen, a 4th undocumented button radius is live, two data cards run under the documented padding floor, and neither `<html>` nor `<body>` sets `color-scheme: dark` so native `<select>`/scrollbars render in light browser chrome (`/impeccable harden`).
+
+Also surfaced, not yet actioned: a real accessibility gap on the Season Hub tab strip (announces as a tab widget via ARIA roles but has no `aria-controls`/`role="tabpanel"`/arrow-key handling), ~300 player-pool rows individually tab-stoppable with a meaningless `aria-selected`, and — confirmed independently by Assessment B via DOM measurement — the Draft Board does **not** restack at 390px (horizontally scrollable instead, default scroll position shows no player names at all), while the Season Hub does restack cleanly. Full detail, all 3 personas' red flags, and 9 minor observations in the persisted snapshot.
+
+---
+
+### D-04 · Draft Board + Season Hub — Combined Visual/System Pass (in progress)
+**Status: Executing one step at a time, 2026-08-05 onward — user wants to review each before the next starts.** User decision after reviewing D-03 (2026-08-05): run all three P1s **in one combined pass** across both screens rather than sequencing them, and **roll in both P2s** too rather than deferring them — the `harden` fixes (`color-scheme: dark`, routing through the shared `Button` primitive) directly affect how the color rebalance will actually render, so doing them separately later risked redoing work.
+
+**Sequence** (structure before color, since D-03's own read is that colorize/bolder need a real layout to land in — right now they'd be rebalancing color on an empty page). Each step ships and gets reviewed before the next starts:
+- [ ] 1. **`/impeccable layout`** — real 12-column grid on the Season Hub (an 8/4 split: active advisor take left, standing/roster/context rail right), replacing `max-w-3xl mx-auto`.
+- [ ] 2. **`/impeccable colorize`** — reserve `signal-up` for genuine outliers (top-decile Value, real category-bar grade changes) instead of ~every row; DESIGN.md's Brass Scarcity Rule (≤3 brass moments/screen) stays a deliberate constraint, not something to override — this is about giving brass one *large, confident* moment per screen, especially on My Team where it's currently absent, not adding more of it everywhere.
+- [ ] 3. **`/impeccable bolder`** — widen the visual gap between brass (`#C9A227`) and the caution-amber `signal-watch` (`#E0A83D`), which read too close together on a dark field right now.
+- [ ] 4. **`/impeccable clarify`** — name each Advisor card's CTA for its actual take instead of a repeated "Get Beane's Take"; fix the filter toggle stating its opposite state; turn "Needs Yahoo" into a real connect action instead of a dead-end label.
+- [ ] 5. **`/impeccable harden`** — `color-scheme: dark` at the root; route Draft Board/Season Hub buttons through the shared `Button` primitive; normalize the two under-padded data cards to the documented 12px/20px floor.
+- [ ] 6. **`/impeccable polish`** — final pass per the skill's own recommended closing step.
+
+**Not in scope for this pass, flagged for later:** the Season Hub tab-strip ARIA gaps and the player-pool row-focus issue (real, but a deeper a11y-pattern fix than this pass's five commands cover) and the Draft Board's mobile non-restacking (a deliberate density trade-off per D-01, not clearly a regression — worth a separate conversation on whether PRODUCT.md's mobile claim should change or the board should).
 
 ---
 

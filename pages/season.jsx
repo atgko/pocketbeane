@@ -1,16 +1,25 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import useLeagueStore from '@/store/leagueStore'
 import { useYahooAuth } from '@/hooks/useYahooAuth'
+import nbaPlayers from '@/data/players.json'
+import mlbPlayers from '@/data/mlb_players.json'
+import nflPlayers from '@/data/nfl_players.json'
+import { getSportConfig } from '@/config/sports'
 import { Card, TabBar } from '@/components/ui'
-import { isSyncStale, formatSyncedAt } from '@/components/season/shared'
+import { isSyncStale, formatSyncedAt, computeTeamStanding } from '@/components/season/shared'
 import SeasonRecapPanel from '@/components/season/SeasonRecapPanel'
+import StandingRail from '@/components/season/StandingRail'
 import ThisWeekTab from '@/components/season/ThisWeekTab'
 import WaiversTab from '@/components/season/WaiversTab'
 import TradesTab from '@/components/season/TradesTab'
 import LeagueTab from '@/components/season/LeagueTab'
 import MyTeamTab from '@/components/season/MyTeamTab'
+
+function playersFor(sport) {
+  return sport === 'mlb' ? mlbPlayers : sport === 'nfl' ? nflPlayers : nbaPlayers
+}
 
 // Roster Health Score's 1-10 number was never built past this placeholder —
 // it's now the Contender/Bubble/Rebuilding tier inside the League tab instead.
@@ -68,6 +77,17 @@ export default function SeasonHub() {
   // it's just always true once a Sleeper league is actually linked.
   const platformConnected = isSleeperLeague ? true : yahoo.connected
 
+  // Right-rail standing summary, shown alongside whichever tab is active —
+  // computed here once rather than inside every tab that would otherwise
+  // recompute its own copy. Plain computeTeamStanding + useMemo (not the
+  // useTeamStanding hook) since this runs before the `!league` early return
+  // below and the hook itself dereferences league.config unconditionally.
+  const sportConfig = league ? getSportConfig(league.config.sport ?? 'nba') : null
+  const standing = useMemo(() => {
+    if (!league || !rosters?.teams?.length) return null
+    return computeTeamStanding({ league, rosters, players: playersFor(league.config.sport ?? 'nba'), sportConfig })
+  }, [league, rosters, sportConfig])
+
   async function handleSync() {
     if (!canSync) return
     setSyncing(true)
@@ -123,9 +143,9 @@ export default function SeasonHub() {
           <title>{league.config.name || 'Season Hub'} — PocketBeane</title>
         </Head>
         <main className="min-h-screen bg-surface-base text-ink-primary">
-          <div className="max-w-3xl mx-auto px-8 py-12">
+          <div className="max-w-5xl mx-auto px-8 py-12">
             <div className="flex items-center justify-between mb-8">
-              <h1 className="text-2xl font-bold text-ink-primary tracking-tight">
+              <h1 className="font-display text-display font-semibold text-ink-primary">
                 {league.config.name || 'Season Hub'}
               </h1>
               <button
@@ -166,12 +186,12 @@ export default function SeasonHub() {
         <title>{league.config.name || 'Season Hub'} — PocketBeane</title>
       </Head>
       <main className="min-h-screen bg-surface-base text-ink-primary">
-        <div className="max-w-3xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
+        <div className="max-w-5xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
 
           {/* Header */}
           <div className="flex items-center justify-between mb-1">
             <div>
-              <h1 className="text-2xl font-bold text-ink-primary tracking-tight">
+              <h1 className="font-display text-display font-semibold text-ink-primary">
                 {league.config.name || 'Season Hub'}
               </h1>
               <p className="text-ink-secondary text-sm mt-0.5">
@@ -268,7 +288,18 @@ export default function SeasonHub() {
                 onChange={setActiveTab}
                 className="sticky top-0 z-10 bg-surface-base mb-4"
               />
-              <ActiveTabComponent league={league} rosters={rosters} yahooConnected={platformConnected} />
+              {standing ? (
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                  <div className="lg:col-span-8">
+                    <ActiveTabComponent league={league} rosters={rosters} yahooConnected={platformConnected} />
+                  </div>
+                  <div className="lg:col-span-4">
+                    <StandingRail standing={standing} sportConfig={sportConfig} />
+                  </div>
+                </div>
+              ) : (
+                <ActiveTabComponent league={league} rosters={rosters} yahooConnected={platformConnected} />
+              )}
             </>
           ) : canSync ? (
             <Card className="text-xs text-ink-secondary">
