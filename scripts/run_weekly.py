@@ -337,26 +337,35 @@ def git_commit_changes(results):
     if not existing:
         return {'committed': False, 'reason': 'no changed files found to stage'}
 
+    # Every other subprocess call in this script has a timeout — these git
+    # calls didn't, and this repo lives inside an actively-syncing OneDrive
+    # folder (a known source of git lock contention on Windows). A 2026-08-03
+    # scheduled run hung for the full Task Scheduler ExecutionTimeLimit (1h)
+    # and was force-killed with no output captured anywhere; these three
+    # calls were the only unguarded step in the whole pipeline. Local-only
+    # git ops (no network) should finish in well under 30s normally.
     try:
-        subprocess.run(['git', 'add', *existing], cwd=str(REPO_ROOT), check=True, capture_output=True, text=True)
-        staged = subprocess.run(['git', 'diff', '--cached', '--quiet'], cwd=str(REPO_ROOT))
+        subprocess.run(['git', 'add', *existing], cwd=str(REPO_ROOT), check=True, capture_output=True, text=True, timeout=30)
+        staged = subprocess.run(['git', 'diff', '--cached', '--quiet'], cwd=str(REPO_ROOT), timeout=30)
         if staged.returncode == 0:
             return {'committed': False, 'reason': 'no changes to commit'}
 
         summary = ', '.join(f'{s.upper()} {results[s]["players_updated"]}' for s in updated_sports)
         message = f'chore: weekly data update {today_str} ({summary})'
         commit = subprocess.run(
-            ['git', 'commit', '-m', message], cwd=str(REPO_ROOT), capture_output=True, text=True,
+            ['git', 'commit', '-m', message], cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30,
         )
         if commit.returncode != 0:
             return {'committed': False, 'reason': f'commit failed: {commit.stderr.strip()}'}
 
         sha = subprocess.run(
-            ['git', 'rev-parse', '--short', 'HEAD'], cwd=str(REPO_ROOT), capture_output=True, text=True,
+            ['git', 'rev-parse', '--short', 'HEAD'], cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30,
         ).stdout.strip()
         return {'committed': True, 'sha': sha, 'message': message}
     except subprocess.CalledProcessError as exc:
         return {'committed': False, 'reason': f'git add failed: {exc.stderr.strip()}'}
+    except subprocess.TimeoutExpired as exc:
+        return {'committed': False, 'reason': f'git command timed out after 30s: {" ".join(str(c) for c in exc.cmd)}'}
 
 
 def next_weekly_run(from_date):
@@ -739,5 +748,47 @@ def build_email_body(run_date, duration, results, token, git_result):
     return '\n'.join(lines)
 
 
+class _Tee:
+    """Mirrors every write to both the original stream and a log file.
+    Task Scheduler doesn't capture stdout/stderr by default — the
+    2026-08-03 hung run left zero output anywhere, forcing root-cause
+    diagnosis purely from exit codes and file timestamps. Flushing on every
+    write means the log has everything up to the moment a run is killed,
+    not just whatever was buffered at a clean exit. Wraps every existing
+    print() call automatically; no call site needs to change."""
+
+    def __init__(self, *streams):
+        self.streams = streams
+
+    def write(self, data):
+        for s in self.streams:
+            s.write(data)
+            s.flush()
+
+    def flush(self):
+        for s in self.streams:
+            s.flush()
+
+
 if __name__ == '__main__':
-    sys.exit(main())
+    log_dir = REPO_ROOT / 'scripts' / 'logs'
+    log_dir.mkdir(exist_ok=True)
+    log_path = log_dir / f'run_weekly_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'
+    log_file = open(log_path, 'a', encoding='utf-8')
+    _orig_stdout, _orig_stderr = sys.stdout, sys.stderr
+    sys.stdout = _Tee(_orig_stdout, log_file)
+    sys.stderr = _Tee(_orig_stderr, log_file)
+    print(f'--- run_weekly.py started {datetime.now().isoformat()} — log: {log_path} ---')
+
+    try:
+        exit_code = main()
+    finally:
+        # Restore the real streams and close the log BEFORE sys.exit() —
+        # Python's interpreter-shutdown sequence flushes sys.stdout again
+        # after this, and flushing a _Tee still pointed at a closed log
+        # file raises inside sys.unraisablehook (seen live: the pipeline
+        # completed and committed successfully, but the process still
+        # reported a failing exit code because of this exact ordering bug).
+        sys.stdout, sys.stderr = _orig_stdout, _orig_stderr
+        log_file.close()
+    sys.exit(exit_code)

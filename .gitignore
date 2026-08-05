@@ -42,3 +42,6 @@ __pycache__/
 
 # weekly pipeline run-once-per-day guard (local machine state, not data)
 data-updates/.last_run
+
+# weekly pipeline run logs (local machine diagnostics, not project data)
+scripts/logs/

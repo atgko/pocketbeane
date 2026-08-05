@@ -831,6 +831,33 @@ Also swept the whole codebase for other fixed-pixel-width red flags (`grid-cols-
 
 ---
 
+### D-02 · Homepage Design Critique (2026-08-04) + Bolder Executive Visual Direction
+**Status: Critique done, fixes not yet built. Bolder-direction phase explicitly parked by the user.**
+
+**Context:** ran `/impeccable critique` against the homepage (`pages/index.jsx`) as a dual-agent pass (LLM design review + detector/browser evidence, isolated sub-agents). Scored **23/40 ("Acceptable")**. Full report: `.impeccable/critique/2026-08-05T05-36-22Z__pages-index-jsx.md`.
+
+**Notable: this is a partial regression of D-01's already-completed "Next phase" work above, not a fresh finding.** D-01's Step 3-8 pass (2026-07-30) specifically ran `/impeccable bolder` to fix every `AdvisorCard` showing the identical generic "BEANE'S TAKE" eyebrow across "10 Advisor cards," establishing the Named-Take Rule. Today's critique found `BeaneNote.jsx`'s `AdvisorCard` calls on the homepage still never pass a custom `eyebrow` — confirmed in source (`AdvisorCard.jsx` defaults to `"BEANE'S TAKE"`, neither `BeaneNote.jsx` call site overrides it). Either the homepage's Advisor card wasn't actually among the "10" covered in that pass, or it regressed since. Worth checking whether other surfaces have similarly drifted before assuming D-01's fixes are still fully intact everywhere.
+
+**Priority issues found (highest first):**
+- [ ] **[P1]** `ActiveLeagueBar` (5-button action row) renders *before* the Hero card + Beane's Note in DOM order (`pages/index.jsx` line 271 vs. 282/296) — buries the product's core differentiator under transactional chrome, driving 4 of 5 cognitive-load checklist failures. Fix: move the action bar into/below the Hero card as subordinate footer actions. → `/impeccable layout`
+- [ ] **[P1]** The Yahoo league picker has no cancel, outside-click, or Escape — only clears on selecting a league. Fails Nielsen heuristic 3 (User Control and Freedom) outright. → `/impeccable harden`
+- [ ] **[P2]** Empty-state copy is now factually stale: "ESPN and other platforms are coming soon" — Sleeper shipped as a real second platform the same day this critique ran (see SLP-01). Same paragraph also fails a browser-detected line-length check (~89 chars/line, no `max-w`) at `pages/index.jsx:904-907` — fix both together. → `/impeccable clarify`
+- [ ] **[P2]** Homepage doesn't apply its own design system: `<h1>PocketBeane</h1>` uses plain Inter (`text-3xl font-bold`) instead of the `font-display` (Fraunces) token DESIGN.md reserves for page heroes; `BeaneNote`'s Advisor card never gets a Named-Take eyebrow (see regression note above). → `/impeccable polish`
+- [ ] **[P2]** Standing trend arrow conveys state via color + glyph only, no text fallback or `aria-label` — fails color-blind and screen-reader users specifically. → `/impeccable harden`
+- [ ] **[P3]** Zero keyboard shortcuts or bulk actions on `ActiveLeagueBar`, despite PRODUCT.md stating the real user runs 3 concurrent leagues today. → `/impeccable optimize`
+
+Minor: delete-confirmation copy differs between `ActiveLeagueBar` ("Confirm Delete") and `LeagueCard` ("Confirm"); raw `yahoo_error` query param echoed straight into the toast instead of a plain-language message.
+
+**User decision (2026-08-04):** fix all 6 issues, in the order listed above, then a final `/impeccable polish` pass. Not yet executed — this ticket tracks the checklist above until it is.
+
+---
+
+**Parked — bolder/executive visual direction (2026-08-04):** separately, the user is unhappy with the current look: *"it feels flat, with a lot of greens but it doesn't pop... I want an executive, polished look and this does not look how I envision it."* Brass is explicitly called out as the one accent that's working — the ask is to lean harder into that rather than the current green-dominant balance, without abandoning "The Front Office" identity DESIGN.md already documents. This directly echoes D-01's "Next phase" note above, which already flagged brass/Fraunces as under-deployed outside the homepage/Draft DNA card — same root complaint, not yet resolved by that pass either.
+
+**Explicitly not started — user said to park this for now.** When resumed, likely sequence: `/impeccable critique` across more surfaces than just the homepage (draft board, Season Hub) to get fresh evidence rather than assume D-01's July findings still hold, then `/impeccable bolder` and/or `/impeccable colorize` targeted at the green/brass balance specifically, guided by the user's own framing ("executive, polished," brass-forward) rather than a generic bolder pass. Do not start this without the user explicitly asking to resume it.
+
+---
+
 ## Completed (archived reference)
 
 | Item | Notes |
