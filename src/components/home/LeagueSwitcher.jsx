@@ -19,6 +19,9 @@ export default function LeagueSwitcher({ leagues, activeId, onSelect }) {
     <div className="relative">
       <button
         onClick={() => canSwitch && setOpen(o => !o)}
+        title={canSwitch ? 'Switch league — or press [ / ]' : undefined}
+        aria-haspopup={canSwitch ? 'listbox' : undefined}
+        aria-expanded={canSwitch ? open : undefined}
         className={`flex items-center gap-2 bg-surface-raised border border-surface-line rounded-lg px-3 py-1.5 text-sm font-medium text-ink-primary transition-colors ${
           canSwitch ? 'hover:border-ink-secondary cursor-pointer' : 'cursor-default'
         }`}

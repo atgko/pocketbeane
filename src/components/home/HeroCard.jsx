@@ -204,7 +204,16 @@ export default function HeroCard({ league, rosters, standing, sportConfig, weekl
             {tierStyle.label}
           </span>
         )}
-        {trendArrow && <span className={`text-sm font-mono ${trendArrow.color}`}>{trendArrow.icon}</span>}
+        {trendArrow && (
+          <span
+            role="img"
+            aria-label={trendArrow.label}
+            title={trendArrow.label}
+            className={`text-sm font-mono ${trendArrow.color}`}
+          >
+            {trendArrow.icon}
+          </span>
+        )}
       </div>
       {strongest && (
         <p className="text-xs text-ink-secondary leading-relaxed">

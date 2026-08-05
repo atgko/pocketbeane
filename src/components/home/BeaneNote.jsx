@@ -20,7 +20,7 @@ export default function BeaneNote({ gmProfile, standing, sportConfig, weeklyMatc
     const tossups = weeklyMatchup.tossupCategories?.length ?? 0
     const title = `You're projected ${wins}-${losses}${tossups ? `-${tossups}` : ''} this week`
     return (
-      <AdvisorCard title={title}>
+      <AdvisorCard eyebrow="THE MATCHUP READ" title={title}>
         <p>{weeklyMatchup.outlook}</p>
       </AdvisorCard>
     )
@@ -28,7 +28,7 @@ export default function BeaneNote({ gmProfile, standing, sportConfig, weeklyMatc
 
   if (!gmProfile?.completedAt) {
     return (
-      <AdvisorCard title="Get to know your GM">
+      <AdvisorCard eyebrow="FIRST THINGS FIRST" title="Get to know your GM">
         <p>
           You haven't set a philosophy yet. Take the quick quiz so my calls actually reflect how you draft —
           risk tolerance, category strategy, all of it.
@@ -47,7 +47,7 @@ export default function BeaneNote({ gmProfile, standing, sportConfig, weeklyMatc
   const standingLine = standing?.userEntry ? buildFallbackInsight(standing.userEntry, sportConfig) : null
 
   return (
-    <AdvisorCard>
+    <AdvisorCard eyebrow="THE SEASON READ">
       <p>{strategyLine}</p>
       {standingLine && <p className="mt-2">{standingLine}</p>}
     </AdvisorCard>

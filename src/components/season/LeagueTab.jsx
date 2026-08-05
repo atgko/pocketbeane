@@ -93,7 +93,16 @@ export default function LeagueTab({ league, rosters }) {
               {tierStyle.label}
             </span>
           )}
-          {trendArrow && <span className={`text-sm font-mono ${trendArrow.color}`}>{trendArrow.icon}</span>}
+          {trendArrow && (
+            <span
+              role="img"
+              aria-label={trendArrow.label}
+              title={trendArrow.label}
+              className={`text-sm font-mono ${trendArrow.color}`}
+            >
+              {trendArrow.icon}
+            </span>
+          )}
           <span className="text-xs text-ink-primary font-medium">{userTeam.teamName} · #{userTeam.rank ?? '?'}</span>
           <span className="text-micro font-mono tabular-nums text-ink-secondary">
             {userTeam.wins}-{userTeam.losses}{userTeam.ties ? `-${userTeam.ties}` : ''}

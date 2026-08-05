@@ -95,9 +95,9 @@ export const TIER_STYLES = {
 }
 
 export const STANDING_TREND_ARROW = {
-  up:   { icon: '↑', color: 'text-signal-up' },
-  down: { icon: '↓', color: 'text-signal-down' },
-  flat: { icon: '→', color: 'text-ink-secondary' },
+  up:   { icon: '↑', color: 'text-signal-up', label: 'Trending up' },
+  down: { icon: '↓', color: 'text-signal-down', label: 'Trending down' },
+  flat: { icon: '→', color: 'text-ink-secondary', label: 'Holding steady' },
 }
 
 export const WIN_RATE_GRADE_STYLES = {

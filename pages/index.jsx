@@ -37,6 +37,40 @@ function playersFor(sport) {
   return sport === 'mlb' ? mlbPlayers : sport === 'nfl' ? nflPlayers : nbaPlayers
 }
 
+// Yahoo's OAuth callback forwards its raw error query param straight through
+// (see pages/api/auth/yahoo/callback.js) — that can be a short known code
+// ("access_denied") or, on a failed token exchange, a dumped status+body
+// string never meant for a user to read. Map known cases to plain language
+// and fall back to a generic message rather than surface the raw value; the
+// full detail is still logged server-side (console.error in that handler).
+const YAHOO_ERROR_MESSAGES = {
+  access_denied: "Yahoo connection cancelled.",
+  no_code: "Yahoo didn't return an authorization code. Please try again.",
+}
+function yahooErrorMessage(code) {
+  return YAHOO_ERROR_MESSAGES[code] ?? "Couldn't connect your Yahoo account. Please try again."
+}
+
+// Escape key + outside-click dismissal for the Yahoo league picker
+// dropdowns below — previously the only way out was selecting a league,
+// which fails heuristic 3 (User Control and Freedom) for anyone who opened
+// it by mistake or whose league isn't listed.
+function useDismiss(active, onDismiss) {
+  const ref = useRef(null)
+  useEffect(() => {
+    if (!active) return
+    const handleKey = (e) => { if (e.key === 'Escape') onDismiss() }
+    const handleClick = (e) => { if (ref.current && !ref.current.contains(e.target)) onDismiss() }
+    document.addEventListener('keydown', handleKey)
+    document.addEventListener('mousedown', handleClick)
+    return () => {
+      document.removeEventListener('keydown', handleKey)
+      document.removeEventListener('mousedown', handleClick)
+    }
+  }, [active, onDismiss])
+  return ref
+}
+
 // Which league's Hero/Beane's Note shows by default. An upcoming draft
 // (no picks yet) is the one thing worth a proactive reminder, so it wins
 // outright. Below that, an active season league — your actual ongoing
@@ -62,34 +96,34 @@ export default function Home() {
   const { leagues, setActiveLeague, deleteLeague, setLeagueStatus, archiveLeague, setWeeklyMatchup } = useLeagueStore()
   const [mounted, setMounted] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(null)
-  const [yahooToast, setYahooToast] = useState(null)
+  const [toast, setToast] = useState(null)
   const [selectedHeroId, setSelectedHeroId] = useState(null)
   const yahoo = useYahooAuth()
 
   useEffect(() => { setMounted(true) }, [])
 
-  // Auto-archive season leagues inactive for 7+ days (last roster sync)
-  useEffect(() => {
-    if (!mounted) return
-    const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000
-    for (const l of leagues) {
-      if (l.status !== 'season') continue
-      const syncedAt = l.leagueRosters?.syncedAt
-      if (!syncedAt) continue
-      if (Date.now() - new Date(syncedAt).getTime() > SEVEN_DAYS) {
-        archiveLeague(l.id)
-      }
-    }
-  }, [mounted])
+  // No automatic archiving here anymore. This used to fire on pure
+  // time-since-last-successful-sync (7+ days), then on the isSeasonOver
+  // flag once that signal existed — but isSeasonOver is itself derived from
+  // "Yahoo 403'd this league" (sync-rosters.js / sync-draft.js), which can't
+  // always tell a genuinely concluded season apart from a transient Yahoo
+  // outage or an account-wide throttle. Auto-archiving on it meant a false
+  // positive silently and irreversibly (from the user's perspective) moved
+  // a still-active league into Archived on every reload — including
+  // immediately undoing a manual Restore, since the flag never cleared.
+  // isSeasonOver already freezes the season-advisor UI and shows "Season
+  // complete" on its own (season.jsx, LeagueCard) without needing `status`
+  // to change, so archiving stays a deliberate, user-driven action via the
+  // Archive button below.
 
   useEffect(() => {
     if (!mounted) return
     const { yahoo_connected, yahoo_error } = router.query
     if (yahoo_connected) {
-      setYahooToast({ type: 'success', message: 'Yahoo account connected.' })
+      setToast({ type: 'success', message: 'Yahoo account connected.' })
       router.replace('/', undefined, { shallow: true })
     } else if (yahoo_error) {
-      setYahooToast({ type: 'error', message: `Yahoo error: ${yahoo_error}` })
+      setToast({ type: 'error', message: yahooErrorMessage(yahoo_error) })
       router.replace('/', undefined, { shallow: true })
     }
   }, [mounted, router.query])
@@ -101,6 +135,25 @@ export default function Home() {
   const defaultHeroId = useMemo(() => pickHeroLeagueId(leagues), [leagues])
   const heroLeagueId = selectedHeroId ?? defaultHeroId
   const heroLeague = leagues.find(l => l.id === heroLeagueId) ?? null
+
+  // [ / ] cycles which league drives the Hero + Beane's Note — the one
+  // accelerator PRODUCT.md's real 3-concurrent-league user had no keyboard
+  // path for; LeagueSwitcher was mouse-only. Ignored while typing anywhere
+  // (search boxes, form fields) so it never steals a literal "[" or "]".
+  useEffect(() => {
+    if (nonArchivedLeagues.length < 2) return
+    const handleKey = (e) => {
+      if (e.key !== '[' && e.key !== ']') return
+      const tag = document.activeElement?.tagName
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement?.isContentEditable) return
+      const idx = nonArchivedLeagues.findIndex(l => l.id === heroLeagueId)
+      const delta = e.key === ']' ? 1 : -1
+      const next = nonArchivedLeagues[(idx + delta + nonArchivedLeagues.length) % nonArchivedLeagues.length]
+      setSelectedHeroId(next.id)
+    }
+    document.addEventListener('keydown', handleKey)
+    return () => document.removeEventListener('keydown', handleKey)
+  }, [nonArchivedLeagues, heroLeagueId])
 
   const heroStanding = useMemo(() => {
     if (!heroLeague || heroLeague.status !== 'season') return null
@@ -165,6 +218,18 @@ export default function Home() {
     }
   }
 
+  // Archive/restore otherwise change state silently — heuristic 1
+  // (Visibility of System Status) flagged that a click here gives no
+  // confirmation beyond the league quietly moving sections.
+  const handleArchive = (id) => {
+    archiveLeague(id)
+    setToast({ type: 'success', message: 'League archived.' })
+  }
+  const handleUnarchive = (id) => {
+    setLeagueStatus(id, 'season')
+    setToast({ type: 'success', message: 'League restored.' })
+  }
+
   // Group leagues by sport, split active vs archived within each sport
   const grouped = {}
   for (const l of leagues) {
@@ -192,8 +257,8 @@ export default function Home() {
     onDelete: handleDelete,
     onCancelDelete: () => setConfirmDelete(null),
     confirmDelete,
-    archiveLeague,
-    onUnarchive: (id) => setLeagueStatus(id, 'season'),
+    archiveLeague: handleArchive,
+    onUnarchive: handleUnarchive,
   }
 
   return (
@@ -208,7 +273,7 @@ export default function Home() {
           {/* Top bar */}
           <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
             <div>
-              <h1 className="text-3xl font-bold text-ink-primary tracking-tight">PocketBeane</h1>
+              <h1 className="font-display text-display font-semibold text-ink-primary">PocketBeane</h1>
               <p className="text-ink-secondary mt-1 text-sm">AI-powered Assistant GM</p>
             </div>
 
@@ -254,10 +319,10 @@ export default function Home() {
           {!yahoo.connected && <YahooConnect yahoo={yahoo} />}
 
           {/* Toast */}
-          {yahooToast && (
-            <div className={`mb-6 px-4 py-3 rounded-lg text-sm flex items-center justify-between ${yahooToast.type === 'success' ? 'bg-signal-up/15 border border-signal-up/40 text-signal-up' : 'bg-signal-down/15 border border-signal-down/40 text-signal-down'}`}>
-              <span>{yahooToast.message}</span>
-              <button onClick={() => setYahooToast(null)} className="ml-4 text-ink-secondary hover:text-ink-primary">✕</button>
+          {toast && (
+            <div role="status" aria-live="polite" className={`mb-6 px-4 py-3 rounded-lg text-sm flex items-center justify-between ${toast.type === 'success' ? 'bg-signal-up/15 border border-signal-up/40 text-signal-up' : 'bg-signal-down/15 border border-signal-down/40 text-signal-down'}`}>
+              <span>{toast.message}</span>
+              <button onClick={() => setToast(null)} className="ml-4 text-ink-secondary hover:text-ink-primary">✕</button>
             </div>
           )}
 
@@ -265,19 +330,11 @@ export default function Home() {
             <EmptyState />
           ) : (
             <>
-              {/* Active league quick actions — scoped to whichever league
-                  the Hero/Beane's Note below is currently showing */}
-              {heroLeague && heroLeague.status !== 'complete' && (
-                <ActiveLeagueBar
-                  league={heroLeague}
-                  confirmingDelete={confirmDelete === heroLeague.id}
-                  {...sharedCardProps}
-                />
-              )}
-
-              {/* Hero status + Beane's Note */}
+              {/* Hero status + Beane's Note — read first, before any action
+                  button. The product's whole thesis is one opinionated take,
+                  not a row of transactional chrome. */}
               {heroLeague && (
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-8">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-3">
                   <div className="lg:col-span-8">
                     <HeroCard
                       league={heroLeague}
@@ -301,6 +358,18 @@ export default function Home() {
                     />
                   </div>
                 </div>
+              )}
+
+              {/* Active league quick actions — scoped to whichever league
+                  the Hero/Beane's Note above is showing. Subordinate to the
+                  take above it: smaller, muted, secondary-styled primary
+                  action (Hero's own button already covers that same click). */}
+              {heroLeague && heroLeague.status !== 'complete' && (
+                <ActiveLeagueBar
+                  league={heroLeague}
+                  confirmingDelete={confirmDelete === heroLeague.id}
+                  {...sharedCardProps}
+                />
               )}
 
               {/* League grid — info-only, click a card to make it active */}
@@ -368,6 +437,7 @@ function ArchivedSection({ leagues, sport, confirmDelete, ...cardProps }) {
     <div className="mt-3">
       <button
         onClick={() => setExpanded(p => !p)}
+        aria-expanded={expanded}
         className="text-xs font-mono text-ink-muted hover:text-ink-secondary transition-colors"
       >
         {expanded ? '↑' : '↓'} Archived ({leagues.length})
@@ -444,6 +514,9 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
     setPicker({ open: false, loading: false, leagues: [], error: null })
   }
 
+  const closePicker = () => setPicker({ open: false, loading: false, leagues: [], error: null })
+  const pickerRef = useDismiss(picker.open, closePicker)
+
   const syncDraft = async () => {
     setSyncState({ loading: true, error: null })
     try {
@@ -481,7 +554,16 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
                 {tierStyle.label}
               </span>
             )}
-            {trendArrow && <span className={`text-xs font-mono ${trendArrow.color}`}>{trendArrow.icon}</span>}
+            {trendArrow && (
+              <span
+                role="img"
+                aria-label={trendArrow.label}
+                title={trendArrow.label}
+                className={`text-xs font-mono ${trendArrow.color}`}
+              >
+                {trendArrow.icon}
+              </span>
+            )}
           </div>
           <div className="text-xs text-ink-secondary mt-0.5 font-mono">
             {config.numTeams} teams · Pick {config.draftPosition} · {config.scoringFormat?.toUpperCase() ?? '9CAT'}
@@ -566,12 +648,24 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
               <div>
                 <button
                   onClick={openPicker}
+                  aria-haspopup="listbox"
+                  aria-expanded={picker.open}
                   className="text-xs text-ink-secondary hover:text-ink-primary transition-colors"
                 >
                   + Link Yahoo league
                 </button>
                 {picker.open && (
-                  <div className="mt-2">
+                  <div ref={pickerRef} className="mt-2">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-micro font-mono text-ink-muted uppercase tracking-wider">Choose a league</span>
+                      <button
+                        onClick={closePicker}
+                        aria-label="Close league picker"
+                        className="text-ink-muted hover:text-ink-primary text-xs px-1"
+                      >
+                        ✕
+                      </button>
+                    </div>
                     {picker.loading && <p className="text-xs text-ink-secondary font-mono">Loading leagues…</p>}
                     {picker.error && <p className="text-xs text-signal-down">{picker.error}</p>}
                     {!picker.loading && !picker.error && picker.leagues.length === 0 && (
@@ -616,29 +710,31 @@ function LeagueCard({ league, yahooConnected, confirmingDelete, onEnterDraft, on
               Restore
             </button>
           )}
-          {confirmingDelete ? (
-            <div className="flex items-center gap-2">
+          <div aria-live="polite">
+            {confirmingDelete ? (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => onDelete(league.id)}
+                  className="px-3 py-1 bg-signal-down text-[#1A0505] rounded-lg text-xs font-semibold hover:brightness-110 transition-colors"
+                >
+                  Confirm Delete
+                </button>
+                <button
+                  onClick={onCancelDelete}
+                  className="px-3 py-1 border border-surface-line text-ink-secondary rounded-lg text-xs hover:text-ink-primary transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
               <button
                 onClick={() => onDelete(league.id)}
-                className="px-3 py-1 bg-signal-down text-[#1A0505] rounded-lg text-xs font-semibold hover:brightness-110 transition-colors"
+                className="text-xs text-ink-muted hover:text-signal-down transition-colors"
               >
-                Confirm
+                Delete
               </button>
-              <button
-                onClick={onCancelDelete}
-                className="px-3 py-1 border border-surface-line text-ink-secondary rounded-lg text-xs hover:text-ink-primary transition-colors"
-              >
-                Cancel
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={() => onDelete(league.id)}
-              className="text-xs text-ink-muted hover:text-signal-down transition-colors"
-            >
-              Delete
-            </button>
-          )}
+            )}
+          </div>
         </div>
 
       </div>
@@ -685,6 +781,9 @@ function ActiveLeagueBar({ league, yahooConnected, onEnterDraft, onEnterSeason, 
     setPicker({ open: false, loading: false, leagues: [], error: null })
   }
 
+  const closePicker = () => setPicker({ open: false, loading: false, leagues: [], error: null })
+  const pickerRef = useDismiss(picker.open, closePicker)
+
   const syncDraft = async () => {
     setSyncState({ loading: true, error: null })
     try {
@@ -707,19 +806,22 @@ function ActiveLeagueBar({ league, yahooConnected, onEnterDraft, onEnterSeason, 
   }
 
   return (
-    <div className="mb-4">
+    <div className="mb-8 pt-3 border-t border-surface-line/60">
       <div className="flex flex-wrap items-center gap-2">
+        {/* Secondary-styled — Hero's own action button above already covers
+            this exact click with primary emphasis; this row is a shortcut,
+            not a second competing call to action. */}
         {showSeasonHub ? (
           <button
             onClick={() => onEnterSeason(league.id)}
-            className="px-4 py-1.5 bg-beane-green text-[#06120C] rounded-lg text-xs font-semibold hover:brightness-110 transition-colors"
+            className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded-lg text-xs hover:text-ink-primary hover:border-ink-secondary transition-colors"
           >
             Season Hub
           </button>
         ) : (
           <button
             onClick={() => onEnterDraft(league.id)}
-            className="px-4 py-1.5 bg-beane-green text-[#06120C] rounded-lg text-xs font-semibold hover:brightness-110 transition-colors"
+            className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded-lg text-xs hover:text-ink-primary hover:border-ink-secondary transition-colors"
           >
             Draft Board
           </button>
@@ -746,12 +848,24 @@ function ActiveLeagueBar({ league, yahooConnected, onEnterDraft, onEnterSeason, 
             <div className="relative">
               <button
                 onClick={openPicker}
+                aria-haspopup="listbox"
+                aria-expanded={picker.open}
                 className="px-3 py-1.5 border border-surface-line text-ink-secondary rounded-lg text-xs hover:text-ink-primary hover:border-ink-secondary transition-colors"
               >
                 Link Yahoo
               </button>
               {picker.open && (
-                <div className="absolute top-full left-0 mt-1 z-20 bg-surface-overlay border border-surface-line rounded-lg overflow-hidden min-w-[240px] shadow-lg">
+                <div ref={pickerRef} className="absolute top-full left-0 mt-1 z-20 bg-surface-overlay border border-surface-line rounded-lg overflow-hidden min-w-[240px] shadow-lg">
+                  <div className="flex items-center justify-between px-3 py-2 border-b border-surface-line">
+                    <span className="text-micro font-mono text-ink-muted uppercase tracking-wider">Choose a league</span>
+                    <button
+                      onClick={closePicker}
+                      aria-label="Close league picker"
+                      className="text-ink-muted hover:text-ink-primary text-xs px-1"
+                    >
+                      ✕
+                    </button>
+                  </div>
                   {picker.loading && <p className="text-xs text-ink-secondary font-mono px-3 py-2">Loading leagues…</p>}
                   {picker.error && <p className="text-xs text-signal-down px-3 py-2">{picker.error}</p>}
                   {!picker.loading && !picker.error && picker.leagues.length === 0 && (
@@ -790,7 +904,7 @@ function ActiveLeagueBar({ league, yahooConnected, onEnterDraft, onEnterSeason, 
           </button>
         )}
 
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-2" aria-live="polite">
           {confirmingDelete ? (
             <>
               <button
@@ -852,7 +966,16 @@ function LeagueSummaryCard({ league, isActive, onSelect }) {
         <span className="text-micro font-mono text-ink-muted uppercase tracking-wider">
           {SPORT_LABELS[sport] ?? sport.toUpperCase()} · {config.scoringFormat?.toUpperCase() ?? '9CAT'}
         </span>
-        {trendArrow && <span className={`text-sm font-mono ${trendArrow.color}`}>{trendArrow.icon}</span>}
+        {trendArrow && (
+          <span
+            role="img"
+            aria-label={trendArrow.label}
+            title={trendArrow.label}
+            className={`text-sm font-mono ${trendArrow.color}`}
+          >
+            {trendArrow.icon}
+          </span>
+        )}
       </div>
       <p className="font-semibold text-ink-primary text-sm truncate mb-0.5">{config.name || 'Unnamed League'}</p>
       <p className="text-xs font-mono tabular-nums text-ink-secondary">
@@ -901,8 +1024,8 @@ function EmptyState() {
   return (
     <div className="border border-dashed border-surface-line rounded-lg px-8 py-14 text-center">
       <p className="text-ink-secondary mb-1">No leagues set up yet.</p>
-      <p className="text-ink-muted text-sm mb-6">
-        Add one for each Yahoo draft you're running. ESPN and other platforms are coming soon.
+      <p className="text-ink-muted text-sm mb-6 max-w-md mx-auto">
+        Add one for each Yahoo or Sleeper league you're running.
         PocketBeane runs alongside your live draft and tells you who to pick.
       </p>
       <Link
