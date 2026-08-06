@@ -59,6 +59,56 @@ test('missing injury status defaults to treating the pitcher as healthy', () => 
   assert.strictEqual(rec, 'start')
 })
 
+// confirmedStarts (real probable-start data, Y-05c) — takes over from the
+// teamGamesThisWeek proxy whenever the caller passes it, even an empty array.
+test('confirmed start this week -> start, ignoring teamGamesThisWeek', () => {
+  const rec = getPitchingRecommendation({
+    teamGamesThisWeek: 0, // proxy would say hold — confirmedStarts should win
+    injuryStatus: 'healthy',
+    confirmedStarts: [{ date: '2026-08-10', opponent: 'TEX', home: true }],
+  })
+  assert.strictEqual(rec, 'start')
+})
+
+test('confirmed two-start week still recommends start (badge is separate)', () => {
+  const rec = getPitchingRecommendation({
+    teamGamesThisWeek: 5,
+    injuryStatus: 'healthy',
+    confirmedStarts: [
+      { date: '2026-08-10', opponent: 'TEX', home: true },
+      { date: '2026-08-15', opponent: 'MIA', home: false },
+    ],
+  })
+  assert.strictEqual(rec, 'start')
+})
+
+test('confirmed zero starts this week -> hold, even if teamGamesThisWeek is nonzero', () => {
+  const rec = getPitchingRecommendation({
+    teamGamesThisWeek: 4, // proxy would say start — real data says otherwise
+    injuryStatus: 'healthy',
+    confirmedStarts: [],
+  })
+  assert.strictEqual(rec, 'hold')
+})
+
+test('confirmed start with a day-to-day pitcher -> stream', () => {
+  const rec = getPitchingRecommendation({
+    teamGamesThisWeek: 3,
+    injuryStatus: 'day-to-day',
+    confirmedStarts: [{ date: '2026-08-10', opponent: 'TEX', home: true }],
+  })
+  assert.strictEqual(rec, 'stream')
+})
+
+test('IL pitcher -> hold even with a confirmed start', () => {
+  const rec = getPitchingRecommendation({
+    teamGamesThisWeek: 3,
+    injuryStatus: 'il',
+    confirmedStarts: [{ date: '2026-08-10', opponent: 'TEX', home: true }],
+  })
+  assert.strictEqual(rec, 'hold')
+})
+
 if (failures.length > 0) {
   console.error(`\npitchingStarts.test.js — ${passed} passed, ${failures.length} failed\n`)
   for (const { name, err } of failures) {

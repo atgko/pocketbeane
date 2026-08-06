@@ -272,6 +272,17 @@ function LineupAdvisorPanel({ league, rosters, sport, mode }) {
   )
 }
 
+// "2026-08-10" -> "Aug 10". Parsed as UTC (matches src/utils/schedule.js's
+// date handling) so the displayed date can't shift a day depending on the
+// viewer's local timezone.
+function formatShortDate(isoDate) {
+  return new Date(`${isoDate}T00:00:00Z`).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'UTC',
+  })
+}
+
 // MLB's Start/Sit replacement — everyday hitters don't need a positional
 // start/sit call, so this shows scheduled starts for rostered SPs with a
 // simple start/stream/hold recommendation instead of a full weekly lineup.
@@ -339,14 +350,31 @@ function PitchingStartsPanel({ league, rosters }) {
             <div className="space-y-2">
               {data.starts.map((s, i) => {
                 const hurt = s.injuryStatus && s.injuryStatus !== 'healthy'
+                // confirmedStarts is real FanGraphs probable-start data
+                // (Y-05c) when the API trusted it for this week; null means
+                // it fell back to the team-schedule proxy below.
+                const hasConfirmed = Array.isArray(s.confirmedStarts)
                 return (
                   <div key={i} className="border border-surface-line rounded-md px-4 py-3 flex items-center justify-between gap-3">
                     <div>
                       <p className="text-xs text-ink-primary font-medium">
                         {s.player} <span className="text-ink-muted font-mono">{s.team}</span>
+                        {s.twoStartWeek && (
+                          <span className="ml-1.5 text-micro font-mono px-1.5 py-0.5 rounded-full uppercase bg-signal-up/15 text-signal-up align-middle">
+                            2-start
+                          </span>
+                        )}
                       </p>
                       <p className="text-micro text-ink-secondary font-mono tabular-nums mt-0.5">
-                        Team plays {s.teamGamesThisWeek} time{s.teamGamesThisWeek === 1 ? '' : 's'} this week
+                        {hasConfirmed ? (
+                          s.confirmedStarts.length > 0
+                            ? s.confirmedStarts
+                                .map((c) => `${formatShortDate(c.date)} ${c.home ? 'vs' : '@'} ${c.opponent}`)
+                                .join(', ')
+                            : 'No confirmed start this week'
+                        ) : (
+                          `Team plays ${s.teamGamesThisWeek} time${s.teamGamesThisWeek === 1 ? '' : 's'} this week`
+                        )}
                         {hurt && (
                           <span className="text-signal-watch/80">
                             {' '}· {INJURY_LABELS[s.injuryStatus] ?? s.injuryStatus}{s.injuryNote ? `: ${s.injuryNote}` : ''}

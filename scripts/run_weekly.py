@@ -43,6 +43,12 @@ MERGE_SCRIPT = REPO_ROOT / 'scripts' / 'mergeCurrentSeasonData.js'
 SCHEDULE_SCRAPERS = {
     'mlb': REPO_ROOT / 'scripts' / 'fetch_mlb_schedule.py',
 }
+# Pitcher-level probable starts (Y-05c) — layered on top of the team-schedule
+# proxy above, which stays in place as the fallback (see
+# src/utils/probables.js's hasFullCoverage/isProbablesDataUsable).
+PROBABLES_SCRAPERS = {
+    'mlb': REPO_ROOT / 'scripts' / 'fetch_mlb_probables.py',
+}
 AUTH_PATH = Path(r'C:\Users\athav\AppData\Local\hermes\auth.json')
 # Guards against double-running when both the Hermes cron job and the
 # wake-and-run Task Scheduler backstop fire for the same Monday.
@@ -326,7 +332,7 @@ def git_commit_changes(results):
     if not updated_sports:
         return {'committed': False, 'reason': 'no sports updated cleanly this run'}
 
-    paths = [REPO_ROOT / 'src' / 'data' / 'mlb_schedule.json']
+    paths = [REPO_ROOT / 'src' / 'data' / 'mlb_schedule.json', REPO_ROOT / 'src' / 'data' / 'mlb_probables.json']
     for sport in updated_sports:
         players_file = 'mlb_players.json' if sport == 'mlb' else 'players.json'
         paths.append(REPO_ROOT / 'src' / 'data' / players_file)
@@ -366,6 +372,25 @@ def git_commit_changes(results):
         return {'committed': False, 'reason': f'git add failed: {exc.stderr.strip()}'}
     except subprocess.TimeoutExpired as exc:
         return {'committed': False, 'reason': f'git command timed out after 30s: {" ".join(str(c) for c in exc.cmd)}'}
+
+
+def run_refresh_scraper(sport, scraper, timeout=60):
+    """Run a single standalone data-refresh scraper (schedule or probables)
+    for one sport. Never raises — any failure is printed and swallowed,
+    since these refreshes must never fail the whole weekly run."""
+    try:
+        proc = subprocess.run(
+            [sys.executable, str(scraper)],
+            cwd=str(REPO_ROOT),
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
+        print(proc.stdout)
+        if proc.returncode != 0:
+            print(f'  [{sport}] Refresh failed:\n{proc.stderr}')
+    except subprocess.TimeoutExpired:
+        print(f'  [{sport}] Refresh timed out')
 
 
 def next_weekly_run(from_date):
@@ -611,19 +636,22 @@ def main():
         if not sports.get(sport):
             print(f'  [{sport}] Skipping schedule refresh (offseason)')
             continue
-        try:
-            proc = subprocess.run(
-                [sys.executable, str(scraper)],
-                cwd=str(REPO_ROOT),
-                capture_output=True,
-                text=True,
-                timeout=60,
-            )
-            print(proc.stdout)
-            if proc.returncode != 0:
-                print(f'  [{sport}] Schedule refresh failed:\n{proc.stderr}')
-        except subprocess.TimeoutExpired:
-            print(f'  [{sport}] Schedule refresh timed out')
+        run_refresh_scraper(sport, scraper)
+
+    # Probable-starts refresh (Y-05c) — pitcher-level data layered on top of
+    # the team-schedule proxy above. That proxy is left untouched and stays
+    # the fallback whenever this file ends up missing, stale, or a
+    # requested week extends past what's been scraped (see
+    # src/utils/probables.js). Independent of every other step here — never
+    # lets a probables fetch failure fail the whole weekly run.
+    print(f'\n{"="*60}')
+    print('PROBABLES REFRESH')
+    print(f'{"="*60}')
+    for sport, scraper in PROBABLES_SCRAPERS.items():
+        if not sports.get(sport):
+            print(f'  [{sport}] Skipping probables refresh (offseason)')
+            continue
+        run_refresh_scraper(sport, scraper)
 
     # Commit the data files this run touched. Independent of the checks
     # above — never lets a git failure fail the whole weekly run.

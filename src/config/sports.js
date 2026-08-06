@@ -85,15 +85,23 @@ export const SPORT_CONFIGS = {
 
     playerFile: 'mlb_players.json',
     scheduleFile: 'mlb_schedule.json',
+    // Pitcher-level probable starts (FanGraphs RosterResource, refreshed
+    // weekly by scripts/fetch_mlb_probables.py — see BACKLOG Y-05c). MLB-only:
+    // no other sport in this app has a "starting pitcher" concept. The
+    // Pitching Starts panel prefers this when it's fresh and covers the
+    // requested week; scheduleFile above remains the fallback proxy
+    // (games-this-week) for whenever this file is missing, stale, or the
+    // week extends past what's been scraped.
+    probablesFile: 'mlb_probables.json',
     // Real 2026 regular-season end date (matches the last date in
     // mlb_schedule.json) — used to give Team Pulse a "weeks remaining"
     // figure for its playoff/buy-sell-hold read.
     seasonEndDate: '2026-09-27',
     // Teams play near-daily — team-schedule density isn't a meaningful
     // fatigue signal here (unlike NBA/NHL), so the Start/Sit Advisor doesn't
-    // surface back-to-back tags for this sport. Games-this-week is still
-    // used as an approximate proxy for pitcher start count until real
-    // probable-starts data exists (see BACKLOG Y-05c).
+    // surface back-to-back tags for this sport. Games-this-week remains an
+    // approximate proxy for pitcher start count whenever probablesFile isn't
+    // available (see BACKLOG Y-05c).
     backToBackRelevant: false,
     // Everyday hitters don't need a positional start/sit call — the only
     // real weekly lineup lever for MLB is pitcher starts, so this sport gets
@@ -294,6 +302,13 @@ export function getPlayerFile(sport) {
 // has no schedule data configured yet (Start/Sit Advisor unavailable).
 export function getScheduleFile(sport) {
   return SPORT_CONFIGS[sport]?.scheduleFile ?? null
+}
+
+// Probable-starts data file for a sport, relative to src/data/, or null if
+// that sport has no probables data configured (falls back to scheduleFile's
+// games-this-week proxy — currently MLB-only, see BACKLOG Y-05c).
+export function getProbablesFile(sport) {
+  return SPORT_CONFIGS[sport]?.probablesFile ?? null
 }
 
 // Whether the Start/Sit Advisor has schedule data to work with for this

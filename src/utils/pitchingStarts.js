@@ -19,16 +19,27 @@ const OUT_STATUSES = new Set(['il', 'out', 'ir'])
 // automatic hold.
 const WATCH_STATUSES = new Set(['day-to-day', 'questionable', 'doubtful'])
 
-// getPitchingRecommendation({ teamGamesThisWeek, injuryStatus }) -> 'start' | 'stream' | 'hold'
+// getPitchingRecommendation({ teamGamesThisWeek, injuryStatus, confirmedStarts }) -> 'start' | 'stream' | 'hold'
 //   teamGamesThisWeek: number — team-schedule games-in-range, used as an
-//     approximate proxy for probable starts (see BACKLOG Y-05c: real
-//     probable-starts data doesn't exist yet). Named for what it actually
-//     measures — a pitcher never starts every one of their team's games.
+//     approximate proxy for probable starts when real data isn't available
+//     or trustworthy for this pitcher/week (see BACKLOG Y-05c). Named for
+//     what it actually measures — a pitcher never starts every one of their
+//     team's games.
 //   injuryStatus: string | null | undefined
-function getPitchingRecommendation({ teamGamesThisWeek, injuryStatus }) {
+//   confirmedStarts: array | undefined — real probable-start rows for this
+//     pitcher this week (see src/utils/probables.js), when the caller has
+//     decided the data is fresh and covers the full week. Omit entirely
+//     (leave undefined) to fall back to the teamGamesThisWeek proxy — an
+//     empty array is treated as authoritative (a confirmed zero-start week),
+//     not as "no data".
+function getPitchingRecommendation({ teamGamesThisWeek, injuryStatus, confirmedStarts }) {
   const status = injuryStatus?.toLowerCase()
   if (status && OUT_STATUSES.has(status)) return 'hold'
-  if (teamGamesThisWeek === 0) return 'hold'
+
+  const hasStart = Array.isArray(confirmedStarts)
+    ? confirmedStarts.length > 0
+    : teamGamesThisWeek !== 0
+  if (!hasStart) return 'hold'
   if (status && WATCH_STATUSES.has(status)) return 'stream'
   return 'start'
 }

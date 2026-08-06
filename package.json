@@ -15,7 +15,8 @@
     "test:schedule": "node scripts/test/schedule.test.js",
     "test:pitching-starts": "node scripts/test/pitchingStarts.test.js",
     "test:team-standing": "node scripts/test/teamStanding.test.js",
-    "test": "npm run test:calculate-trend && npm run test:merge-current-season && npm run test:schedule && npm run test:pitching-starts && npm run test:team-standing"
+    "test:probables": "node scripts/test/probables.test.js",
+    "test": "npm run test:calculate-trend && npm run test:merge-current-season && npm run test:schedule && npm run test:pitching-starts && npm run test:team-standing && npm run test:probables"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.95.2",

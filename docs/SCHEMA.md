@@ -270,11 +270,63 @@ Season-long game list, one file per sport that supports the Start/Sit Advisor (Y
 
 **Current state:** both files are hand-seeded samples, **not real, verified schedules** — `nba_schedule.json` covers 6 teams across two weeks (Nov 16–29, 2026); `mlb_schedule.json` covers 6 teams for the week of Jul 6–12, 2026 (chosen to match `mlb_players.json`'s real `current_season.as_of_date`, so the MLB advisor is live-demoable with no params). Swapping in a real season export is a pure data-file replacement — same `{season, sport, source, games[]}` shape, no changes needed in `src/utils/schedule.js` or `pages/api/season/startsit-advice.js`.
 
-**MLB caveat:** MLB hitters play near-daily, so team-schedule density isn't a strong start/sit signal for hitters the way it is for NBA. The real MLB signal — pitcher probable starts (1-start vs. 2-start weeks) — isn't tracked yet; the advisor uses team-schedule games-this-week as an approximate proxy for pitchers in the meantime and says so in its output. See BACKLOG Y-05c for the planned upgrade.
+**MLB caveat:** MLB hitters play near-daily, so team-schedule density isn't a strong start/sit signal for hitters the way it is for NBA. The real MLB signal — pitcher probable starts (1-start vs. 2-start weeks) — is now tracked separately in `mlb_probables.json` (see below, BACKLOG Y-05c). This file remains the fallback: whenever probables data is missing, stale, or a requested week extends past what's been scraped, the Pitching Starts panel falls back to team-schedule games-this-week as an approximate proxy and says so in its output.
 
 ### Schedule utility
 
 `src/utils/schedule.js` — pure date-math functions (`getTeamGamesInRange`, `countGamesInRange`, `findBackToBacks`, `hasBackToBack`, `getWeekRange`), sport-agnostic by design. Written as CommonJS (like `scripts/calculateTrend.js`) so it's testable via plain `node` (`scripts/test/schedule.test.js`, `npm run test:schedule`) and still importable from Next.js API routes.
+
+---
+
+## MLB Probable Starts (`mlb_probables.json`)
+
+Pitcher-level, date-specific probable starts — the real signal the team-schedule proxy above always stood in for (Y-05c). Sourced weekly by `scripts/fetch_mlb_probables.py` from FanGraphs' RosterResource Probables Grid (which aggregates RotoWire's probable pitcher data), refreshed by Hermes alongside the schedule/stats pulls. Like `mlb_schedule.json`, this is a full-file replace each run, not a merge into `mlb_players.json` — the underlying rotation data only makes sense as "what does the grid say right now," not something to accumulate.
+
+```json
+{
+  "as_of_date": "2026-08-06",
+  "sport": "mlb",
+  "source": "fangraphs_rosterresource_probables_grid",
+  "updated_at": "2026-08-06T14:57:04.201000+00:00",
+  "updated_at_label": "Thursday, August 6, 2026 8:38 AM ET",
+  "stale": false,
+  "date_range": { "start": "2026-08-05", "end": "2026-08-15" },
+  "starts": [
+    {
+      "date": "2026-08-08",
+      "team": "SEA",
+      "opponent": "TBR",
+      "home": true,
+      "pitcher_id": "bryce-miller",
+      "pitcher_name": "Bryce Miller",
+      "pitcher_fangraphs_id": "29837",
+      "throws": "R"
+    }
+  ],
+  "players_matched": 122,
+  "players_unmatched": 92,
+  "unmatched_pitchers": ["Chris Bassitt", "..."]
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `updated_at` | string (ISO datetime)\|null | FanGraphs' own last-refresh timestamp for the grid (the react-query cache's `dataUpdatedAt`, not this script's run time) — the authoritative freshness signal |
+| `updated_at_label` | string\|null | Human-readable form of the same timestamp, scraped from the page footer, for logs only |
+| `stale` | boolean | `true` when `updated_at` is more than 48 hours old. Consumers should not treat `starts` as authoritative when this is `true` — probables are provisional (rotation shuffles, rainouts, injuries) even when fresh, and doubly so when stale |
+| `date_range` | `{start, end}`\|null | The scraped window's actual date coverage (~10 days). A requested fantasy week extending past `end` means "not yet announced," not "no start" — see `hasFullCoverage()` below |
+| `starts[].pitcher_id` | string\|null | Matched `mlb_players.json` id, via the same normalized-name convention that builds that file's ids. `null` when no match was found (commonly a pitcher outside the ~300-player drafted pool, not a matching bug) — logged in `unmatched_pitchers` |
+| `starts[].pitcher_fangraphs_id` | string | FanGraphs' own numeric player id — not currently cross-referenced into `mlb_players.json`, kept for future use |
+| `players_matched` / `players_unmatched` | number | Per-run match summary, visible in the Hermes run log |
+| `unmatched_pitchers` | string[] | Raw (unnormalized) names that didn't match, for debugging |
+
+A pitcher's true weekly start count is a query over this file scoped to the actual fantasy week (Monday–Sunday), not something precomputed at scrape time — a raw count over the full ~10-day `starts` window would overcount almost every pitcher, since a 5-man rotation cycles roughly twice in that span. `src/utils/probables.js` does this scoping:
+
+- `getPitcherStartsInRange(probablesData, {pitcherId, name}, start, end)` — a pitcher's confirmed starts within a date range, matched primarily by `pitcher_id` (falling back to a live name comparison only for rows the scraper itself couldn't resolve)
+- `hasFullCoverage(probablesData, start, end)` — whether the scraped window actually covers the requested week
+- `isProbablesDataUsable(probablesData)` — the `stale` gate
+
+`pages/api/season/pitching-starts.js` only trusts `mlb_probables.json` for a given week when both checks pass; otherwise it falls back to `mlb_schedule.json`'s games-this-week proxy exactly as before. Written as CommonJS, same reasoning as `schedule.js` (`scripts/test/probables.test.js`, `npm run test:probables`).
 
 ---
 
@@ -293,3 +345,4 @@ These rules exist to prevent the merge script from corrupting curated data.
 | `current_season` | Merge script / Hermes | Manual (except for `manual_entry` source) |
 | `current_season.trend` | `calculateTrend()` utility | External data sources |
 | `nba_schedule.json` / `mlb_schedule.json` (whole file) | Manual curation / future schedule-import script | Merge script, `calculateTrend()` |
+| `mlb_probables.json` (whole file) | Hermes / `scripts/fetch_mlb_probables.py` | Manual, merge script, `calculateTrend()` |

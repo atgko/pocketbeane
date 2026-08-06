@@ -273,14 +273,22 @@ Y-05 status table's Team Pulse row flipped to "✅ UAT complete".
 
 ---
 
-### Y-05c · MLB Pitcher Probable-Start Tracking
+### Y-05c · MLB Pitcher Probable-Start Tracking · build complete 2026-08-06, browser UAT pending
 **Goal:** Sharpen the Start/Sit Advisor's MLB pitcher signal. Deferred out of the initial Start/Sit Advisor build (2026-07-07) because it's a fundamentally different data problem from the NBA/MLB team-schedule work that ticket shipped.
 
 **Why this is separate:** MLB hitters play ~6 games/week almost every week (162g/~26wk), so team-schedule density isn't a differentiating signal for hitters — the schedule-file approach already covers them fine. The real MLB lineup lever is pitcher probable starts (a 1-start vs. 2-start week is the single biggest swing in a category league), but starting rotations are only announced ~5 days out — not known for a full season the way team schedules are. That makes this a weekly dynamic-data problem much closer to `mergeCurrentSeasonData.js`/Hermes than the ship-once `mlb_schedule.json` file.
 
-**Current state:** the Start/Sit Advisor already runs for MLB using team-schedule games-this-week as an approximate proxy for pitcher starts, with an explicit lower-confidence caveat in the Claude prompt. This ticket is about replacing that proxy with real data, not unblocking MLB (it's already unblocked).
+**Built 2026-08-06** (brief: FanGraphs Probables Grid Integration):
+- `scripts/fetch_mlb_probables.py` — new Hermes MLB scraper. Reads FanGraphs RosterResource's Probables Grid (`fangraphs.com/roster-resource/probables-grid`) via its `__NEXT_DATA__` react-query cache (confirmed live 2026-08-06: a flat per-team-per-date JSON list, not HTML-table scraping) — 298 rows across 30 teams / ~10 days on the day this was built. Maps FanGraphs' team codes to `mlb_players.json`'s own convention (`KCR→KC`, `SDP→SD`, `TBR→TB`, `SFG→SF`, `WSN→WSH`, `CHW→CWS`; `ARI`/`ATH` already matched), matches each probable pitcher to a `mlb_players.json` id via the same hyphenated `normalize_name()` `scrape_mlb.py` already uses to build those ids, and logs unmatched pitchers rather than failing the run (122/298 matched live — most "unmatched" pitchers are legitimately outside the ~300-player drafted pool, not a matching bug). Flags `stale: true` when the grid's own last-updated timestamp is >48h old, and guards against a short/malformed response (<100 rows) overwriting a good file, same defensive-threshold philosophy as `fetch_mlb_schedule.py`.
+- `src/data/mlb_probables.json` — full-file-replace weekly output (same pattern as `mlb_schedule.json`, not merged into `mlb_players.json`). Schema documented in `docs/SCHEMA.md`.
+- `src/utils/probables.js` — pure query functions (`getPitcherStartsInRange`, `hasFullCoverage`, `isProbablesDataUsable`), CommonJS/testable via plain `node` like `schedule.js`. `hasFullCoverage` is the key piece: a pitcher with zero rows in a week that extends past the ~10-day scraped horizon means "not yet announced," not "no start" — only a week fully inside the scraped window can trust an empty result as a real hold.
+- `src/utils/pitchingStarts.js` — `getPitchingRecommendation` now accepts an optional `confirmedStarts` array; when present (even empty) it's authoritative, when omitted it falls back byte-for-byte to the original `teamGamesThisWeek` proxy logic (existing tests unchanged).
+- `pages/api/season/pitching-starts.js` — loads `mlb_probables.json` (tolerates missing/malformed file), only trusts it per-week when fresh *and* `hasFullCoverage` — otherwise falls back to the schedule proxy exactly as before. Response now carries `confirmedStarts` (nullable) and `twoStartWeek` per pitcher; `teamGamesThisWeek` is kept either way, both as the fallback signal and for any future use.
+- `src/components/season/ThisWeekTab.jsx` — Pitching Starts panel shows confirmed start date(s)/opponent/home-away when available, a "2-start" badge (signal-up styled) for two-start weeks, falling back to the original "Team plays N times this week" copy when no confirmed data.
+- **Deliberately retained, per explicit instruction:** the team-schedule proxy (`mlb_schedule.json`, `fetch_mlb_schedule.py`, `getTeamGamesInRange`) is untouched — it's both the live fallback above and available for future use elsewhere, not superseded.
+- Tests: `scripts/test/probables.test.js` (new, 13 cases) + `scripts/test/pitchingStarts.test.js` extended with 5 `confirmedStarts` cases. `npm run test:probables` / `npm test`.
 
-**Prerequisite:** a probable-starts data source (Hermes or similar) + a weekly ingestion script analogous to T1-2/`mergeCurrentSeasonData.js`.
+**Not yet done:** browser UAT (real league roster, verifying the panel renders confirmed starts/two-start badge correctly and falls back cleanly when `mlb_probables.json` is stale/missing) and the first real Hermes-triggered weekly run (built or manually re-run so far, not yet exercised via the actual Monday cron path).
 
 ---
 
