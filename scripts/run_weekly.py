@@ -17,6 +17,7 @@ import time
 import urllib.parse
 import urllib.request
 import urllib.error
+from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 from email.mime.text import MIMEText
 from pathlib import Path
@@ -389,8 +390,84 @@ def run_refresh_scraper(sport, scraper, timeout=60):
         print(proc.stdout)
         if proc.returncode != 0:
             print(f'  [{sport}] Refresh failed:\n{proc.stderr}')
+            return {'ok': False, 'returncode': proc.returncode, 'stderr': proc.stderr}
+        return {'ok': True, 'returncode': 0}
     except subprocess.TimeoutExpired:
         print(f'  [{sport}] Refresh timed out')
+        return {'ok': False, 'returncode': None, 'stderr': 'timeout'}
+
+
+def find_two_start_pitchers(data):
+    """Return names of pitchers scheduled for 2+ starts within the Mon–Sun
+    week containing today, using the probables file's `starts` list. A
+    pitcher's starts are keyed by pitcher_id when matched, else by
+    pitcher_name (unmatched players fall back to name-only identity)."""
+    starts = data.get('starts', [])
+    if not starts:
+        return []
+    today = date.today()
+    monday = today - timedelta(days=today.weekday())
+    sunday = monday + timedelta(days=6)
+    by_pitcher = defaultdict(set)
+    pitcher_names = {}
+    for s in starts:
+        sd = s.get('date', '')
+        if not sd or not (monday.isoformat() <= sd <= sunday.isoformat()):
+            continue
+        pid = s.get('pitcher_id')
+        name = s.get('pitcher_name')
+        if pid is not None:
+            key = ('id', pid)
+        elif name:
+            key = ('name', name)
+        else:
+            continue
+        by_pitcher[key].add(sd)
+        pitcher_names[key] = name or str(pid)
+    return sorted(
+        pitcher_names[key] for key, dates in by_pitcher.items() if len(dates) >= 2
+    )
+
+
+def summarize_probables(sport, scraper, timeout=60):
+    """Run the probables scraper for one sport, then read back
+    src/data/mlb_probables.json to build a structured summary for the
+    weekly email: rows fetched, pitchers matched, staleness status, and
+    two-start pitchers detected for the current week. Never raises — a
+    probables failure is reported in the email but never fails the run."""
+    result = {
+        'sport': sport,
+        'ok': False,
+        'rows': 0,
+        'matched': 0,
+        'stale': None,
+        'updated_at': None,
+        'two_start': [],
+        'error': None,
+    }
+    proc_result = run_refresh_scraper(sport, scraper, timeout)
+    if not proc_result.get('ok'):
+        result['error'] = proc_result.get('stderr') or 'probables refresh failed'
+        print(f'  [{sport}] Probables summary: FAILED ({result["error"]})')
+        return result
+
+    probables_file = REPO_ROOT / 'src' / 'data' / 'mlb_probables.json'
+    try:
+        with open(probables_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        result['ok'] = True
+        result['rows'] = len(data.get('starts', []))
+        result['matched'] = data.get('players_matched', 0)
+        result['stale'] = data.get('stale')
+        result['updated_at'] = data.get('updated_at')
+        result['two_start'] = find_two_start_pitchers(data)
+        print(f'  [{sport}] Probables summary: {result["rows"]} rows, '
+              f'{result["matched"]} matched, stale={result["stale"]}, '
+              f'two-start={result["two_start"]}')
+    except Exception as exc:
+        result['error'] = f'could not read {probables_file.name}: {exc}'
+        print(f'  [{sport}] Probables summary: FAILED ({result["error"]})')
+    return result
 
 
 def next_weekly_run(from_date):
@@ -647,11 +724,12 @@ def main():
     print(f'\n{"="*60}')
     print('PROBABLES REFRESH')
     print(f'{"="*60}')
+    probables_summary = None
     for sport, scraper in PROBABLES_SCRAPERS.items():
         if not sports.get(sport):
             print(f'  [{sport}] Skipping probables refresh (offseason)')
             continue
-        run_refresh_scraper(sport, scraper)
+        probables_summary = summarize_probables(sport, scraper)
 
     # Commit the data files this run touched. Independent of the checks
     # above — never lets a git failure fail the whole weekly run.
@@ -670,7 +748,7 @@ def main():
     # Build summary
     duration = (date.today() - run_start).total_seconds()
 
-    email_body = build_email_body(as_of, duration, results, token, git_result)
+    email_body = build_email_body(as_of, duration, results, token, git_result, probables_summary)
     subject = build_subject(results)
 
     # Always attempt to send for visibility
@@ -697,7 +775,7 @@ def build_subject(results):
     return f'✅ PocketBeane — Weekly Data Update {date.today().isoformat()}'
 
 
-def build_email_body(run_date, duration, results, token, git_result):
+def build_email_body(run_date, duration, results, token, git_result, probables_summary=None):
     next_run = next_weekly_run(date.fromisoformat(run_date))
     lines = []
     lines.append(f'PocketBeane weekly data pipeline complete.')
@@ -744,6 +822,35 @@ def build_email_body(run_date, duration, results, token, git_result):
         lines.append('─' * 40)
         lines.append(f'MERGE OUTPUT — {sport.upper()}')
         lines.append(results[sport].get('merge_output', 'N/A'))
+
+    # Probables refresh summary — standalone signal, never a pipeline
+    # failure. A probables failure is reported clearly here but the rest of
+    # the run's results above are unaffected.
+    lines.append('')
+    lines.append('─' * 40)
+    lines.append('PROBABLES REFRESH — MLB')
+    if probables_summary is None:
+        lines.append('  ⏸ Skipped (MLB offseason or not configured)')
+    elif probables_summary.get('ok'):
+        lines.append(f'  ✅ Rows fetched: {probables_summary.get("rows", 0)}')
+        lines.append(f'  ✅ Pitchers matched: {probables_summary.get("matched", 0)}')
+        stale = probables_summary.get('stale')
+        if stale is None:
+            lines.append('  ⚠️ Staleness: unknown (no timestamp in source)')
+        elif stale:
+            lines.append('  ⚠️ Staleness: STALE (>48h old source data)')
+        else:
+            lines.append('  ✅ Staleness: fresh (<48h old source data)')
+        updated = probables_summary.get('updated_at') or 'unknown'
+        lines.append(f'  Source updated: {updated}')
+        two_start = probables_summary.get('two_start') or []
+        if two_start:
+            lines.append(f'  🔁 Two-start pitchers this week ({len(two_start)}): {", ".join(two_start)}')
+        else:
+            lines.append('  Two-start pitchers this week: none detected')
+    else:
+        lines.append(f'  ⚠️ FAILED — {probables_summary.get("error", "unknown error")}')
+        lines.append('  (Probables refresh failure — rest of pipeline unaffected)')
 
     lines.append('')
     lines.append('─' * 40)
