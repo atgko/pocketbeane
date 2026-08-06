@@ -112,9 +112,14 @@ function getOverallWinRate(categoryWinRates) {
 // getWinRateGrade(rate) -> 'strong' | 'ok' | 'weak' | null
 //   Same 3-tier grading spirit as src/ai/categoryAnalysis.js's draft-board
 //   category grades, thresholded on win rate instead of benchmark progress.
+//   'strong' at 0.6 (barely above a coin-flip breakeven of 0.5) marked most
+//   categories on a decent team as a signal-up "strong" bar — the Season
+//   Hub's own version of the Value-column bug (D-03/D-04: green painted on
+//   ~every row instead of genuine outliers). 0.7 — clearly beating most of
+//   the league, not just edging past half of it — is the real bar.
 function getWinRateGrade(rate) {
   if (rate == null) return null
-  if (rate >= 0.6) return 'strong'
+  if (rate >= 0.7) return 'strong'
   if (rate >= 0.4) return 'ok'
   return 'weak'
 }

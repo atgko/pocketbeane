@@ -2,8 +2,29 @@ import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
 import nflPlayers from '@/data/nfl_players.json'
 import { getWinRateGrade } from '@/utils/teamStanding'
-import { Card } from '@/components/ui'
+import { Card, Badge } from '@/components/ui'
 import { TrendBadge, WIN_RATE_GRADE_STYLES, WIN_RATE_BAR_COLOR, findPlayerByName, useTeamStanding } from './shared'
+
+// The one large, confident brass moment this screen earns — My Team had
+// zero brass before D-04 (Brass Scarcity Rule caps it at ≤3/screen, but
+// this tab was sitting at the opposite failure: none at all). Only renders
+// when a category is a genuine 'strong' grade (>=70% league win rate,
+// tightened alongside the Value-column fix) — no category clearing that
+// bar means no fabricated edge, matching the product's fail-soft principle.
+function EdgeCallout({ cat, winRate }) {
+  if (!cat || !winRate) return null
+  return (
+    <div className="flex items-center gap-4 rounded-xl border border-brass/25 bg-brass/[0.06] px-4 py-3 mb-4">
+      <span className="font-mono text-data-lg font-semibold text-brass tabular-nums shrink-0">
+        {Math.round(winRate.rate * 100)}%
+      </span>
+      <p className="text-xs text-ink-secondary leading-relaxed">
+        <Badge tone="brass" size="sm" className="mr-1.5 align-middle">Your Edge</Badge>
+        <span className="text-ink-primary font-medium">{cat.label}</span> is your strongest category — beating {winRate.wins} of {winRate.of} other teams.
+      </p>
+    </div>
+  )
+}
 
 function WinRateRow({ cat, winRate }) {
   const grade = getWinRateGrade(winRate?.rate ?? null)
@@ -61,6 +82,11 @@ export default function MyTeamTab({ league, rosters }) {
   const playerById = Object.fromEntries(players.map(p => [p.id, p]))
   const resolvePlayer = (entry) => (entry.playerId && playerById[entry.playerId]) || findPlayerByName(players, entry.name)
 
+  const edge = sportConfig.categories
+    .map(cat => ({ cat, winRate: userEntry.winRates[cat.id] }))
+    .filter(({ winRate }) => getWinRateGrade(winRate?.rate ?? null) === 'strong')
+    .sort((a, b) => b.winRate.rate - a.winRate.rate)[0] ?? null
+
   return (
     <div className="space-y-4">
       <Card>
@@ -70,6 +96,7 @@ export default function MyTeamTab({ league, rosters }) {
             #{userTeam.rank ?? '?'} · {userTeam.wins}-{userTeam.losses}{userTeam.ties ? `-${userTeam.ties}` : ''}
           </span>
         </div>
+        {edge && <EdgeCallout cat={edge.cat} winRate={edge.winRate} />}
         <p className="text-micro font-mono text-ink-muted uppercase tracking-wider mb-2">Category Profile</p>
         <div className="space-y-1.5">
           {sportConfig.categories.map(cat => (

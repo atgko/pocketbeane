@@ -79,6 +79,22 @@ export default function PlayerPool() {
     return result
   }, [search, posFilter, showAvailableOnly, pickMap, activeLeague?.config?.sport])
 
+  // Value-column green threshold: every row below the current pick trivially
+  // has a positive ADP gap simply because the draft hasn't reached it yet —
+  // painting all of them signal-up was D-03's headline finding (203 green
+  // nodes vs. 2 brass on one render). Reserve green for the top decile of
+  // the gap distribution actually on screen right now, so it flags real
+  // standouts (a falling player, a draft-day steal) instead of the whole
+  // remaining board.
+  const valueThreshold = useMemo(() => {
+    const gaps = filtered
+      .map(p => p.adp - (pickMap[p.id] ? pickMap[p.id].pickNumber : currentPickNum))
+      .filter(d => d > 0)
+      .sort((a, b) => b - a)
+    if (gaps.length === 0) return Infinity
+    return gaps[Math.max(0, Math.ceil(gaps.length * 0.1) - 1)]
+  }, [filtered, pickMap, currentPickNum])
+
   useEffect(() => {
     setSelectedIndex(prev => {
       if (prev === null) return null
@@ -357,6 +373,7 @@ export default function PlayerPool() {
                 isMyTurn={isMyTurn}
                 isYahooLinked={isYahooLinked}
                 currentPickNum={currentPickNum}
+                valueThreshold={valueThreshold}
                 onClick={() => setSelectedIndex(i)}
                 onDraftAsUser={() => handleDraftAs(player, 'user')}
                 onDraftAsOpponent={() => handleDraftAs(player, 'opponent')}
@@ -444,7 +461,7 @@ function PendingBanner({ pendingPick, players, onCancel, isAuction, pendingPrice
 
 function PlayerRow({
   player, rank, pick, isSelected, isPending, pendingDraftedBy, isMyTurn, isAuction, isYahooLinked, currentPickNum,
-  onClick, onDraftAsUser, onDraftAsOpponent, onEdit, rowRef,
+  valueThreshold, onClick, onDraftAsUser, onDraftAsOpponent, onEdit, rowRef,
 }) {
   const isDrafted = !!pick
   const draftedBy = pick?.draftedBy ?? null
@@ -453,10 +470,14 @@ function PlayerRow({
   // this player is relative to the pick they were taken at (or would be
   // taken at, right now, if still available) — a steal reads green, an
   // at-value or reach pick stays neutral. No red: a reach isn't a mistake
-  // worth flagging with an alarm color, just not a discount.
+  // worth flagging with an alarm color, just not a discount. Green itself
+  // is reserved for the top decile of the gap (valueThreshold, computed
+  // across the visible board) — see D-03/D-04: an unthresholded `> 0` here
+  // painted almost every undrafted row green, since anyone not yet reached
+  // in the draft trivially clears zero.
   const valueReference = pick ? pick.pickNumber : currentPickNum
   const valueDelta = player.adp - valueReference
-  const isValue = valueDelta > 0
+  const isValue = valueDelta >= valueThreshold
 
   let rowClass = 'border-b border-l-2 border-surface-line last:border-b-0 cursor-pointer transition-colors'
 
