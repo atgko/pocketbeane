@@ -9,7 +9,7 @@ colors:
   beane-green: "#1DB068"
   beane-green-dim: "#14724A"
   beane-green-text: "#34C77F"
-  brass: "#C9A227"
+  brass: "#B49C27"
   ink-primary: "#E8ECEA"
   ink-secondary: "#93A69B"
   ink-muted: "#7C8D84"
@@ -132,7 +132,7 @@ A deep green-black canvas with two reserved accents — a serious, deliberately-
 - **Beane Green Text** (`#34C77F`): a lightened, text-safe variant of the brand green for the rare case it needs to render as text on a dark surface — accent fills and text tints are different jobs and use different tokens.
 
 ### Secondary
-- **Brass** (`#C9A227`): the Moneyball gold. Reserved for premium/identity moments only — the Draft DNA card, archetype badges, the "BEANE'S TAKE" eyebrow label, percentile/edge highlights.
+- **Brass** (`#B49C27`): the Moneyball gold. Reserved for premium/identity moments only — the Draft DNA card, archetype badges, the "BEANE'S TAKE" eyebrow label, percentile/edge highlights. Deepened and hue-shifted from `#C9A227` (D-04 step 3, 2026-08-06) — the prior value read too close to `signal-watch`'s caution-amber on a dark field (~7° hue apart, ~9pt lightness apart). The new value pulls brass warmer-yellow and darker, reading as antique gold/coin rather than a second amber alert, while `signal-watch` itself is untouched — it's one of four semantic signals that must hold its family relationship, not a free-floating identity token.
   **The Brass Scarcity Rule.** If brass appears more than roughly three times on one screen, it's being overused — its rarity is what makes it read as premium instead of decorative.
 
 ### Neutral

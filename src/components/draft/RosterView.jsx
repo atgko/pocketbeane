@@ -74,7 +74,7 @@ export default function RosterView({ league }) {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="flex-1 min-h-0 bg-surface-raised rounded-lg border border-surface-line p-4 flex flex-col">
+      <div className="flex-1 min-h-0 bg-surface-raised rounded-xl border border-surface-line p-5 flex flex-col">
         {/* Header */}
         <h3 className="text-xs text-ink-secondary uppercase tracking-wider font-mono mb-3 shrink-0">
           {showHistory ? 'Pick History' : 'Your Roster'}

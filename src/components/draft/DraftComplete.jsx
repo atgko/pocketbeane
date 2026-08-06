@@ -8,7 +8,7 @@ import { analyzeCategoryGaps } from '@/ai/categoryAnalysis'
 import useLeagueStore from '@/store/leagueStore'
 import { getSessionId } from '@/utils/session'
 import { resolveProfile } from '@/utils/gmProfile'
-import { Card, Badge } from '@/components/ui'
+import { Card, Badge, Button } from '@/components/ui'
 
 const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers, nfl: nflPlayers }
 
@@ -183,7 +183,7 @@ export default function DraftComplete({ league }) {
         </div>
 
         {/* Category grades */}
-        <div className="bg-surface-raised rounded-lg border border-surface-line p-4">
+        <div className="bg-surface-raised rounded-xl border border-surface-line p-5">
           <h3 className="text-xs font-mono text-ink-secondary uppercase tracking-wider mb-4">Category Report</h3>
           <div className="space-y-2">
             {categoryGaps.map(gap => (
@@ -255,12 +255,9 @@ export default function DraftComplete({ league }) {
         {error && (
           <div className="space-y-2">
             <p className="text-xs text-signal-down font-mono">{error}</p>
-            <button
-              onClick={generateOutlook}
-              className="text-xs font-mono px-3 py-1.5 rounded bg-surface-overlay border border-surface-line text-ink-secondary hover:text-ink-primary hover:border-beane-green transition-colors"
-            >
+            <Button variant="secondary" onClick={generateOutlook}>
               Try again
-            </button>
+            </Button>
           </div>
         )}
       </Card>}

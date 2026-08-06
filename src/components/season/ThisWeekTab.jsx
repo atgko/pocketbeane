@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import nbaPlayers from '@/data/players.json'
 import { hasScheduleSupport, getStartSitMode } from '@/config/sports'
-import { AdvisorCard, Card, AdvisorError } from '@/components/ui'
+import { AdvisorCard, Card, AdvisorError, Button } from '@/components/ui'
 import useLeagueStore from '@/store/leagueStore'
 import { TrendBadge, INJURY_LABELS, PITCHING_REC_STYLES, SLOT_CONFIG_KEYS, findPlayerByName, fetchWeeklyMatchup, isMatchupStale } from './shared'
 
@@ -28,6 +28,14 @@ function MatchupPanel({ league, rosters, yahooConnected }) {
     }
   }
 
+  // season.jsx only renders this tab once canSync is true, which for a
+  // Sleeper league is already satisfied via sleeperLeagueId — so the only
+  // way canRun can be false here is one of two distinct reasons, and they
+  // need different UI: a Sleeper league structurally has no
+  // yahooLeagueKey (this advisor is Yahoo-only, see BACKLOG SLP-01 — no
+  // amount of connecting Yahoo fixes that), versus a real Yahoo league
+  // whose OAuth session has lapsed, which a reconnect genuinely fixes.
+  const isSleeperLeague = league.config.platform === 'sleeper'
   const canRun = yahooConnected && Boolean(league.config.yahooLeagueKey)
 
   return (
@@ -40,15 +48,18 @@ function MatchupPanel({ league, rosters, yahooConnected }) {
           </p>
         </div>
         {canRun ? (
-          <button
-            onClick={handleGetAdvice}
-            disabled={loading}
-            className="shrink-0 text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            {advice ? 'Refresh' : "Get Beane's Take"}
-          </button>
+          <Button onClick={handleGetAdvice} disabled={loading} className="shrink-0">
+            {advice ? 'Refresh' : 'Read the Matchup'}
+          </Button>
+        ) : isSleeperLeague ? (
+          <span className="shrink-0 text-xs text-ink-muted font-mono">Yahoo leagues only</span>
         ) : (
-          <span className="shrink-0 text-xs text-signal-watch font-mono">Needs Yahoo</span>
+          <a
+            href="/api/auth/yahoo/login"
+            className="shrink-0 text-xs font-mono px-3 py-1.5 bg-surface-overlay border border-signal-watch/30 text-signal-watch rounded-lg hover:bg-signal-watch/10 transition-colors"
+          >
+            Connect Yahoo →
+          </a>
         )}
       </div>
 
@@ -182,13 +193,9 @@ function LineupAdvisorPanel({ league, rosters, sport, mode }) {
           </p>
         </div>
         {supported ? (
-          <button
-            onClick={handleGetAdvice}
-            disabled={loading}
-            className="shrink-0 text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            {advice ? 'Refresh' : "Get Beane's Take"}
-          </button>
+          <Button onClick={handleGetAdvice} disabled={loading} className="shrink-0">
+            {advice ? 'Refresh' : 'Set the Lineup'}
+          </Button>
         ) : (
           <span className="shrink-0 text-xs text-signal-watch font-mono">Not available for {sport.toUpperCase()} yet</span>
         )}
@@ -322,13 +329,9 @@ function PitchingStartsPanel({ league, rosters }) {
             Scheduled starts this week for your rostered SPs, with a start / stream / hold call.
           </p>
         </div>
-        <button
-          onClick={handleCheckStarts}
-          disabled={loading}
-          className="shrink-0 text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-        >
+        <Button onClick={handleCheckStarts} disabled={loading} className="shrink-0">
           {data ? 'Refresh' : 'Check Starts'}
-        </button>
+        </Button>
       </div>
 
       {loading && (

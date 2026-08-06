@@ -3,7 +3,7 @@ import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
 import nflPlayers from '@/data/nfl_players.json'
 import { getWinRateGrade } from '@/utils/teamStanding'
-import { AdvisorCard, Card, AdvisorError } from '@/components/ui'
+import { AdvisorCard, Card, AdvisorError, Button } from '@/components/ui'
 import useLeagueStore from '@/store/leagueStore'
 import {
   TIER_STYLES,
@@ -126,12 +126,9 @@ export default function LeagueTab({ league, rosters }) {
         </div>
 
         {!pulse && !pulseLoading && (
-          <button
-            onClick={handleGetInsight}
-            className="text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded-lg hover:bg-beane-green/20 transition-colors"
-          >
-            Get Beane's Take
-          </button>
+          <Button onClick={handleGetInsight}>
+            Run the Report
+          </Button>
         )}
         {pulseLoading && <p className="text-xs text-ink-secondary font-mono animate-pulse">Reading the league…</p>}
         {pulseError && !pulseLoading && <AdvisorError message={pulseError} onRetry={handleGetInsight} />}

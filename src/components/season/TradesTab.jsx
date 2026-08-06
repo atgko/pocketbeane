@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AdvisorCard, AdvisorError } from '@/components/ui'
+import { AdvisorCard, AdvisorError, Button } from '@/components/ui'
 import useLeagueStore from '@/store/leagueStore'
 import { TradeFavorBar, TradePlayerToggle } from './shared'
 
@@ -130,13 +130,9 @@ function TradeAnalyzerPanel({ league, rosters }) {
         </div>
       </div>
 
-      <button
-        onClick={handleGetAdvice}
-        disabled={loading}
-        className="text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-      >
-        {advice ? 'Refresh' : "Get Beane's Take"}
-      </button>
+      <Button onClick={handleGetAdvice} disabled={loading}>
+        {advice ? 'Refresh' : 'Get the Verdict'}
+      </Button>
 
       {loading && (
         <p className="text-xs text-ink-secondary font-mono mt-4 animate-pulse">Weighing the trade…</p>
@@ -245,13 +241,9 @@ function TradeValueIndexPanel({ league, rosters }) {
             Sell-high candidates on your roster, buy-low targets across the league, and specific trade fits worth pursuing now.
           </p>
         </div>
-        <button
-          onClick={handleGetIndex}
-          disabled={loading}
-          className="shrink-0 text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          {index ? 'Refresh' : "Get Beane's Take"}
-        </button>
+        <Button onClick={handleGetIndex} disabled={loading} className="shrink-0">
+          {index ? 'Refresh' : 'Price the Market'}
+        </Button>
       </div>
 
       {loading && (

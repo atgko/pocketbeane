@@ -20,7 +20,7 @@ export default function FilterBar({
       </div>
 
       <FilterButton active={showAvailableOnly} onClick={onToggleAvailable}>
-        {showAvailableOnly ? 'All Players' : 'Available'}
+        {showAvailableOnly ? 'Available' : 'All Players'}
       </FilterButton>
 
       <div className="flex gap-1.5">

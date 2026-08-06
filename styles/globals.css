@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 :root {
+  /* D-04 step 5 (2026-08-06): without this, the browser has no signal that
+     this is a dark UI and renders native form chrome (the <select>
+     dropdown in TradesTab's opponent picker, every scrollbar) in light UA
+     styling by default — a literal white box on an otherwise all-dark
+     screen. This is the one line that fixes all of it at once. */
+  color-scheme: dark;
+
   /* RGB triplets (not hex) so Tailwind's /opacity modifiers work through
      rgb(var(--x) / <alpha-value>) in tailwind.config.js. A future light
      theme is a pure swap of these values — no component changes needed. */
@@ -14,7 +21,18 @@
   --color-beane-green:       29 176 104;  /* #1DB068 */
   --color-beane-green-dim:   20 114 74;   /* #14724A */
   --color-beane-green-text:  52 199 127;  /* #34C77F */
-  --color-brass:             201 162 39;  /* #C9A227 */
+  /* D-04 step 3 (2026-08-06): deepened + hue-shifted from #C9A227 — the old
+     value sat only ~7° apart in hue and ~9pt apart in lightness from
+     signal-watch (#E0A83D), reading as near-identical caution-amber on a
+     dark field instead of a distinct premium gold. Shifted warmer-yellow
+     (hue ~46°→50°) and darker (L 47%→43%) widens both hue and value
+     separation from signal-watch, which is untouched — brass is the
+     system's only free-floating identity token, signal-watch is one of
+     four semantic signals that must hold its family relationship intact.
+     Still clears AA text contrast: 5.10:1 on surface-overlay (the
+     tightest of the three surface tiers), same margin class as the
+     2026-07-30 ink-muted fix. */
+  --color-brass:             180 156 39;  /* #B49C27 */
 
   --color-ink-primary:       232 236 234; /* #E8ECEA */
   --color-ink-secondary:     147 166 155; /* #93A69B */

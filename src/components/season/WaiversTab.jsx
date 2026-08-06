@@ -2,7 +2,7 @@ import { useState } from 'react'
 import nbaPlayers from '@/data/players.json'
 import mlbPlayers from '@/data/mlb_players.json'
 import nflPlayers from '@/data/nfl_players.json'
-import { AdvisorCard, AdvisorError } from '@/components/ui'
+import { AdvisorCard, AdvisorError, Button } from '@/components/ui'
 import useLeagueStore from '@/store/leagueStore'
 import { TrendBadge, PRIORITY_STYLES, findPlayerByName } from './shared'
 
@@ -51,13 +51,9 @@ export default function WaiversTab({ league, rosters }) {
             Recommended adds and drops based on your roster gaps and available free agents.
           </p>
         </div>
-        <button
-          onClick={handleGetAdvice}
-          disabled={loading}
-          className="shrink-0 text-xs font-mono px-3 py-1.5 bg-beane-green/10 border border-beane-green/30 text-beane-green-text rounded hover:bg-beane-green/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          {advice ? 'Refresh' : "Get Beane's Take"}
-        </button>
+        <Button onClick={handleGetAdvice} disabled={loading} className="shrink-0">
+          {advice ? 'Refresh' : 'Scan the Wire'}
+        </Button>
       </div>
 
       {loading && (

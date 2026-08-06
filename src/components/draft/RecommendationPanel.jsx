@@ -11,7 +11,7 @@ import { computeScarcity, getSmartScarcityAlerts, computePositionalDepth } from 
 import { rankByFit, rankByFitPoints, computeSleepers } from '@/ai/valueCalculator'
 import { getSessionId } from '@/utils/session'
 import { resolveProfile } from '@/utils/gmProfile'
-import { Card, Badge, AdvisorCard } from '@/components/ui'
+import { Card, Badge, AdvisorCard, Button } from '@/components/ui'
 
 const PLAYER_DATA = { nba: nbaPlayers, mlb: mlbPlayers, nfl: nflPlayers }
 
@@ -244,17 +244,14 @@ export default function RecommendationPanel({ league }) {
         {!isMyTurn && !isRosterFull && (
           <div className="mt-3 space-y-3">
             <div>
-              <button
+              <Button
+                variant="secondary"
                 onClick={handleRefreshClick}
                 disabled={!canRefresh}
-                className={`w-full py-1.5 px-3 rounded-lg text-xs font-mono font-semibold transition-colors ${
-                  canRefresh
-                    ? 'text-ink-primary hover:bg-surface-overlay border border-surface-line'
-                    : 'text-ink-muted cursor-not-allowed border border-transparent'
-                }`}
+                className="w-full"
               >
                 {loading ? 'Thinking…' : refreshesLeft === 0 ? "No refreshes remaining" : isSnake ? "Get Beane's Insights" : "Get Market Read"}
-              </button>
+              </Button>
               <p className="text-xs font-mono text-ink-muted text-center mt-1.5">
                 {refreshesLeft} of {REFRESH_BUDGET} refreshes left this draft
               </p>
@@ -298,17 +295,14 @@ export default function RecommendationPanel({ league }) {
                       placeholder="bid"
                       className="w-14 bg-surface-overlay border border-surface-line rounded-lg px-2 py-1 text-xs text-ink-primary font-mono text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:outline-none focus:border-beane-green/50"
                     />
-                    <button
+                    <Button
+                      variant="secondary"
                       onClick={handleBidAdvice}
                       disabled={Number(bidAmount) < 1 || loading}
-                      className={`flex-1 py-1 px-2 rounded-lg text-xs font-mono font-semibold transition-colors ${
-                        Number(bidAmount) >= 1 && !loading
-                          ? 'text-ink-primary hover:bg-surface-overlay border border-surface-line'
-                          : 'text-ink-muted cursor-not-allowed border border-transparent'
-                      }`}
+                      className="flex-1"
                     >
                       {loading ? 'Thinking…' : 'Get ceiling'}
-                    </button>
+                    </Button>
                   </div>
                 )}
               </div>
