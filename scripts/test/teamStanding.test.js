@@ -150,8 +150,9 @@ test('overall win rate is null when nothing is computable', () => {
   assert.strictEqual(getOverallWinRate({ pts: null }), null)
 })
 
-test('win rate grade thresholds: >=0.6 strong, >=0.4 ok, below weak', () => {
-  assert.strictEqual(getWinRateGrade(0.6), 'strong')
+test('win rate grade thresholds: >=0.7 strong, >=0.4 ok, below weak', () => {
+  assert.strictEqual(getWinRateGrade(0.7), 'strong')
+  assert.strictEqual(getWinRateGrade(0.6), 'ok')
   assert.strictEqual(getWinRateGrade(0.4), 'ok')
   assert.strictEqual(getWinRateGrade(0.39), 'weak')
   assert.strictEqual(getWinRateGrade(null), null)
