@@ -4,7 +4,7 @@ in src/data/mlb_schedule.json with the real regular-season schedule from the
 public MLB Stats API (statsapi.mlb.com, no auth required).
 
 Consumed by src/utils/schedule.js for the Start/Sit Advisor's games-this-week
-and back-to-back detection (see Y-05, BACKLOG.md).
+and back-to-back detection (see Y-05, documentation/BACKLOG.md).
 
 Usage:
   python scripts/fetch_mlb_schedule.py

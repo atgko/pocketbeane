@@ -58,7 +58,7 @@ export default function DraftRecap({ league }) {
   const isPointsFormat = league.config.scoringFormat === 'points'
 
   // Points-format leagues (Sleeper NFL) use positional roster-fit instead
-  // of category grading — see BACKLOG.md NFL-01 / memory
+  // of category grading — see documentation/BACKLOG.md NFL-01 / memory
   // project_sleeper_integration_scope. Shaped identically to
   // analyzeCategoryGaps's output so classifyDraftDNA, recommend.js, and
   // the category bars below all work unchanged.

@@ -38,7 +38,7 @@
   --color-ink-secondary:     147 166 155; /* #93A69B */
   /* Retinted from #64736B (2026-07-30 audit): the old value cleared only
      3.25-3.68:1 against surface-raised/surface-base — below AA even at
-     large text, so the "AA-large-only" exception in DESIGN.md didn't
+     large text, so the "AA-large-only" exception in documentation/DESIGN.md didn't
      actually cover any of its 124 real call sites (all 12px or below).
      This value clears 4.74:1 on surface-raised / 5.25:1 on surface-base,
      same hue/saturation, so every existing call site is fixed for free. */

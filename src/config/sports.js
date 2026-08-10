@@ -254,7 +254,7 @@ export const SPORT_CONFIGS = {
     // consumer (categoryAnalysis, valueCalculator, draftDNA, season API
     // prompts). A 1-category league degrades cleanly through all of that
     // existing infrastructure: it sums/grades to one number instead of nine,
-    // which is exactly the right behavior for a points format. See BACKLOG.md
+    // which is exactly the right behavior for a points format. See documentation/BACKLOG.md
     // NFL-01 for the roto-vs-points reconciliation this replaces.
     categories: [
       { id: 'fantasy_ppg', label: 'PPG', description: 'Fantasy Points Per Game (Half-PPR)' },

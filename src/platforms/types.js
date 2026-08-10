@@ -19,7 +19,7 @@
  * @typedef {'9cat' | '8cat' | 'points'} ScoringFormat
  * Mirrors leagueStore.js's DEFAULT_CONFIG.scoringFormat. 'points' is read by
  * the points-value engine (src/ai/valueCalculator.js etc.) added alongside
- * this platform work — see BACKLOG.md NFL-01 for why Yahoo NFL leagues stay
+ * this platform work — see documentation/BACKLOG.md NFL-01 for why Yahoo NFL leagues stay
  * on the 'points'-as-single-category shim instead of switching over.
  */
 

@@ -41,7 +41,7 @@ export function analyzeCategoryGaps(userPicks, playerMap, sportConfig, totalRost
 }
 
 // Points-mode equivalent of analyzeCategoryGaps, for leagues where
-// scoringFormat === 'points' (see BACKLOG.md NFL-01 / memory
+// scoringFormat === 'points' (see documentation/BACKLOG.md NFL-01 / memory
 // project_sleeper_integration_scope — Yahoo NFL stays on the single-
 // synthetic-category fantasy_ppg shim, this is the real alternative used
 // for Sleeper). Category-gap grading doesn't mean anything for a points

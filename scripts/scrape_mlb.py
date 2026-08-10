@@ -3,7 +3,7 @@
 (statsapi.mlb.com, no auth required) and ESPN injury data, produces
 PocketBeane-compatible current-season JSON for the merge step.
 
-Replaces the original Baseball Reference HTML scraper (P-02, BACKLOG.md):
+Replaces the original Baseball Reference HTML scraper (P-02, documentation/BACKLOG.md):
 that version read pre-downloaded bbref-batting.html/bbref-pitching.html
 snapshots that nothing ever re-fetched, so every weekly run just re-stamped
 the same July 6 numbers with a fresh as_of_date — real data never moved,

@@ -71,7 +71,7 @@ export function rankByFit(available, categoryGaps, sportConfig, currentPickNumbe
 // ─── Points mode ──────────────────────────────────────────────────────────────
 
 // Positional-VORP ranking for scoringFormat === 'points' leagues (Sleeper
-// NFL — see BACKLOG.md NFL-01 / memory project_sleeper_integration_scope
+// NFL — see documentation/BACKLOG.md NFL-01 / memory project_sleeper_integration_scope
 // for why Yahoo NFL stays on the single-synthetic-category fantasy_ppg
 // shim instead of this). Category z-scoring (rankByFit's core signal)
 // doesn't mean anything when there's only one real stat — the equivalent

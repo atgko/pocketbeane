@@ -66,7 +66,7 @@ export default function RecommendationPanel({ league }) {
   const { boardState, categoryGaps, scarcityAlerts, topCandidates, sleepers } = useMemo(() => {
     const bs = computeBoardState(league, players)
     // Points-format leagues (Sleeper NFL) use positional roster-fit instead
-    // of category z-scoring — see BACKLOG.md NFL-01 / memory
+    // of category z-scoring — see documentation/BACKLOG.md NFL-01 / memory
     // project_sleeper_integration_scope. Yahoo NFL's fantasy_ppg-as-
     // single-category leagues stay on the category path unchanged.
     const gaps = isPointsFormat

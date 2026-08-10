@@ -137,7 +137,7 @@ export default function Home() {
   const heroLeague = leagues.find(l => l.id === heroLeagueId) ?? null
 
   // [ / ] cycles which league drives the Hero + Beane's Note — the one
-  // accelerator PRODUCT.md's real 3-concurrent-league user had no keyboard
+  // accelerator documentation/PRODUCT.md's real 3-concurrent-league user had no keyboard
   // path for; LeagueSwitcher was mouse-only. Ignored while typing anywhere
   // (search boxes, form fields) so it never steals a literal "[" or "]".
   useEffect(() => {
