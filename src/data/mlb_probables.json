@@ -1,25 +1,15 @@
 {
-  "as_of_date": "2026-08-10",
+  "as_of_date": "2026-08-11",
   "sport": "mlb",
   "source": "fangraphs_rosterresource_probables_grid",
-  "updated_at": "2026-08-10T19:10:57.835000+00:00",
-  "updated_at_label": "Monday, August 10, 2026 9:18 AM ET",
+  "updated_at": "2026-08-11T15:45:21.994000+00:00",
+  "updated_at_label": "Tuesday, August 11, 2026 9:31 AM ET",
   "stale": false,
   "date_range": {
-    "start": "2026-08-09",
-    "end": "2026-08-19"
+    "start": "2026-08-10",
+    "end": "2026-08-20"
   },
   "starts": [
-    {
-      "date": "2026-08-09",
-      "team": "LAA",
-      "opponent": "MIA",
-      "home": false,
-      "pitcher_id": "grayson-rodriguez",
-      "pitcher_name": "Grayson Rodriguez",
-      "pitcher_fangraphs_id": "24492",
-      "throws": "R"
-    },
     {
       "date": "2026-08-10",
       "team": "LAA",
@@ -111,14 +101,14 @@
       "throws": "R"
     },
     {
-      "date": "2026-08-09",
-      "team": "BAL",
-      "opponent": "TEX",
+      "date": "2026-08-20",
+      "team": "LAA",
+      "opponent": "HOU",
       "home": false,
-      "pitcher_id": null,
-      "pitcher_name": "Cade Povich",
-      "pitcher_fangraphs_id": "30055",
-      "throws": "L"
+      "pitcher_id": "grayson-rodriguez",
+      "pitcher_name": "Grayson Rodriguez",
+      "pitcher_fangraphs_id": "24492",
+      "throws": "R"
     },
     {
       "date": "2026-08-10",
@@ -211,14 +201,14 @@
       "throws": "R"
     },
     {
-      "date": "2026-08-09",
-      "team": "BOS",
-      "opponent": "ATH",
+      "date": "2026-08-20",
+      "team": "BAL",
+      "opponent": "NYY",
       "home": true,
       "pitcher_id": null,
-      "pitcher_name": "Erik Miller",
-      "pitcher_fangraphs_id": "26252",
-      "throws": "L"
+      "pitcher_name": "Chris Bassitt",
+      "pitcher_fangraphs_id": "12304",
+      "throws": "R"
     },
     {
       "date": "2026-08-10",
@@ -321,16 +311,6 @@
       "throws": "L"
     },
     {
-      "date": "2026-08-09",
-      "team": "CWS",
-      "opponent": "CLE",
-      "home": true,
-      "pitcher_id": null,
-      "pitcher_name": "Davis Martin",
-      "pitcher_fangraphs_id": "21448",
-      "throws": "R"
-    },
-    {
       "date": "2026-08-11",
       "team": "CWS",
       "opponent": "CIN",
@@ -421,14 +401,14 @@
       "throws": "L"
     },
     {
-      "date": "2026-08-09",
-      "team": "CLE",
-      "opponent": "CWS",
-      "home": false,
-      "pitcher_id": "joey-cantillo",
-      "pitcher_name": "Joey Cantillo",
-      "pitcher_fangraphs_id": "23335",
-      "throws": "L"
+      "date": "2026-08-20",
+      "team": "CWS",
+      "opponent": "ATL",
+      "home": true,
+      "pitcher_id": null,
+      "pitcher_name": "Davis Martin",
+      "pitcher_fangraphs_id": "21448",
+      "throws": "R"
     },
     {
       "date": "2026-08-11",
@@ -511,13 +491,13 @@
       "throws": "L"
     },
     {
-      "date": "2026-08-09",
-      "team": "DET",
+      "date": "2026-08-20",
+      "team": "CLE",
       "opponent": "SF",
-      "home": false,
-      "pitcher_id": null,
-      "pitcher_name": "Troy Melton",
-      "pitcher_fangraphs_id": "31807",
+      "home": true,
+      "pitcher_id": "gavin-williams",
+      "pitcher_name": "Gavin Williams",
+      "pitcher_fangraphs_id": "30122",
       "throws": "R"
     },
     {
@@ -611,16 +591,6 @@
       "throws": "R"
     },
     {
-      "date": "2026-08-09",
-      "team": "KC",
-      "opponent": "CHC",
-      "home": true,
-      "pitcher_id": null,
-      "pitcher_name": "Randy Dobnak",
-      "pitcher_fangraphs_id": "23798",
-      "throws": "R"
-    },
-    {
       "date": "2026-08-10",
       "team": "KC",
       "opponent": "LAD",
@@ -711,14 +681,14 @@
       "throws": "R"
     },
     {
-      "date": "2026-08-09",
-      "team": "MIN",
-      "opponent": "MIL",
-      "home": false,
+      "date": "2026-08-20",
+      "team": "KC",
+      "opponent": "ATH",
+      "home": true,
       "pitcher_id": null,
-      "pitcher_name": "Connor Prielipp",
-      "pitcher_fangraphs_id": "31857",
-      "throws": "L"
+      "pitcher_name": "Randy Dobnak",
+      "pitcher_fangraphs_id": "23798",
+      "throws": "R"
     },
     {
       "date": "2026-08-10",
@@ -808,16 +778,6 @@
       "pitcher_id": null,
       "pitcher_name": "Taj Bradley",
       "pitcher_fangraphs_id": "22543",
-      "throws": "R"
-    },
-    {
-      "date": "2026-08-09",
-      "team": "NYY",
-      "opponent": "ATL",
-      "home": true,
-      "pitcher_id": "cam-schlittler",
-      "pitcher_name": "Cam Schlittler",
-      "pitcher_fangraphs_id": "32095",
       "throws": "R"
     },
     {
@@ -901,13 +861,13 @@
       "throws": "L"
     },
     {
-      "date": "2026-08-09",
-      "team": "ATH",
-      "opponent": "BOS",
+      "date": "2026-08-20",
+      "team": "NYY",
+      "opponent": "BAL",
       "home": false,
-      "pitcher_id": null,
-      "pitcher_name": "J.T. Ginn",
-      "pitcher_fangraphs_id": "27889",
+      "pitcher_id": "gerrit-cole",
+      "pitcher_name": "Gerrit Cole",
+      "pitcher_fangraphs_id": "13125",
       "throws": "R"
     },
     {
@@ -1001,13 +961,13 @@
       "throws": "L"
     },
     {
-      "date": "2026-08-09",
-      "team": "SEA",
-      "opponent": "TB",
-      "home": true,
+      "date": "2026-08-20",
+      "team": "ATH",
+      "opponent": "KC",
+      "home": false,
       "pitcher_id": null,
-      "pitcher_name": "Emerson Hancock",
-      "pitcher_fangraphs_id": "27470",
+      "pitcher_name": "J.T. Ginn",
+      "pitcher_fangraphs_id": "27889",
       "throws": "R"
     },
     {
@@ -1091,14 +1051,14 @@
       "throws": "R"
     },
     {
-      "date": "2026-08-09",
-      "team": "TB",
-      "opponent": "SEA",
+      "date": "2026-08-20",
+      "team": "SEA",
+      "opponent": "MIL",
       "home": false,
-      "pitcher_id": "ian-seymour",
-      "pitcher_name": "Ian Seymour",
-      "pitcher_fangraphs_id": "27932",
-      "throws": "L"
+      "pitcher_id": "george-kirby",
+      "pitcher_name": "George Kirby",
+      "pitcher_fangraphs_id": "25436",
+      "throws": "R"
     },
     {
       "date": "2026-08-10",
@@ -1191,14 +1151,14 @@
       "throws": "L"
     },
     {
-      "date": "2026-08-09",
-      "team": "TEX",
-      "opponent": "BAL",
+      "date": "2026-08-20",
+      "team": "TB",
+      "opponent": "TOR",
       "home": true,
-      "pitcher_id": null,
-      "pitcher_name": "Kumar Rocker",
-      "pitcher_fangraphs_id": "31843",
-      "throws": "R"
+      "pitcher_id": "ian-seymour",
+      "pitcher_name": "Ian Seymour",
+      "pitcher_fangraphs_id": "27932",
+      "throws": "L"
     },
     {
       "date": "2026-08-10",
@@ -1225,9 +1185,9 @@
       "team": "TEX",
       "opponent": "LAA",
       "home": false,
-      "pitcher_id": "nathan-eovaldi",
-      "pitcher_name": "Nathan Eovaldi",
-      "pitcher_fangraphs_id": "9132",
+      "pitcher_id": null,
+      "pitcher_name": "Cal Quantrill",
+      "pitcher_fangraphs_id": "19312",
       "throws": "R"
     },
     {
@@ -1275,9 +1235,9 @@
       "team": "TEX",
       "opponent": "WSH",
       "home": true,
-      "pitcher_id": "nathan-eovaldi",
-      "pitcher_name": "Nathan Eovaldi",
-      "pitcher_fangraphs_id": "9132",
+      "pitcher_id": null,
+      "pitcher_name": "Cal Quantrill",
+      "pitcher_fangraphs_id": "19312",
       "throws": "R"
     },
     {
@@ -1291,13 +1251,13 @@
       "throws": "R"
     },
     {
-      "date": "2026-08-09",
-      "team": "TOR",
-      "opponent": "PHI",
-      "home": false,
-      "pitcher_id": "shane-bieber",
-      "pitcher_name": "Shane Bieber",
-      "pitcher_fangraphs_id": "19427",
+      "date": "2026-08-20",
+      "team": "TEX",
+      "opponent": "WSH",
+      "home": true,
+      "pitcher_id": null,
+      "pitcher_name": "Kumar Rocker",
+      "pitcher_fangraphs_id": "31843",
       "throws": "R"
     },
     {
@@ -1391,14 +1351,14 @@
       "throws": "R"
     },
     {
-      "date": "2026-08-09",
-      "team": "ARI",
-      "opponent": "LAD",
-      "home": true,
-      "pitcher_id": null,
-      "pitcher_name": "Eduardo Rodriguez",
-      "pitcher_fangraphs_id": "13164",
-      "throws": "L"
+      "date": "2026-08-20",
+      "team": "TOR",
+      "opponent": "TB",
+      "home": false,
+      "pitcher_id": "shane-bieber",
+      "pitcher_name": "Shane Bieber",
+      "pitcher_fangraphs_id": "19427",
+      "throws": "R"
     },
     {
       "date": "2026-08-10",
@@ -1488,16 +1448,6 @@
       "pitcher_id": null,
       "pitcher_name": "Brandon Pfaadt",
       "pitcher_fangraphs_id": "27782",
-      "throws": "R"
-    },
-    {
-      "date": "2026-08-09",
-      "team": "ATL",
-      "opponent": "NYY",
-      "home": false,
-      "pitcher_id": null,
-      "pitcher_name": "Grant Holmes",
-      "pitcher_fangraphs_id": "16944",
       "throws": "R"
     },
     {
@@ -1591,14 +1541,14 @@
       "throws": "L"
     },
     {
-      "date": "2026-08-09",
-      "team": "CHC",
-      "opponent": "KC",
+      "date": "2026-08-20",
+      "team": "ATL",
+      "opponent": "CWS",
       "home": false,
-      "pitcher_id": "matthew-boyd",
-      "pitcher_name": "Matthew Boyd",
-      "pitcher_fangraphs_id": "15440",
-      "throws": "L"
+      "pitcher_id": null,
+      "pitcher_name": "Grant Holmes",
+      "pitcher_fangraphs_id": "16944",
+      "throws": "R"
     },
     {
       "date": "2026-08-11",
@@ -1688,16 +1638,6 @@
       "pitcher_id": "kevin-gausman",
       "pitcher_name": "Kevin Gausman",
       "pitcher_fangraphs_id": "14107",
-      "throws": "R"
-    },
-    {
-      "date": "2026-08-09",
-      "team": "CIN",
-      "opponent": "WSH",
-      "home": false,
-      "pitcher_id": "brady-singer",
-      "pitcher_name": "Brady Singer",
-      "pitcher_fangraphs_id": "25377",
       "throws": "R"
     },
     {
@@ -1801,13 +1741,13 @@
       "throws": "R"
     },
     {
-      "date": "2026-08-09",
-      "team": "COL",
+      "date": "2026-08-20",
+      "team": "CIN",
       "opponent": "STL",
-      "home": false,
-      "pitcher_id": null,
-      "pitcher_name": "Michael Lorenzen",
-      "pitcher_fangraphs_id": "14843",
+      "home": true,
+      "pitcher_id": "brady-singer",
+      "pitcher_name": "Brady Singer",
+      "pitcher_fangraphs_id": "25377",
       "throws": "R"
     },
     {
@@ -1899,16 +1839,6 @@
       "pitcher_name": "Kyle Freeland",
       "pitcher_fangraphs_id": "16256",
       "throws": "L"
-    },
-    {
-      "date": "2026-08-09",
-      "team": "MIA",
-      "opponent": "LAA",
-      "home": true,
-      "pitcher_id": null,
-      "pitcher_name": "Ryan Gusto",
-      "pitcher_fangraphs_id": "26440",
-      "throws": "R"
     },
     {
       "date": "2026-08-11",
@@ -2001,16 +1931,6 @@
       "throws": "R"
     },
     {
-      "date": "2026-08-09",
-      "team": "HOU",
-      "opponent": "SD",
-      "home": false,
-      "pitcher_id": null,
-      "pitcher_name": "Cristian Javier",
-      "pitcher_fangraphs_id": "17606",
-      "throws": "R"
-    },
-    {
       "date": "2026-08-10",
       "team": "HOU",
       "opponent": "SF",
@@ -2091,14 +2011,14 @@
       "throws": "R"
     },
     {
-      "date": "2026-08-09",
-      "team": "LAD",
-      "opponent": "ARI",
-      "home": false,
+      "date": "2026-08-20",
+      "team": "HOU",
+      "opponent": "LAA",
+      "home": true,
       "pitcher_id": null,
-      "pitcher_name": "Justin Wrobleski",
-      "pitcher_fangraphs_id": "31204",
-      "throws": "L"
+      "pitcher_name": "Peter Lambert",
+      "pitcher_fangraphs_id": "17969",
+      "throws": "R"
     },
     {
       "date": "2026-08-10",
@@ -2201,16 +2121,6 @@
       "throws": "R"
     },
     {
-      "date": "2026-08-09",
-      "team": "MIL",
-      "opponent": "MIN",
-      "home": true,
-      "pitcher_id": "jacob-misiorowski",
-      "pitcher_name": "Jacob Misiorowski",
-      "pitcher_fangraphs_id": "31623",
-      "throws": "R"
-    },
-    {
       "date": "2026-08-10",
       "team": "MIL",
       "opponent": "SD",
@@ -2301,14 +2211,14 @@
       "throws": "R"
     },
     {
-      "date": "2026-08-09",
-      "team": "WSH",
-      "opponent": "CIN",
+      "date": "2026-08-20",
+      "team": "MIL",
+      "opponent": "SEA",
       "home": true,
       "pitcher_id": null,
-      "pitcher_name": "Brad Lord",
-      "pitcher_fangraphs_id": "31972",
-      "throws": "R"
+      "pitcher_name": "Shane Drohan",
+      "pitcher_fangraphs_id": "27814",
+      "throws": "L"
     },
     {
       "date": "2026-08-11",
@@ -2336,8 +2246,8 @@
       "opponent": "CHC",
       "home": true,
       "pitcher_id": null,
-      "pitcher_name": "Miles Mikolas",
-      "pitcher_fangraphs_id": "9803",
+      "pitcher_name": "Cade Cavalli",
+      "pitcher_fangraphs_id": "27473",
       "throws": "R"
     },
     {
@@ -2346,8 +2256,8 @@
       "opponent": "NYM",
       "home": false,
       "pitcher_id": null,
-      "pitcher_name": "Cade Cavalli",
-      "pitcher_fangraphs_id": "27473",
+      "pitcher_name": "Miles Mikolas",
+      "pitcher_fangraphs_id": "9803",
       "throws": "R"
     },
     {
@@ -2386,21 +2296,21 @@
       "opponent": "TEX",
       "home": false,
       "pitcher_id": null,
+      "pitcher_name": "Cade Cavalli",
+      "pitcher_fangraphs_id": "27473",
+      "throws": "R"
+    },
+    {
+      "date": "2026-08-20",
+      "team": "WSH",
+      "opponent": "TEX",
+      "home": false,
+      "pitcher_id": null,
       "pitcher_name": "Miles Mikolas",
       "pitcher_fangraphs_id": "9803",
       "throws": "R"
     },
     {
-      "date": "2026-08-09",
-      "team": "NYM",
-      "opponent": "PIT",
-      "home": false,
-      "pitcher_id": "sean-manaea",
-      "pitcher_name": "Sean Manaea",
-      "pitcher_fangraphs_id": "15873",
-      "throws": "L"
-    },
-    {
       "date": "2026-08-10",
       "team": "NYM",
       "opponent": "ATL",
@@ -2489,16 +2399,6 @@
       "pitcher_name": "Robert Stock",
       "pitcher_fangraphs_id": "6576",
       "throws": "R"
-    },
-    {
-      "date": "2026-08-09",
-      "team": "PHI",
-      "opponent": "TOR",
-      "home": true,
-      "pitcher_id": "jesus-luzardo",
-      "pitcher_name": "Jesús Luzardo",
-      "pitcher_fangraphs_id": "19959",
-      "throws": "L"
     },
     {
       "date": "2026-08-10",
@@ -2591,16 +2491,6 @@
       "throws": "R"
     },
     {
-      "date": "2026-08-09",
-      "team": "PIT",
-      "opponent": "NYM",
-      "home": true,
-      "pitcher_id": null,
-      "pitcher_name": "Jared Jones",
-      "pitcher_fangraphs_id": "27863",
-      "throws": "R"
-    },
-    {
       "date": "2026-08-11",
       "team": "PIT",
       "opponent": "MIA",
@@ -2688,16 +2578,6 @@
       "pitcher_id": "bubba-chandler",
       "pitcher_name": "Bubba Chandler",
       "pitcher_fangraphs_id": "29868",
-      "throws": "R"
-    },
-    {
-      "date": "2026-08-09",
-      "team": "STL",
-      "opponent": "COL",
-      "home": true,
-      "pitcher_id": null,
-      "pitcher_name": "Michael McGreevy",
-      "pitcher_fangraphs_id": "29869",
       "throws": "R"
     },
     {
@@ -2801,13 +2681,13 @@
       "throws": "L"
     },
     {
-      "date": "2026-08-09",
-      "team": "SD",
-      "opponent": "HOU",
-      "home": true,
+      "date": "2026-08-20",
+      "team": "STL",
+      "opponent": "CIN",
+      "home": false,
       "pitcher_id": null,
-      "pitcher_name": "Randy Vásquez",
-      "pitcher_fangraphs_id": "24719",
+      "pitcher_name": "Michael McGreevy",
+      "pitcher_fangraphs_id": "29869",
       "throws": "R"
     },
     {
@@ -2901,16 +2781,6 @@
       "throws": "R"
     },
     {
-      "date": "2026-08-09",
-      "team": "SF",
-      "opponent": "DET",
-      "home": true,
-      "pitcher_id": "logan-webb",
-      "pitcher_name": "Logan Webb",
-      "pitcher_fangraphs_id": "17995",
-      "throws": "R"
-    },
-    {
       "date": "2026-08-10",
       "team": "SF",
       "opponent": "HOU",
@@ -2989,23 +2859,32 @@
       "pitcher_name": "Adrian Houser",
       "pitcher_fangraphs_id": "12718",
       "throws": "R"
+    },
+    {
+      "date": "2026-08-20",
+      "team": "SF",
+      "opponent": "CLE",
+      "home": false,
+      "pitcher_id": null,
+      "pitcher_name": "Landen Roupp",
+      "pitcher_fangraphs_id": "30076",
+      "throws": "R"
     }
   ],
-  "players_matched": 121,
-  "players_unmatched": 96,
+  "players_matched": 115,
+  "players_unmatched": 94,
   "unmatched_pitchers": [
     "Adrian Houser",
     "Andre Pallante",
     "Andrew Alvarez",
     "Anthony Kay",
     "Blade Tidwell",
-    "Brad Lord",
     "Brandon Pfaadt",
     "Brandon Williamson",
     "Brandon Young",
     "Bryce Elder",
     "Cade Cavalli",
-    "Cade Povich",
+    "Cal Quantrill",
     "Carmen Mlodzinski",
     "Carson Whisenhunt",
     "Chris Bassitt",
@@ -3022,7 +2901,6 @@
     "Eduardo Rodriguez",
     "Emerson Hancock",
     "Eric Lauer",
-    "Erik Miller",
     "Foster Griffin",
     "Gabriel Hughes",
     "Gage Jump",
