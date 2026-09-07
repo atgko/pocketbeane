@@ -97,6 +97,7 @@ export function createYahooAdapter({ req, res } = {}) {
         status: settings?.seasonOver ? 'complete' : 'unknown', // Yahoo doesn't expose a direct draft-status field through settings.js
         type: settings?.draftType ?? 'snake',
         draftOrder: {},
+        budget: null, // Yahoo's settings.js reads auctionBudget from the league resource directly instead — see types.js
       }
     },
 

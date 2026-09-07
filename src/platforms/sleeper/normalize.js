@@ -206,6 +206,14 @@ export function normalizeDraft(sleeperDraft) {
     status: sleeperDraft.status,
     type: sleeperDraft.type ?? 'snake',
     draftOrder: sleeperDraft.draft_order ?? {},
+    // Per-team starting auction budget — UNVERIFIED. Sleeper's public docs
+    // only document snake-draft settings (teams/slots_*/rounds/pick_timer)
+    // and say nothing about an auction budget field; `settings.budget` here
+    // is a best guess, not confirmed against a live Sleeper auction draft.
+    // Callers (pages/api/sleeper/settings.js) fall back to $200 when this is
+    // null. Confirm the real field once a real auction league exists, then
+    // remove this comment.
+    budget: sleeperDraft.settings?.budget ?? null,
   }
 }
 
@@ -225,6 +233,11 @@ export function normalizeDraftPicks(sleeperPicks, sleeperDraft, userId) {
       playerId: nameToPocketBeaneId(fullName),
       playerName: fullName,
       draftedBy: userRosterId != null && p.roster_id === userRosterId ? 'user' : 'opponent',
+      // Auction leagues only — winning bid. Not in Sleeper's official docs;
+      // metadata.amount is what real captured auction-draft API responses
+      // show (found via community wrapper libraries, not docs.sleeper.com),
+      // so treat as reasonably likely but unverified against a live league.
+      price: p.metadata?.amount != null ? Number(p.metadata.amount) : null,
     }
   })
 

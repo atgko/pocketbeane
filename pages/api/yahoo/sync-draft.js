@@ -131,6 +131,11 @@ export async function syncDraft(token, { leagueKey, sport = 'nba' }) {
       playerId,
       playerName,
       draftedBy,
+      // Auction leagues only — Yahoo's draft_result includes a "cost" field
+      // (the winning bid) for those; snake drafts omit it entirely. This was
+      // previously never parsed, so boardState.js's budgetSpent calc
+      // (`p.price ?? 0`) silently read 0 for every pick, all along.
+      price: d.cost != null ? Number(d.cost) : null,
     })
   }
 

@@ -110,6 +110,7 @@
  * @property {string|null} playerId    - PocketBeane id, null if unmatched
  * @property {string|null} playerName
  * @property {'user'|'opponent'} draftedBy
+ * @property {number|null} price       - Auction winning bid, null for snake drafts. Read by src/ai/boardState.js's budgetSpent calc. Yahoo: draft_result.cost (documented, confirmed). Sleeper: pick.metadata.amount (UNVERIFIED — see sleeper/normalize.js).
  */
 
 /**
@@ -156,6 +157,7 @@
  * @property {string} status          - 'pre_draft' | 'drafting' | 'complete'
  * @property {string} type            - 'snake' | 'auction'
  * @property {Object.<string, number>} draftOrder - userId -> slot
+ * @property {number|null} budget      - Sleeper only, per-team starting auction budget. UNVERIFIED field — see sleeper/normalize.js's normalizeDraft(). Always null for Yahoo (yahoo/settings.js reads auctionBudget from the league resource directly instead).
  */
 
 /**
