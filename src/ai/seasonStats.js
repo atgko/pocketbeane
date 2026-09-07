@@ -61,7 +61,11 @@ export function formatCurrentSeasonLine(player, sport) {
   const injuryTag = cs.injury_status && cs.injury_status !== 'healthy'
     ? ` [${cs.injury_status.toUpperCase()}${cs.injury_note ? `: ${cs.injury_note}` : ''}]`
     : ''
-  return ` || CURRENT (as of ${cs.as_of_date}, ${cs.g} GP, ${cs.trend}${staleTag}): ${stats}${injuryTag}`
+  // MLB's schema calls the field "g"; NBA/NFL call it "gp" (see
+  // mergeCurrentSeasonData.js's SPORT_SCHEMAS) — this line previously always
+  // read cs.g, which rendered "undefined GP" for every non-MLB sport.
+  const gamesPlayed = sport === 'mlb' ? cs.g : cs.gp
+  return ` || CURRENT (as of ${cs.as_of_date}, ${gamesPlayed} GP, ${cs.trend}${staleTag}): ${stats}${injuryTag}`
 }
 
 // Yahoo roster slots that mean "stashed, not competing for an active spot."

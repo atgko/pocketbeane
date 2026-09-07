@@ -53,11 +53,22 @@ const SPORT_SCHEMAS = {
     skater: ['g', 'a', 'pts', 'plus_minus', 'pim', 'ppg', 'shg', 'sog', 'gp'],
     goalie: ['w', 'l', 'ga', 'sv_pct', 'gaa', 'so', 'gp'],
   },
+  // Field names match prior_season/build-nfl-players.js/seasonStats.js
+  // (pass_yd, rush_yd, gp — no trailing "s", "gp" not "g"), NOT an
+  // independent convention — the original nfl schema here used pass_yds/g,
+  // which meant current_season would validate but seasonStats.js's
+  // formatSeasonStats() would silently read undefined for every field.
+  // fantasy_ppg is required so trend calc (see buildTrendInputs below) has
+  // the same per-game rate on both sides of the comparison.
   nfl: {
-    QB: ['pass_yds', 'pass_td', 'int', 'rush_yds', 'rush_td', 'g'],
-    RB: ['rush_yds', 'rush_td', 'rec_yds', 'rec_td', 'rec', 'g'],
-    WR: ['rec_yds', 'rec_td', 'rec', 'g'],
-    TE: ['rec_yds', 'rec_td', 'rec', 'g'],
+    QB: ['position_type', 'pass_yd', 'pass_td', 'int', 'rush_yd', 'rush_td', 'gp', 'fantasy_ppg'],
+    RB: ['position_type', 'rush_yd', 'rush_td', 'rec_yd', 'rec_td', 'rec', 'gp', 'fantasy_ppg'],
+    // rush_yd/rush_td included even for WR/TE — prior_season always carries
+    // them too (a WR/TE can pick up garbage-time or gadget-play rushing
+    // yards), so omitting them here would make current_season render "—"
+    // where prior_season shows a real number.
+    WR: ['position_type', 'rush_yd', 'rush_td', 'rec_yd', 'rec_td', 'rec', 'gp', 'fantasy_ppg'],
+    TE: ['position_type', 'rush_yd', 'rush_td', 'rec_yd', 'rec_td', 'rec', 'gp', 'fantasy_ppg'],
   },
 }
 
@@ -112,6 +123,17 @@ function buildTrendInputs(sport, positionType, priorSeason, incomingStats) {
       avg: incomingStats.avg,
     }
     return { prior, current, profile: TREND_PROFILES.mlb_hitter }
+  }
+  if (sport === 'nfl') {
+    // fantasy_ppg is already a per-game rate on both sides (prior_season via
+    // build-nfl-players.js, current_season via scrape_nfl.py) — no perGame()
+    // normalization needed, unlike MLB's counting stats above. Previously
+    // fell through to the nba branch below, comparing NFL's pass_yd/rush_yd
+    // fields against nba's pts/reb/ast — always null, so NFL trend was
+    // silently always "stable".
+    const prior = priorSeason && { fantasy_ppg: priorSeason.fantasy_ppg }
+    const current = { fantasy_ppg: incomingStats.fantasy_ppg }
+    return { prior, current, profile: TREND_PROFILES.nfl }
   }
   return { prior: priorSeason, current: incomingStats, profile: TREND_PROFILES.nba }
 }

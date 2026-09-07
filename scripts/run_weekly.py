@@ -41,6 +41,16 @@ SCRAPERS = {
     'nfl': REPO_ROOT / 'scripts' / 'scrape_nfl.py',
 }
 MERGE_SCRIPT = REPO_ROOT / 'scripts' / 'mergeCurrentSeasonData.js'
+# Mirrors src/config/sports.js's getPlayerFile() — kept as its own Python
+# copy since this script can't import the ESM config directly. Was
+# previously a bare "mlb_players.json or players.json" ternary, which
+# silently pointed every non-MLB sport (including nfl) at the NBA pool.
+PLAYER_FILES = {
+    'mlb': 'mlb_players.json',
+    'nba': 'players.json',
+    'nhl': 'nhl_players.json',
+    'nfl': 'nfl_players.json',
+}
 SCHEDULE_SCRAPERS = {
     'mlb': REPO_ROOT / 'scripts' / 'fetch_mlb_schedule.py',
 }
@@ -335,7 +345,7 @@ def git_commit_changes(results):
 
     paths = [REPO_ROOT / 'src' / 'data' / 'mlb_schedule.json', REPO_ROOT / 'src' / 'data' / 'mlb_probables.json']
     for sport in updated_sports:
-        players_file = 'mlb_players.json' if sport == 'mlb' else 'players.json'
+        players_file = PLAYER_FILES.get(sport, 'players.json')
         paths.append(REPO_ROOT / 'src' / 'data' / players_file)
     today_str = date.today().isoformat()
     paths.extend(p for p in UPDATES_DIR.glob('*-current-season-*.json') if today_str in p.name)
@@ -618,9 +628,11 @@ def main():
             continue
 
         output_path = output_files[-1]
-        expected_year = str(today.year) if sport == 'mlb' else str(today.year)
-        if sport in ('nba', 'nhl', 'nfl'):
-            # NBA/NHL season crosses year boundary
+        # MLB and NFL are both labeled by the single year they start in (a
+        # September-2026 NFL week is season "2026" even though it plays into
+        # February 2027) — only NBA/NHL use the cross-year "2026-2027" label.
+        expected_year = str(today.year)
+        if sport in ('nba', 'nhl'):
             if today.month >= 10:
                 expected_year = f'{today.year}-{today.year + 1}'
             else:
@@ -649,7 +661,7 @@ def main():
             continue
 
         # Run merge
-        players_file = 'mlb_players.json' if sport == 'mlb' else 'players.json'
+        players_file = PLAYER_FILES.get(sport, 'players.json')
         merge_cmd = [
             sys.executable, '-c',
             f'import json; from mergeCurrentSeasonData import mergeCurrentSeasonData; '

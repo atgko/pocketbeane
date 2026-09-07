@@ -23,6 +23,10 @@ const TREND_PROFILES = {
   nba: { stats: TREND_SIGNAL_STATS },
   mlb_hitter: { stats: ['hr', 'rbi', 'avg'] },
   mlb_pitcher: { stats: ['k', 'era', 'whip'], lowerIsBetter: ['era', 'whip'] },
+  // Single-category league (see SPORT_CONFIGS.nfl) — fantasy_ppg is the only
+  // signal there is, so summedTotalDeviation over one stat reduces to a
+  // plain percent change.
+  nfl: { stats: ['fantasy_ppg'] },
 }
 
 // Original NBA methodology, unchanged: sum the raw stats on each side, then

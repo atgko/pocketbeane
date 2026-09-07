@@ -116,6 +116,18 @@ test('mlb_hitter profile: a real but modest per-game rate decline reads as sligh
   assert.strictEqual(calculateTrend(prior, current, TREND_PROFILES.mlb_hitter), 'slightly-declining')
 })
 
+test('nfl profile: fantasy_ppg-only comparison — matches real sample data (Bijan Robinson, stable)', () => {
+  const prior = { fantasy_ppg: 19.72 }
+  const current = { fantasy_ppg: 19.49 }
+  assert.strictEqual(calculateTrend(prior, current, TREND_PROFILES.nfl), 'stable')
+})
+
+test('nfl profile: fantasy_ppg-only comparison reads a real per-game jump as improving', () => {
+  const prior = { fantasy_ppg: 15 }
+  const current = { fantasy_ppg: 19 } // +26.7%
+  assert.strictEqual(calculateTrend(prior, current, TREND_PROFILES.nfl), 'improving')
+})
+
 test('is a pure function — does not mutate its inputs', () => {
   const prior = { pts: 20, reb: 5, ast: 5 }
   const current = { pts: 25, reb: 6, ast: 6 }

@@ -116,6 +116,88 @@ test('validatePlayerEntry: flags invalid injury_status', () => {
   assert.ok(errors.some(e => e.includes('injury_status')))
 })
 
+function makeNflPlayer(overrides = {}) {
+  return {
+    id: 'bijan-robinson',
+    name: 'Bijan Robinson',
+    team: 'ATL',
+    positions: ['RB'],
+    yahoo_positions: ['RB'],
+    adp: 1.3,
+    adp_source: 'FantasyPros Consensus 2026 NFL',
+    prior_season: { pass_yd: null, pass_td: null, int: null, rush_yd: 1478, rush_td: 7, rec: 79, rec_yd: 820, rec_td: 4, gp: 17, fantasy_ppg: 19.72 },
+    current_season: null,
+    age: 23,
+    injury_risk: false,
+    injury_notes: null,
+    injury_status: 'healthy',
+    contract_year: false,
+    notes: null,
+    ...overrides,
+  }
+}
+
+function validNflRbEntry(overrides = {}) {
+  const { current_season, ...topLevel } = overrides
+  return {
+    id: 'bijan-robinson',
+    current_season: {
+      position_type: 'RB', rush_yd: 1478, rush_td: 7, rec_yd: 820, rec_td: 4, rec: 79, gp: 17, fantasy_ppg: 19.49,
+      ...current_season,
+    },
+    ...topLevel,
+  }
+}
+
+// ─── NFL schema (regression guard — see mergeCurrentSeasonData.js SPORT_SCHEMAS.nfl) ──
+
+test('validatePlayerEntry: sport="nfl"/positionType="RB" — valid entry has no errors', () => {
+  const errors = validatePlayerEntry(validNflRbEntry(), 'nfl', 'RB')
+  assert.deepStrictEqual(errors, [])
+})
+
+test('validatePlayerEntry: sport="nfl"/positionType="RB" — flags missing rec_yd', () => {
+  const entry = validNflRbEntry()
+  delete entry.current_season.rec_yd
+  const errors = validatePlayerEntry(entry, 'nfl', 'RB')
+  assert.ok(errors.some(e => e.includes('rec_yd')))
+})
+
+test('validatePlayerEntry: sport="nfl"/positionType="QB" — requires "pass_yd", not the old "pass_yds"', () => {
+  // Regression guard: SPORT_SCHEMAS.nfl.QB originally listed pass_yds/g,
+  // which never matched what scrape_nfl.py/seasonStats.js/prior_season
+  // actually use (pass_yd/gp) — current_season validated against field
+  // names nothing ever produced, so real NFL stats silently never landed.
+  const entry = {
+    id: 'josh-allen',
+    current_season: { position_type: 'QB', pass_yds: 3668, pass_td: 25, int: 10, rush_yd: 579, rush_td: 14, gp: 17, fantasy_ppg: 22.04 },
+  }
+  const errors = validatePlayerEntry(entry, 'nfl', 'QB')
+  assert.ok(errors.some(e => e.includes('pass_yd')))
+})
+
+test('mergeCurrentSeasonData: nfl entry uses the single fantasy_ppg trend signal, not nba pts/reb/ast', () => {
+  const players = [makeNflPlayer()]
+  const incoming = { as_of_date: '2026-09-15', sport: 'nfl', players: [validNflRbEntry()] }
+  const result = mergeCurrentSeasonData(incoming, players)
+
+  assert.strictEqual(result.ok, true)
+  const updated = result.players.find(p => p.id === 'bijan-robinson')
+  assert.strictEqual(updated.current_season.position_type, 'RB')
+  assert.strictEqual(updated.current_season.fantasy_ppg, 19.49)
+  assert.strictEqual(updated.current_season.trend, 'stable') // matches real 2025 sample data
+})
+
+test('mergeCurrentSeasonData: nfl trend reacts to a real fantasy_ppg swing', () => {
+  const players = [makeNflPlayer({
+    prior_season: { pass_yd: null, pass_td: null, int: null, rush_yd: 1000, rush_td: 5, rec: 50, rec_yd: 400, rec_td: 2, gp: 17, fantasy_ppg: 12 },
+  })]
+  const incoming = { as_of_date: '2026-09-15', sport: 'nfl', players: [validNflRbEntry({ current_season: { fantasy_ppg: 16 } })] } // +33%
+  const result = mergeCurrentSeasonData(incoming, players)
+  const updated = result.players.find(p => p.id === 'bijan-robinson')
+  assert.strictEqual(updated.current_season.trend, 'improving')
+})
+
 // ─── mergeCurrentSeasonData: batch-level rejection ───────────────────────────
 
 test('rejects malformed batch entirely — no players touched', () => {
