@@ -29,7 +29,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 83,
+      "rush_td": 0,
+      "rec_yd": 90,
+      "rec_td": 1,
+      "rec": 8,
+      "gp": 1,
+      "fantasy_ppg": 27.3,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "The Falcons' offense was hamstrung by the fact it was down to its third-string quarterback in Cooper",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jahmyr-gibbs",
@@ -61,7 +77,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 156,
+      "rush_td": 2,
+      "rec_yd": 30,
+      "rec_td": 0,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 31.1,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "He did lose a fumble, but there wasn't much to criticize about Gibbs' performance otherwise. The sta",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ja-marr-chase",
@@ -93,7 +125,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 12,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 2.2,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Despite the Bengals shaking off their usual Week 1 offensive doldrums, it was still a relatively mod",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "puka-nacua",
@@ -125,7 +173,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 74,
+      "rec_td": 0,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 9.9,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Nacua was in the familiar position of leading the Rams in receptions, receiving yards and targets, b",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "christian-mccaffrey",
@@ -157,7 +221,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 68,
+      "rush_td": 0,
+      "rec_yd": 20,
+      "rec_td": 0,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 11.3,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Coming off a 2025 regular season where he was able to suit up for all 17 games while handling 413 to",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jaxon-smith-njigba",
@@ -189,7 +269,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 122,
+      "rec_td": 1,
+      "rec": 8,
+      "gp": 1,
+      "fantasy_ppg": 22.2,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "The reigning Offensive Player of the Year endured a relatively difficult first half after making a 1",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jonathan-taylor",
@@ -221,7 +317,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 98,
+      "rush_td": 2,
+      "rec_yd": 23,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 23.6,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Taylor and the Colts' offense as a whole got the new season off to a highly encouraging start, cappi",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "amon-ra-st-brown",
@@ -253,7 +365,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 67,
+      "rec_td": 2,
+      "rec": 10,
+      "gp": 1,
+      "fantasy_ppg": 23.7,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "The star wideout got the new season started with a bang, leading Detroit in catches, targets and rec",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "james-cook",
@@ -285,7 +413,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 57,
+      "rush_td": 0,
+      "rec_yd": 12,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 8.4,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Cook didn't find much room against Houston's stout front and took a back seat to Josh Allen, who had",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ashton-jeanty",
@@ -317,7 +461,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 102,
+      "rush_td": 0,
+      "rec_yd": 45,
+      "rec_td": 2,
+      "rec": 6,
+      "gp": 1,
+      "fantasy_ppg": 29.7,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Jeanty shook off the ankle injury that had plagued him for weeks leading into Week 1 by handling a v",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ceedee-lamb",
@@ -349,7 +509,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 44,
+      "rec_td": 1,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 12.9,
+      "trend": "slightly-improving",
+      "injury_status": "out",
+      "injury_note": "Lamb led the team in targets and receiving yards, as Dak Prescott threw for only 175 yards in a subp",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "justin-jefferson",
@@ -381,7 +557,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 92,
+      "rec_td": 2,
+      "rec": 8,
+      "gp": 1,
+      "fantasy_ppg": 27.2,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Jefferson kept the Vikings within striking distance with a 39-yard touchdown catch just after the tw",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "de-von-achane",
@@ -413,7 +605,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 36,
+      "rush_td": 0,
+      "rec_yd": 30,
+      "rec_td": 0,
+      "rec": 4,
+      "gp": 1,
+      "fantasy_ppg": 8.6,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Achane ceded only one carry to backup Jaylen Wright, but the former's opportunities on the ground we",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "saquon-barkley",
@@ -445,7 +653,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 83,
+      "rush_td": 0,
+      "rec_yd": -3,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 8.5,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "The highlight of Barkley's performance was easily his 42-yard, tackle-breaking scamper midway throug",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "chase-brown",
@@ -477,7 +701,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 56,
+      "rush_td": 1,
+      "rec_yd": 22,
+      "rec_td": 0,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 16.3,
+      "trend": "slightly-improving",
+      "injury_status": "out",
+      "injury_note": "As his final line indicates, Brown unsurprisingly found running room at a premium against the Buccan",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "omarion-hampton",
@@ -509,7 +749,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 43,
+      "rush_td": 1,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 8.3,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Hampton and the Chargers looked ready to roll early in the alarming loss, as the second-year back an",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "drake-london",
@@ -541,7 +797,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 6,
+      "rush_td": 0,
+      "rec_yd": 29,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 4.5,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "With third-string quarterback Cooper Rush getting the start in light of both Tua Tagovailoa (oblique",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "trey-mcbride",
@@ -573,7 +845,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 95,
+      "rec_td": 1,
+      "rec": 9,
+      "gp": 1,
+      "fantasy_ppg": 20,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "McBride was in the familiar position of leading the Cardinals across the board in receptions, receiv",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "brock-bowers",
@@ -669,7 +957,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 334,
+      "pass_td": 2,
+      "int": 0,
+      "rush_yd": 23,
+      "rush_td": 2,
+      "gp": 1,
+      "fantasy_ppg": 35.66,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Allen ran in touchdowns of 21 yards and one yard in the second quarter. Those two rushing scores giv",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "derrick-henry",
@@ -701,7 +1005,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 144,
+      "rush_td": 3,
+      "rec_yd": 19,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 34.8,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Much like he'd done at the expense of the Bills in Week 1 of last season, Henry turned in one of his",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "aj-brown",
@@ -733,7 +1053,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 26,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 4.1,
+      "trend": "declining",
+      "injury_status": "il",
+      "injury_note": "The Patriots deactivated Brown just three days after he sustained the injury in the third quarter of",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "nico-collins",
@@ -765,7 +1101,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 7,
+      "rush_td": 0,
+      "rec_yd": 75,
+      "rec_td": 1,
+      "rec": 7,
+      "gp": 1,
+      "fantasy_ppg": 17.7,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "C.J. Stroud connected with Collins for a 12-yard touchdown in the second quarter, marking the first",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jeremiyah-love",
@@ -786,7 +1138,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 41,
+      "rush_td": 1,
+      "rec_yd": 9,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 12,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "The rookie had been managing a high-ankle sprain for several weeks, but Love looked to be at full he",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "george-pickens",
@@ -818,7 +1186,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 28,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 4.3,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Pickens had a couple drops in Sunday night's underwhelming season-opening performance. He was also q",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "josh-jacobs",
@@ -882,7 +1266,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 182,
+      "rec_td": 0,
+      "rec": 10,
+      "gp": 1,
+      "fantasy_ppg": 23.2,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "As expected, Olave was Tyler Shough's top downfield option, but there was plenty of volume to go aro",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kyren-williams",
@@ -914,7 +1314,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 41,
+      "rush_td": 1,
+      "rec_yd": 24,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 14,
+      "trend": "slightly-declining",
+      "injury_status": "out",
+      "injury_note": "Williams worked in what was just one carry short of an even timeshare with Blake Corum in terms of r",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "rashee-rice",
@@ -978,7 +1394,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 41,
+      "rush_td": 1,
+      "rec_yd": 31,
+      "rec_td": 1,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 21.7,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Williams scored a one-yard rushing touchdown in the third quarter and added a 17-yard touchdown catc",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "breece-hall",
@@ -1010,7 +1442,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 102,
+      "rush_td": 1,
+      "rec_yd": 16,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 18.8,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "The Jets overpowered the Titans at the line of scrimmage, controlling the clock with the running gam",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "devonta-smith",
@@ -1074,7 +1522,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 324,
+      "pass_td": 1,
+      "int": 0,
+      "rush_yd": 40,
+      "rush_td": 1,
+      "gp": 1,
+      "fantasy_ppg": 24.96,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Although Derrick Henry put together a dominant performance of 144 rushing yards and three touchdowns",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "cam-skattebo",
@@ -1106,7 +1570,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 81,
+      "rush_td": 1,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 14.1,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Skattebo opened the scoring with a three-yard touchdown run to cap the Giants' first possession of t",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tetairoa-mcmillan",
@@ -1138,7 +1618,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 75,
+      "rec_td": 0,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 8,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "In the highest-scoring Week 1 game in NFL history, McMillan had just one catch for 14 yards in the f",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "malik-nabers",
@@ -1170,7 +1666,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 69,
+      "rec_td": 0,
+      "rec": 6,
+      "gp": 1,
+      "fantasy_ppg": 9.9,
+      "trend": "slightly-declining",
+      "injury_status": "out",
+      "injury_note": "Nabers was listed as questionable heading into the game but ultimately suited up for his first game",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "travis-etienne",
@@ -1202,7 +1714,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 46,
+      "rush_td": 0,
+      "rec_yd": 32,
+      "rec_td": 0,
+      "rec": 7,
+      "gp": 1,
+      "fantasy_ppg": 11.3,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "The former Jaguar didn't see a lot of work on the ground, but Etienne set a new career high in recep",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tee-higgins",
@@ -1234,7 +1762,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 59,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 7.4,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Higgins tied for second in receptions and targets while also serving as the runner-up in receiving y",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "zay-flowers",
@@ -1266,7 +1810,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 150,
+      "rec_td": 1,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 23.5,
+      "trend": "improving",
+      "injury_status": "day-to-day",
+      "injury_note": "The Ravens had labeled Flowers as questionable to return after he exited midway through the second q",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "garrett-wilson",
@@ -1298,7 +1858,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 79,
+      "rec_td": 0,
+      "rec": 6,
+      "gp": 1,
+      "fantasy_ppg": 10.9,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Wilson paced the team in targets, catches and receiving yards while no teammate exceeded three targe",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "colston-loveland",
@@ -1330,7 +1906,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "It was the highest-scoring Week 1 game in NFL history, but Loveland wasn't able to contribute as Cal",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "emeka-egbuka",
@@ -1362,7 +1954,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 63,
+      "rec_td": 0,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 8.8,
+      "trend": "slightly-declining",
+      "injury_status": "out",
+      "injury_note": "The second-year wideout led the way for the Buccaneers in receiving yards while checking in second i",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "bucky-irving",
@@ -1394,7 +2002,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 45,
+      "rush_td": 1,
+      "rec_yd": 48,
+      "rec_td": 0,
+      "rec": 7,
+      "gp": 1,
+      "fantasy_ppg": 16.8,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "With the Buccaneers already down by a 24-10 margin at halftime, Irving was deployed as as receiver a",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ladd-mcconkey",
@@ -1426,7 +2050,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 82,
+      "rec_td": 1,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 16.7,
+      "trend": "improving",
+      "injury_status": "day-to-day",
+      "injury_note": "McConkey was originally deemed questionable to return after absorbing a big hit in the third quarter",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "quinshon-judkins",
@@ -1458,7 +2098,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 33,
+      "rush_td": 0,
+      "rec_yd": 17,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 6,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Judkins operated as the unquestioned lead back for the Browns as expected, yet his opportunities on",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "luther-burden",
@@ -1490,7 +2146,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 2,
+      "rush_td": 0,
+      "rec_yd": 63,
+      "rec_td": 0,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 7,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "In the highest-scoring Week 1 game in NFL history, Burden didn't make a huge impact but did the most",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "treveyon-henderson",
@@ -1586,7 +2258,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 178,
+      "pass_td": 1,
+      "int": 3,
+      "rush_yd": 47,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 12.82,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "The third-year signal-caller carried out a conservative game plan with reasonable efficacy for three",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "joe-burrow",
@@ -1618,7 +2306,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 254,
+      "pass_td": 1,
+      "int": 1,
+      "rush_yd": 20,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 15.16,
+      "trend": "slightly-declining",
+      "injury_status": "out",
+      "injury_note": "The Bengals have curiously struggled on offense in multiple Week 1 games during Burrow's tenure, but",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "dj-moore",
@@ -1650,7 +2354,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 100,
+      "rec_td": 1,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 18.5,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Moore made a strong first impression with the Bills, highlighted by a 43-yard touchdown catch in the",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "david-montgomery",
@@ -1682,7 +2402,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 60,
+      "rush_td": 2,
+      "rec_yd": 19,
+      "rec_td": 1,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 27.4,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Montgomery scored Houston's first two touchdowns of the season with a one-yard run in the first quar",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tyler-warren",
@@ -1714,7 +2450,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 13,
+      "rec_td": 1,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 8.8,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "The athletic second-year tight end was on the receiving end of Daniel Jones' sole touchdown pass, re",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "terry-mclaurin",
@@ -1746,7 +2498,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 14,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 2.4,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "McLaurin surprisingly took a back seat to third-round rookie Antonio Williams (4-61-1) and veteran S",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "d-andre-swift",
@@ -1778,7 +2546,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 124,
+      "rush_td": 3,
+      "rec_yd": 10,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 31.9,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "In the highest-scoring Week 1 game in NFL history, Swift scored one-yard TDs in the first and third",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "davante-adams",
@@ -1810,7 +2594,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 26,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 4.1,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "The veteran receiver's final line underscores the kind of game it was for the Rams' air attack, whic",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "bhayshul-tuten",
@@ -1842,7 +2642,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 66,
+      "rush_td": 0,
+      "rec_yd": 22,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 9.3,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Any questions surrounding the potential workload split in the Jaguars' ground attack were definitive",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jameson-williams",
@@ -1874,7 +2690,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 45,
+      "rec_td": 0,
+      "rec": 4,
+      "gp": 1,
+      "fantasy_ppg": 6.5,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "QB Jared Goff and Williams weren't on the same page often Week 1, as the fifth-year wide receiver's",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jayden-daniels",
@@ -1906,7 +2738,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 164,
+      "pass_td": 2,
+      "int": 0,
+      "rush_yd": 31,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 17.66,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "Daniels had a rough first half, completing just six of 16 passes for 43 yards. He was much better af",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "mike-evans",
@@ -1938,7 +2786,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 49,
+      "rec_td": 1,
+      "rec": 6,
+      "gp": 1,
+      "fantasy_ppg": 13.9,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "Evans shrugged off recent nagging injuries to hit the ground running in his 49ers regular-season deb",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jadarian-price",
@@ -1959,7 +2823,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 52,
+      "rush_td": 0,
+      "rec_yd": 6,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 6.8,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "The rookie running back touched the ball on Seattle's first play from scrimmage and immediately made",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jalen-hurts",
@@ -1991,7 +2871,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 203,
+      "pass_td": 3,
+      "int": 0,
+      "rush_yd": 46,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 24.72,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Hurts wasn't particularly efficient, but he made big completions when needed, including a 17-yard co",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "rome-odunze",
@@ -2023,7 +2919,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 52,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 6.2,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "In the highest-scoring Week 1 game in NFL history, Odunze didn't get much of a chance to contribute,",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "harold-fannin",
@@ -2055,7 +2967,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 21,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 3.1,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Deshaun Watson mostly struggled against an aggressive Jaguars defense that sacked him five times and",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "christian-watson",
@@ -2087,7 +3015,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 147,
+      "rec_td": 2,
+      "rec": 6,
+      "gp": 1,
+      "fantasy_ppg": 29.7,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Watson broke free down the sideline for an 81-yard touchdown catch in the first quarter and added a",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jaylen-warren",
@@ -2119,7 +3063,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 46,
+      "rush_td": 0,
+      "rec_yd": 27,
+      "rec_td": 0,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 7.8,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Sunday offered the first look at the division of labor between Warren and new backfield mate Rico Do",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tucker-kraft",
@@ -2151,7 +3111,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 65,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 8,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Kraft avoided the Week 1 injury report in his return from a torn ACL suffered Week 9 of last season.",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "carnell-tate",
@@ -2172,7 +3148,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 38,
+      "rec_td": 0,
+      "rec": 4,
+      "gp": 1,
+      "fantasy_ppg": 5.8,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "Tate tied Wan'Dale Robinson for the team lead in receiving yards and targets, but Tennessee's entire",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kyle-pitts",
@@ -2204,7 +3196,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Fresh off having recorded a career-best 88 receptions a season ago, Pitts was clearly impacted by th",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "brian-thomas",
@@ -2236,7 +3244,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 40,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 5.5,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Thomas was left out of the fun when it came to Trevor Lawrence's four touchdown passes, but the thir",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "chuba-hubbard",
@@ -2268,7 +3292,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 49,
+      "rush_td": 1,
+      "rec_yd": 38,
+      "rec_td": 1,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 22.2,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "In the highest-scoring Week 1 game in NFL history, Hubbard did his part to keep Carolina competitive",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "rj-harvey",
@@ -2332,7 +3372,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 51,
+      "rush_td": 0,
+      "rec_yd": 44,
+      "rec_td": 0,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 12,
+      "trend": "slightly-improving",
+      "injury_status": "out",
+      "injury_note": "As expected with TreVeyon Henderson (ankle) unavailable, Stevenson shouldered a heavy workload and f",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "marvin-harrison",
@@ -2364,7 +3420,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 33,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 3.8,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Harrison's one reception was impressive, as he corralled a perfect over-the-shoulder throw from Jaco",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "caleb-williams",
@@ -2396,7 +3468,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 269,
+      "pass_td": 2,
+      "int": 0,
+      "rush_yd": 65,
+      "rush_td": 2,
+      "gp": 1,
+      "fantasy_ppg": 37.26,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "In the highest-scoring Week 1 game in NFL history, Williams led the Bears on nine separate scoring d",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "rico-dowdle",
@@ -2428,7 +3516,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 15,
+      "rush_td": 0,
+      "rec_yd": 6,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 3.1,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Dowdle trailed backfield mate Jaylen Warren by only two carries and a sole target, but he was outgai",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "sam-laporta",
@@ -2460,7 +3564,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 48,
+      "rec_td": 0,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 7.3,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "The tight end finished second to Amon-Ra St. Brown in receiving yards on the day while tying Jahmyr",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "justin-herbert",
@@ -2492,7 +3612,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 209,
+      "pass_td": 1,
+      "int": 1,
+      "rush_yd": 29,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 14.26,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Herbert's final line was about as unremarkable as his performance in the shocking season-opening los",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tony-pollard",
@@ -2524,7 +3660,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 35,
+      "rush_td": 0,
+      "rec_yd": -1,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 3.9,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "The Titans spent most of Sunday's season opener playing catch-up, so they didn't give Pollard many c",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "alec-pierce",
@@ -2556,7 +3708,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 61,
+      "rec_td": 0,
+      "rec": 4,
+      "gp": 1,
+      "fantasy_ppg": 8.1,
+      "trend": "declining",
+      "injury_status": "day-to-day",
+      "injury_note": "Pierce returned to the game after getting encouraging results on the injury he sustained by hitting",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "dak-prescott",
@@ -2588,7 +3756,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 175,
+      "pass_td": 2,
+      "int": 1,
+      "rush_yd": 14,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 15.4,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Prescott connected with CeeDee Lamb for a one-yard touchdown in the second quarter and found Javonte",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jaxson-dart",
@@ -2620,7 +3804,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 230,
+      "pass_td": 3,
+      "int": 0,
+      "rush_yd": 54,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 26.6,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Dart delivered a superb performance with both his arm and his legs. He threw touchdown passes of 15",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kyle-monangai",
@@ -2652,7 +3852,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 100,
+      "rush_td": 1,
+      "rec_yd": 24,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 19.4,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "In the highest-scoring Week 1 game in NFL history, Monangai carved out his share of the production,",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "dk-metcalf",
@@ -2684,7 +3900,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 40,
+      "rec_td": 0,
+      "rec": 4,
+      "gp": 1,
+      "fantasy_ppg": 6,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Metcalf's target total led the Steelers by a fairly comfortable margin, but the talented receiver br",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jordyn-tyson",
@@ -2737,7 +3969,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 245,
+      "pass_td": 4,
+      "int": 0,
+      "rush_yd": 3,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 26.1,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Lawrence's afternoon was about as smooth as his numbers suggest, as he helped stake the Jaguars to a",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "courtland-sutton",
@@ -2801,7 +4049,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 56,
+      "rec_td": 0,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 8.1,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Wilson saw No. 3 receiver Kendrick Bourne outpace him by three catches, 19 receiving yards and one t",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "chris-godwin",
@@ -2833,7 +4097,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 3,
+      "rush_td": 0,
+      "rec_yd": 40,
+      "rec_td": 0,
+      "rec": 4,
+      "gp": 1,
+      "fantasy_ppg": 6.3,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Godwin's 32 routes on Baker Mayfield's 36 dropbacks were second on the team behind Emeka Egbuka, who",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "parker-washington",
@@ -2865,7 +4145,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 83,
+      "rec_td": 1,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 16.8,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Washington led the Jaguars in all of receptions, receiving yards and targets, and his impressive 30-",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jk-dobbins",
@@ -2918,7 +4214,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": -5,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 1,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "The rookie joins DeVonta Smith and Dontayvion Wicks as the top three receivers on the depth chart, t",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "blake-corum",
@@ -2950,7 +4262,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 54,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 5.4,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Corum's backfield mate Kyren Williams worked as the starting running back and logged his first carry",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "george-kittle",
@@ -2982,7 +4310,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 12,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 2.2,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Kittle headed into the game without an injury designation, making a remarkable recovery from January",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "patrick-mahomes",
@@ -3110,7 +4454,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 130,
+      "rec_td": 0,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 15.5,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Kincaid did most of his damage late, recording catches of 40 and 35 yards in the fourth quarter. He",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "brock-purdy",
@@ -3142,7 +4502,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 205,
+      "pass_td": 3,
+      "int": 1,
+      "rush_yd": 29,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 22.1,
+      "trend": "slightly-improving",
+      "injury_status": "out",
+      "injury_note": "After an offseason in which the Rams' fearsome pass rush garnered plenty of headlines, Purdy navigat",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jonathon-brooks",
@@ -3163,7 +4539,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 14,
+      "rush_td": 0,
+      "rec_yd": 48,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 6.7,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "Brooks initially missed practice Sept. 1 due to general soreness before opening Week 1 prep with bac",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "bo-nix",
@@ -3227,7 +4619,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 78,
+      "rec_td": 2,
+      "rec": 8,
+      "gp": 1,
+      "fantasy_ppg": 23.8,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Likely showcased excellent chemistry with quarterback Jaxson Dart, as all of their attempted connect",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kenny-gainwell",
@@ -3259,7 +4667,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 15,
+      "rush_td": 0,
+      "rec_yd": 3,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 2.3,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Gainwell worked in the No. 2 role as expected, and with Sean Tucker (hamstring) unavailable Sunday,",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "matthew-stafford",
@@ -3291,7 +4715,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 155,
+      "pass_td": 0,
+      "int": 1,
+      "rush_yd": -1,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 5.1,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "The reigning NFL MVP looked anything but during a shockingly poor performance by his side of the bal",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jakobi-meyers",
@@ -3323,7 +4763,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 2,
+      "rush_td": 0,
+      "rec_yd": 40,
+      "rec_td": 1,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 11.2,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Meyers did not receive much attention despite a strong offensive day for the Jaguars. Parker Washing",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "michael-pittman",
@@ -3355,7 +4811,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 58,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 7.3,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "While Pittman was sixth on the team with three targets, seeing just a 7.5 percent target share on Aa",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jake-ferguson",
@@ -3387,7 +4859,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 6,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 1.6,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Ferguson, George Pickens, CeeDee Lamb and Dak Prescott were all sidelined for the entire preseason,",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jacory-croskey-merritt",
@@ -3419,7 +4907,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 63,
+      "rush_td": 1,
+      "rec_yd": -7,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 12.1,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Croskey-Merritt scored Washington's only touchdown of the first half when he plunged into the end zo",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "quentin-johnston",
@@ -3451,7 +4955,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 17,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 2.7,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Johnston was unable to capture more than half of his targets, failing to show up even after No. 1 wi",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jordan-addison",
@@ -3483,7 +5003,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Addison was second on the team with his 28 routes, but his two targets were a distant fourth on the",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "rachaad-white",
@@ -3515,7 +5051,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 22,
+      "rush_td": 0,
+      "rec_yd": 5,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 3.7,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "White had a long run of nine yards but was held to 13 yards across his other six carries. He did see",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "aaron-jones",
@@ -3547,7 +5099,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 40,
+      "rush_td": 1,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 10,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "Jones and Mason effectively split Minnesota's backfield in 2025, with the former earning 160 touches",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "brandon-aubrey",
@@ -3600,7 +5168,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 206,
+      "pass_td": 2,
+      "int": 0,
+      "rush_yd": 2,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 16.44,
+      "trend": "slightly-declining",
+      "injury_status": "out",
+      "injury_note": "Both of Goff's TD passes went to Amon-Ra St. Brown, while Jahmyr Gibbs scored on a pair of one-yard",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "mark-andrews",
@@ -3632,7 +5216,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 49,
+      "rec_td": 0,
+      "rec": 4,
+      "gp": 1,
+      "fantasy_ppg": 6.9,
+      "trend": "slightly-improving",
+      "injury_status": "out",
+      "injury_note": "Andrews commemorated his return to a clear-cut TE1 role with a strong season-opening performance, fi",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jordan-mason",
@@ -3664,7 +5264,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 59,
+      "rush_td": 1,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 11.9,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Mason had three more carries than Aaron Jones, and neither of Minnesota's top two running backs reco",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "wan-dale-robinson",
@@ -3696,7 +5312,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 38,
+      "rec_td": 0,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 6.3,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Tennessee's offense struggled as a whole Sunday, and the addition of Robinson and rookie Carnell Tat",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jayden-reed",
@@ -3728,7 +5360,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 20,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 3.5,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Reed saw the third-most targets for the Packers behind Matthew Golden (12) and Christian Watson (eig",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "dallas-goedert",
@@ -3760,7 +5408,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 77,
+      "rec_td": 2,
+      "rec": 4,
+      "gp": 1,
+      "fantasy_ppg": 21.7,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Goedert looked spry in the first game of his ninth NFL campaign, leading Philadelphia in catches and",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "josh-downs",
@@ -3792,7 +5456,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 37,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 4.7,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Downs' four targets tied Jonathan Taylor for fourth on the team behind Alec Pierce (six), Keenan All",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "houston-texans",
@@ -3898,7 +5578,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 18,
+      "pass_td": 0,
+      "int": 1,
+      "rush_yd": 9,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 0.62,
+      "trend": "declining",
+      "injury_status": "day-to-day",
+      "injury_note": "Murray was dealt a blow to the head by Javon Bullard on a play that drew an unnecessary roughness pe",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "oronde-gadsden",
@@ -3930,7 +5626,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 32,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 4.2,
+      "trend": "declining",
+      "injury_status": "healthy",
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "zach-charbonnet",
@@ -3994,7 +5706,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 387,
+      "pass_td": 2,
+      "int": 1,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 20.48,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Love started hot, connecting with Christian Watson for an 81-yard touchdown in the first quarter and",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "malik-willis",
@@ -4026,7 +5754,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 220,
+      "pass_td": 0,
+      "int": 1,
+      "rush_yd": 39,
+      "rush_td": 1,
+      "gp": 1,
+      "fantasy_ppg": 17.7,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Willis' regular-season Dolphins debut did have its share of positives, including a pair of 30-yard c",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "baker-mayfield",
@@ -4058,7 +5802,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 216,
+      "pass_td": 0,
+      "int": 0,
+      "rush_yd": 30,
+      "rush_td": 1,
+      "gp": 1,
+      "fantasy_ppg": 11.64,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Fresh off inking his long-sought-after contract extension, Mayfield endured a fairly nightmarish aft",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "denver-broncos",
@@ -4111,7 +5871,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "The veteran offseason addition had a highly inauspicious debut, despite the fact he'd frequently imp",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "hunter-henry",
@@ -4143,7 +5919,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 26,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 4.1,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "The trusted tight end figures to remain an important component of the Patriots' air attack this seas",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "brenton-strange",
@@ -4175,7 +5967,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 23,
+      "rec_td": 1,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 9.3,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Strange had a relatively quiet day in terms of targets and yardage, but he finished with a fine fant",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "seattle-seahawks",
@@ -4228,7 +6036,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 61,
+      "rush_td": 0,
+      "rec_yd": 9,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 8,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Allgeier lived up to his No. 1 slotting on the Week 1 depth chart, outpacing Jeremiyah Love by six c",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tyrone-tracy",
@@ -4260,7 +6084,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 14,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": -0.6,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Tracy sustained an apparent neck injury during New York's exhibition finale, but after landing a spo",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tyler-shough",
@@ -4292,7 +6132,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 410,
+      "pass_td": 3,
+      "int": 2,
+      "rush_yd": 8,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 25.2,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "The second-year quarterback struggled in the first half and the Saints were facing a 21-0 deficit ea",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kc-concepcion",
@@ -4313,7 +6169,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 15,
+      "rush_td": 0,
+      "rec_yd": 43,
+      "rec_td": 0,
+      "rec": 4,
+      "gp": 1,
+      "fantasy_ppg": 5.8,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "While Concepcion paced the team with his five targets, he ran just 20 routes on Deshaun Watson's 30",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "brian-robinson",
@@ -4345,7 +6217,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 31,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 3.1,
+      "trend": "slightly-declining",
+      "injury_status": "out",
+      "injury_note": "As expected, Robinson spelled Bijan Robinson and was a non-factor in the passing game, as Bijan out-",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "chig-okonkwo",
@@ -4377,7 +6265,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 16,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 2.6,
+      "trend": "declining",
+      "injury_status": "day-to-day",
+      "injury_note": "Okonkwo was deemed questionable to return in the second half of a close contest. Before exiting, he",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "aaron-rodgers",
@@ -4409,7 +6313,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 221,
+      "pass_td": 1,
+      "int": 0,
+      "rush_yd": -3,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 12.54,
+      "trend": "slightly-declining",
+      "injury_status": "out",
+      "injury_note": "Rodgers commemorated his first non-preseason game under Mike McCarthy since a divisional-round match",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "woody-marks",
@@ -4441,7 +6361,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 42,
+      "rush_td": 0,
+      "rec_yd": -2,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 4.5,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "While David Montgomery stole the headlines with three total touchdowns, Montgomery wasn't exactly ef",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "juwan-johnson",
@@ -4473,7 +6409,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 54,
+      "rec_td": 1,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 12.9,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Johnson had a strong Week 1, with Tyler Shough targeting the No. 1 tight end at the third-highest ra",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "rashid-shaheed",
@@ -4505,7 +6457,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 4,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 0.9,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "After some offseason whispers about a larger role on offense for Shaheed, that didn't materialize in",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "sam-darnold",
@@ -4537,7 +6505,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 13,
+      "pass_td": 0,
+      "int": 0,
+      "rush_yd": 0,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 0.52,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Darnold played just five snaps in Wednesday's 13-10 win over the Patriots before being removed from",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kenyon-sadiq",
@@ -4558,7 +6542,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 3,
+      "rush_td": 1,
+      "rec_yd": 21,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 9.9,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "Sadiq caught one more pass than current listed No. 1 tight end Mason Taylor, and his 31 yards dwarfe",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "ka-imi-fairbairn",
@@ -4611,7 +6611,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 95,
+      "rec_td": 0,
+      "rec": 6,
+      "gp": 1,
+      "fantasy_ppg": 12.5,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "With the Packers chasing the Vikings on the scoreboard much of the fourth quarter and getting virtua",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "alvin-kamara",
@@ -4717,7 +6733,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 50,
+      "rec_td": 0,
+      "rec": 4,
+      "gp": 1,
+      "fantasy_ppg": 7,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Shakir finished a distant third on the Bills in receiving yards behind Dalton Kincaid and DJ Moore,",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "isiah-pacheco",
@@ -4781,7 +6813,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 274,
+      "pass_td": 2,
+      "int": 0,
+      "rush_yd": 15,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 16.46,
+      "trend": "slightly-improving",
+      "injury_status": "out",
+      "injury_note": "Stroud guided a pair of touchdown drives capped by David Montgomery runs before finding Nico Collins",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "cameron-dicker",
@@ -4834,7 +6882,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 23,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 2.3,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Bhayshul Tuten got the start and out-snapped Rodriguez by a 28-23 margin and out-carried him 15 to s",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tyjae-spears",
@@ -4866,7 +6930,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 12,
+      "rush_td": 0,
+      "rec_yd": 12,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 3.4,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Based on preseason usage, Spears is firmly entrenched as the team's top alternative to Tony Pollard",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "bryce-young",
@@ -4898,7 +6978,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 361,
+      "pass_td": 3,
+      "int": 1,
+      "rush_yd": 10,
+      "rush_td": 1,
+      "gp": 1,
+      "fantasy_ppg": 32.44,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "In the highest-scoring Week 1 contest in NFL history, Young did his part to try and keep Carolina in",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jayden-higgins",
@@ -4962,7 +7058,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 55,
+      "rec_td": 1,
+      "rec": 4,
+      "gp": 1,
+      "fantasy_ppg": 13.5,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Diggs' nine targets were more than double the amount of any other Washington player. While the veter",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "cam-ward",
@@ -4994,7 +7106,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 140,
+      "pass_td": 1,
+      "int": 0,
+      "rush_yd": 21,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 11.7,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "Ward was under siege all afternoon from a surprisingly effective Jets pass rush, and New York contro",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "philadelphia-eagles",
@@ -5047,7 +7175,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 9,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 1.4,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Johnson is coming off a 2025 regular season in which he posted a 45-528-5 line on 74 targets in 15 g",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "david-njoku",
@@ -5079,7 +7223,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 58,
+      "rec_td": 0,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 8.3,
+      "trend": "slightly-improving",
+      "injury_status": "out",
+      "injury_note": "Njoku worked behind starter Charlie Kolar and ahead of Oronde Gadsden in the contest. During the exh",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jalen-coker",
@@ -5111,7 +7271,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 138,
+      "rec_td": 2,
+      "rec": 8,
+      "gp": 1,
+      "fantasy_ppg": 29.8,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "In the highest-scoring Week 1 game in NFL history, Coker emerged as Bryce Young's favorite downfield",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "fernando-mendoza",
@@ -5164,7 +7340,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 36,
+      "rec_td": 1,
+      "rec": 4,
+      "gp": 1,
+      "fantasy_ppg": 11.6,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Justin Jefferson easily paced the Vikings with nine targets on 24 total pass attempts, but Hockenson",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "denzel-boston",
@@ -5185,7 +7377,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 59,
+      "rec_td": 1,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 12.9,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "It wasn't until the third play of the fourth quarter that Boston made his first NFL catch, a 13-yard",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "omar-cooper",
@@ -5206,7 +7414,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 30,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 3.5,
+      "trend": "stable",
+      "injury_status": "day-to-day",
+      "injury_note": "Cooper was ruled out due to an ankle injury after the opening drive, during which the rookie first-r",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jauan-jennings",
@@ -5238,7 +7462,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Signed to a one-year, $8 million deal in May, Jennings is locked in as the Vikings' No. 3 receiver a",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jalen-mcmillan",
@@ -5302,7 +7542,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 26,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 3.6,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "It comes as no surprise after the Browns cut Cedric Tillman at the end of training camp. Jeudy is li",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jason-myers",
@@ -5355,7 +7611,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0,
+      "trend": "declining",
+      "injury_status": "day-to-day",
+      "injury_note": "Sampson was hurt in the first quarter. He was initially deemed questionable but was eventually downg",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "dalton-schultz",
@@ -5387,7 +7659,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 35,
+      "rec_td": 0,
+      "rec": 4,
+      "gp": 1,
+      "fantasy_ppg": 5.5,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Schultz's eight targets were second on the team to Nico Collins' 10 on 38 pass attempts by C.J. Stro",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "daniel-jones",
@@ -5419,7 +7707,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 166,
+      "pass_td": 1,
+      "int": 1,
+      "rush_yd": 4,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 10.04,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Jones' middling final line underscored the type of afternoon it was for the Colts' offense overall,",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "travis-hunter",
@@ -5451,7 +7755,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 3,
+      "rush_td": 0,
+      "rec_yd": 8,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 1.6,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "After his rookie 2025 season came to an abrupt end after Week 7 due to an isolated LCL injury in his",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "aj-barner",
@@ -5483,7 +7803,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 13,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 2.3,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Barner was on the field for 44 of Seattle's 50 snaps on offense, so he remains firmly entrenched ato",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "keaton-mitchell",
@@ -5515,7 +7851,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 9,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0.9,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Mitchell had a long rush of eight yards but combined for just three yards on his other three carries",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "pat-freiermuth",
@@ -5547,7 +7899,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 46,
+      "rec_td": 1,
+      "rec": 5,
+      "gp": 1,
+      "fantasy_ppg": 13.1,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Freiermuth looked great in Pittsburgh's season opener, ranking second on the team in receiving yarda",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "cam-little",
@@ -5600,7 +7968,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 40,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 4,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Allen worked with the starters for most of the preseason while Hall was sidelined by a groin injury.",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "mike-washington",
@@ -5632,7 +8016,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 41,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 4.1,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "After Ashton Jeanty dealt with an ankle sprain for the previous month, it was unclear if the Raiders",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "new-england-patriots",
@@ -5685,7 +8085,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0,
+      "trend": "declining",
+      "injury_status": "healthy",
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tank-bigsby",
@@ -5717,7 +8133,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 3,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0.3,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "The fact he was rested for Weeks 2 and 3 of the preseason while Will Shipley played would suggest Bi",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "austin-ekeler",
@@ -5813,7 +8245,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 28,
+      "rec_td": 0,
+      "rec": 4,
+      "gp": 1,
+      "fantasy_ppg": 4.8,
+      "trend": "slightly-improving",
+      "injury_status": "out",
+      "injury_note": "Helm's five targets trailed both Carnell Tate and Wan'Dale Robinson, as the duo drew six targets api",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "emmett-johnson",
@@ -5866,7 +8314,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 21,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 2.6,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Boutte ended up being the odd man out last month in a New England receiving corps that added A.J. Br",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "cade-otton",
@@ -5898,7 +8362,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 26,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 4.1,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Aside from adding sixth-round rookie Bauer Sharp to the TE room this offseason, it's status quo for",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tyreek-hill",
@@ -5962,7 +8442,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 27,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 4.2,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Nailor led the Raiders in targets and finished tied for second in receptions. The fifth-year pro mad",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "deebo-samuel",
@@ -5994,7 +8490,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 12,
+      "rush_td": 0,
+      "rec_yd": 48,
+      "rec_td": 1,
+      "rec": 6,
+      "gp": 1,
+      "fantasy_ppg": 15,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "The versatile Samuel made a splash in his return to the 49ers following a one-year stint with the Co",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "nicholas-singleton",
@@ -6047,7 +8559,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Tennessee heads into the season with Carnell Tate (undisclosed), Wan'Dale Robinson (head), Ridley, C",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jacoby-brissett",
@@ -6079,7 +8607,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 277,
+      "pass_td": 1,
+      "int": 0,
+      "rush_yd": 14,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 16.48,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "Brissett helped the Cardinals set an immediate tone for a potential upset on the team's first drive",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "geno-smith",
@@ -6111,7 +8655,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 215,
+      "pass_td": 0,
+      "int": 0,
+      "rush_yd": 7,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 9.3,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Smith kept the offense on schedule but wasn't asked to do too much as the Jets rode their running ga",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "malik-washington",
@@ -6143,7 +8703,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 53,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 4.8,
+      "trend": "slightly-declining",
+      "injury_status": "out",
+      "injury_note": "Washington's turnover was the one blemish on an otherwise encouraging afternoon, as the fumble came",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "antonio-williams",
@@ -6164,7 +8740,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 64,
+      "rec_td": 1,
+      "rec": 4,
+      "gp": 1,
+      "fantasy_ppg": 14.4,
+      "trend": "stable",
+      "injury_status": "healthy",
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "terrance-ferguson",
@@ -6196,7 +8788,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "The lone pass Ferguson saw from Matthew Stafford was on fourth-and-5 midway through the fourth quart",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "minnesota-vikings",
@@ -6249,7 +8857,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 18,
+      "rush_td": 0,
+      "rec_yd": 10,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 3.3,
+      "trend": "declining",
+      "injury_status": "healthy",
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "adonai-mitchell",
@@ -6281,7 +8905,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 60,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 7.5,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "It's no surprise after Mitchell showed playmaking ability with New York following his midseason trad",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tre-tucker",
@@ -6313,7 +8953,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 27,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 3.7,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Tucker had a relatively quiet performance, though that was the case for the Raiders' wideout corps a",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kaytron-allen",
@@ -6334,7 +8990,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 16,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 1.6,
+      "trend": "stable",
+      "injury_status": "healthy",
+      "injury_note": null,
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "sean-tucker",
@@ -6398,7 +9070,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "TE",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 18,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 2.8,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Dulcich played a total of 15 offensive snaps across those two games before sitting for the Dolphins'",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jordan-james",
@@ -6440,7 +9128,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 37,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 3.7,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "Lloyd worked ahead of Chris Brooks (seven carries for 29 yards) in a Packers backfield that struggle",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "george-holani",
@@ -6472,7 +9176,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 29,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 2.9,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "The change-of-pace back ironically logged just two fewer carries than lead runner Jadarian Price whi",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "dallas-cowboys",
@@ -6514,7 +9234,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "Branch opened Week 1 prep with back-to-back limited sessions due to a hamstring injury, but a full s",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "san-francisco-ers",
@@ -6567,7 +9303,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Top RB Omarion Hampton started for the Chargers and played two series. Vidal followed and rushed for",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "brandon-aiyuk",
@@ -6620,7 +9372,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 30,
+      "rush_td": 1,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 9,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "Miller was dealing with an unknown issue, but the running back's presence in practice indicates he h",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "new-york-giants",
@@ -6673,7 +9441,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 3,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0.3,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Frank Gore actually out-snapped Davis 10 to five behind James Cook, as both Davis and Gore rushed on",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "marvin-mims",
@@ -6842,7 +9626,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 25,
+      "rec_td": 0,
+      "rec": 2,
+      "gp": 1,
+      "fantasy_ppg": 3.5,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "Prior to his release, Slayton looked like the leading candidate to handle the perimeter role opposit",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "kyle-williams",
@@ -6874,7 +9674,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Williams played 12 of 71 offensive snaps and ran just seven routes on 36 dropbacks by Drake Maye. He",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "jake-elliott",
@@ -6927,7 +9743,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 20,
+      "rec_td": 0,
+      "rec": 3,
+      "gp": 1,
+      "fantasy_ppg": 3.5,
+      "trend": "slightly-improving",
+      "injury_status": "out",
+      "injury_note": "Harris dealt with an unspecified injury last month but is fine for Sunday's season opener against th",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "atlanta-falcons",
@@ -7043,7 +9875,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": 3,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": 0.3,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "Wilson worked as a distant third option in Seattle's backfield behind Jadarian Price (58 yards on 12",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "chicago-bears",
@@ -7096,7 +9944,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "RB",
+      "rush_yd": -1,
+      "rush_td": 0,
+      "rec_yd": 0,
+      "rec_td": 0,
+      "rec": 0,
+      "gp": 1,
+      "fantasy_ppg": -0.1,
+      "trend": "declining",
+      "injury_status": "out",
+      "injury_note": "The 23-year-old is entering his third NFL season after being selected in the fourth round of the 202",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tyler-loop",
@@ -7149,7 +10013,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 160,
+      "pass_td": 3,
+      "int": 2,
+      "rush_yd": -6,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 15.8,
+      "trend": "improving",
+      "injury_status": "out",
+      "injury_note": "As his final line indicates, the majority of Cousins' passing line was far from scintillating from a",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "michael-penix",
@@ -7202,7 +10082,23 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "QB",
+      "pass_yd": 205,
+      "pass_td": 1,
+      "int": 1,
+      "rush_yd": 38,
+      "rush_td": 0,
+      "gp": 1,
+      "fantasy_ppg": 15,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "Watson put together a deceptively impressive 72.7 percent completion rate, but the numbers were larg",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   },
   {
     "id": "tory-horton",
@@ -7425,6 +10321,22 @@
     "injury_notes": null,
     "injury_status": "healthy",
     "contract_year": false,
-    "notes": null
+    "notes": null,
+    "current_season": {
+      "as_of_date": "2026-09-14",
+      "position_type": "WR",
+      "rush_yd": 0,
+      "rush_td": 0,
+      "rec_yd": 11,
+      "rec_td": 0,
+      "rec": 1,
+      "gp": 1,
+      "fantasy_ppg": 1.6,
+      "trend": "stable",
+      "injury_status": "out",
+      "injury_note": "Lane is expected to face a multi-week absence due to the fractured wrist he sustained in his NFL deb",
+      "source": "hermes_weekly_pull",
+      "note": null
+    }
   }
 ]
