@@ -2,7 +2,7 @@
   "season": "2026",
   "sport": "mlb",
   "source": "mlb_stats_api",
-  "as_of_date": "2026-09-25",
+  "as_of_date": "2026-09-28",
   "games": [
     {
       "date": "2026-03-25",
@@ -11896,11 +11896,6 @@
     },
     {
       "date": "2026-09-26",
-      "home": "BOS",
-      "away": "CHC"
-    },
-    {
-      "date": "2026-09-26",
       "home": "CWS",
       "away": "COL"
     },
@@ -11963,6 +11958,11 @@
       "date": "2026-09-27",
       "home": "ATH",
       "away": "HOU"
+    },
+    {
+      "date": "2026-09-27",
+      "home": "BOS",
+      "away": "CHC"
     },
     {
       "date": "2026-09-27",
