@@ -45,3 +45,11 @@ data-updates/.last_run
 
 # weekly pipeline run logs (local machine diagnostics, not project data)
 scripts/logs/
+
+# locally installed agent skills (tooling, not project code)
+agent/
+.agents/
+skills-lock.json
+
+# impeccable live-mode session state (per-machine)
+.impeccable/live/
