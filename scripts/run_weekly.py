@@ -74,9 +74,9 @@ NFL_ACTIVE = (9, 2)
 # Sports intentionally parked. They are skipped before any calendar/Yahoo
 # check, report as 'dormant' (not 'failed'), and never set any_failed — so a
 # dormant sport can't produce a Monday failure email or a non-zero exit.
-# NBA/NHL are parked because no scrape_nba.py / scrape_nhl.py exists yet and
-# the project is on hold; remove a sport from this set to reactivate it.
-DORMANT_SPORTS = {'nba', 'nhl'}
+# ALL FOUR are currently parked: the project is on hold. Remove a sport from
+# this set (and re-enable the scheduler) to reactivate it.
+DORMANT_SPORTS = {'mlb', 'nba', 'nhl', 'nfl'}
 
 
 def is_month_in_range(month, start, end):
@@ -742,6 +742,9 @@ def main():
     print('SCHEDULE REFRESH')
     print(f'{"="*60}')
     for sport, scraper in SCHEDULE_SCRAPERS.items():
+        if sport in DORMANT_SPORTS:
+            print(f'  [{sport}] Skipping schedule refresh (dormant)')
+            continue
         if not sports.get(sport):
             print(f'  [{sport}] Skipping schedule refresh (offseason)')
             continue
@@ -758,6 +761,9 @@ def main():
     print(f'{"="*60}')
     probables_summary = None
     for sport, scraper in PROBABLES_SCRAPERS.items():
+        if sport in DORMANT_SPORTS:
+            print(f'  [{sport}] Skipping probables refresh (dormant)')
+            continue
         if not sports.get(sport):
             print(f'  [{sport}] Skipping probables refresh (offseason)')
             continue
