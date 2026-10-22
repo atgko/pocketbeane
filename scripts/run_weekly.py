@@ -71,6 +71,13 @@ NBA_ACTIVE = (10, 4)
 NHL_ACTIVE = (10, 4)
 NFL_ACTIVE = (9, 2)
 
+# Sports intentionally parked. They are skipped before any calendar/Yahoo
+# check, report as 'dormant' (not 'failed'), and never set any_failed — so a
+# dormant sport can't produce a Monday failure email or a non-zero exit.
+# NBA/NHL are parked because no scrape_nba.py / scrape_nhl.py exists yet and
+# the project is on hold; remove a sport from this set to reactivate it.
+DORMANT_SPORTS = {'nba', 'nhl'}
+
 
 def is_month_in_range(month, start, end):
     if start <= end:
@@ -552,6 +559,19 @@ def main():
         print(f'Sport: {sport.upper()}')
         print(f'{"="*60}')
 
+        # Dormant: intentionally parked (no scraper yet / project on hold).
+        # Checked before the calendar and Yahoo calls so a parked sport makes
+        # no network requests and can never be reported as a failure.
+        if sport in DORMANT_SPORTS:
+            print(f'  [{sport}] Dormant — paused, not attempting (see DORMANT_SPORTS)')
+            results[sport] = {
+                'status': 'dormant',
+                'reason': 'dormant',
+                'players_updated': 0,
+                'players_skipped': 0,
+            }
+            continue
+
         # Check 1: Calendar
         if not active:
             print(f'  [{sport}] Check 1 FAIL (offseason) — skipping')
@@ -798,9 +818,11 @@ def build_email_body(run_date, duration, results, token, git_result, probables_s
 
     for sport in ['mlb', 'nba', 'nhl', 'nfl']:
         r = results.get(sport, {'status': 'unknown'})
-        status_icon = {'ok': '✅', 'skipped': '⏸', 'failed': '⚠️'}.get(r['status'], '?')
+        status_icon = {'ok': '✅', 'skipped': '⏸', 'dormant': '⏸', 'failed': '⚠️'}.get(r['status'], '?')
         reason = r.get('reason', '')
-        if r['status'] == 'skipped' and reason == 'offseason':
+        if r['status'] == 'dormant':
+            lines.append(f'{sport.upper()} {status_icon}  Dormant — paused, not attempted this run')
+        elif r['status'] == 'skipped' and reason == 'offseason':
             if sport in ('nba', 'nhl'):
                 next_active = 'October 2026'
             elif sport == 'nfl':
